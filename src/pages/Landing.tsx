@@ -11,6 +11,10 @@ const Form = styled.form`
   margin: 2rem 0 1.25rem;
 `;
 
+const LoginButton = styled(Button)`
+  margin-top: 0.625rem;
+`;
+
 const Landing = () => {
   const { t } = useTranslation();
   return (
@@ -29,7 +33,7 @@ const Landing = () => {
           autoComplete="current-password"
           name="password"
         />
-        <Button type="submit">{t("login")}</Button>
+        <LoginButton type="submit">{t("login")}</LoginButton>
       </Form>
     </div>
   );
