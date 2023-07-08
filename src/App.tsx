@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Landing from "./pages/Landing";
+import Router from "./router";
 
 const Root = styled.main`
   max-width: 425px;
@@ -9,7 +9,7 @@ const Root = styled.main`
 
 const App = () => (
   <Root>
-    <Landing />
+    <Router />
   </Root>
 );
 
