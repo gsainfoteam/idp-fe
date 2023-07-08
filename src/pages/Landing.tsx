@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { login } from "src/api/auth";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
 import Logo from "src/components/Logo";
@@ -23,13 +25,39 @@ const LoginButton = styled(Button)`
   margin-top: 0.625rem;
 `;
 
+const useLanding = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const email = event.currentTarget.email as HTMLInputElement;
+    const password = event.currentTarget.password as HTMLInputElement;
+
+    try {
+      setLoading(true);
+      const authCode = await login({
+        email: email.value,
+        password: password.value,
+        clientId: "",
+        redirectUri: "",
+      });
+      console.log(authCode);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { handleSubmit, loading };
+};
+
 const Landing = () => {
   const { t } = useTranslation();
+  const { handleSubmit, loading } = useLanding();
 
   return (
     <Container>
       <Logo />
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Input
           type="text"
           placeholder={t("email.placeholder")}
@@ -42,7 +70,9 @@ const Landing = () => {
           autoComplete="current-password"
           name="password"
         />
-        <LoginButton type="submit">{t("login")}</LoginButton>
+        <LoginButton type="submit" disabled={loading}>
+          {t("login")}
+        </LoginButton>
       </Form>
     </Container>
   );
