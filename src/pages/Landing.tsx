@@ -45,10 +45,10 @@ const useLanding = () => {
       const authCode = await login({
         email: email.value,
         password: password.value,
-        clientId: "",
-        redirectUri: "",
+        clientId,
+        redirectUri,
       });
-      console.log(authCode);
+      window.location.href = `${redirectUri}?code=${authCode}`;
     } finally {
       setLoading(false);
     }

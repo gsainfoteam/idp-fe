@@ -14,10 +14,9 @@ interface LoginForm {
  */
 export const login = ({ email, password, clientId, redirectUri }: LoginForm) =>
   api
-    .post("/idp/login", {
-      email,
-      password,
-      client_id: clientId,
-      redirect_uri: redirectUri,
-    })
+    .post(
+      "/idp/login",
+      { user_email_id: email, user_password: password },
+      { params: { client_id: clientId, redirect_uri: redirectUri } },
+    )
     .then((res) => res.data.auth_code as string);
