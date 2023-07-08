@@ -23,6 +23,8 @@ i18next
     interpolation: {
       escapeValue: false,
     },
+    ns: ["main"],
+    defaultNS: "main",
   });
 
 export default i18next;

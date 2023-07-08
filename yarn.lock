@@ -239,12 +239,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.19.4, @babel/runtime@npm:^7.20.6":
+"@babel/runtime@npm:^7.19.4":
   version: 7.20.7
   resolution: "@babel/runtime@npm:7.20.7"
   dependencies:
     regenerator-runtime: ^0.13.11
   checksum: 4629ce5c46f06cca9cfb9b7fc00d48003335a809888e2b91ec2069a2dcfbfef738480cff32ba81e0b7c290f8918e5c22ddcf2b710001464ee84ba62c7e32a3a3
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.22.5":
+  version: 7.22.6
+  resolution: "@babel/runtime@npm:7.22.6"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: e585338287c4514a713babf4fdb8fc2a67adcebab3e7723a739fc62c79cfda875b314c90fd25f827afb150d781af97bc16c85bfdbfa2889f06053879a1ddb597
   languageName: node
   linkType: hard
 
@@ -2449,12 +2458,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^22.4.8":
-  version: 22.4.8
-  resolution: "i18next@npm:22.4.8"
+"i18next@npm:^23.2.8":
+  version: 23.2.8
+  resolution: "i18next@npm:23.2.8"
   dependencies:
-    "@babel/runtime": ^7.20.6
-  checksum: bac5eb763ba6e2e34ff58d52da2ad8ef506d42d0be9efb4abb116d649fef4d6af097a8be1bade3439ff1a1c66c207e661212a1c7caefd405f02a738e37e7bc37
+    "@babel/runtime": ^7.22.5
+  checksum: 6f01943cc8bf3e9315773fecbed2a8bcede4575dd505badea12c8f07b69936f5d0474dc6a724b123bedc8a3db4e12dca1e377d807eda90f1bd53d8f66b4694fb
   languageName: node
   linkType: hard
 
@@ -3436,21 +3445,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^12.1.1":
-  version: 12.1.1
-  resolution: "react-i18next@npm:12.1.1"
+"react-i18next@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "react-i18next@npm:13.0.1"
   dependencies:
-    "@babel/runtime": ^7.14.5
+    "@babel/runtime": ^7.22.5
     html-parse-stringify: ^3.0.1
   peerDependencies:
-    i18next: ">= 19.0.0"
+    i18next: ">= 23.2.3"
     react: ">= 16.8.0"
   peerDependenciesMeta:
     react-dom:
       optional: true
     react-native:
       optional: true
-  checksum: baeb1957d70281d1a95ef0b94801bc2e6bf17066a49a45f32cd1a706ead3ddce2ab3e7b321e07c43f082efa9987c2d55856a5bdf419d9ad628dbfa9ec87af8ea
+  checksum: eac59c4517c07e4e4b182570140ad9b2f7a7920dac5dadd694107ea6359743fe855390192072464fac579d3de1370bf4656b987a8c9c77babeb5b60ff8f17d3c
   languageName: node
   linkType: hard
 
@@ -3673,12 +3682,12 @@ __metadata:
     eslint-plugin-react: ^7.31.11
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-simple-import-sort: ^8.0.0
-    i18next: ^22.4.8
+    i18next: ^23.2.8
     i18next-browser-languagedetector: ^7.0.1
     prettier: ^2.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-i18next: ^12.1.1
+    react-i18next: ^13.0.1
     styled-components: ^5.3.6
     typescript: ^4.9.3
     vite: ^4.0.0
