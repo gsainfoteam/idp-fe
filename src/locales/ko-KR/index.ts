@@ -56,5 +56,6 @@ export const main = {
     action: "회원가입",
     back: "로그인 페이지로 돌아가기",
     error: "회원가입에 실패하였습니다.",
+    success: "회원가입이 완료되었습니다.",
   },
 };

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   register,
   requestEmailVerification,
@@ -12,6 +12,7 @@ const useRegister = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const loginPageUri = searchParams.get("redirect");
+  const navigate = useNavigate();
 
   const verifyTimer = useRef<NodeJS.Timer>();
   const [verifyLeftTime, setVerifyLeftTime] = useState(-1);
@@ -180,6 +181,12 @@ const useRegister = () => {
         phoneNumber,
         verificationToken: verificationToken.current,
       });
+      await Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: t("register.success"),
+      });
+      navigate(loginPageUri || "/");
     } catch {
       Swal.fire({
         icon: "error",
