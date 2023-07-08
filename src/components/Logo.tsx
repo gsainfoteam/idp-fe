@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import infoteamTextSrc from "../assets/infoteam.png";
-import { ReactComponent as CatLogo } from "../assets/logo.svg";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +19,7 @@ Image.defaultProps = {
 
 const Logo = () => (
   <Container>
-    <CatLogo width={220} height={220} />
+    <img width={220} height={220} src="/logo.svg" />
     <Image />
   </Container>
 );
