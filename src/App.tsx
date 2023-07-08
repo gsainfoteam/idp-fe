@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Router from "./router";
 
-const Root = styled.main`
+const Root = styled.div`
   max-width: 425px;
   margin: 0 auto;
 `;

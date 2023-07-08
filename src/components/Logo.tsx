@@ -1,6 +1,5 @@
+import infoteamTextSrc from "src/assets/infoteam.png";
 import styled from "styled-components";
-
-import infoteamTextSrc from "../assets/infoteam.png";
 
 const Container = styled.div`
   display: flex;

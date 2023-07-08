@@ -8,7 +8,7 @@ import Logo from "src/components/Logo";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;

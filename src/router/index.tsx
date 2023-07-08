@@ -2,11 +2,15 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Landing from "src/pages/Landing";
 import Register from "src/pages/Register";
 
+import SubPageLayout from "./SubPageLayout";
+
 const Router = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/register" element={<Register />} />
+      <Route element={<SubPageLayout />}>
+        <Route path="/register" element={<Register />} />
+      </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </BrowserRouter>
