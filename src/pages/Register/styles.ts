@@ -30,6 +30,7 @@ export const Row = styled.div<{ narrow?: boolean }>`
 export const BackLink = styled(Link)`
   color: #959595;
   font-size: 0.875rem;
+  margin-top: 1rem;
 `;
 
 export const VerifiedText = styled.div`
