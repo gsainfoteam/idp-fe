@@ -9,6 +9,10 @@ export const main = {
         "인증 요청은 1분에 한 번만 가능합니다. 잠시 후 다시 시도해주세요.",
       left: "남은 시간 : {time}",
       wrongEmail: "이메일을 다시 확인해주세요.",
+      timeout: "인증 시간이 초과되었습니다.",
+      notVerified: "인증되지 않은 이메일입니다.",
+      success: "인증 메일이 발송되었습니다.",
+      error: "인증 요청에 실패하였습니다.",
     },
   },
   verificationCode: {
@@ -17,6 +21,7 @@ export const main = {
     verify: {
       action: "인증하기",
       complete: "인증이 완료되었습니다.",
+      error: "인증에 실패하였습니다.",
     },
   },
   password: {
@@ -50,5 +55,6 @@ export const main = {
   register: {
     action: "회원가입",
     back: "로그인 페이지로 돌아가기",
+    error: "회원가입에 실패하였습니다.",
   },
 };

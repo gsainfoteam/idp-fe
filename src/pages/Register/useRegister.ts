@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import {
+  register,
+  requestEmailVerification,
+  verifyEmail,
+} from "src/api/register";
 import Swal from "sweetalert2";
 
 const useRegister = () => {
@@ -12,6 +17,8 @@ const useRegister = () => {
   const [verifyLeftTime, setVerifyLeftTime] = useState(-1);
   const verifiedEmail = useRef<string>();
   const [verified, setVerified] = useState(false);
+  const verificationToken = useRef<string>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (verifyLeftTime < 0 && verifyTimer.current) {
@@ -44,6 +51,25 @@ const useRegister = () => {
     }, 1e3);
     verifiedEmail.current = email;
     setVerified(false);
+
+    try {
+      setLoading(true);
+      await requestEmailVerification(email);
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: t("email.verify.success"),
+      });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("email.verify.error"),
+      });
+      setVerifyLeftTime(-1);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleVerify = async (email: string, verificationCode: string) => {
@@ -55,8 +81,27 @@ const useRegister = () => {
       });
       return;
     }
+    if (verifyLeftTime < 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("email.verify.timeout"),
+      });
+      return;
+    }
 
-    setVerified(true);
+    try {
+      verificationToken.current = await verifyEmail(email, verificationCode);
+      setVerified(true);
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("verificationCode.verify.error"),
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getData = (event: React.FormEvent<HTMLFormElement>) => ({
@@ -101,8 +146,50 @@ const useRegister = () => {
     event.preventDefault();
     if (handleSubAction(event)) return;
     event.currentTarget.reportValidity();
-    const { password, passwordConfirm } = getData(event);
+    if (!verified || !verificationToken.current) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("email.verify.notVerified"),
+      });
+      return;
+    }
+    const {
+      password,
+      passwordConfirm,
+      email,
+      phoneNumber,
+      realName,
+      studentId,
+    } = getData(event);
+    if (email !== verifiedEmail.current) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("email.verify.wrongEmail"),
+      });
+      return;
+    }
     if (checkPasswordHasError(password, passwordConfirm)) return;
+    try {
+      await register({
+        email,
+        password,
+        name: realName,
+        studentId,
+        phoneNumber,
+        verificationToken: verificationToken.current,
+      });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("register.error"),
+      });
+      return;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {
@@ -110,6 +197,7 @@ const useRegister = () => {
     verifyLeftTime,
     verified,
     loginPageUri,
+    loading,
   };
 };
 
