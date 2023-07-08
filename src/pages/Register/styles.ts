@@ -34,4 +34,26 @@ export const BackLink = styled(Link)`
 
 export const VerifiedText = styled.div`
   color: #26d681;
+  position: relative;
+  padding-left: 1.5em;
+
+  ::before,
+  ::after {
+    content: "";
+    top: 0.9375em;
+    left: 0.5em;
+    transform-origin: left;
+    position: absolute;
+    border-bottom: 2px solid currentColor;
+  }
+
+  ::before {
+    width: 0.5em;
+    transform: rotate(-135deg);
+  }
+
+  ::after {
+    width: 1em;
+    transform: rotate(-45deg);
+  }
 `;

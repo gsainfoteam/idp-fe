@@ -40,13 +40,13 @@ const Register = () => {
             required
             name="verificationCode"
           >
-            <Row>
+            <Row narrow>
               <Button name="action" value="verify" formNoValidate outline small>
                 {t("verificationCode.verify.action")}
               </Button>
-              {!verified && (
+              {verified && (
                 <VerifiedText>
-                  ✅{t("verificationCode.verify.complete")}
+                  {t("verificationCode.verify.complete")}
                 </VerifiedText>
               )}
             </Row>
