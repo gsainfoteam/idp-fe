@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { login } from "src/api/auth";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
@@ -12,6 +13,7 @@ const Container = styled.div`
   justify-content: center;
   min-height: 100vh;
   padding: 0 1.25rem;
+  text-align: center;
 `;
 
 const Form = styled.form`
@@ -27,6 +29,11 @@ const LoginButton = styled(Button)`
 
 const useLanding = () => {
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const { client_id: clientId, redirect_uri: redirectUri } = Object.fromEntries(
+    searchParams.entries(),
+  );
+  const isValid = !!clientId && !!redirectUri;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,12 +54,16 @@ const useLanding = () => {
     }
   };
 
-  return { handleSubmit, loading };
+  return { handleSubmit, loading, isValid };
 };
 
 const Landing = () => {
   const { t } = useTranslation();
-  const { handleSubmit, loading } = useLanding();
+  const { handleSubmit, loading, isValid } = useLanding();
+
+  if (!isValid) {
+    return <Container>invalid client_id or redirect_uri</Container>;
+  }
 
   return (
     <Container>
