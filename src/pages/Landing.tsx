@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import Button from "src/components/Button";
 import Input from "src/components/Input";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
@@ -28,6 +29,7 @@ const Landing = () => {
           autoComplete="current-password"
           name="password"
         />
+        <Button type="submit">{t("login")}</Button>
       </Form>
     </div>
   );

@@ -5,4 +5,5 @@ export const main = {
   password: {
     placeholder: "Password",
   },
+  login: "로그인",
 };
