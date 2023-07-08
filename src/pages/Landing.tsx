@@ -116,7 +116,14 @@ const Landing = () => {
         </LoginButton>
       </Form>
       <Links>
-        <FindPassword to="/find-password">
+        <FindPassword
+          to={{
+            pathname: "/find-password",
+            search: new URLSearchParams({
+              redirect: window.location.href,
+            }).toString(),
+          }}
+        >
           {t("findPassword.action")}
         </FindPassword>
         |

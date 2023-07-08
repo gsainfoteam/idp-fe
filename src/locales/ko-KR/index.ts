@@ -51,6 +51,19 @@ export const main = {
   },
   findPassword: {
     action: "비밀번호 찾기",
+    new: {
+      label: "새 비밀번호",
+      placeholder: "New Password",
+    },
+    newConfirm: {
+      label: "새 비밀번호 확인",
+      placeholder: "New Password Confirm",
+    },
+    change: {
+      action: "비밀번호 변경",
+      error: "비밀번호 변경에 실패하였습니다.",
+      success: "비밀번호가 변경되었습니다.",
+    },
   },
   register: {
     action: "회원가입",
