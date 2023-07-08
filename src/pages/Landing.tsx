@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { login } from "src/api/auth";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
@@ -26,6 +26,26 @@ const Form = styled.form`
 
 const LoginButton = styled(Button)`
   margin-top: 0.625rem;
+`;
+
+const Links = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.375rem;
+
+  &,
+  * {
+    color: #959595;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+`;
+
+const FindPassword = styled(Link)``;
+
+const Register = styled(Link)`
+  color: var(--color-primary);
 `;
 
 const useLanding = () => {
@@ -95,6 +115,12 @@ const Landing = () => {
           {t("login.action")}
         </LoginButton>
       </Form>
+      <Links>
+        <FindPassword to="/find-password">
+          {t("findPassword.action")}
+        </FindPassword>
+        |<Register to="/register">{t("register.action")}</Register>
+      </Links>
     </Container>
   );
 };
