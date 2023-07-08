@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link, useSearchParams } from "react-router-dom";
 import Button from "src/components/Button";
 import Field from "src/components/Field";
 import styled from "styled-components";
@@ -7,6 +8,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const Form = styled.form`
@@ -31,17 +33,25 @@ const Row = styled.div`
   }
 `;
 
+const BackLink = styled(Link)`
+  color: #959595;
+  font-size: 0.875rem;
+`;
+
 const useRegister = () => {
+  const [searchParams] = useSearchParams();
+  const loginPageUri = searchParams.get("redirect");
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
-  return { handleSubmit };
+  return { handleSubmit, loginPageUri };
 };
 
 const Register = () => {
   const { t } = useTranslation();
-  const { handleSubmit } = useRegister();
+  const { handleSubmit, loginPageUri } = useRegister();
 
   return (
     <Container>
@@ -114,6 +124,9 @@ const Register = () => {
           />
         </Group>
       </Form>
+      {loginPageUri && (
+        <BackLink to={loginPageUri}>{t("register.back")}</BackLink>
+      )}
     </Container>
   );
 };

@@ -119,7 +119,17 @@ const Landing = () => {
         <FindPassword to="/find-password">
           {t("findPassword.action")}
         </FindPassword>
-        |<Register to="/register">{t("register.action")}</Register>
+        |
+        <Register
+          to={{
+            pathname: "/register",
+            search: new URLSearchParams({
+              redirect: window.location.href,
+            }).toString(),
+          }}
+        >
+          {t("register.action")}
+        </Register>
       </Links>
     </Container>
   );

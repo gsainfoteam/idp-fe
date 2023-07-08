@@ -42,5 +42,6 @@ export const main = {
   },
   register: {
     action: "회원가입",
+    back: "로그인 페이지로 돌아가기",
   },
 };
