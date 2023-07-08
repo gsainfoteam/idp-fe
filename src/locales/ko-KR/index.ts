@@ -3,7 +3,13 @@ export const main = {
     label: "이메일",
     placeholder: "Email",
     example: "xxx@gm.gist.ac.kr / .gist.ac.kr",
-    verify: "인증 요청",
+    verify: {
+      action: "인증 요청",
+      tryLater:
+        "인증 요청은 1분에 한 번만 가능합니다. 잠시 후 다시 시도해주세요.",
+      left: "남은 시간 : {time}",
+      wrongEmail: "이메일을 다시 확인해주세요.",
+    },
   },
   verificationCode: {
     label: "인증번호",
@@ -20,6 +26,7 @@ export const main = {
   passwordConfirm: {
     label: "비밀번호 확인",
     placeholder: "Password Confirm",
+    error: "비밀번호가 일치하지 않습니다.",
   },
   name: {
     label: "이름",
