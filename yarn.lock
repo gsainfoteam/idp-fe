@@ -3801,6 +3801,7 @@ __metadata:
     react-router: ^6.14.1
     react-router-dom: ^6.14.1
     styled-components: ^5.3.6
+    sweetalert2: ^11.7.12
     typescript: ^4.9.3
     vite: ^4.0.0
     vite-plugin-checker: ^0.5.3
@@ -4062,6 +4063,13 @@ __metadata:
   version: 2.0.4
   resolution: "svg-parser@npm:2.0.4"
   checksum: b3de6653048212f2ae7afe4a423e04a76ec6d2d06e1bf7eacc618a7c5f7df7faa5105561c57b94579ec831fbbdbf5f190ba56a9205ff39ed13eabdf8ab086ddf
+  languageName: node
+  linkType: hard
+
+"sweetalert2@npm:^11.7.12":
+  version: 11.7.12
+  resolution: "sweetalert2@npm:11.7.12"
+  checksum: 3f0d26399f7660bf8f410686d9e53bc2216e973a6cedd53a4566fd3f5952e642cf012d0ae68bc47d89cb2e29244ea54489c524217481581945983e5138ce1510
   languageName: node
   linkType: hard
 

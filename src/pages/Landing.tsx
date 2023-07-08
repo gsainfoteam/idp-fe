@@ -6,6 +6,7 @@ import Button from "src/components/Button";
 import Input from "src/components/Input";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const LoginButton = styled(Button)`
 `;
 
 const useLanding = () => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const { client_id: clientId, redirect_uri: redirectUri } = Object.fromEntries(
@@ -49,6 +51,12 @@ const useLanding = () => {
         redirectUri,
       });
       window.location.href = `${redirectUri}?code=${authCode}`;
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("login.error"),
+      });
     } finally {
       setLoading(false);
     }
@@ -82,7 +90,7 @@ const Landing = () => {
           name="password"
         />
         <LoginButton type="submit" disabled={loading}>
-          {t("login")}
+          {t("login.action")}
         </LoginButton>
       </Form>
     </Container>

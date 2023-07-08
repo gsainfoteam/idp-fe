@@ -5,5 +5,8 @@ export const main = {
   password: {
     placeholder: "Password",
   },
-  login: "로그인",
+  login: {
+    action: "로그인",
+    error: "로그인에 실패하였습니다.",
+  },
 };
