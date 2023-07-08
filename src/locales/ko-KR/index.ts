@@ -1,3 +1,8 @@
 export const main = {
-  title: "안녕 세상아!",
+  email: {
+    placeholder: "Email",
+  },
+  password: {
+    placeholder: "Password",
+  },
 };
