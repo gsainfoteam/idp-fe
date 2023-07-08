@@ -7,6 +7,7 @@ const Input = styled.input`
   padding: 0.5rem 1rem;
   min-height: 40px;
   box-sizing: border-box;
+  width: 100%;
   line-height: 1rem;
 
   &::placeholder {

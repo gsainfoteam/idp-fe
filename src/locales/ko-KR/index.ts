@@ -3,10 +3,15 @@ export const main = {
     label: "이메일",
     placeholder: "Email",
     example: "xxx@gm.gist.ac.kr / .gist.ac.kr",
+    verify: "인증 요청",
   },
   verificationCode: {
     label: "인증번호",
     placeholder: "Verification Code",
+    verify: {
+      action: "인증하기",
+      complete: "인증이 완료되었습니다.",
+    },
   },
   password: {
     label: "비밀번호",
