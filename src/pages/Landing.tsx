@@ -4,6 +4,13 @@ import Input from "src/components/Input";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -17,8 +24,9 @@ const LoginButton = styled(Button)`
 
 const Landing = () => {
   const { t } = useTranslation();
+
   return (
-    <div>
+    <Container>
       <Logo />
       <Form>
         <Input
@@ -35,7 +43,7 @@ const Landing = () => {
         />
         <LoginButton type="submit">{t("login")}</LoginButton>
       </Form>
-    </div>
+    </Container>
   );
 };
 
