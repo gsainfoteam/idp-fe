@@ -5,6 +5,9 @@ const Input = styled.input`
   border: 1px solid #e4e4e4;
 
   padding: 0.5rem 1rem;
+  min-height: 40px;
+  box-sizing: border-box;
+  line-height: 1rem;
 
   &::placeholder {
     color: #959595;
