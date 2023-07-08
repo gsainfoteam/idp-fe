@@ -82,12 +82,14 @@ const Landing = () => {
           placeholder={t("email.placeholder")}
           autoComplete="email"
           name="email"
+          required
         />
         <Input
           type="password"
           placeholder={t("password.placeholder")}
           autoComplete="current-password"
           name="password"
+          required
         />
         <LoginButton type="submit" disabled={loading}>
           {t("login.action")}
