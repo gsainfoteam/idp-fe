@@ -14,5 +14,5 @@ export const changePassowrd = ({
   api.post("/v1/user/change_password", {
     certification_jwt_token: verificationToken,
     user_email_id: email,
-    chnaged_password: password,
+    changed_password: password,
   });
