@@ -169,6 +169,7 @@ const useFindPassword = () => {
         icon: "success",
         title: "Success!",
         text: t("findPassword.change.success"),
+        confirmButtonText: t("register.back"),
       });
       navigate(loginPageUri || "/");
     } catch {

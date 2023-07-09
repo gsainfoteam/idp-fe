@@ -185,6 +185,7 @@ const useRegister = () => {
         icon: "success",
         title: "Success!",
         text: t("register.success"),
+        confirmButtonText: t("register.back"),
       });
       navigate(loginPageUri || "/");
     } catch {
