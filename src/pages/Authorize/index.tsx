@@ -29,6 +29,7 @@ const useAuthorize = () => {
     redirect_uri: redirectUri,
     state,
     scope,
+    nonce,
   } = Object.fromEntries(searchParams.entries());
   const href = useHref(useLocation());
   const { user } = useAuth({
@@ -51,7 +52,7 @@ const useAuthorize = () => {
         const { code } = await authorize({
           client_id: clientId,
           redirect_uri: redirectUri,
-          state,
+          nonce,
           scope,
         });
         url.searchParams.append("code", code);
@@ -65,7 +66,7 @@ const useAuthorize = () => {
         setError("unknown error");
       }
     })();
-  }, [clientId, navigate, redirectUri, scope, state, t, user]);
+  }, [clientId, navigate, nonce, redirectUri, scope, state, t, user]);
 
   return { error };
 };
