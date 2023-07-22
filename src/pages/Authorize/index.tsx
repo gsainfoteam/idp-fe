@@ -52,7 +52,7 @@ const useAuthorize = () => {
           scope: "",
         });
         url.searchParams.append("code", code);
-        url.searchParams.append("state", state);
+        if (state) url.searchParams.append("state", state);
         window.location.href = url.toString();
       } catch (e) {
         console.error(e);
