@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { login } from "src/api/auth";
-import { getUserInfo } from "src/api/user";
+import { useAuth } from "src/api/auth";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
 import Logo from "src/components/Logo";
-import { saveToken } from "src/utils/token";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -53,6 +51,7 @@ const Register = styled(Link)`
 const useLanding = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth({ redirectIfFound: true, redirectUrl: "/" });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,12 +60,7 @@ const useLanding = () => {
 
     try {
       setLoading(true);
-      const accessToken = await login({
-        email: email.value,
-        password: password.value,
-      });
-      saveToken({ accessToken });
-      getUserInfo().then(console.log);
+      await login({ email: email.value, password: password.value });
     } catch {
       Swal.fire({
         icon: "error",
