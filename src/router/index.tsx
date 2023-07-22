@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Authorize from "src/pages/Authorize";
 import FindPassword from "src/pages/FindPassword";
 import Landing from "src/pages/Landing";
 import Register from "src/pages/Register";
@@ -13,6 +14,7 @@ const Router = () => (
         <Route path="/register" element={<Register />} />
         <Route path="/find-password" element={<FindPassword />} />
       </Route>
+      <Route path="/authorize" element={<Authorize />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </BrowserRouter>
