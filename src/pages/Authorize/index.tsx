@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useSearchParams } from "react-router-dom";
-import Button from "src/components/Button";
-import Input from "src/components/Input";
+import {
+  useHref,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import { useAuth } from "src/api/auth";
+import { authorize } from "src/api/oauth";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -16,77 +21,55 @@ const Container = styled.main`
   text-align: center;
 `;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  margin: 2rem 0 1.25rem;
-`;
-
-const LoginButton = styled(Button)`
-  margin-top: 0.625rem;
-`;
-
-const Links = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.375rem;
-
-  &,
-  * {
-    color: #959595;
-    text-decoration: none;
-    font-size: 0.875rem;
-  }
-`;
-
-const FindPassword = styled(Link)``;
-
-const Register = styled(Link)`
-  color: var(--color-primary);
-`;
-
 const useAuthorize = () => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
-  const { client_id: clientId, redirect_uri: redirectUri } = Object.fromEntries(
-    searchParams.entries(),
-  );
+  const {
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    state,
+  } = Object.fromEntries(searchParams.entries());
   const isValid = !!clientId && !!redirectUri;
+  const href = useHref(useLocation());
+  const { user } = useAuth({
+    redirectUrl: {
+      pathname: "/login",
+      search: new URLSearchParams({ redirect: href }).toString(),
+    },
+  });
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // const email = event.currentTarget.email as HTMLInputElement;
-    // const password = event.currentTarget.password as HTMLInputElement;
+  useEffect(() => {
+    if (!isValid || !user) return;
+    (async () => {
+      try {
+        console.log(redirectUri);
+        const url = new globalThis.URL(redirectUri);
+        const { code } = await authorize({
+          client_id: clientId,
+          redirect_uri: redirectUri,
+          state,
+          scope: "",
+        });
+        url.searchParams.append("code", code);
+        url.searchParams.append("state", state);
+        window.location.href = url.toString();
+      } catch (e) {
+        console.error(e);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: t("authorize.error"),
+        });
+      }
+    })();
+  }, [clientId, isValid, navigate, redirectUri, state, t, user]);
 
-    try {
-      setLoading(true);
-      // const authCode = await login({
-      //   email: email.value,
-      //   password: password.value,
-      //   clientId,
-      //   redirectUri,
-      // });
-      // window.location.href = `${redirectUri}?code=${authCode}`;
-    } catch {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: t("login.error"),
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { handleSubmit, loading, isValid };
+  return { isValid };
 };
 
 const Authorize = () => {
-  const { t } = useTranslation();
-  const { handleSubmit, loading, isValid } = useAuthorize();
+  const { isValid } = useAuthorize();
 
   if (!isValid) {
     return <Container>invalid client_id or redirect_uri</Container>;
@@ -95,48 +78,6 @@ const Authorize = () => {
   return (
     <Container>
       <Logo />
-      <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder={t("email.placeholder")}
-          autoComplete="email"
-          name="email"
-          required
-        />
-        <Input
-          type="password"
-          placeholder={t("password.placeholder")}
-          autoComplete="current-password"
-          name="password"
-          required
-        />
-        <LoginButton type="submit" disabled={loading}>
-          {t("login.action")}
-        </LoginButton>
-      </Form>
-      <Links>
-        <FindPassword
-          to={{
-            pathname: "/find-password",
-            search: new URLSearchParams({
-              redirect: window.location.href,
-            }).toString(),
-          }}
-        >
-          {t("findPassword.action")}
-        </FindPassword>
-        |
-        <Register
-          to={{
-            pathname: "/register",
-            search: new URLSearchParams({
-              redirect: window.location.href,
-            }).toString(),
-          }}
-        >
-          {t("register.action")}
-        </Register>
-      </Links>
     </Container>
   );
 };

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "src/api/auth";
 import Swal from "sweetalert2";
 
 const useLogin = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth({ redirectIfFound: true, redirectUrl: "/" });
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/";
+  const { login } = useAuth({ redirectIfFound: true, redirectUrl });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

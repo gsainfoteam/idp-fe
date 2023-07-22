@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useHref, useLocation } from "react-router";
 import Input from "src/components/Input";
 import Logo from "src/components/Logo";
 
@@ -15,6 +16,7 @@ import useLogin from "./useLogin";
 const Login = () => {
   const { t } = useTranslation();
   const { handleSubmit, loading } = useLogin();
+  const href = useHref(useLocation());
 
   return (
     <Container>
@@ -42,9 +44,7 @@ const Login = () => {
         <FindPassword
           to={{
             pathname: "/find-password",
-            search: new URLSearchParams({
-              redirect: window.location.href,
-            }).toString(),
+            search: new URLSearchParams({ redirect: href }).toString(),
           }}
         >
           {t("findPassword.action")}
@@ -53,9 +53,7 @@ const Login = () => {
         <Register
           to={{
             pathname: "/register",
-            search: new URLSearchParams({
-              redirect: window.location.href,
-            }).toString(),
+            search: new URLSearchParams({ redirect: href }).toString(),
           }}
         >
           {t("register.action")}

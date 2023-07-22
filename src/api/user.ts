@@ -15,8 +15,6 @@ export const getUserInfo = () =>
     studentId: data.student_id as string,
   }));
 
-export type User = Awaited<ReturnType<typeof getUserInfo>>;
-
 export const changePassowrd = ({
   verificationToken,
   email,
