@@ -20,7 +20,8 @@
     "react-router": "^6.14.1",
     "react-router-dom": "^6.14.1",
     "styled-components": "^5.3.6",
-    "sweetalert2": "^11.7.12"
+    "sweetalert2": "^11.7.12",
+    "swr": "^2.2.0"
   },
   "devDependencies": {
     "@types/eslint": "^8",
