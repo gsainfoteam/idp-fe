@@ -49,9 +49,6 @@ export const main = {
     action: "로그인",
     error: "로그인에 실패하였습니다.",
   },
-  authorize: {
-    error: "인증에 문제가 발생했습니다.",
-  },
   findPassword: {
     action: "비밀번호 찾기",
     new: {

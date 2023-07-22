@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -10,7 +11,6 @@ import { useAuth } from "src/api/auth";
 import { authorize } from "src/api/oauth";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
-import Swal from "sweetalert2";
 
 const Container = styled.main`
   display: flex;
@@ -58,12 +58,11 @@ const useAuthorize = () => {
         if (state) url.searchParams.append("state", state);
         window.location.href = url.toString();
       } catch (e) {
-        console.error(e);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: t("authorize.error"),
-        });
+        if (e instanceof AxiosError) {
+          setError(e.response?.data.message ?? e.message);
+          return;
+        }
+        setError("unknown error");
       }
     })();
   }, [clientId, navigate, redirectUri, scope, state, t, user]);
