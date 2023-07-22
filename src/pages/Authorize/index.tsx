@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   useHref,
@@ -28,8 +28,8 @@ const useAuthorize = () => {
     client_id: clientId,
     redirect_uri: redirectUri,
     state,
+    scope,
   } = Object.fromEntries(searchParams.entries());
-  const isValid = !!clientId && !!redirectUri;
   const href = useHref(useLocation());
   const { user } = useAuth({
     redirectUrl: {
@@ -38,18 +38,21 @@ const useAuthorize = () => {
     },
   });
   const navigate = useNavigate();
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
-    if (!isValid || !user) return;
+    if (!user) return;
+    if (!clientId) return setError("client_id is required");
+    if (!redirectUri) return setError("redirect_uri is required");
+    if (!scope) return setError("scope is required");
     (async () => {
       try {
-        console.log(redirectUri);
         const url = new globalThis.URL(redirectUri);
         const { code } = await authorize({
           client_id: clientId,
           redirect_uri: redirectUri,
           state,
-          scope: "",
+          scope,
         });
         url.searchParams.append("code", code);
         if (state) url.searchParams.append("state", state);
@@ -63,16 +66,16 @@ const useAuthorize = () => {
         });
       }
     })();
-  }, [clientId, isValid, navigate, redirectUri, state, t, user]);
+  }, [clientId, navigate, redirectUri, scope, state, t, user]);
 
-  return { isValid };
+  return { error };
 };
 
 const Authorize = () => {
-  const { isValid } = useAuthorize();
+  const { error } = useAuthorize();
 
-  if (!isValid) {
-    return <Container>invalid client_id or redirect_uri</Container>;
+  if (error) {
+    return <Container>error: {error}</Container>;
   }
 
   return (
