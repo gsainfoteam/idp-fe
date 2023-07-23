@@ -5,6 +5,7 @@ export const authorize = (payload: {
   scope: string;
   redirect_uri: string;
   nonce?: string;
+  response_type: string;
 }) =>
   api.post("/idp/authorize", payload).then(({ data }) => ({
     code: data.code as string,

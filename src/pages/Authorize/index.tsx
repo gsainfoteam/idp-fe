@@ -30,6 +30,7 @@ const useAuthorize = () => {
     state,
     scope,
     nonce,
+    response_type: responseType,
   } = Object.fromEntries(searchParams.entries());
   const href = useHref(useLocation());
   const { user } = useAuth({
@@ -46,12 +47,14 @@ const useAuthorize = () => {
     if (!clientId) return setError("client_id is required");
     if (!redirectUri) return setError("redirect_uri is required");
     if (!scope) return setError("scope is required");
+    if (!responseType) return setError("response_type is required");
     (async () => {
       try {
         const url = new globalThis.URL(redirectUri);
         const { code } = await authorize({
           client_id: clientId,
           redirect_uri: redirectUri,
+          response_type: responseType,
           nonce,
           scope,
         });
@@ -66,7 +69,17 @@ const useAuthorize = () => {
         setError("unknown error");
       }
     })();
-  }, [clientId, navigate, nonce, redirectUri, scope, state, t, user]);
+  }, [
+    clientId,
+    navigate,
+    nonce,
+    redirectUri,
+    responseType,
+    scope,
+    state,
+    t,
+    user,
+  ]);
 
   return { error };
 };
