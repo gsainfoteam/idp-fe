@@ -48,18 +48,29 @@ const useAuthorize = () => {
     if (!redirectUri) return setError("redirect_uri is required");
     if (!scope) return setError("scope is required");
     if (!responseType) return setError("response_type is required");
+    const isImplicitFlow =
+      responseType.includes("token") || responseType.includes("id_token");
     (async () => {
       try {
         const url = new globalThis.URL(redirectUri);
-        const { code } = await authorize({
+        const result = await authorize({
           client_id: clientId,
           redirect_uri: redirectUri,
           response_type: responseType,
           nonce,
           scope,
         });
-        url.searchParams.append("code", code);
-        if (state) url.searchParams.append("state", state);
+
+        const searchParams = new URLSearchParams();
+        Object.entries(result).forEach(([key, value]) =>
+          searchParams.append(key, value as string),
+        );
+        if (state) searchParams.append("state", state);
+        if (isImplicitFlow) {
+          url.hash = searchParams.toString();
+        } else {
+          url.search = searchParams.toString();
+        }
         window.location.href = url.toString();
       } catch (e) {
         if (e instanceof AxiosError) {

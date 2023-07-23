@@ -6,7 +6,4 @@ export const authorize = (payload: {
   redirect_uri: string;
   nonce?: string;
   response_type: string;
-}) =>
-  api.post("/idp/authorize", payload).then(({ data }) => ({
-    code: data.code as string,
-  }));
+}) => api.post("/idp/authorize", payload).then(({ data }) => data);
