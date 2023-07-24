@@ -30,6 +30,8 @@ export const refreshToken = () =>
       accessToken: data.access_token as string,
     }));
 
+const logout = () => api.post("/idp/logout");
+
 export const useAuth = ({
   redirectUrl = "/login" as To,
   redirectIfFound = false,
@@ -45,7 +47,8 @@ export const useAuth = ({
     await mutate();
   };
 
-  const logout = async () => {
+  const userLogout = async () => {
+    await logout();
     saveToken(null);
     await mutate(null);
   };
@@ -57,5 +60,5 @@ export const useAuth = ({
     }
   }, [redirectIfFound, redirectUrl, user, navigate]);
 
-  return { login: userLogin, logout, user };
+  return { login: userLogin, logout: userLogout, user };
 };
