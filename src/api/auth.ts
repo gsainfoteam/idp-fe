@@ -23,6 +23,13 @@ const login = ({ email, password }: LoginForm) =>
       accessToken: data.access_token as string,
     }));
 
+export const refreshToken = () =>
+  api
+    .post("/idp/refresh", undefined, { _retry: true } as any)
+    .then(({ data }) => ({
+      accessToken: data.access_token as string,
+    }));
+
 export const useAuth = ({
   redirectUrl = "/login" as To,
   redirectIfFound = false,
