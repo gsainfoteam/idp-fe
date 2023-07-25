@@ -63,6 +63,14 @@ const paramSchema = z
     },
   )
   .refine(
+    ({ scopes, responseTypes }) =>
+      !scopes.includes("offline_access") || responseTypes.includes("code"),
+    {
+      message: "offline_access scope requires code response type",
+      path: ["response_type"],
+    },
+  )
+  .refine(
     ({ nonce, responseTypes }) => !responseTypes.includes("id_token") || nonce,
     {
       message: "nonce is required for id_token response type",
