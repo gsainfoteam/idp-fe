@@ -122,9 +122,13 @@ const useAuthorize = () => {
   };
 
   useEffect(() => {
-    if (!user || !paramsData) return;
+    if (!user || !paramsData || !clientData) return;
     const { scopes, ...data } = paramsData;
     if (scopesConsented.length === 0) {
+      if (data.prompt === "login" && clientData.recentConsent) {
+        setScopesConsented(clientData.recentConsent);
+        return;
+      }
       setScopesConsented(
         scopes.filter((scope) => !ScopeRequireConsent.safeParse(scope).success),
       );
@@ -155,6 +159,7 @@ const useAuthorize = () => {
       }
     })();
   }, [
+    clientData,
     navigate,
     paramsData,
     paramsError,
