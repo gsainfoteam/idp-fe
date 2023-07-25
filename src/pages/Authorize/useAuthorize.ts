@@ -30,18 +30,12 @@ const paramSchema = z
     scope: z
       .string()
       .transform((scope) => scope.split(" "))
-      .refine(
-        (scopes): scopes is z.infer<typeof Scope>[] =>
-          z.array(Scope).safeParse(scopes).success,
-      ),
+      .pipe(z.array(Scope)),
     nonce: z.string().optional(),
     response_type: z
       .string()
       .transform((responseType) => responseType.split(" "))
-      .refine(
-        (responseTypes): responseTypes is z.infer<typeof ResponseType>[] =>
-          z.array(ResponseType).safeParse(responseTypes).success,
-      ),
+      .pipe(z.array(ResponseType)),
     prompt: z.enum(["login", "consent"]).default("login"),
   })
   .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
