@@ -32,7 +32,10 @@ const paramSchema = z
     scope: z
       .string()
       .transform((scope) => scope.split(" "))
-      .pipe(z.array(Scope)),
+      .pipe(z.array(Scope))
+      .refine((scopes) => scopes.includes("openid"), {
+        message: "openid scope is required",
+      }),
     nonce: z.string().optional(),
     response_type: z
       .string()
