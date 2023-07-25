@@ -111,11 +111,7 @@ const useAuthorize = () => {
           searchParams.append(key, value as string),
         );
         if (state) searchParams.append("state", state);
-        if (useImplicitFlow) {
-          url.hash = searchParams.toString();
-        } else {
-          url.search = searchParams.toString();
-        }
+        url[useImplicitFlow ? "hash" : "search"] = searchParams.toString();
         window.location.href = url.toString();
       } catch (e) {
         if (e instanceof AxiosError) {
