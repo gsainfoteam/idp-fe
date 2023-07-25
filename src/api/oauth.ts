@@ -5,6 +5,7 @@ export const getClientInformation = (clientId: string) =>
     .get<{
       id: string;
       name: string;
+      recentConsent?: string[];
     }>(`/idp/clients/${clientId}`)
     .then(({ data }) => data);
 

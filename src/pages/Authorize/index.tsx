@@ -18,10 +18,17 @@ const Authorize = () => {
   const [scopesConsented, setScopesConsented] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!clientData) return;
     if (scopesNotConsented.length > 0) {
-      setScopesConsented(scopesNotConsented);
+      setScopesConsented(
+        clientData.recentConsent
+          ? clientData.recentConsent
+          : scopesNotConsented,
+      );
     }
-  }, [scopesNotConsented]);
+  }, [clientData, scopesNotConsented]);
+
+  if (!clientData) return null;
 
   if (error) {
     return <Container>{error}</Container>;
