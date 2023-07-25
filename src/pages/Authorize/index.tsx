@@ -28,11 +28,11 @@ const Authorize = () => {
     }
   }, [clientData, scopesNotConsented]);
 
-  if (!clientData) return null;
-
   if (error) {
     return <Container>{error}</Container>;
   }
+
+  if (!clientData) return null;
 
   if (scopesNotConsented.length > 0) {
     return (
