@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Logo from "src/components/Logo";
 import styled from "styled-components";
 
@@ -13,10 +14,53 @@ const Container = styled.main`
 `;
 
 const Authorize = () => {
-  const { error } = useAuthorize();
+  const { error, consent, scopesNotConsented } = useAuthorize();
+  const [scopesConsented, setScopesConsented] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (scopesNotConsented.length > 0) {
+      setScopesConsented(scopesNotConsented);
+    }
+  }, [scopesNotConsented]);
 
   if (error) {
     return <Container>{error}</Container>;
+  }
+
+  if (scopesNotConsented.length > 0) {
+    return (
+      <Container>
+        <h1>Missing scopes</h1>
+        <p>
+          You need to consent to the following scopes:{" "}
+          {scopesNotConsented.join(", ")}
+        </p>
+        <ul>
+          {scopesNotConsented.map((scope) => (
+            <li key={scope}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={scopesConsented.includes(scope)}
+                  onChange={(e) =>
+                    setScopesConsented(
+                      e.target.checked
+                        ? [...scopesConsented, scope]
+                        : scopesConsented.filter((s) => s !== scope),
+                    )
+                  }
+                  readOnly
+                />{" "}
+                {scope}
+              </label>
+            </li>
+          ))}
+        </ul>
+        <p>
+          <button onClick={() => consent(scopesConsented)}>Consent</button>
+        </p>
+      </Container>
+    );
   }
 
   return (

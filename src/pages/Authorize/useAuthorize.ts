@@ -14,12 +14,13 @@ import { zx } from "zodix";
 
 const Scope = z.enum([
   "openid",
+  "offline_access",
   "profile",
   "email",
   "phone",
   "student_id",
-  "offline_access",
 ]);
+const ScopeRequireConsent = Scope.exclude(["openid", "offline_access"]);
 const ResponseType = z.enum(["token", "id_token", "code"]);
 const responseTypesForImplicitFlow = ["token", "id_token"] as const;
 const paramSchema = z
@@ -88,7 +89,7 @@ const useParams = () => {
 
 const useAuthorize = () => {
   const { t } = useTranslation();
-  const { data, error: paramsError } = useParams();
+  const { data: paramsData, error: paramsError } = useParams();
   const href = useHref(useLocation());
   const { user } = useAuth({
     redirectUrl: {
@@ -98,13 +99,31 @@ const useAuthorize = () => {
   });
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
+  const [scopesConsented, setScopesConsented] = useState<string[]>([]);
+  const [scopesNotConsented, setScopesNotConsented] = useState<string[]>([]);
+
+  const consent = (scopes: string[]) => {
+    setScopesConsented((prev) => [...prev, ...scopes]);
+    setScopesNotConsented([]);
+  };
 
   useEffect(() => {
-    if (!user || !data) return;
+    if (!user || !paramsData) return;
+    const { scopes, ...data } = paramsData;
+    if (scopesConsented.length === 0) {
+      setScopesConsented(
+        scopes.filter((scope) => !ScopeRequireConsent.safeParse(scope).success),
+      );
+      setScopesNotConsented(
+        scopes.filter((scope) => ScopeRequireConsent.safeParse(scope).success),
+      );
+      return;
+    }
+    if (scopesNotConsented.length !== 0) return;
     (async () => {
       try {
         const { useImplicitFlow, state, url, ...payload } = data;
-        const result = await authorize(payload);
+        const result = await authorize({ ...payload, scopes: scopesConsented });
 
         const searchParams = new URLSearchParams();
         Object.entries(result).forEach(([key, value]) =>
@@ -121,9 +140,17 @@ const useAuthorize = () => {
         setError("unknown error");
       }
     })();
-  }, [data, navigate, paramsError, t, user]);
+  }, [
+    navigate,
+    paramsData,
+    paramsError,
+    scopesConsented,
+    scopesNotConsented.length,
+    t,
+    user,
+  ]);
 
-  return { error: error ?? paramsError };
+  return { error: error ?? paramsError, scopesNotConsented, consent };
 };
 
 export default useAuthorize;
