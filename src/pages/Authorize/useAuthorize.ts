@@ -59,11 +59,20 @@ const paramSchema = z
       path: ["prompt"],
     },
   )
-  .refine(({ nonce, useImplicitFlow }) => !useImplicitFlow || !!nonce, {
-    message: "nonce is required for implicit flow",
-    path: ["nonce"],
-  });
-
+  .refine(
+    ({ nonce, responseTypes }) => !responseTypes.includes("id_token") || nonce,
+    {
+      message: "nonce is required for id_token response type",
+      path: ["nonce"],
+    },
+  )
+  .refine(
+    ({ nonce, responseTypes }) => responseTypes.includes("id_token") || !nonce,
+    {
+      message: "nonce is not required for non-id_token response type",
+      path: ["nonce"],
+    },
+  );
 const useParams = () => {
   const [searchParams] = useSearchParams();
   const [data, setData] = useState<z.infer<typeof paramSchema>>();
