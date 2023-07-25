@@ -14,7 +14,7 @@ const Container = styled.main`
 `;
 
 const Authorize = () => {
-  const { error, consent, scopesNotConsented } = useAuthorize();
+  const { error, consent, scopesNotConsented, clientData } = useAuthorize();
   const [scopesConsented, setScopesConsented] = useState<string[]>([]);
 
   useEffect(() => {
@@ -32,7 +32,10 @@ const Authorize = () => {
       <Container>
         <h1>Missing scopes</h1>
         <p>
-          You need to consent to the following scopes:{" "}
+          application name: <strong>{clientData?.name}</strong>
+        </p>
+        <p>
+          You need to consent to the following scopes for{" "}
           {scopesNotConsented.join(", ")}
         </p>
         <ul>

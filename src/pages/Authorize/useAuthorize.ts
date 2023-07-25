@@ -8,7 +8,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { useAuth } from "src/api/auth";
-import { authorize } from "src/api/oauth";
+import { authorize, getClientInformation } from "src/api/oauth";
+import useSWR from "swr";
 import { z } from "zod";
 import { zx } from "zodix";
 
@@ -90,6 +91,10 @@ const useParams = () => {
 const useAuthorize = () => {
   const { t } = useTranslation();
   const { data: paramsData, error: paramsError } = useParams();
+  const { data: clientData } = useSWR(
+    paramsData ? ["client", paramsData.clientId] : undefined,
+    ([, id]) => getClientInformation(id),
+  );
   const href = useHref(useLocation());
   const { user } = useAuth({
     redirectUrl: {
@@ -150,7 +155,12 @@ const useAuthorize = () => {
     user,
   ]);
 
-  return { error: error ?? paramsError, scopesNotConsented, consent };
+  return {
+    error: error ?? paramsError,
+    scopesNotConsented,
+    consent,
+    clientData,
+  };
 };
 
 export default useAuthorize;

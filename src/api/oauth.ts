@@ -1,5 +1,13 @@
 import api from ".";
 
+export const getClientInformation = (clientId: string) =>
+  api
+    .get<{
+      id: string;
+      name: string;
+    }>(`/idp/clients/${clientId}`)
+    .then(({ data }) => data);
+
 export const authorize = ({
   clientId,
   redirectUri,
