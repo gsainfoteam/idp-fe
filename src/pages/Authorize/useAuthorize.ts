@@ -48,7 +48,19 @@ const paramSchema = z
       response_type.includes(type),
     ),
     ...rest,
-  }));
+  }))
+  .refine(
+    ({ scopes, prompt }) =>
+      !scopes.includes("offline_access") || prompt === "consent",
+    {
+      message: "offline_access scope requires consent prompt",
+      path: ["prompt"],
+    },
+  )
+  .refine(({ nonce, useImplicitFlow }) => !useImplicitFlow || !!nonce, {
+    message: "nonce is required for implicit flow",
+    path: ["nonce"],
+  });
 
 const useParams = () => {
   const [searchParams] = useSearchParams();
