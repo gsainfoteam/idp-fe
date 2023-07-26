@@ -58,10 +58,7 @@ const ClientPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>
-          client id:
-          <input type="text" value={client?.id} disabled />
-        </label>
+        <label>client id: {client?.id}</label>
       </div>
       <div>
         <label>
@@ -71,8 +68,7 @@ const ClientPage = () => {
       </div>
       <div>
         <label>
-          client secret:
-          <input type="text" value={secret} disabled />
+          client secret: <code>{secret}</code>
         </label>
       </div>
       <div>
