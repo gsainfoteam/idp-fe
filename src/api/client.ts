@@ -14,8 +14,20 @@ export const useClients = () =>
     api.get<Client[]>("/clients").then(({ data }) => data),
   );
 
+export const useClient = (uuid: string) =>
+  useSWR(["clients", uuid], () =>
+    api.get<Client>(`/clients/${uuid}`).then(({ data }) => data),
+  );
+
 export const createClient = (payload: {
   name: string;
   urls: string[];
   id: string;
-}) => api.post<Client>("/clients", payload).then(({ data }) => data);
+}) =>
+  api
+    .post<{
+      uuid: string;
+      client_id: string;
+      client_secret: string;
+    }>("/clients", payload)
+    .then(({ data }) => data);

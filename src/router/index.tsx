@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Authorize from "src/pages/Authorize";
+import ClientPage from "src/pages/Client";
 import ClientListPage from "src/pages/ClientList";
 import ClientNewPage from "src/pages/ClientNew";
 import FindPassword from "src/pages/FindPassword";
@@ -19,6 +20,7 @@ const Router = () => (
         <Route path="/clients">
           <Route index element={<ClientListPage />} />
           <Route path="new" element={<ClientNewPage />} />
+          <Route path=":uuid" element={<ClientPage />} />
         </Route>
       </Route>
       <Route path="/login" element={<Login />} />

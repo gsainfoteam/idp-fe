@@ -19,7 +19,9 @@ const ClientNewPage = () => {
           name: e.currentTarget.clientName.value,
           urls: [],
         });
-        navigate(`/clients/${client.uuid}`);
+        navigate(`/clients/${client.uuid}`, {
+          state: { client },
+        });
       } catch (e) {
         Swal.fire({
           icon: "error",
