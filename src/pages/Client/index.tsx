@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router";
-import { resetClientSecret, useClient } from "src/api/client";
+import { changeClientName, resetClientSecret, useClient } from "src/api/client";
 
 const ClientPage = () => {
   const { state } = useLocation();
@@ -14,8 +14,10 @@ const ClientPage = () => {
     const result = await resetClientSecret(uuid);
     navigate(".", { state: result });
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    await changeClientName(uuid, e.currentTarget.clientName.value);
+    navigate(".");
   };
 
   return (
@@ -29,7 +31,7 @@ const ClientPage = () => {
       <div>
         <label>
           client name:
-          <input type="text" value={client?.name} name="clientName" />
+          <input type="text" defaultValue={client?.name} name="clientName" />
         </label>
       </div>
       <div>
