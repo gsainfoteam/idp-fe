@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "src/api/auth";
 
 const Landing = () => {
@@ -5,7 +6,8 @@ const Landing = () => {
 
   return (
     <div>
-      {JSON.stringify(user)}
+      <div>{JSON.stringify(user)}</div>
+      <Link to="/clients">manage clients</Link>
       <button onClick={logout}>logout</button>
     </div>
   );
