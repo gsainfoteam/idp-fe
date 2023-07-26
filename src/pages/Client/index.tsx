@@ -1,13 +1,19 @@
-import { useLocation, useParams } from "react-router";
-import { useClient } from "src/api/client";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { resetClientSecret, useClient } from "src/api/client";
 
 const ClientPage = () => {
   const { state } = useLocation();
-  const secret = (state?.secret ?? "refresh to get new secret") as string;
-  const { uuid } = useParams();
-  const { data: client } = useClient(uuid ?? "");
+  const secret = (state?.client_secret ??
+    "refresh to get new secret") as string;
+  const { uuid: _uuid } = useParams();
+  const uuid = _uuid ?? "";
+  const { data: client } = useClient(uuid);
+  const navigate = useNavigate();
 
-  const handleChangeSecret = () => {};
+  const handleChangeSecret = async () => {
+    const result = await resetClientSecret(uuid);
+    navigate(".", { state: result });
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };

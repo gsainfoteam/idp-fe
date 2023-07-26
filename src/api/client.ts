@@ -31,3 +31,8 @@ export const createClient = (payload: {
       client_secret: string;
     }>("/clients", payload)
     .then(({ data }) => data);
+
+export const resetClientSecret = (uuid: string) =>
+  api
+    .post<{ client_secret: string }>(`/clients/${uuid}/reset`)
+    .then(({ data }) => data);
