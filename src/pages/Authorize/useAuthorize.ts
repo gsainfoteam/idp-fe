@@ -9,87 +9,21 @@ import {
 } from "react-router-dom";
 import { useAuth } from "src/api/auth";
 import { authorize, getClientInformation } from "src/api/oauth";
+import {
+  authorizeSchema,
+  isConsentRequiredScope,
+  isNotConsentRequiredScope,
+} from "src/utils/schema";
 import useSWR from "swr";
 import { z } from "zod";
 import { zx } from "zodix";
 
-const Scope = z.enum([
-  "openid",
-  "offline_access",
-  "profile",
-  "email",
-  "phone",
-  "student_id",
-]);
-const ScopeRequireConsent = Scope.exclude(["openid", "offline_access"]);
-const ResponseType = z.enum(["token", "id_token", "code"]);
-const responseTypesForImplicitFlow = ["token", "id_token"] as const;
-const paramSchema = z
-  .object({
-    client_id: z.string(),
-    redirect_uri: z.string().url(),
-    state: z.string().optional(),
-    scope: z
-      .string()
-      .transform((scope) => scope.split(" "))
-      .pipe(z.array(Scope))
-      .refine((scopes) => scopes.includes("openid"), {
-        message: "openid scope is required",
-      }),
-    nonce: z.string().optional(),
-    response_type: z
-      .string()
-      .transform((responseType) => responseType.split(" "))
-      .pipe(z.array(ResponseType)),
-    prompt: z.enum(["login", "consent"]).default("login"),
-  })
-  .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
-    scopes: scope,
-    clientId: client_id,
-    redirectUri: redirect_uri,
-    responseTypes: response_type,
-    url: new URL(redirect_uri),
-    useImplicitFlow: responseTypesForImplicitFlow.some((type) =>
-      response_type.includes(type),
-    ),
-    ...rest,
-  }))
-  .refine(
-    ({ scopes, prompt }) =>
-      !scopes.includes("offline_access") || prompt === "consent",
-    {
-      message: "offline_access scope requires consent prompt",
-      path: ["prompt"],
-    },
-  )
-  .refine(
-    ({ scopes, responseTypes }) =>
-      !scopes.includes("offline_access") || responseTypes.includes("code"),
-    {
-      message: "offline_access scope requires code response type",
-      path: ["response_type"],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => !responseTypes.includes("id_token") || nonce,
-    {
-      message: "nonce is required for id_token response type",
-      path: ["nonce"],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => responseTypes.includes("id_token") || !nonce,
-    {
-      message: "nonce is not required for non-id_token response type",
-      path: ["nonce"],
-    },
-  );
 const useParams = () => {
   const [searchParams] = useSearchParams();
-  const [data, setData] = useState<z.infer<typeof paramSchema>>();
+  const [data, setData] = useState<z.infer<typeof authorizeSchema>>();
   const [error, setError] = useState<string>();
   useEffect(() => {
-    const result = zx.parseQuerySafe(searchParams, paramSchema);
+    const result = zx.parseQuerySafe(searchParams, authorizeSchema);
     if (result.success) {
       setData(result.data);
       setError(undefined);
@@ -140,12 +74,8 @@ const useAuthorize = () => {
         setScopesConsented(clientData.recentConsent);
         return;
       }
-      setScopesConsented(
-        scopes.filter((scope) => !ScopeRequireConsent.safeParse(scope).success),
-      );
-      setScopesNotConsented(
-        scopes.filter((scope) => ScopeRequireConsent.safeParse(scope).success),
-      );
+      setScopesConsented(scopes.filter(isNotConsentRequiredScope));
+      setScopesNotConsented(scopes.filter(isConsentRequiredScope));
       return;
     }
     if (scopesNotConsented.length !== 0) return;
