@@ -23,7 +23,7 @@ export const authorize = ({
   responseTypes: string[];
 }) =>
   api
-    .post("/idp/authorize", {
+    .post("/oauth/authorize", {
       client_id: clientId,
       redirect_uri: redirectUri,
       response_type: responseTypes.join(" "),
