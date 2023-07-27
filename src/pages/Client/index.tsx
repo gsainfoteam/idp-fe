@@ -5,6 +5,7 @@ import {
   resetClientSecret,
   useClient,
 } from "src/api/client";
+import { isNotConsentRequiredScope, Scope } from "src/utils/schema";
 import Swal from "sweetalert2";
 
 const isValidUrl = (url: string) => {
@@ -24,6 +25,7 @@ const ClientPage = () => {
   const { data: client } = useClient(uuid);
   const navigate = useNavigate();
   const [urls, setUris] = useState<string[]>([]);
+  const [scopes, setScopes] = useState<string[]>([]);
 
   const addUri = () => setUris((prev) => [...prev, ""]);
   const removeUri = (index: number) =>
@@ -32,6 +34,7 @@ const ClientPage = () => {
   useEffect(() => {
     if (!client) return;
     setUris(client.urls);
+    setScopes(client.grantScopes);
   }, [client]);
 
   const handleChangeSecret = async () => {
@@ -58,10 +61,7 @@ const ClientPage = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>
-          client id:
-          <input type="text" value={client?.id} disabled />
-        </label>
+        <label>client id: {client?.id}</label>
       </div>
       <div>
         <label>
@@ -71,10 +71,10 @@ const ClientPage = () => {
       </div>
       <div>
         <label>
-          client secret:
-          <input type="text" value={secret} disabled />
+          client secret: <code>{secret}</code>
         </label>
       </div>
+      <br />
       <div>
         <div>
           allowed redirect uri list:
@@ -101,6 +101,36 @@ const ClientPage = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <br />
+      <div>
+        granted scopes:
+        {client?.grantScopes.join(", ")}
+        <div style={{ border: "1px solid black" }}>
+          <ul>
+            {Scope.options.map((scope) => (
+              <li key={scope}>
+                <label>
+                  <input
+                    type="checkbox"
+                    name={`scopes-${scope}`}
+                    checked={
+                      isNotConsentRequiredScope(scope) || scopes.includes(scope)
+                    }
+                    onChange={(e) =>
+                      e.currentTarget.checked
+                        ? setScopes((prev) => [...prev, scope])
+                        : setScopes((prev) => prev.filter((v) => v !== scope))
+                    }
+                    disabled={isNotConsentRequiredScope(scope)}
+                  />
+                  {scope}
+                </label>
+              </li>
+            ))}
+          </ul>
+          <button type="button">추가 권한 요청</button>
+        </div>
       </div>
       <div>
         <button type="button" onClick={handleChangeSecret}>

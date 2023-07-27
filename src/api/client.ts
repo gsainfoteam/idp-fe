@@ -7,6 +7,7 @@ interface Client {
   id: string;
   name: string;
   urls: string[];
+  grantScopes: string[];
 }
 
 export const useClients = () =>
