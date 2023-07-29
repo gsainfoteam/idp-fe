@@ -13,7 +13,7 @@ import useSWR from "swr";
 import { z } from "zod";
 import { zx } from "zodix";
 
-const loginRedirectedKey = "_login_redirected";
+export const recentlyLoginKey = "_login_redirected";
 
 const useParams = () => {
   const [searchParams] = useSearchParams();
@@ -66,14 +66,14 @@ const useAuthorize = () => {
         if (!clientData.recentConsent)
           return redirect({ error: "consent_required" }, data);
       }
-      if (data.prompt === "login") {
-        if (!sessionStorage.getItem(loginRedirectedKey)) {
-          sessionStorage.setItem(loginRedirectedKey, "true");
-          void logout();
-          return;
-        }
+      if (
+        data.prompt === "login" &&
+        !sessionStorage.getItem(recentlyLoginKey)
+      ) {
+        void logout();
+        return;
       }
-      if (data.prompt === undefined && clientData.recentConsent) {
+      if (data.prompt !== "consent" && clientData.recentConsent) {
         setScopesConsented(clientData.recentConsent);
         return;
       }
@@ -82,7 +82,7 @@ const useAuthorize = () => {
       return;
     }
     if (scopesNotConsented.length !== 0) return;
-    sessionStorage.removeItem(loginRedirectedKey);
+    sessionStorage.removeItem(recentlyLoginKey);
     (async () => {
       try {
         const { useImplicitFlow, state, url, ...payload } = data;

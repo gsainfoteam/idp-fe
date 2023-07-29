@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "src/api/auth";
 import Swal from "sweetalert2";
 
+import { recentlyLoginKey } from "../Authorize/useAuthorize";
+
 const useLogin = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -16,6 +18,7 @@ const useLogin = () => {
     try {
       setLoading(true);
       await login({ email: email.value, password: password.value });
+      sessionStorage.setItem(recentlyLoginKey, "true");
     } catch {
       Swal.fire({
         icon: "error",
