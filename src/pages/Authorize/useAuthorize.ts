@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "src/api/auth";
 import { authorize, getClientInformation } from "src/api/oauth";
 import {
   authorizeSchema,
@@ -11,6 +12,8 @@ import {
 import useSWR from "swr";
 import { z } from "zod";
 import { zx } from "zodix";
+
+const loginRedirectedKey = "_login_redirected";
 
 const useParams = () => {
   const [searchParams] = useSearchParams();
@@ -43,6 +46,7 @@ const useAuthorize = () => {
     paramsData ? ["client", paramsData.clientId] : undefined,
     ([, id]) => getClientInformation(id),
   );
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
   const [scopesConsented, setScopesConsented] = useState<string[]>([]);
@@ -57,7 +61,19 @@ const useAuthorize = () => {
     if (!paramsData || !clientData) return;
     const { scopes, ...data } = paramsData;
     if (scopesConsented.length === 0) {
-      if (data.prompt === "login" && clientData.recentConsent) {
+      if (data.prompt === "none") {
+        if (!user) return redirect({ error: "login_required" }, data);
+        if (!clientData.recentConsent)
+          return redirect({ error: "consent_required" }, data);
+      }
+      if (data.prompt === "login") {
+        if (!sessionStorage.getItem(loginRedirectedKey)) {
+          sessionStorage.setItem(loginRedirectedKey, "true");
+          void logout();
+          return;
+        }
+      }
+      if (data.prompt === undefined && clientData.recentConsent) {
         setScopesConsented(clientData.recentConsent);
         return;
       }
@@ -66,18 +82,12 @@ const useAuthorize = () => {
       return;
     }
     if (scopesNotConsented.length !== 0) return;
+    sessionStorage.removeItem(loginRedirectedKey);
     (async () => {
       try {
         const { useImplicitFlow, state, url, ...payload } = data;
         const result = await authorize({ ...payload, scopes: scopesConsented });
-
-        const searchParams = new URLSearchParams();
-        Object.entries(result).forEach(([key, value]) =>
-          searchParams.append(key, value as string),
-        );
-        if (state) searchParams.append("state", state);
-        url[useImplicitFlow ? "hash" : "search"] = searchParams.toString();
-        window.location.href = url.toString();
+        redirect({ ...result, state }, { url, useImplicitFlow });
       } catch (e) {
         if (e instanceof AxiosError) {
           setError(e.response?.data.message ?? e.message);
@@ -88,12 +98,14 @@ const useAuthorize = () => {
     })();
   }, [
     clientData,
+    logout,
     navigate,
     paramsData,
     paramsError,
     scopesConsented,
     scopesNotConsented.length,
     t,
+    user,
   ]);
 
   return {
@@ -102,6 +114,22 @@ const useAuthorize = () => {
     consent,
     clientData,
   };
+};
+
+const redirect = (
+  params: Record<string, string>,
+  data: {
+    useImplicitFlow: boolean;
+    url: URL;
+  },
+) => {
+  const searchParams = new URLSearchParams();
+  Object.entries(params)
+    .filter(([, value]) => value !== undefined)
+    .forEach(([key, value]) => searchParams.append(key, value as string));
+  const url = new URL(data.url);
+  url[data.useImplicitFlow ? "hash" : "search"] = searchParams.toString();
+  window.location.href = url.toString();
 };
 
 export default useAuthorize;

@@ -32,7 +32,7 @@ export const authorizeSchema = z
       .string()
       .transform((responseType) => responseType.split(" "))
       .pipe(z.array(ResponseType)),
-    prompt: z.enum(["login", "consent"]).default("login"),
+    prompt: z.enum(["none", "login", "consent"]).optional(),
   })
   .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
     scopes: scope,
