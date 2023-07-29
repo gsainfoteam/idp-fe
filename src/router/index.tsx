@@ -13,8 +13,8 @@ import SubPageLayout from "./SubPageLayout";
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Landing />} />
       <Route element={<SubPageLayout />}>
+        <Route index element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/find-password" element={<FindPassword />} />
         <Route path="/clients">
