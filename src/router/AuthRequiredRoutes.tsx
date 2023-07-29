@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { useAuth } from "src/api/auth";
 import Authorize from "src/pages/Authorize";
-import Landing from "src/pages/Landing";
+import Profile from "src/pages/Profile";
 import Register from "src/pages/Register";
 
 import SubPageLayout from "./SubPageLayout";
@@ -28,12 +28,15 @@ const AuthRequiredRouters = () => {
   return (
     <Routes>
       <Route path="/" element={<SubPageLayout />}>
-        <Route index element={<Landing />} />
+        <Route path="profile">
+          <Route index element={<Profile />} />
+        </Route>
         <Route path="register" element={<Register />} />
         <Route path="clients/*" element={<ClientRoutes />} />
       </Route>
       <Route path="/authorize" element={<Authorize />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route index element={<Navigate to="/profile" replace />} />
+      <Route path="*" element={<Navigate to="/profile" replace />} />
     </Routes>
   );
 };
