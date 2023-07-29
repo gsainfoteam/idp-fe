@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Router from "./router";
 
 const Root = styled.div`
-  max-width: 425px;
+  max-width: var(--max-width);
   margin: 0 auto;
 `;
 

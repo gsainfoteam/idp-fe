@@ -2,8 +2,10 @@
   font-family: 'Noto Sans KR', Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
 
+  --max-width: 425px;
   --color-primary: #eb6263;
   --color-white: #ffffff;
+  --color-primary-text: #525252;
 }
 
 body {

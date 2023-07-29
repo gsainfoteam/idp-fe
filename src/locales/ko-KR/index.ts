@@ -71,4 +71,27 @@ export const main = {
     error: "회원가입에 실패하였습니다.",
     success: "회원가입이 완료되었습니다.",
   },
+  profile: {
+    userInfo: "유저 정보",
+    edit: "수정",
+    services: {
+      title: "연결된 서비스",
+      ziggle: {
+        title: "지글",
+        description: "지스트의 모든 공지를 한눈에.",
+      },
+      andromeda: {
+        title: "andromeda",
+        description: "새롭고 빛나는 수강평 서비스",
+      },
+    },
+    connected: "연결됨",
+    connect: "지금 연결",
+    withdraw: {
+      action: "회원탈퇴",
+      confirm:
+        "정말로 탈퇴하시겠습니까? 탈퇴 후에는 연결된 서비스를 이용할 수 없습니다.",
+      success: "회원탈퇴가 완료되었습니다.",
+    },
+  },
 };
