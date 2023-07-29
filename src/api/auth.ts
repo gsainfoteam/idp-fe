@@ -33,7 +33,7 @@ export const refreshToken = () =>
 const logout = () => api.post("/idp/logout");
 
 export const useAuth = ({
-  redirectUrl = "/login" as To,
+  redirectUrl = undefined as To | undefined,
   redirectIfFound = false,
 } = {}) => {
   const { data: user, mutate } = useSWR("user", () =>

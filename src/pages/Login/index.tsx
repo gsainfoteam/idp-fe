@@ -44,7 +44,7 @@ const Login = () => {
       <Links>
         <FindPassword
           to={{
-            pathname: "/find-password",
+            pathname: "../find-password",
             search: new URLSearchParams({ redirect: href }).toString(),
           }}
         >
@@ -53,7 +53,7 @@ const Login = () => {
         |
         <Register
           to={{
-            pathname: "/register",
+            pathname: "../register",
             search: new URLSearchParams({ redirect: href }).toString(),
           }}
         >

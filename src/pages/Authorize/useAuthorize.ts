@@ -1,13 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  useHref,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
-import { useAuth } from "src/api/auth";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { authorize, getClientInformation } from "src/api/oauth";
 import {
   authorizeSchema,
@@ -49,13 +43,6 @@ const useAuthorize = () => {
     paramsData ? ["client", paramsData.clientId] : undefined,
     ([, id]) => getClientInformation(id),
   );
-  const href = useHref(useLocation());
-  const { user } = useAuth({
-    redirectUrl: {
-      pathname: "/login",
-      search: new URLSearchParams({ redirect: href }).toString(),
-    },
-  });
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
   const [scopesConsented, setScopesConsented] = useState<string[]>([]);
@@ -67,7 +54,7 @@ const useAuthorize = () => {
   };
 
   useEffect(() => {
-    if (!user || !paramsData || !clientData) return;
+    if (!paramsData || !clientData) return;
     const { scopes, ...data } = paramsData;
     if (scopesConsented.length === 0) {
       if (data.prompt === "login" && clientData.recentConsent) {
@@ -107,7 +94,6 @@ const useAuthorize = () => {
     scopesConsented,
     scopesNotConsented.length,
     t,
-    user,
   ]);
 
   return {
