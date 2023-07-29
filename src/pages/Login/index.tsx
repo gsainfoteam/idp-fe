@@ -28,6 +28,7 @@ const Login = () => {
           autoComplete="email"
           name="email"
           required
+          autoCapitalize="none"
         />
         <Input
           type="password"
