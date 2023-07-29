@@ -19,6 +19,8 @@ const Button = styled.button<ButtonProps>`
 
   font-size: ${({ small }) => (small ? "0.75rem" : "1.125rem")};
   font-weight: bold;
+
+  cursor: pointer;
 `;
 
 export default Button;
