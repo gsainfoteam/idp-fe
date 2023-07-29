@@ -25,3 +25,6 @@ export const changePassowrd = ({
     user_email_id: email,
     changed_password: password,
   });
+
+export const withdraw = (payload: { password: string }) =>
+  api.post("/v1/user/withdraw", payload);

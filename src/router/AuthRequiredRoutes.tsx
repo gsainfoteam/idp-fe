@@ -10,6 +10,7 @@ import { useAuth } from "src/api/auth";
 import Authorize from "src/pages/Authorize";
 import Profile from "src/pages/Profile";
 import Register from "src/pages/Register";
+import WithdrawPage from "src/pages/Withdraw";
 
 import SubPageLayout from "./SubPageLayout";
 
@@ -30,6 +31,7 @@ const AuthRequiredRouters = () => {
       <Route path="/" element={<SubPageLayout />}>
         <Route path="profile">
           <Route index element={<Profile />} />
+          <Route path="withdraw" element={<WithdrawPage />} />
         </Route>
         <Route path="register" element={<Register />} />
         <Route path="clients/*" element={<ClientRoutes />} />
