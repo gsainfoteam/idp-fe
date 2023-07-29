@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import {
   Navigate,
   Route,
@@ -10,8 +11,9 @@ import Authorize from "src/pages/Authorize";
 import Landing from "src/pages/Landing";
 import Register from "src/pages/Register";
 
-import ClientRoutes from "./ClientRoutes";
 import SubPageLayout from "./SubPageLayout";
+
+const ClientRoutes = lazy(() => import("./ClientRoutes"));
 
 const AuthRequiredRouters = () => {
   const href = useHref(useLocation());

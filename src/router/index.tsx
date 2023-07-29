@@ -1,7 +1,8 @@
+import { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import AuthNotRequiredRouters from "./AuthNotRequiredRoutes";
-import AuthRequiredRouters from "./AuthRequiredRoutes";
+const AuthNotRequiredRouters = lazy(() => import("./AuthNotRequiredRoutes"));
+const AuthRequiredRouters = lazy(() => import("./AuthRequiredRoutes"));
 
 const Router = () => (
   <BrowserRouter>
