@@ -26,5 +26,13 @@ export const changePassowrd = ({
     changed_password: password,
   });
 
-export const withdraw = (payload: { password: string }) =>
-  api.post("/v1/user/withdraw", payload);
+export const withdraw = ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) =>
+  api.delete("/v1/user", {
+    data: { user_email_id: email, password },
+  });

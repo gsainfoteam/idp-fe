@@ -11,6 +11,7 @@ const WithdrawPage = () => {
 
   const handleWithdraw = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const email = e.currentTarget.email.value;
     const password = e.currentTarget.password.value;
     const waitResult = await Swal.fire({
       title: t("profile.withdraw.progress"),
@@ -28,7 +29,7 @@ const WithdrawPage = () => {
       didOpen: async () => {
         Swal.showLoading();
         try {
-          await withdraw({ password });
+          await withdraw({ email, password });
           Swal.close({ isConfirmed: true });
         } catch {
           Swal.close({ isConfirmed: false });
@@ -53,6 +54,14 @@ const WithdrawPage = () => {
       <h1>{t("profile.withdraw.action")}</h1>
       <p>{t("profile.withdraw.confirm")}</p>
       <form onSubmit={handleWithdraw}>
+        <Input
+          placeholder={t("email.placeholder")}
+          autoComplete="off"
+          required
+          name="email"
+        />
+        <br />
+        <br />
         <Input
           placeholder={t("password.placeholder")}
           type="password"
