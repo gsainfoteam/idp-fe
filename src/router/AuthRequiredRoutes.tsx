@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import {
   Navigate,
   Route,
@@ -34,7 +34,14 @@ const AuthRequiredRouters = () => {
           <Route path="withdraw" element={<WithdrawPage />} />
         </Route>
         <Route path="register" element={<Register />} />
-        <Route path="clients/*" element={<ClientRoutes />} />
+        <Route
+          path="clients/*"
+          element={
+            <Suspense fallback={<></>}>
+              <ClientRoutes />
+            </Suspense>
+          }
+        />
       </Route>
       <Route path="/authorize" element={<Authorize />} />
       <Route index element={<Navigate to="/profile" replace />} />
