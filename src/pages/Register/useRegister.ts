@@ -116,10 +116,9 @@ const useRegister = () => {
   });
 
   const handleSubAction = (event: React.FormEvent<HTMLFormElement>) => {
-    const action =
-      document.activeElement?.getAttribute("name") === "action" &&
-      (document.activeElement as HTMLButtonElement).value;
-
+    const button = (event.nativeEvent as SubmitEvent)
+      .submitter as HTMLButtonElement;
+    const action = button.getAttribute("name") === "action" && button.value;
     const { email, verificationCode } = getData(event);
     if (action === "request") {
       handleRequest(email);
