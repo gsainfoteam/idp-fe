@@ -13,6 +13,21 @@ const Container = styled.main`
   text-align: center;
 `;
 
+const translateScope = (scope: string) => {
+  switch (scope) {
+    case "student_id":
+      return "학번";
+    case "profile":
+      return "프로필";
+    case "email":
+      return "이메일";
+    case "phone":
+      return "전화번호";
+    default:
+      return scope;
+  }
+};
+
 const Authorize = () => {
   const { error, consent, scopesNotConsented, clientData } = useAuthorize();
   const [scopesConsented, setScopesConsented] = useState<string[]>([]);
@@ -37,13 +52,13 @@ const Authorize = () => {
   if (scopesNotConsented.length > 0) {
     return (
       <Container>
-        <h1>Missing scopes</h1>
+        <h1>아래 항목에 동의해주세요</h1>
         <p>
-          application name: <strong>{clientData?.name}</strong>
+          다음에 연결 : <strong>{clientData?.name}</strong>
         </p>
         <p>
-          You need to consent to the following scopes for{" "}
-          {scopesNotConsented.join(", ")}
+          다음 항목에 동의해야 합니다 :
+          {scopesNotConsented.map(translateScope).join(", ")}
         </p>
         <ul>
           {scopesNotConsented.map((scope) => (
@@ -61,13 +76,22 @@ const Authorize = () => {
                   }
                   readOnly
                 />{" "}
-                {scope}
+                {translateScope(scope)}
               </label>
             </li>
           ))}
         </ul>
         <p>
-          <button onClick={() => consent(scopesConsented)}>Consent</button>
+          <button
+            style={{
+              backgroundColor: "#eb6263",
+              padding: "0.5rem 1rem",
+              color: "white",
+            }}
+            onClick={() => consent(scopesConsented)}
+          >
+            동의합니다
+          </button>
         </p>
       </Container>
     );

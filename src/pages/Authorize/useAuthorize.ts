@@ -42,6 +42,7 @@ const useParams = () => {
 const useAuthorize = () => {
   const { t } = useTranslation();
   const { data: paramsData, error: paramsError } = useParams();
+
   const { data: clientData } = useSWR(
     paramsData ? ["client", paramsData.clientId] : undefined,
     ([, id]) => getClientInformation(id),

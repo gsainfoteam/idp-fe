@@ -20,7 +20,7 @@ export const changePassowrd = ({
   email,
   password,
 }: ChangePasswordForm) =>
-  api.post("/v1/user/change_password", {
+  api.patch("/v1/user/password", {
     certification_jwt_token: verificationToken,
     user_email_id: email,
     changed_password: password,
