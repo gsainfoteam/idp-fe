@@ -5,9 +5,13 @@ export const getClientInformation = (clientId: string) =>
     .get<{
       id: string;
       name: string;
-      recentConsent?: string[];
+      recent_consent?: string[];
     }>(`/idp/clients/${clientId}`)
-    .then(({ data }) => data);
+    .then(({ data }) => ({
+      id: data.id,
+      name: data.name,
+      recentConsent: data.recent_consent,
+    }));
 
 export const authorize = ({
   clientId,
