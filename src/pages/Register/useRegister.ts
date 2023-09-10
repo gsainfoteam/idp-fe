@@ -112,7 +112,7 @@ const useRegister = () => {
     passwordConfirm: event.currentTarget.passwordConfirm.value,
     realName: event.currentTarget.realName.value,
     studentId: event.currentTarget.studentId.value,
-    phoneNumber: event.currentTarget.phoneNumber.value,
+    phoneNumber: event.currentTarget.phoneNumber.value.replace(/-/g, ""),
   });
 
   const handleSubAction = (event: React.FormEvent<HTMLFormElement>) => {
