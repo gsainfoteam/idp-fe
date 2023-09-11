@@ -115,7 +115,8 @@ const ClientPage = () => {
                     type="checkbox"
                     name={`scopes-${scope}`}
                     checked={
-                      isNotConsentRequiredScope(scope) || scopes.includes(scope)
+                      isNotConsentRequiredScope(scope) ||
+                      scopes?.includes(scope)
                     }
                     onChange={(e) =>
                       e.currentTarget.checked
