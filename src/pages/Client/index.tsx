@@ -105,7 +105,7 @@ const ClientPage = () => {
       <br />
       <div>
         granted scopes:
-        {client?.grantScopes.join(", ")}
+        {client?.grantScopes?.join(", ")}
         <div style={{ border: "1px solid black" }}>
           <ul>
             {Scope.options.map((scope) => (
