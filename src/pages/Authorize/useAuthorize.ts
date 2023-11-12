@@ -74,7 +74,11 @@ const useAuthorize = () => {
         void logout();
         return;
       }
-      if (data.prompt !== "consent" && clientData.recentConsent) {
+      if (
+        data.prompt !== "consent" &&
+        data.prompt !== "login" &&
+        clientData.recentConsent
+      ) {
         setScopesConsented(clientData.recentConsent);
         return;
       }

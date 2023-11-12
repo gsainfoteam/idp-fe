@@ -47,9 +47,11 @@ export const authorizeSchema = z
   }))
   .refine(
     ({ scopes, prompt }) =>
-      !scopes.includes("offline_access") || prompt === "consent",
+      !scopes.includes("offline_access") ||
+      prompt === "consent" ||
+      prompt === "login",
     {
-      message: "offline_access scope requires consent prompt",
+      message: "offline_access scope requires consent or login prompt",
       path: ["prompt"],
     },
   )
