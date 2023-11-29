@@ -1,0 +1,34 @@
+name: Staging Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  preview-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: build
+        run: |
+          yarn install --immutable --immutable-cache
+          VITE_MODE=staging yarn build
+      - name: Deploy to production
+        uses: cloudflare/pages-action@v1.5.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: idp-fe-stg
+          directory: build
+          gitHubToken: ${{ github.token }}
+      - name: Update GitHub Deployment Status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: "${{ github.token }}"
+          state: "success"
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
