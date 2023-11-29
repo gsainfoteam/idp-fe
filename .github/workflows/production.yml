@@ -25,10 +25,3 @@ jobs:
           projectName: idp-fe
           directory: build
           gitHubToken: ${{ github.token }}
-      - name: Update GitHub Deployment Status (success)
-        if: success()
-        uses: chrnorm/deployment-status@v2
-        with:
-          token: "${{ github.token }}"
-          state: "success"
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
