@@ -1,5 +1,4 @@
-import { Scope } from "src/utils/schema";
-import { z } from "zod";
+import { Scopes } from "src/utils/schema";
 
 import api from ".";
 
@@ -13,7 +12,7 @@ export const getClientInformation = (clientId: string) =>
     .then(({ data }) => ({
       id: data.id,
       name: data.name,
-      recentConsent: data.recent_consent as z.infer<typeof Scope>[],
+      recentConsent: data.recent_consent as Scopes,
     }));
 
 export const authorize = ({

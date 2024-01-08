@@ -8,6 +8,7 @@ export const Scope = z.enum([
   "phone",
   "student_id",
 ]);
+export type Scopes = z.infer<typeof Scope>[];
 const ScopeRequireConsent = Scope.exclude(["openid", "offline_access"]);
 export const isConsentRequiredScope = (scope: string) =>
   ScopeRequireConsent.safeParse(scope).success;

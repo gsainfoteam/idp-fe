@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "src/components/Button";
 import Logo from "src/components/Logo";
-import { Scope } from "src/utils/schema";
+import { Scopes } from "src/utils/schema";
 import styled from "styled-components";
-import { z } from "zod";
 
 import useAuthorize from "./useAuthorize";
 
@@ -46,9 +45,7 @@ const Item = styled.li`
 
 const Authorize = () => {
   const { error, consent, scopesNotConsented, clientData } = useAuthorize();
-  const [scopesConsented, setScopesConsented] = useState<
-    z.infer<typeof Scope>[]
-  >([]);
+  const [scopesConsented, setScopesConsented] = useState<Scopes>([]);
   const { t } = useTranslation();
 
   useEffect(() => {
