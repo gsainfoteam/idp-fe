@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Button from "src/components/Button";
 import Logo from "src/components/Logo";
+import { Scope } from "src/utils/schema";
 import styled from "styled-components";
+import { z } from "zod";
 
 import useAuthorize from "./useAuthorize";
 
@@ -13,24 +17,39 @@ const Container = styled.main`
   text-align: center;
 `;
 
-const translateScope = (scope: string) => {
-  switch (scope) {
-    case "student_id":
-      return "학번";
-    case "profile":
-      return "프로필";
-    case "email":
-      return "이메일";
-    case "phone":
-      return "전화번호";
-    default:
-      return scope;
+const Title = styled.h1`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Item = styled.li`
+  padding: 0.5rem 0;
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    input {
+      margin-left: 0.5rem;
+    }
   }
-};
+
+  &:not(:first-of-type) {
+    border-top: 1px solid #ccc;
+  }
+`;
 
 const Authorize = () => {
   const { error, consent, scopesNotConsented, clientData } = useAuthorize();
-  const [scopesConsented, setScopesConsented] = useState<string[]>([]);
+  const [scopesConsented, setScopesConsented] = useState<
+    z.infer<typeof Scope>[]
+  >([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!clientData) return;
@@ -52,18 +71,13 @@ const Authorize = () => {
   if (scopesNotConsented.length > 0) {
     return (
       <Container>
-        <h1>아래 항목에 동의해주세요</h1>
-        <p>
-          다음에 연결 : <strong>{clientData?.name}</strong>
-        </p>
-        <p>
-          다음 항목에 동의해야 합니다 :
-          {scopesNotConsented.map(translateScope).join(", ")}
-        </p>
-        <ul>
+        <Title>{t("authorize.title", { application: clientData.name })}</Title>
+        <p>{t("authorize.description", { application: clientData.name })}</p>
+        <List>
           {scopesNotConsented.map((scope) => (
-            <li key={scope}>
+            <Item key={scope}>
               <label>
+                {t(`authorize.scopes.${scope}`)}
                 <input
                   type="checkbox"
                   checked={scopesConsented.includes(scope)}
@@ -75,23 +89,15 @@ const Authorize = () => {
                     )
                   }
                   readOnly
-                />{" "}
-                {translateScope(scope)}
+                />
               </label>
-            </li>
+            </Item>
           ))}
-        </ul>
+        </List>
         <p>
-          <button
-            style={{
-              backgroundColor: "#eb6263",
-              padding: "0.5rem 1rem",
-              color: "white",
-            }}
-            onClick={() => consent(scopesConsented)}
-          >
-            동의합니다
-          </button>
+          <Button onClick={() => consent(scopesConsented)}>
+            {t("authorize.action")}
+          </Button>
         </p>
       </Container>
     );

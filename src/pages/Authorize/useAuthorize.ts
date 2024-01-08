@@ -8,6 +8,7 @@ import {
   authorizeSchema,
   isConsentRequiredScope,
   isNotConsentRequiredScope,
+  Scope,
 } from "src/utils/schema";
 import useSWR from "swr";
 import { z } from "zod";
@@ -50,10 +51,14 @@ const useAuthorize = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
-  const [scopesConsented, setScopesConsented] = useState<string[]>([]);
-  const [scopesNotConsented, setScopesNotConsented] = useState<string[]>([]);
+  const [scopesConsented, setScopesConsented] = useState<
+    z.infer<typeof Scope>[]
+  >([]);
+  const [scopesNotConsented, setScopesNotConsented] = useState<
+    z.infer<typeof Scope>[]
+  >([]);
 
-  const consent = (scopes: string[]) => {
+  const consent = (scopes: z.infer<typeof Scope>[]) => {
     setScopesConsented((prev) => [...prev, ...scopes]);
     setScopesNotConsented([]);
   };

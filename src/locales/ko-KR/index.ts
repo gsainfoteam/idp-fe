@@ -97,4 +97,17 @@ export const main = {
       success: "회원탈퇴가 완료되었습니다.",
     },
   },
+  authorize: {
+    title: "'{{application}}'에서 GSA 통합 계정으로 로그인을 사용하려고 합니다",
+    description: "{{application}}이 접근할 수 있는 항목을 선택해주세요",
+    action: "동의",
+    scopes: {
+      openid: "OpenID",
+      offline_access: "오프라인 액세스",
+      profile: "프로필",
+      email: "이메일",
+      phone: "전화번호",
+      student_id: "학번",
+    },
+  },
 };
