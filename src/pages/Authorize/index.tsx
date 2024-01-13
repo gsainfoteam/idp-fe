@@ -23,6 +23,7 @@ const Title = styled.h1`
 
 const List = styled.ul`
   list-style: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
 `;
