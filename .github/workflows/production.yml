@@ -12,7 +12,7 @@ jobs:
       contents: read
       deployments: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: build
         run: |
           yarn install --immutable
@@ -25,3 +25,4 @@ jobs:
           projectName: idp-fe
           directory: build
           gitHubToken: ${{ github.token }}
+          branch: main
