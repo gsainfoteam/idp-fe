@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -187,7 +188,19 @@ const useRegister = () => {
         confirmButtonText: t("register.back"),
       });
       navigate(loginPageUri || "/");
-    } catch {
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 409) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: t("register.duplicate"),
+          });
+        }
+
+        return;
+      }
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
