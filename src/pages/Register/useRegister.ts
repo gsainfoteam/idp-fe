@@ -196,9 +196,8 @@ const useRegister = () => {
             title: "Oops...",
             text: t("register.duplicate"),
           });
+          return;
         }
-
-        return;
       }
 
       Swal.fire({
