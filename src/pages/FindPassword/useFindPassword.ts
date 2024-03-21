@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { requestEmailVerification, verifyEmail } from "src/api/register";
-import { changePassowrd } from "src/api/user";
+import { changePassword } from "src/api/user";
 import Swal from "sweetalert2";
 
 const useFindPassword = () => {
@@ -159,7 +159,7 @@ const useFindPassword = () => {
     }
     if (checkPasswordHasError(password, passwordConfirm)) return;
     try {
-      await changePassowrd({
+      await changePassword({
         email,
         password,
         verificationToken: verificationToken.current,

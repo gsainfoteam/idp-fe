@@ -8,14 +8,14 @@ interface ChangePasswordForm {
 
 export const getUserInfo = () =>
   api.get("/idp/user").then(({ data }) => ({
-    uuid: data.user_uuid as string,
-    email: data.user_email_id as string,
-    name: data.user_name as string,
-    phoneNumber: data.user_phone_number as string,
-    studentId: data.student_id as string,
+    uuid: data.uuid as string,
+    email: data.email as string,
+    name: data.name as string,
+    phoneNumber: data.phoneNumber as string,
+    studentId: data.studentId as string,
   }));
 
-export const changePassowrd = ({
+export const changePassword = ({
   verificationToken,
   email,
   password,
