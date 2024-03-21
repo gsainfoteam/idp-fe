@@ -1,7 +1,7 @@
 import api from ".";
 
 interface ChangePasswordForm {
-  verificationToken: string;
+  certificationJwtToken: string;
   email: string;
   password: string;
 }
@@ -16,15 +16,11 @@ export const getUserInfo = () =>
   }));
 
 export const changePassword = ({
-  verificationToken,
+  certificationJwtToken,
   email,
   password,
 }: ChangePasswordForm) =>
-  api.patch("/v1/user/password", {
-    certification_jwt_token: verificationToken,
-    user_email_id: email,
-    changed_password: password,
-  });
+  api.patch("/user/password", { certificationJwtToken, email, password });
 
 export const withdraw = ({
   email,
@@ -32,7 +28,4 @@ export const withdraw = ({
 }: {
   email: string;
   password: string;
-}) =>
-  api.delete("/v1/user", {
-    data: { user_email_id: email, password },
-  });
+}) => api.delete("/user", { data: { email, password } });

@@ -1,15 +1,12 @@
 import api from ".";
 
 export const requestEmailVerification = async (email: string) =>
-  api.post("/v1/user/register/code", { user_email_id: email });
+  api.post("/user/register/code", { email });
 
 export const verifyEmail = async (email: string, code: string) =>
   api
-    .post("/v1/user/register/validate", {
-      user_email_id: email,
-      email_certification_code: code,
-    })
-    .then((res) => res.data.register_certification_jwt_token);
+    .post("/user/register/validate", { email, code })
+    .then((res) => res.data.certificationJwtToken);
 
 interface RegisterForm {
   email: string;
@@ -17,7 +14,7 @@ interface RegisterForm {
   name: string;
   studentId: string;
   phoneNumber: string;
-  verificationToken: string;
+  certificationJwt: string;
 }
 
 export const register = async ({
@@ -26,13 +23,13 @@ export const register = async ({
   name,
   studentId,
   phoneNumber,
-  verificationToken,
+  certificationJwt,
 }: RegisterForm) =>
-  api.post("/v1/user/register", {
-    user_email_id: email,
-    user_password: password,
-    user_name: name,
-    user_phone_number: phoneNumber,
-    student_id: studentId,
-    register_certification_jwt_token: verificationToken,
+  api.post("/user/register", {
+    email,
+    password,
+    name,
+    phoneNumber,
+    studentId,
+    certificationJwt,
   });

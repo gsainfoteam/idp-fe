@@ -162,7 +162,7 @@ const useFindPassword = () => {
       await changePassword({
         email,
         password,
-        verificationToken: verificationToken.current,
+        certificationJwtToken: verificationToken.current,
       });
       await Swal.fire({
         icon: "success",
