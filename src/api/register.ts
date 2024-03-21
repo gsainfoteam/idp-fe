@@ -14,7 +14,7 @@ interface RegisterForm {
   name: string;
   studentId: string;
   phoneNumber: string;
-  certificationJwt: string;
+  certificationJwtToken: string;
 }
 
 export const register = async ({
@@ -23,7 +23,7 @@ export const register = async ({
   name,
   studentId,
   phoneNumber,
-  certificationJwt,
+  certificationJwtToken,
 }: RegisterForm) =>
   api.post("/user/register", {
     email,
@@ -31,5 +31,5 @@ export const register = async ({
     name,
     phoneNumber,
     studentId,
-    certificationJwt,
+    certificationJwtToken,
   });

@@ -179,7 +179,7 @@ const useRegister = () => {
         name: realName,
         studentId,
         phoneNumber,
-        certificationJwt: verificationToken.current,
+        certificationJwtToken: verificationToken.current,
       });
       await Swal.fire({
         icon: "success",
