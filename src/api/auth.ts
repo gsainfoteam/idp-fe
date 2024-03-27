@@ -28,7 +28,7 @@ export const refreshToken = () =>
       accessToken: data.accessToken as string,
     }));
 
-const logout = () => api.post("/idp/logout");
+const logout = () => api.delete("/idp/logout");
 
 export const useAuth = ({
   redirectUrl = undefined as To | undefined,
