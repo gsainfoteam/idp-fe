@@ -17,17 +17,15 @@ interface LoginForm {
  * @returns auth code
  */
 const login = ({ email, password }: LoginForm) =>
-  api
-    .post("/idp/login", { user_email_id: email, user_password: password })
-    .then(({ data }) => ({
-      accessToken: data.access_token as string,
-    }));
+  api.post("/idp/login", { email, password }).then(({ data }) => ({
+    accessToken: data.access_token as string,
+  }));
 
 export const refreshToken = () =>
   api
     .post("/idp/refresh", undefined, { _retry: true } as any)
     .then(({ data }) => ({
-      accessToken: data.access_token as string,
+      accessToken: data.accessToken as string,
     }));
 
 const logout = () => api.post("/idp/logout");

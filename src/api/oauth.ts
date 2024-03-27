@@ -30,9 +30,9 @@ export const authorize = ({
 }) =>
   api
     .post("/oauth/authorize", {
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      response_type: responseTypes.join(" "),
+      clientId,
+      redirectUri,
+      responseType: responseTypes.join(" "),
       scope: scopes.join(" "),
       nonce,
     })
