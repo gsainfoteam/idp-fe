@@ -14,7 +14,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/local": {
-        target: "https://api.idp.gistory.me",
+        target: "https://api.stg.idp.gistory.me",
         changeOrigin: true,
         headers: {
           Origin: "https://idp.gistory.me",
