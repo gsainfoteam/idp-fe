@@ -1,19 +1,4 @@
-import { Scopes } from "src/utils/schema";
-
 import api from ".";
-
-export const getClientInformation = (clientId: string) =>
-  api
-    .get<{
-      id: string;
-      name: string;
-      recent_consent?: string[];
-    }>(`/idp/clients/${clientId}`)
-    .then(({ data }) => ({
-      id: data.id,
-      name: data.name,
-      recentConsent: data.recent_consent as Scopes,
-    }));
 
 export const authorize = ({
   clientId,

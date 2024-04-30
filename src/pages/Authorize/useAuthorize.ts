@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "src/api/auth";
-import { authorize, getClientInformation } from "src/api/oauth";
+import { getClientPublicInformation } from "src/api/client";
+import { authorize } from "src/api/oauth";
 import {
   authorizeSchema,
   isConsentRequiredScope,
@@ -46,7 +47,7 @@ const useAuthorize = () => {
 
   const { data: clientData } = useSWR(
     paramsData ? ["client", paramsData.clientId] : undefined,
-    ([, id]) => getClientInformation(id),
+    ([, id]) => getClientPublicInformation(id),
   );
   const { user, logout } = useAuth();
   const navigate = useNavigate();

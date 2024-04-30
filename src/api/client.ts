@@ -1,3 +1,4 @@
+import { Scopes } from "src/utils/schema";
 import useSWR from "swr";
 
 import api from ".";
@@ -9,6 +10,21 @@ interface Client {
   urls: string[];
   grantScopes: string[];
 }
+
+export const getClientPublicInformation = (clientId: string) =>
+  api
+    .get<{
+      id: string;
+      uuid: string;
+      name: string;
+      recentConsent?: string[];
+    }>(`/client/${clientId}/public`)
+    .then(({ data }) => ({
+      id: data.id,
+      uuid: data.uuid,
+      name: data.name,
+      recentConsent: data.recentConsent as Scopes,
+    }));
 
 export const useClients = () =>
   useSWR("clients", () =>
