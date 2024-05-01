@@ -18,8 +18,7 @@ const isValidUrl = (url: string) => {
 
 const ClientPage = () => {
   const { state } = useLocation();
-  const secret = (state?.client_secret ??
-    "refresh to get new secret") as string;
+  const secret = (state?.clientSecret ?? "refresh to get new secret") as string;
   const { uuid: _uuid } = useParams();
   const uuid = _uuid ?? "";
   const { data: client } = useClient(uuid);

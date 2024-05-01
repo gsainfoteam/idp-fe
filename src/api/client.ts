@@ -51,7 +51,7 @@ export const createClient = (payload: {
 
 export const resetClientSecret = (uuid: string) =>
   api
-    .post<{ client_secret: string }>(`/client/${uuid}/reset`)
+    .patch<{ clientSecret: string }>(`/client/${uuid}/reset-secret`)
     .then(({ data }) => data);
 
 export const changeClientName = (
