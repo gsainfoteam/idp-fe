@@ -63,31 +63,27 @@ const useAuthorize = () => {
   useEffect(() => {
     if (!paramsData || !clientData) return;
     const { scopes, ...data } = paramsData;
-    if (scopesConsented.length === 0) {
-      if (data.prompt === "none") {
-        if (!user) return redirect({ error: "login_required" }, data);
-        if (!clientData.recentConsent)
-          return redirect({ error: "consent_required" }, data);
-      }
-      if (
-        data.prompt === "login" &&
-        !sessionStorage.getItem(recentlyLoginKey)
-      ) {
-        void logout();
-        return;
-      }
-      if (
-        data.prompt !== "consent" &&
-        data.prompt !== "login" &&
-        clientData.recentConsent
-      ) {
-        setScopesConsented(clientData.recentConsent);
-        return;
-      }
-      setScopesConsented(scopes.filter(isNotConsentRequiredScope));
-      setScopesNotConsented(scopes.filter(isConsentRequiredScope));
+    if (data.prompt === "none") {
+      if (!user) return redirect({ error: "login_required" }, data);
+      if (!clientData.recentConsent)
+        return redirect({ error: "consent_required" }, data);
+    }
+    if (data.prompt === "login" && !sessionStorage.getItem(recentlyLoginKey)) {
+      void logout();
       return;
     }
+    if (
+      data.prompt !== "consent" &&
+      data.prompt !== "login" &&
+      scopesConsented.length === 0 &&
+      clientData.recentConsent.length
+    ) {
+      setScopesConsented(clientData.recentConsent);
+      return;
+    }
+    setScopesConsented(scopes.filter(isNotConsentRequiredScope));
+    setScopesNotConsented(scopes.filter(isConsentRequiredScope));
+
     if (scopesNotConsented.length !== 0) return;
     sessionStorage.removeItem(recentlyLoginKey);
     (async () => {
@@ -110,7 +106,7 @@ const useAuthorize = () => {
     paramsData,
     paramsError,
     scopesConsented,
-    scopesNotConsented.length,
+    scopesNotConsented,
     t,
     user,
   ]);
