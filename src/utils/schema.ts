@@ -25,8 +25,15 @@ export const authorizeSchema = z
       .string()
       .transform((scope) => scope.split(" "))
       .pipe(z.array(Scope))
-      .refine((scopes) => scopes.includes("openid"), {
-        message: "openid scope is required",
+      .superRefine((scopes, ctx) => {
+        if (!scopes.includes("openid")) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "openid scope is required",
+            fatal: true,
+          });
+          return z.NEVER;
+        }
       }),
     nonce: z.string().optional(),
     response_type: z
