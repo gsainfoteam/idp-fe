@@ -50,7 +50,7 @@ const Authorize = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!clientData) return;
+    if (!clientData || !scopesNotConsented) return;
     if (scopesNotConsented.length > 0) {
       setScopesConsented(
         clientData.recentConsent
@@ -64,7 +64,7 @@ const Authorize = () => {
     return <Container>{error}</Container>;
   }
 
-  if (!clientData) return null;
+  if (!clientData || !scopesNotConsented) return null;
 
   if (scopesNotConsented.length > 0) {
     return (

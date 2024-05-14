@@ -52,11 +52,11 @@ const useAuthorize = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
-  const [scopesConsented, setScopesConsented] = useState<Scopes>([]);
-  const [scopesNotConsented, setScopesNotConsented] = useState<Scopes>([]);
+  const [scopesConsented, setScopesConsented] = useState<Scopes>();
+  const [scopesNotConsented, setScopesNotConsented] = useState<Scopes>();
 
   const consent = (scopes: Scopes) => {
-    setScopesConsented((prev) => [...prev, ...scopes]);
+    setScopesConsented((prev) => [...(prev ?? []), ...scopes]);
     setScopesNotConsented([]);
   };
 
@@ -75,14 +75,20 @@ const useAuthorize = () => {
     if (
       data.prompt !== "consent" &&
       data.prompt !== "login" &&
-      scopesConsented.length === 0 &&
+      !scopesConsented &&
       clientData.recentConsent.length
     ) {
       setScopesConsented(clientData.recentConsent);
       return;
     }
-    setScopesConsented(scopes.filter(isNotConsentRequiredScope));
-    setScopesNotConsented(scopes.filter(isConsentRequiredScope));
+    if (!scopesConsented) {
+      setScopesConsented(scopes.filter(isNotConsentRequiredScope));
+      return;
+    }
+    if (!scopesNotConsented) {
+      setScopesNotConsented(scopes.filter(isConsentRequiredScope));
+      return;
+    }
 
     if (scopesNotConsented.length !== 0) return;
     sessionStorage.removeItem(recentlyLoginKey);
