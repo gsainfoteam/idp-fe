@@ -56,7 +56,7 @@ const useAuthorize = () => {
   const [scopesNotConsented, setScopesNotConsented] = useState<Scopes>();
 
   const consent = (scopes: Scopes) => {
-    setScopesConsented((prev) => [...(prev ?? []), ...scopes]);
+    setScopesConsented((prev) => [...new Set([...(prev ?? []), ...scopes])]);
     setScopesNotConsented([]);
   };
 
