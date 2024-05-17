@@ -25,8 +25,8 @@ const useRegister = () => {
   useEffect(() => {
     if (verifyLeftTime < 0 && verifyTimer.current) {
       clearInterval(verifyTimer.current);
+      verifyTimer.current = undefined;
     }
-    verifyTimer.current = undefined;
   }, [verifyLeftTime]);
 
   const handleRequest = async (email: string) => {
