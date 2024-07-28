@@ -10,11 +10,9 @@ export default defineConfig({
     outDir: "build",
   },
   server: {
-    open: true,
-    port: 3000,
     proxy: {
       "/local": {
-        target: "https://api.stg.idp.gistory.me",
+        target: "http://localhost:3000",
         changeOrigin: true,
         headers: {
           Origin: "https://idp.gistory.me",

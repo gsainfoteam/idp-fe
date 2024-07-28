@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "src/api/auth";
+import { registerPasskey } from "src/api/passkey";
 import Button from "src/components/Button";
 
 import {
@@ -50,7 +51,9 @@ const Landing = () => {
       <Divier /> */}
       <Section>
         <Title>{t("profile.passkey.title")}</Title>
-        <Button onClick={logout}>{t("profile.passkey.register")}</Button>
+        <Button onClick={registerPasskey}>
+          {t("profile.passkey.register")}
+        </Button>
       </Section>
       <Divier />
       <Section>
