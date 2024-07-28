@@ -12,6 +12,7 @@ import {
   TextLink,
   Title,
 } from "./styles";
+import { registerPasskey } from "src/api/passkey";
 
 const Landing = () => {
   const { user, logout } = useAuth();
@@ -50,7 +51,9 @@ const Landing = () => {
       <Divier /> */}
       <Section>
         <Title>{t("profile.passkey.title")}</Title>
-        <Button onClick={logout}>{t("profile.passkey.register")}</Button>
+        <Button onClick={registerPasskey}>
+          {t("profile.passkey.register")}
+        </Button>
       </Section>
       <Divier />
       <Section>
