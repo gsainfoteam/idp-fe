@@ -4,7 +4,7 @@ import Button from "src/components/Button";
 
 import {
   Container,
-  Divier,
+  Divider,
   LabelTitle,
   LabelValue,
   Row,
@@ -43,7 +43,7 @@ const Landing = () => {
           <LabelValue>{user.phoneNumber}</LabelValue>
         </Row>
       </Section>
-      <Divier />
+      <Divider />
       {/* <Section>
         <Title>{t("profile.services.title")}</Title>
       </Section>
