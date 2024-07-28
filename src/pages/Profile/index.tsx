@@ -49,6 +49,11 @@ const Landing = () => {
       </Section>
       <Divier /> */}
       <Section>
+        <Title>{t("profile.passkey.title")}</Title>
+        <Button onClick={logout}>{t("profile.passkey.register")}</Button>
+      </Section>
+      <Divier />
+      <Section>
         <Button onClick={logout} outline>
           logout
         </Button>

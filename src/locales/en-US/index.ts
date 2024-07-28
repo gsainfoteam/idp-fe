@@ -86,6 +86,10 @@ export const main = {
         description: "새롭고 빛나는 수강평 서비스",
       },
     },
+    passkey: {
+      title: "Passkey Management",
+      register: "Register new Passkey",
+    },
     connected: "Connected",
     connect: "Connect Now",
     withdraw: {
