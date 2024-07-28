@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Divier = styled.div`
+export const Divider = styled.div`
   background-color: #f5f5f5;
   height: 1px;
   margin: 1.875rem 0;
