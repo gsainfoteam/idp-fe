@@ -111,4 +111,10 @@ export const main = {
       student_id: "학번",
     },
   },
+  clients: {
+    list: {
+      title: "클라이언트 목록",
+      add: "새로 생성하기",
+    },
+  },
 };

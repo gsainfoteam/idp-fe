@@ -1,5 +1,16 @@
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
 import { useClients } from "src/api/client";
+import Button from "src/components/Button";
+
+import {
+  ClientCardContainer,
+  Container,
+  Divider,
+  Row,
+  Section,
+  Title,
+} from "./styles";
 
 const ClientCard = ({
   uuid,
@@ -10,25 +21,53 @@ const ClientCard = ({
   name: string;
   id: string;
 }) => (
-  <div>
-    <Link to={`/clients/${uuid}`}>{name}</Link>
-    <div>id: {id}</div>
-  </div>
+  <ClientCardContainer>
+    <b>
+      <Link to={`/clients/${uuid}`}>{name}</Link>
+    </b>
+    <div>
+      ID: <code>{id}</code>
+    </div>
+  </ClientCardContainer>
 );
 
 const ClientListPage = () => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const { data: clients } = useClients();
   return (
-    <div>
-      <ul>
+    // <div>
+    //   <ul>
+    //     {clients?.map((client) => (
+    //       <li key={client.uuid}>
+    //         <ClientCard {...client} />
+    //       </li>
+    //     ))}
+    //   </ul>
+    //   <Link to="/clients/new">create new client</Link>
+    // </div>
+    <Container>
+      <Section>
+        <Row>
+          <Title>{t("clients.list.title")}</Title>
+        </Row>
+
         {clients?.map((client) => (
-          <li key={client.uuid}>
+          <Row key={client.uuid}>
             <ClientCard {...client} />
-          </li>
+          </Row>
         ))}
-      </ul>
-      <Link to="/clients/new">create new client</Link>
-    </div>
+      </Section>
+
+      <Divider />
+
+      <Section>
+        <Button onClick={() => navigate("/clients/new")}>
+          {t("clients.list.add")}
+        </Button>
+      </Section>
+    </Container>
   );
 };
 
