@@ -37,16 +37,6 @@ const ClientListPage = () => {
 
   const { data: clients } = useClients();
   return (
-    // <div>
-    //   <ul>
-    //     {clients?.map((client) => (
-    //       <li key={client.uuid}>
-    //         <ClientCard {...client} />
-    //       </li>
-    //     ))}
-    //   </ul>
-    //   <Link to="/clients/new">create new client</Link>
-    // </div>
     <Container>
       <Section>
         <Row>
