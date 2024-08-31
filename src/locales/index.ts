@@ -14,11 +14,16 @@ i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    supportedLngs: ["ko-KR", "en-US", "ko", "en"],
+    detection: {
+      // LanguageDetector options
+      order: ["navigator"],
+    },
     resources,
-    lng: "ko-KR",
     fallbackLng: {
-      "en-US": ["en-US"],
-      default: ["ko-KR"],
+      "ko-KR": ["ko-KR"],
+      ko: ["ko-KR"],
+      default: ["en-US"],
     },
     interpolation: {
       escapeValue: false,
