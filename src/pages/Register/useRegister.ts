@@ -62,7 +62,19 @@ const useRegister = () => {
         title: "Success!",
         text: t("email.verify.success"),
       });
-    } catch {
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 409) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: t("register.duplicate"),
+          });
+          setVerifyLeftTime(-1);
+          return;
+        }
+      }
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
