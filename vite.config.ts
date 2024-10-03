@@ -12,16 +12,6 @@ export default defineConfig({
   server: {
     open: true,
     port: 3000,
-    proxy: {
-      "/local": {
-        target: "https://api.stg.idp.gistory.me",
-        changeOrigin: true,
-        headers: {
-          Origin: "https://idp.gistory.me",
-        },
-        rewrite: (path) => path.replace(/^\/local/, ""),
-      },
-    },
   },
   plugins: [
     react(),

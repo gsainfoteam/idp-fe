@@ -17,9 +17,9 @@ interface LoginForm {
  * @returns auth code
  */
 const login = ({ email, password }: LoginForm) =>
-  api.post("/idp/login", { email, password }).then(({ data }) => ({
-    accessToken: data.access_token as string,
-  }));
+  api.post<{
+    accessToken: string;
+  }>("/idp/login", { email, password });
 
 export const refreshToken = () =>
   api
@@ -40,8 +40,8 @@ export const useAuth = ({
   const navigate = useNavigate();
 
   const userLogin = async (payload: Parameters<typeof login>[0]) => {
-    const { accessToken } = await login(payload);
-    saveToken({ accessToken });
+    const { data } = await login(payload);
+    saveToken({ accessToken: data.accessToken });
     await mutate();
   };
 
