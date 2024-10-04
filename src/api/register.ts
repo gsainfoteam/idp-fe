@@ -1,7 +1,14 @@
 import api from ".";
 
-export const requestEmailVerification = async (email: string) =>
-  api.post("/user/register/code", { email });
+export enum EmailVerificationType {
+  Register = "register",
+  FindPassword = "password",
+}
+
+export const requestEmailVerification = async (
+  email: string,
+  type: EmailVerificationType,
+) => api.post("/user/register/code", { email, type });
 
 export const verifyEmail = async (email: string, code: string) =>
   api

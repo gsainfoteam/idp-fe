@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
+  EmailVerificationType,
   register,
   requestEmailVerification,
   verifyEmail,
@@ -56,7 +57,7 @@ const useRegister = () => {
 
     try {
       setLoading(true);
-      await requestEmailVerification(email);
+      await requestEmailVerification(email, EmailVerificationType.Register);
       Swal.fire({
         icon: "success",
         title: "Success!",
