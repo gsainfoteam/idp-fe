@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { requestEmailVerification, verifyEmail } from "src/api/register";
+import {
+  EmailVerificationType,
+  requestEmailVerification,
+  verifyEmail,
+} from "src/api/register";
 import { changePassword } from "src/api/user";
 import Swal from "sweetalert2";
 
@@ -52,7 +56,7 @@ const useFindPassword = () => {
 
     try {
       setLoading(true);
-      await requestEmailVerification(email);
+      await requestEmailVerification(email, EmailVerificationType.FindPassword);
       Swal.fire({
         icon: "success",
         title: "Success!",
