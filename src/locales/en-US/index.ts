@@ -111,4 +111,10 @@ export const main = {
       student_id: "Student ID",
     },
   },
+  clients: {
+    list: {
+      title: "Clients List",
+      add: "Create New",
+    },
+  },
 };
