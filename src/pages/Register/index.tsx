@@ -71,23 +71,21 @@ const Register = () => {
           />
         </Group>
         <Group>
-          <Row>
-            <Field
-              label={t("name.label")}
-              placeholder={t("name.placeholder")}
-              type="text"
-              autoComplete="name"
-              required
-              name="realName"
-            />
-            <Field
-              label={t("studentId.label")}
-              placeholder={t("studentId.placeholder")}
-              type="text"
-              required
-              name="studentId"
-            />
-          </Row>
+          <Field
+            label={t("name.label")}
+            placeholder={t("name.placeholder")}
+            type="text"
+            autoComplete="name"
+            required
+            name="realName"
+          />
+          <Field
+            label={t("studentId.label")}
+            placeholder={t("studentId.placeholder")}
+            type="text"
+            required
+            name="studentId"
+          />
           <Field
             label={t("phoneNumber.label")}
             placeholder={t("phoneNumber.placeholder")}
