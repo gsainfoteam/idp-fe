@@ -1,6 +1,6 @@
 import { FormProvider } from 'react-hook-form';
 
-import { LoginForm } from '../components/register-form';
+import { RegisterForm } from '../components/register-form';
 import { useRegisterForm } from '../hooks/use-register-form';
 
 export const RegisterFrame = () => {
@@ -8,7 +8,7 @@ export const RegisterFrame = () => {
   return (
     <FormProvider {...form}>
       <form onSubmit={onSubmit}>
-        <LoginForm />
+        <RegisterForm />
       </form>
     </FormProvider>
   );

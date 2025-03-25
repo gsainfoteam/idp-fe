@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
+.idp-title-1 {
+  font-size: 22px;
+  line-height: 150%;
+  font-weight: 700;
+}
+
+.idp-title-2 {
+  font-size: 18px;
+  line-height: 150%;
+  font-weight: 600;
+}
+
+.idp-title-3 {
+  font-size: 16px;
+  line-height: 150%;
+  font-weight: 600;
+}
+
+.idp-body-1 {
+  font-size: 16px;
+  line-height: 150%;
+  font-weight: 400;
+}
+
+.idp-body-2 {
+  font-size: 14px;
+  line-height: 140%;
+  font-weight: 400;
+}
+
+.idp-label-1 {
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 400;
+}
+
+.idp-label-2 {
+  font-size: 12px;
+  line-height: 120%;
+  font-weight: 400;
+}
+
 @layer base {
   html {
     font-family: Pretendard, "Noto Sans SC", sans-serif;
