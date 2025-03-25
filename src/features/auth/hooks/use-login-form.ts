@@ -2,6 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { login } from '../services/use-login';
+
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
@@ -16,7 +18,7 @@ export const useLoginForm = () => {
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    console.log(data);
+    login(data);
   });
 
   return { form, onSubmit };

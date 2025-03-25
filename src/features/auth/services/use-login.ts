@@ -1,12 +1,16 @@
-import { useCallback } from 'react';
+import { api } from '@/features/core';
 
-export const useLogin = () => {
-  const login = useCallback(
-    async ({ email, password }: { email: string; password: string }) => {
-      console.log(email, password);
-    },
-    [],
-  );
+interface LoginResponse {
+  accessToken: string;
+}
 
-  return { login };
+export const login = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const res = await api.post<LoginResponse>('/auth/login', { email, password });
+  return res.data;
 };
