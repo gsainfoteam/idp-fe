@@ -15,9 +15,9 @@ export const RegisterForm = () => {
         <div className="flex justify-center h-screen">
             <div className="flex flex-col p-[20px] pt-[24px] w-[361px]">
                 <div className="flex flex-col">
-                    <span className="idp-title-1 mb-3">회원가입</span>
-                    <span className="idp-title-3">기본정보</span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">GIST 이메일</span>
+                    <span className="text-title-1 mb-3">회원가입</span>
+                    <span className="text-title-3">기본정보</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">GIST 이메일</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.email ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
@@ -30,7 +30,7 @@ export const RegisterForm = () => {
                             formState.errors.email?.message
                         ) : ''}
                     </span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">비밀번호</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">비밀번호</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.password ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
@@ -43,7 +43,7 @@ export const RegisterForm = () => {
                             formState.errors.password?.message
                         ) : ''}
                     </span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">비밀번호 확인</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">비밀번호 확인</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.passwordConfirm ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
@@ -56,8 +56,8 @@ export const RegisterForm = () => {
                             formState.errors.passwordConfirm?.message
                         ) : ''}
                     </span>
-                    <span className="idp-title-3 mt-[32px]">기본정보</span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">이름</span>
+                    <span className="text-title-3 mt-[32px]">기본정보</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">이름</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.name ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
@@ -70,7 +70,7 @@ export const RegisterForm = () => {
                             formState.errors.name?.message
                         ) : ''}
                     </span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">학번</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">학번</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.studentId ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
@@ -83,7 +83,7 @@ export const RegisterForm = () => {
                             formState.errors.studentId?.message
                         ) : ''}
                     </span>
-                    <span className="idp-label-1 mb-1 mt-2.5 text-[#3d3d3d]">전화번호</span>
+                    <span className="text-label-1 mb-1 mt-2.5 text-[#3d3d3d]">전화번호</span>
                     <input
                         className={`border-1 mb-0.5 rounded-sm p-2 px-2.5 ${formState.errors.phoneNumber ? 'border-red-600 placeholder-red-600 text-red-600' : 'border-[#888888] placeholder-[#888888]'
                             }`}
