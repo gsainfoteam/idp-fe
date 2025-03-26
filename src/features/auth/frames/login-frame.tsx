@@ -1,9 +1,8 @@
 import { FormProvider } from 'react-hook-form';
 
-import { BoxButton } from '../components/box-button';
+import { Button } from '../components/button';
 import { LoginForm } from '../components/login-form';
 import { Logo } from '../components/logo';
-import { TextButton } from '../components/text-button';
 import { useLoginForm } from '../hooks/use-login-form';
 
 export const LoginFrame = () => {
@@ -15,9 +14,9 @@ export const LoginFrame = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full ml-5 mr-5 max-w-[400px] h-[513px]">
+      <div className="w-full ml-5 mr-5 max-w-[400px]">
         <Logo />
-        <div className="h-[32px]" />
+        <div className="h-8" />
         <div className="h-[150px]">
           <FormProvider {...form}>
             <form onSubmit={onSubmit}>
@@ -25,17 +24,25 @@ export const LoginFrame = () => {
             </form>
           </FormProvider>
         </div>
-        <div className="h-[32px]" />
-        <div className="flex flex-col justify-center items-center h-[80px]">
-          <BoxButton
+        <div className="h-8" />
+        <div className="flex flex-col justify-center items-center">
+          <Button
+            variant="primary"
+            width="w-full"
             text="로그인"
-            height={48}
             isDisabled={isError}
             isLoading={form.formState.isSubmitting}
             onClick={onSubmit}
           />
-          <div className="h-[8px]" />
-          <TextButton text="회원가입" width={56} height={24} />
+          <div className="h-2" />
+          <Button
+            variant="link"
+            typoVariant="body1"
+            className="text-neutral-800 no-underline"
+            text="회원가입"
+            to="/auth/register"
+          />
+          {/* FIXME: /auth/register 라우터에 추가하면 오류 사라짐 */}
         </div>
       </div>
     </div>
