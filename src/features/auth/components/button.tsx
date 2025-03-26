@@ -8,7 +8,7 @@ import { cn } from '@/features/core';
 type ButtonProps = {
   variant: 'primary' | 'secondary' | 'text' | 'link';
   text: string;
-  isDisabled?: boolean;
+  disabled?: boolean;
   isLoading?: boolean;
 };
 
@@ -75,7 +75,7 @@ const buttonStyle = cva(
 export function Button({
   variant,
   text,
-  isDisabled = false,
+  disabled = false,
   isLoading: _isLoading = false,
   onClick,
   className,
@@ -92,12 +92,12 @@ export function Button({
         onClick?.(e);
       }}
       className={cn(
-        buttonStyle({ type: variant, isPressed, isDisabled }),
+        buttonStyle({ type: variant, isPressed, isDisabled: disabled }),
         className,
       )}
       {...props}
     >
-      {isLoading ? <LoadingEllipse color="bg-[#d9d9d9]" /> : <div>{text}</div>}
+      {isLoading ? <LoadingEllipse color="bg-[#d9d9d9]" /> : text}
     </button>
   );
 }

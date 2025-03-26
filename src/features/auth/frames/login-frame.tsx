@@ -23,7 +23,7 @@ export const LoginFrame = () => {
         <div className="h-[150px]">
           <FormProvider {...form}>
             <form onSubmit={onSubmit}>
-              <LoginForm isDisabled={form.formState.isSubmitting} />
+              <LoginForm disabled={form.formState.isSubmitting} />
             </form>
           </FormProvider>
         </div>
@@ -33,7 +33,7 @@ export const LoginFrame = () => {
             variant="primary"
             className="w-full"
             text="로그인"
-            isDisabled={isError}
+            disabled={isError}
             isLoading={form.formState.isSubmitting}
             onClick={onSubmit}
           />
