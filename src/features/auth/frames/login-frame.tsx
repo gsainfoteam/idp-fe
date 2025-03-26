@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 
 import { Button } from '../components/button';
@@ -37,12 +38,13 @@ export const LoginFrame = () => {
             onClick={onSubmit}
           />
           <div className="h-2" />
-          <Button
-            variant="link"
-            className={cn('text-neutral-800 text-body-1 no-underline')}
-            text="회원가입"
-            to="/auth/register"
-          />
+          <Link to="/auth/register">
+            <Button
+              variant="link"
+              className={cn('text-neutral-800 text-body-1 no-underline')}
+              text="회원가입"
+            />
+          </Link>
         </div>
       </div>
     </div>

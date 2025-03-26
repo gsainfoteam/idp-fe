@@ -1,4 +1,3 @@
-import { Link } from '@tanstack/react-router';
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
 
@@ -9,7 +8,6 @@ import { cn } from '@/features/core';
 type ButtonProps = {
   variant: 'primary' | 'secondary' | 'text' | 'link';
   text: string;
-  to?: string;
   isDisabled?: boolean;
   isLoading?: boolean;
 };
@@ -77,7 +75,6 @@ const buttonStyle = cva(
 export function Button({
   variant,
   text,
-  to = '',
   isDisabled = false,
   isLoading: _isLoading = false,
   onClick,
@@ -100,11 +97,7 @@ export function Button({
       )}
       {...props}
     >
-      {isLoading ? (
-        <LoadingEllipse color="bg-[#d9d9d9]" />
-      ) : (
-        <div>{variant === 'link' ? <Link to={to}>{text}</Link> : text}</div>
-      )}
+      {isLoading ? <LoadingEllipse color="bg-[#d9d9d9]" /> : <div>{text}</div>}
     </button>
   );
 }
