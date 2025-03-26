@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { cva } from 'class-variance-authority';
 
 import { cn } from '@/features/core';
 
@@ -7,54 +7,31 @@ type InputProps = {
   isError?: boolean;
 };
 
-function textStyle(isDisabled: boolean) {
-  if (isDisabled) return 'text-neutral-600';
-  return 'text-neutral-950';
-}
-
-function borderStyle(
-  isDisabled: boolean,
-  isError: boolean,
-  isFocused: boolean,
-) {
-  if (isDisabled) return 'border border-neutral-400';
-  if (isError) return 'border-2 border-red-500';
-  if (isFocused) return 'border border-primary-400';
-  return 'border border-neutral-400';
-}
-
-function bgStyle(isDisabled: boolean, isError: boolean) {
-  if (isDisabled) return 'bg-neutral-100';
-  if (isError) return 'bg-white';
-  return 'bg-white';
-}
+const inputStyle = cva(
+  'text-neutral-950 border border-neutral-400 bg-white w-full rounded px-4 py-3 placeholder:text-neutral-400 text-body-1 focus:outline-none focus:border focus:border-primary-400',
+  {
+    variants: {
+      isError: {
+        true: 'bg-white border-2 border-red-500',
+        false: '',
+      },
+      isDisabled: {
+        true: 'bg-neutral-100 text-neutral-600 border border-neutral-400',
+        false: '',
+      },
+    },
+  },
+);
 
 export function Input({
   isDisabled = false,
   isError = false,
-  onFocus,
-  onBlur,
+  className,
   ...props
 }: InputProps & React.InputHTMLAttributes<HTMLInputElement>) {
-  const [isFocused, setIsFocused] = useState(false);
-
   return (
     <input
-      onFocus={(e) => {
-        setIsFocused(true);
-        onFocus?.(e);
-      }}
-      onBlur={(e) => {
-        setIsFocused(false);
-        onBlur?.(e);
-      }}
-      className={cn(
-        textStyle(isDisabled),
-        borderStyle(isDisabled, isError, isFocused),
-        bgStyle(isDisabled, isError),
-        `w-full h-12 rounded px-4 py-3 placeholder:text-neutral-400 typo-body1 focus:outline-none`,
-        props.className,
-      )}
+      className={cn(inputStyle({ isError, isDisabled }), className)}
       {...props}
     />
   );
