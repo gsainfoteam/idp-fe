@@ -11,7 +11,6 @@ const schema = z.object({
     name: z.string().min(1),
     studentId: z.string().min(1),
     phoneNumber: z.string().min(1),
-    // verificationJwtToken: z.string().min(1),
 }).refine((data) => data.password === data.passwordConfirm, {
     message: "비밀번호가 일치하지 않습니다",
     path: ["passwordConfirm"],
