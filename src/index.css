@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --text-title-1: 22px;
@@ -26,6 +26,6 @@
 
 @layer base {
   html {
-    font-family: Pretendard, "Noto Sans SC", sans-serif;
+    font-family: Pretendard, 'Noto Sans SC', sans-serif;
   }
 }
