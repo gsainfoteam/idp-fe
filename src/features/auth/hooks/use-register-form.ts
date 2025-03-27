@@ -10,8 +10,9 @@ const schema = z
     password: z.string().min(1),
     passwordConfirm: z.string().min(1),
     name: z.string().min(1),
-    studentId: z.string().min(1),
-    phoneNumber: z.string().min(1),
+    studentId: z.string().regex(/^\d{8}$/),
+    phoneNumber: z.string().regex(/^\d{3}-\d{4}-\d{4}$/),
+    verificationJwtToken: z.string().min(1),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다',
@@ -26,7 +27,7 @@ export const useRegisterForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = form.handleSubmit((data) => {
+  const onSubmit = form.handleSubmit(async (data) => {
     register(data);
   });
 

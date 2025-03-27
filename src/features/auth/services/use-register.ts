@@ -4,25 +4,19 @@ interface RegisterResponse {
   accessToken: string;
 }
 
-export const register = async ({
-  email,
-  password,
-  name,
-  studentId,
-  phoneNumber,
-}: {
+export const register = async (requestBody: {
   email: string;
   password: string;
   name: string;
   studentId: string;
   phoneNumber: string;
+  verificationJwtToken: string;
 }) => {
-  const res = await api.post<RegisterResponse>('/user', {
-    email,
-    password,
-    name,
-    studentId,
-    phoneNumber,
-  });
+  const modifiedRequestBody = {
+    ...requestBody,
+    phoneNumber: requestBody.phoneNumber.replace(/-/g, ''),
+  };
+
+  const res = await api.post<RegisterResponse>('/user', modifiedRequestBody);
   return res.data;
 };

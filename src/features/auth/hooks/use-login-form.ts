@@ -17,7 +17,7 @@ export const useLoginForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = form.handleSubmit((data) => {
+  const onSubmit = form.handleSubmit(async (data) => {
     login(data);
   });
 
