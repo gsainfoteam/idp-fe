@@ -4,13 +4,10 @@ interface LoginResponse {
   accessToken: string;
 }
 
-export const login = async ({
-  email,
-  password,
-}: {
+export const login = async (requestBody: {
   email: string;
   password: string;
 }) => {
-  const res = await api.post<LoginResponse>('/auth/login', { email, password });
+  const res = await api.post<LoginResponse>('/auth/login', requestBody);
   return res.data;
 };

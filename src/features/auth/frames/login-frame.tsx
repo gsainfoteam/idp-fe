@@ -1,14 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 
+import InfoTeamLogo from '../../../assets/logo.svg?react';
+import InfoTeamTextLogo from '../../../assets/text-logo.svg?react';
 import { Button } from '../components/button';
 import { LoginForm } from '../components/login-form';
-import { Logo } from '../components/logo';
 import { useLoginForm } from '../hooks/use-login-form';
 
-import { cn } from '@/features/core';
-
-export const LoginFrame = () => {
+export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
 
   const hasError =
@@ -17,8 +16,11 @@ export const LoginFrame = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full ml-5 mr-5 max-w-[400px]">
-        <Logo />
+      <div className="w-full px-5 max-w-[400px]">
+        <div className="flex flex-col justify-center items-center">
+          <InfoTeamLogo />
+          <InfoTeamTextLogo />
+        </div>
         <div className="h-8" />
         <div className="h-[150px]">
           <FormProvider {...form}>
@@ -40,10 +42,7 @@ export const LoginFrame = () => {
           </Button>
           <div className="h-2" />
           <Link to="/auth/register">
-            <Button
-              variant="link"
-              className={cn('text-neutral-800 text-body-1 no-underline')}
-            >
+            <Button variant="link" className="text-neutral-800 no-underline">
               회원가입
             </Button>
           </Link>
@@ -51,4 +50,4 @@ export const LoginFrame = () => {
       </div>
     </div>
   );
-};
+}

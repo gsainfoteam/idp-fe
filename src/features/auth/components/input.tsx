@@ -1,11 +1,13 @@
 import { cn } from '@/features/core';
 
 type InputProps = {
+  title?: string;
   disabled?: boolean;
   error?: string | boolean;
 };
 
 export function Input({
+  title = undefined,
   disabled = false,
   error = undefined,
   className,
@@ -13,6 +15,7 @@ export function Input({
 }: InputProps & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
+      {title && <div className="text-label-1 mb-1">{title}</div>}
       <input
         disabled={disabled}
         className={cn(

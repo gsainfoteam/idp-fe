@@ -20,7 +20,7 @@ const buttonStyle = cva(
         secondary:
           'w-full py-3 bg-white text-primary-600 border border-primary-600',
         text: 'text-primary-600',
-        link: 'text-neutral-400 underline',
+        link: 'text-body-1 text-neutral-400 underline',
       },
       isPressed: { true: 'cursor-default', false: '' },
       disabled: { true: 'cursor-default', false: '' },
