@@ -22,15 +22,6 @@ const customTwMerge = extendTailwindMerge({
         'text-label-1',
         'text-label-2',
       ],
-      'line-height': [
-        'text-title-1',
-        'text-title-2',
-        'text-title-3',
-        'text-body-1',
-        'text-body-2',
-        'text-label-1',
-        'text-label-2',
-      ],
     },
   },
 });
