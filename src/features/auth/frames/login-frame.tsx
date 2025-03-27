@@ -11,7 +11,7 @@ import { cn } from '@/features/core';
 export const LoginFrame = () => {
   const { form, onSubmit } = useLoginForm();
 
-  const isError =
+  const hasError =
     form.formState.errors.email != null ||
     form.formState.errors.password != null;
 
@@ -32,18 +32,20 @@ export const LoginFrame = () => {
           <Button
             variant="primary"
             className="w-full"
-            text="로그인"
-            disabled={isError}
+            disabled={hasError}
             isLoading={form.formState.isSubmitting}
             onClick={onSubmit}
-          />
+          >
+            로그인
+          </Button>
           <div className="h-2" />
           <Link to="/auth/register">
             <Button
               variant="link"
               className={cn('text-neutral-800 text-body-1 no-underline')}
-              text="회원가입"
-            />
+            >
+              회원가입
+            </Button>
           </Link>
         </div>
       </div>
