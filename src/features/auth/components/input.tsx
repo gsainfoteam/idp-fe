@@ -7,9 +7,9 @@ type InputProps = {
 };
 
 export function Input({
-  title = undefined,
+  title,
   disabled = false,
-  error = undefined,
+  error,
   className,
   ...props
 }: InputProps & React.InputHTMLAttributes<HTMLInputElement>) {
