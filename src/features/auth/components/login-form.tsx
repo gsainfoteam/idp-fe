@@ -13,7 +13,7 @@ export function LoginForm({ disabled }: { disabled: boolean }) {
   return (
     <div className="flex flex-col">
       <Input
-        hasError={hasError}
+        error={hasError}
         disabled={disabled}
         type="email"
         placeholder="m@gm.gist.ac.kr"
@@ -21,18 +21,12 @@ export function LoginForm({ disabled }: { disabled: boolean }) {
       />
       <div className="h-4" />
       <Input
-        hasError={hasError}
+        error={hasError && '이메일 또는 비밀번호를 확인해주세요'}
         disabled={disabled}
         type="password"
         placeholder="password"
         {...register('password')}
       />
-      <div className="h-1" />
-      {hasError && (
-        <div className="text-red-500 text-label-1 pl-1 pr-1">
-          이메일 또는 비밀번호를 확인해주세요
-        </div>
-      )}
     </div>
   );
 }

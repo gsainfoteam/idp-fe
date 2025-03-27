@@ -1,4 +1,4 @@
-import { cva } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 
 import { LoadingEllipse } from './loading-ellipse';
@@ -6,7 +6,7 @@ import { LoadingEllipse } from './loading-ellipse';
 import { cn } from '@/features/core';
 
 type ButtonProps = {
-  variant: 'primary' | 'secondary' | 'text' | 'link';
+  variant: NonNullable<VariantProps<typeof buttonStyle>['variant']>;
   disabled?: boolean;
   isLoading?: boolean;
 };
@@ -87,6 +87,7 @@ export function Button({
 
   return (
     <button
+      disabled={disabled}
       onMouseDown={(e) => {
         setPressed(true);
         onMouseDown?.(e);
