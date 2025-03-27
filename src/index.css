@@ -1,7 +1,31 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --text-title-1: 22px;
+  --text-title-1--line-height: 150%;
+  --text-title-1--font-weight: 700;
+  --text-title-2: 18px;
+  --text-title-2--line-height: 150%;
+  --text-title-2--font-weight: 600;
+  --text-title-3: 16px;
+  --text-title-3--line-height: 150%;
+  --text-title-3--font-weight: 600;
+  --text-body-1: 16px;
+  --text-body-1--line-height: 150%;
+  --text-body-1--font-weight: 400;
+  --text-body-2: 14px;
+  --text-body-2--line-height: 140%;
+  --text-body-2--font-weight: 400;
+  --text-label-1: 14px;
+  --text-label-1--line-height: 120%;
+  --text-label-1--font-weight: 400;
+  --text-label-2: 12px;
+  --text-label-2--line-height: 120%;
+  --text-label-2--font-weight: 400;
+}
 
 @layer base {
   html {
-    font-family: Pretendard, "Noto Sans SC", sans-serif;
+    font-family: Pretendard, 'Noto Sans SC', sans-serif;
   }
 }
