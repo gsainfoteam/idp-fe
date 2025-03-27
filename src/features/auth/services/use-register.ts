@@ -10,14 +10,12 @@ export const register = async ({
   name,
   studentId,
   phoneNumber,
-  verificationJwtToken,
 }: {
   email: string;
   password: string;
   name: string;
   studentId: string;
   phoneNumber: string;
-  verificationJwtToken: string;
 }) => {
   const res = await api.post<RegisterResponse>('/user', {
     email,
@@ -25,7 +23,6 @@ export const register = async ({
     name,
     studentId,
     phoneNumber,
-    verificationJwtToken,
   });
   return res.data;
 };
