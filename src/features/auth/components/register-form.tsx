@@ -34,7 +34,7 @@ export function RegisterForm() {
           <Input
             title="비밀번호 확인"
             error={formState.errors.passwordConfirm != null}
-            type="passwordConfirm"
+            type="password"
             placeholder="비밀번호 확인"
             {...register('passwordConfirm')}
           />
@@ -47,7 +47,7 @@ export function RegisterForm() {
           <Input
             title="이름"
             error={formState.errors.name != null}
-            type="name"
+            type="text"
             placeholder="김지니"
             {...register('name')}
           />
@@ -56,7 +56,7 @@ export function RegisterForm() {
           <Input
             title="학번"
             error={formState.errors.studentId != null}
-            type="studentId"
+            type="number"
             placeholder="20235000"
             {...register('studentId')}
           />
@@ -65,7 +65,7 @@ export function RegisterForm() {
           <Input
             title="전화번호"
             error={formState.errors.phoneNumber != null}
-            type="phoneNumber"
+            type="tel"
             placeholder="010-0000-0000"
             {...register('phoneNumber')}
           />
