@@ -14,7 +14,6 @@ const schema = z
     phoneNumber: z
       .string()
       .regex(/^\d{3}-?\d{4}-?\d{4}$/, '전화번호 형식이 아닙니다'),
-    verificationJwtToken: z.string().min(1),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다',

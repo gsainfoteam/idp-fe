@@ -13,12 +13,10 @@ export function Input({
   className,
   ...props
 }: InputProps & React.InputHTMLAttributes<HTMLInputElement>) {
-  // NOTE: label 아래에 mb-1보다 mb-2는 너무 넓고 mb-1.5가 더 나은 거 같은데
-
   return (
     <div className={className}>
       {label && (
-        <div className="text-label-1 mb-1.5 flex">
+        <div className="text-label-1 mb-1 flex">
           {label}
           {required && <div className="text-red-500">*</div>}
         </div>
@@ -36,7 +34,7 @@ export function Input({
         )}
         {...props}
       />
-      {typeof error === 'string' && (
+      {typeof error === 'string' && error.trim().length > 0 && (
         <div className="text-red-500 text-label-1 px-1 mt-1">{error}</div>
       )}
     </div>

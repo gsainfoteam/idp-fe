@@ -7,11 +7,6 @@ import { Input } from './input';
 export function RegisterForm() {
   const { register, formState } = useFormContext<RegisterFormSchema>();
 
-  // FIXME: password, passwordConfirm이 다르면 오류 나게 해놨는데 왜 formState.errors에서 안 잡히는지?
-  // TODO: language file
-  // TODO: 다크모드
-  // FIXME: 기본 정보 제목이 2개
-
   return (
     <div className="flex flex-col">
       <div className="text-title-1 mb-4">회원가입</div>
@@ -24,7 +19,7 @@ export function RegisterForm() {
             type="email"
             placeholder="m@gm.gist.ac.kr"
             required
-            {...register('email')}
+            {...register('email', { required: true })}
           />
         </div>
         <div className="mb-4">
@@ -34,7 +29,7 @@ export function RegisterForm() {
             type="password"
             placeholder="비밀번호"
             required
-            {...register('password')}
+            {...register('password', { required: true })}
           />
         </div>
         <div>
@@ -44,7 +39,7 @@ export function RegisterForm() {
             type="password"
             placeholder="비밀번호 확인"
             required
-            {...register('passwordConfirm')}
+            {...register('passwordConfirm', { required: true })}
           />
         </div>
       </div>
@@ -58,7 +53,7 @@ export function RegisterForm() {
             type="text"
             placeholder="김지니"
             required
-            {...register('name')}
+            {...register('name', { required: true })}
           />
         </div>
         <div className="mb-4">
@@ -68,7 +63,7 @@ export function RegisterForm() {
             type="number"
             placeholder="20235000"
             required
-            {...register('studentId')}
+            {...register('studentId', { required: true })}
           />
         </div>
         <div>
@@ -77,10 +72,12 @@ export function RegisterForm() {
             error={formState.errors.phoneNumber?.message}
             type="tel"
             placeholder="010-0000-0000"
-            {...register('phoneNumber')}
+            {...register('phoneNumber', { required: true })}
           />
         </div>
       </div>
     </div>
   );
+
+  // TODO: required를 하면 register에 require를 자동으로 넣어주도록 하기
 }

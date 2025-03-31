@@ -8,11 +8,7 @@ export function RegisterFrame() {
   const { form, onSubmit } = useRegisterForm();
 
   // 에러가 없으면서 값이 모두 채워질 때 버튼 활성화
-  const satisfied =
-    Object.keys(form.formState.errors).length === 0 &&
-    Object.values(form.getValues()).filter((v) => v.length > 0).length === 6; // FIXME: required input만 체크하기
-
-  // FIXME: 6이라고 하드 코딩해야하나?
+  const satisfied = form.formState.isValid; // FIXME: required input만 체크하기
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -22,7 +18,7 @@ export function RegisterFrame() {
             <RegisterForm />
           </form>
         </FormProvider>
-        <div className="h-[77px]" />
+        <div className="h-16" />
         <Button
           variant="primary"
           disabled={!satisfied}

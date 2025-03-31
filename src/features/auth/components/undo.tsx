@@ -1,4 +1,4 @@
-import UndoIcon from '../../../assets/undo.svg?react';
+import UndoIcon from '../../../assets/arrow-left.svg?react';
 
 import { cn } from '@/features/core';
 
