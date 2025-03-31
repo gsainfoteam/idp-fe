@@ -14,7 +14,7 @@ export function RegisterForm() {
         <div className="text-title-3 mb-2.5">기본정보</div>
         <div className="mb-4">
           <Input
-            title="GIST 이메일"
+            label="GIST 이메일"
             error={formState.errors.email != null}
             type="email"
             placeholder="m@gm.gist.ac.kr"
@@ -23,7 +23,7 @@ export function RegisterForm() {
         </div>
         <div className="mb-4">
           <Input
-            title="비밀번호"
+            label="비밀번호"
             error={formState.errors.password != null}
             type="password"
             placeholder="비밀번호"
@@ -32,7 +32,7 @@ export function RegisterForm() {
         </div>
         <div>
           <Input
-            title="비밀번호 확인"
+            label="비밀번호 확인"
             error={formState.errors.passwordConfirm != null}
             type="password"
             placeholder="비밀번호 확인"
@@ -45,7 +45,7 @@ export function RegisterForm() {
         <div className="text-title-3 mb-2.5">기본정보</div>
         <div className="mb-4">
           <Input
-            title="이름"
+            label="이름"
             error={formState.errors.name != null}
             type="text"
             placeholder="김지니"
@@ -54,7 +54,7 @@ export function RegisterForm() {
         </div>
         <div className="mb-4">
           <Input
-            title="학번"
+            label="학번"
             error={formState.errors.studentId != null}
             type="number"
             placeholder="20235000"
@@ -63,7 +63,7 @@ export function RegisterForm() {
         </div>
         <div>
           <Input
-            title="전화번호"
+            label="전화번호"
             error={formState.errors.phoneNumber != null}
             type="tel"
             placeholder="010-0000-0000"

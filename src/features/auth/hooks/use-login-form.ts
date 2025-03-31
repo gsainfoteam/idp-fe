@@ -18,7 +18,7 @@ export const useLoginForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    login(data);
+    await login(data);
   });
 
   return { form, onSubmit };

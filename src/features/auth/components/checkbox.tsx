@@ -36,7 +36,7 @@ export function Checkbox({
 
   return (
     <div
-      className="flex items-center"
+      className={cn('flex items-center w-fit', className)}
       onClick={() => {
         if (!disabled) setChecked(!isChecked);
       }}
@@ -48,11 +48,7 @@ export function Checkbox({
         {...props}
       />
       <div
-        className={cn(
-          checkboxStyles({ checked: isChecked, disabled }),
-          'm-1',
-          className,
-        )}
+        className={cn(checkboxStyles({ checked: isChecked, disabled }), 'm-1')}
       >
         {isChecked && <CheckIcon />}
       </div>
