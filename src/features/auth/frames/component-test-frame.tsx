@@ -135,18 +135,43 @@ export function ComponentTestFrame() {
       <hr className="border-neutral-100" />
 
       <h1 className="ml-10 mt-10 text-title-1">Input Component</h1>
-      <div className="w-[300px] m-10 gap-5 grid grid-cols-1 grid-rows-3">
-        <Input placeholder="텍스트를 입력하세요" />
-        <Input placeholder="텍스트를 입력하세요" disabled />
-        <Input placeholder="텍스트를 입력하세요" error />
+      <div className="w-[300px] m-10">
+        <Input placeholder="텍스트를 입력하세요" className="mb-5" />
+        <Input
+          placeholder="텍스트를 입력하세요"
+          label="이 필드의 제목"
+          className="mb-5"
+        />
+        <Input placeholder="텍스트를 입력하세요" disabled className="mb-5" />
+        <Input
+          placeholder="텍스트를 입력하세요"
+          label="이 필드의 제목"
+          disabled
+          className="mb-5"
+        />
+        <Input placeholder="텍스트를 입력하세요" error className="mb-5" />
+        <Input
+          placeholder="텍스트를 입력하세요"
+          label="이 필드의 제목"
+          error
+          className="mb-5"
+        />
+        <Input
+          placeholder="텍스트를 입력하세요"
+          label="이 필드의 제목"
+          error="에러가 발생했습니다"
+          className="mb-5"
+        />
       </div>
       <hr className="border-neutral-100" />
 
       <h1 className="ml-10 mt-10 text-title-1">Checkbox Component</h1>
       <div className="w-auto m-10">
-        <Checkbox>체크박스</Checkbox>
-        <Checkbox checked>체크박스</Checkbox>
-        <Checkbox checked disabled>
+        <Checkbox className="mb-1">체크박스</Checkbox>
+        <Checkbox className="mb-1" checked>
+          체크박스
+        </Checkbox>
+        <Checkbox className="mb-1" checked disabled>
           체크박스
         </Checkbox>
         <Checkbox disabled>체크박스</Checkbox>
