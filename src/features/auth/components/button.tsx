@@ -96,7 +96,7 @@ export function Button({
       {...props}
     >
       {variant === 'primary' && isLoading ? (
-        <LoadingEllipse color="bg-[#d9d9d9]" />
+        <LoadingEllipse color={isPressed ? 'bg-[#d9d9d9]' : 'bg-white'} />
       ) : (
         children
       )}

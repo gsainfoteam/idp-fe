@@ -1,6 +1,9 @@
+import { Link } from '@tanstack/react-router';
+
 import { Button } from '../components/button';
 import { Checkbox } from '../components/checkbox';
 import { Input } from '../components/input';
+import { Undo } from '../components/undo';
 
 export function ComponentTestFrame() {
   return (
@@ -140,6 +143,7 @@ export function ComponentTestFrame() {
         <Input
           placeholder="텍스트를 입력하세요"
           label="이 필드의 제목"
+          required
           className="mb-5"
         />
         <Input placeholder="텍스트를 입력하세요" disabled className="mb-5" />
@@ -160,6 +164,7 @@ export function ComponentTestFrame() {
           placeholder="텍스트를 입력하세요"
           label="이 필드의 제목"
           error="에러가 발생했습니다"
+          required
           className="mb-5"
         />
       </div>
@@ -175,6 +180,15 @@ export function ComponentTestFrame() {
           체크박스
         </Checkbox>
         <Checkbox disabled>체크박스</Checkbox>
+      </div>
+      <hr className="border-neutral-100" />
+
+      <h1 className="ml-10 mt-10 text-title-1">Undo Component</h1>
+      <div className="w-auto m-10">
+        <Link to="/auth/login">
+          <Undo className="mb-1">로그인 화면으로 돌아가기</Undo>
+        </Link>
+        <Undo>뒤로가기</Undo>
       </div>
     </>
   );

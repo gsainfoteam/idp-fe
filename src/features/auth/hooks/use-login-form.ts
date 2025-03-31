@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -18,7 +19,16 @@ export const useLoginForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    await login(data);
+    login(data).catch((error) => {
+      if (error instanceof AxiosError && error.status === 401) {
+        form.setError('email', {});
+        form.setError('password', {
+          message: '잘못된 이메일과 비밀번호입니다',
+        });
+      } else {
+        console.error(error);
+      }
+    });
   });
 
   return { form, onSubmit };

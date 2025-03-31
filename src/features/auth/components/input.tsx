@@ -2,20 +2,27 @@ import { cn } from '@/features/core';
 
 type InputProps = {
   label?: string;
-  disabled?: boolean;
   error?: string | boolean;
 };
 
 export function Input({
   label,
+  required = false,
   disabled = false,
   error,
   className,
   ...props
 }: InputProps & React.InputHTMLAttributes<HTMLInputElement>) {
+  // NOTE: label 아래에 mb-1보다 mb-2는 너무 넓고 mb-1.5가 더 나은 거 같은데
+
   return (
     <div className={className}>
-      {label && <div className="text-label-1 mb-1">{label}</div>}
+      {label && (
+        <div className="text-label-1 mb-1.5 flex">
+          {label}
+          {required && <div className="text-red-500">*</div>}
+        </div>
+      )}
       <input
         disabled={disabled}
         className={cn(
