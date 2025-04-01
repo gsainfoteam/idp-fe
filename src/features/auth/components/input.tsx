@@ -13,7 +13,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     return (
-      <div className={className}>
+      <div>
         {label && (
           <div className="text-label-1 mb-1 flex">
             {label}
@@ -31,6 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'bg-white border-red-500 shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
             disabled &&
               'bg-neutral-100 text-neutral-600 border border-neutral-400',
+            className,
           )}
           {...props}
         />
