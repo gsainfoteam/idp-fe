@@ -10,8 +10,6 @@ import { useLoginForm } from '../hooks/use-login-form';
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
 
-  const hasError = !form.formState.isValid;
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full px-5 max-w-[400px]">
@@ -30,7 +28,7 @@ export function LoginFrame() {
               <Button
                 variant="primary"
                 className="w-full"
-                disabled={hasError}
+                disabled={!form.formState.isValid}
                 isLoading={form.formState.isSubmitting}
               >
                 로그인
