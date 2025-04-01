@@ -19,7 +19,7 @@ export function RegisterForm() {
             type="email"
             placeholder="m@gm.gist.ac.kr"
             required
-            {...register('email', { required: true })}
+            {...register('email')}
           />
         </div>
         <div className="mb-4">
@@ -29,7 +29,7 @@ export function RegisterForm() {
             type="password"
             placeholder="비밀번호"
             required
-            {...register('password', { required: true })}
+            {...register('password')}
           />
         </div>
         <div>
@@ -39,7 +39,7 @@ export function RegisterForm() {
             type="password"
             placeholder="비밀번호 확인"
             required
-            {...register('passwordConfirm', { required: true })}
+            {...register('passwordConfirm')}
           />
         </div>
       </div>
@@ -53,7 +53,7 @@ export function RegisterForm() {
             type="text"
             placeholder="김지니"
             required
-            {...register('name', { required: true })}
+            {...register('name')}
           />
         </div>
         <div className="mb-4">
@@ -63,7 +63,7 @@ export function RegisterForm() {
             type="number"
             placeholder="20235000"
             required
-            {...register('studentId', { required: true })}
+            {...register('studentId')}
           />
         </div>
         <div>
@@ -72,12 +72,10 @@ export function RegisterForm() {
             error={formState.errors.phoneNumber?.message}
             type="tel"
             placeholder="010-0000-0000"
-            {...register('phoneNumber', { required: true })}
+            {...register('phoneNumber')}
           />
         </div>
       </div>
     </div>
   );
-
-  // TODO: required를 하면 register에 require를 자동으로 넣어주도록 하기
 }

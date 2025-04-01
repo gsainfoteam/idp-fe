@@ -1,13 +1,9 @@
 import { cva } from 'class-variance-authority';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import CheckIcon from '../../../assets/check.svg?react';
 
 import { cn } from '@/features/core';
-
-type CheckboxProps = {
-  checked?: boolean;
-};
 
 const checkboxStyles = cva(
   'w-5 h-5 bg-white rounded flex items-center justify-center transition-all',
@@ -30,9 +26,17 @@ export function Checkbox({
   disabled = false,
   className,
   children,
+  onChange,
   ...props
-}: CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
+}: React.InputHTMLAttributes<HTMLInputElement>) {
   const [isChecked, setChecked] = useState(checked);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!disabled) {
+      setChecked(e.target.checked);
+      onChange?.(e);
+    }
+  };
 
   return (
     <div
@@ -44,6 +48,7 @@ export function Checkbox({
       <input
         type="checkbox"
         checked={isChecked}
+        onChange={handleChange}
         className="hidden"
         {...props}
       />
