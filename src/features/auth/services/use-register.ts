@@ -1,17 +1,12 @@
+import { RegisterFormSchema } from '../hooks/use-register-form';
+
 import { api } from '@/features/core';
 
 interface RegisterResponse {
   accessToken: string;
 }
 
-export const register = async (requestBody: {
-  email: string;
-  password: string;
-  name: string;
-  studentId: string;
-  phoneNumber: string;
-  verificationJwtToken: string;
-}) => {
+export const register = async (requestBody: RegisterFormSchema) => {
   const modifiedRequestBody = {
     ...requestBody,
     phoneNumber: requestBody.phoneNumber.replace(/-/g, ''),

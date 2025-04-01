@@ -7,13 +7,10 @@ import { Input } from './input';
 export function LoginForm({ disabled }: { disabled: boolean }) {
   const { register, formState } = useFormContext<LoginFormSchema>();
 
-  const hasError =
-    formState.errors.email != null || formState.errors.password != null;
-
   return (
     <div className="flex flex-col">
       <Input
-        error={hasError}
+        error={formState.errors.email?.message}
         disabled={disabled}
         type="email"
         placeholder="m@gm.gist.ac.kr"
@@ -21,7 +18,7 @@ export function LoginForm({ disabled }: { disabled: boolean }) {
       />
       <div className="h-4" />
       <Input
-        error={hasError && '이메일 또는 비밀번호를 확인해주세요'}
+        error={formState.errors.password?.message}
         disabled={disabled}
         type="password"
         placeholder="password"

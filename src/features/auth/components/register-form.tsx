@@ -15,27 +15,30 @@ export function RegisterForm() {
         <div className="mb-4">
           <Input
             label="GIST 이메일"
-            error={formState.errors.email != null}
+            error={formState.errors.email?.message}
             type="email"
             placeholder="m@gm.gist.ac.kr"
+            required
             {...register('email')}
           />
         </div>
         <div className="mb-4">
           <Input
             label="비밀번호"
-            error={formState.errors.password != null}
+            error={formState.errors.password?.message}
             type="password"
             placeholder="비밀번호"
+            required
             {...register('password')}
           />
         </div>
         <div>
           <Input
             label="비밀번호 확인"
-            error={formState.errors.passwordConfirm != null}
+            error={formState.errors.passwordConfirm?.message}
             type="password"
             placeholder="비밀번호 확인"
+            required
             {...register('passwordConfirm')}
           />
         </div>
@@ -46,25 +49,27 @@ export function RegisterForm() {
         <div className="mb-4">
           <Input
             label="이름"
-            error={formState.errors.name != null}
+            error={formState.errors.name?.message}
             type="text"
             placeholder="김지니"
+            required
             {...register('name')}
           />
         </div>
         <div className="mb-4">
           <Input
             label="학번"
-            error={formState.errors.studentId != null}
+            error={formState.errors.studentId?.message}
             type="number"
             placeholder="20235000"
+            required
             {...register('studentId')}
           />
         </div>
         <div>
           <Input
             label="전화번호"
-            error={formState.errors.phoneNumber != null}
+            error={formState.errors.phoneNumber?.message}
             type="tel"
             placeholder="010-0000-0000"
             {...register('phoneNumber')}

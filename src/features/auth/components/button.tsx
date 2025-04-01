@@ -5,11 +5,13 @@ import { LoadingEllipse } from './loading-ellipse';
 
 import { cn } from '@/features/core';
 
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: NonNullable<VariantProps<typeof buttonStyle>['variant']>;
   disabled?: boolean;
   isLoading?: boolean;
-};
+}
+
+// TODO: isPressed -> active: 로 대체 가능
 
 const buttonStyle = cva(
   'flex items-center justify-center text-center rounded-lg w-auto cursor-pointer text-title-3',
@@ -73,7 +75,7 @@ export function Button({
   className,
   children,
   ...props
-}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: ButtonProps) {
   const [isPressed, setPressed] = useState(false);
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export function Button({
       {...props}
     >
       {variant === 'primary' && isLoading ? (
-        <LoadingEllipse color="bg-[#d9d9d9]" />
+        <LoadingEllipse className={isPressed ? 'bg-[#d9d9d9]' : 'bg-white'} />
       ) : (
         children
       )}
