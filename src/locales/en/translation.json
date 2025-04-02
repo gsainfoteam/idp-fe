@@ -10,5 +10,9 @@
         "phone": "Phone Number",
         "next": "Next"
     },
+    "login": {
+        "login": "Login",
+        "register": "Register"
+    },
     "language": "en"
 }
