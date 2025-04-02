@@ -1,20 +1,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { login } from '../services/use-login';
 
-const schema = z.object({
-  email: z.string().email('이메일 형식이 아닙니다'),
-  password: z.string().min(1, '비밀번호를 확인해주세요'),
-});
+const createSchema = (t: (key: string) => string) =>
+  z.object({
+    email: z.string().email(t('login.errors.email')),
+    password: z.string().min(1, t('login.errors.password')),
+  });
 
-export type LoginFormSchema = z.infer<typeof schema>;
+export type LoginFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useLoginForm = () => {
+  const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 
@@ -25,7 +28,7 @@ export const useLoginForm = () => {
         if (error instanceof AxiosError && error.response?.status === 401) {
           form.setError('email', { message: ' ' });
           form.setError('password', {
-            message: '잘못된 이메일과 비밀번호입니다',
+            message: t('login.errors.unauthorized'),
           });
         } else {
           console.error(error);

@@ -1,30 +1,33 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { register } from '../services/use-register';
 
-const schema = z
-  .object({
-    email: z.string().email('이메일 형식이 아닙니다'),
-    password: z.string().min(1, '비밀번호를 입력해주세요'),
-    passwordConfirm: z.string().min(1, '비밀번호를 입력해주세요'),
-    name: z.string().min(1, '이름을 입력해주세요'),
-    studentId: z.string().regex(/^\d{8}$/, '학번 형식이 아닙니다'),
-    phoneNumber: z
-      .string()
-      .regex(/^\d{3}-?\d{4}-?\d{4}$/, '전화번호 형식이 아닙니다'),
-  })
-  .refine((data) => data.password === data.passwordConfirm, {
-    message: '비밀번호가 일치하지 않습니다',
-    path: ['passwordConfirm'],
-  });
+const createSchema = (t: (key: string) => string) =>
+  z
+    .object({
+      email: z.string().email(t('register.errors.email')),
+      password: z.string().min(1, t('register.errors.password')),
+      passwordConfirm: z.string().min(1, t('register.errors.password')),
+      name: z.string().min(1, t('register.errors.name')),
+      studentId: z.string().regex(/^\d{8}$/, t('register.errors.studentId')),
+      phoneNumber: z
+        .string()
+        .regex(/^\d{3}-?\d{4}-?\d{4}$/, t('register.errors.phoneNumber')),
+    })
+    .refine((data) => data.password === data.passwordConfirm, {
+      message: t('register.errors.passwordConfirm'),
+      path: ['passwordConfirm'],
+    });
 
-export type RegisterFormSchema = z.infer<typeof schema>;
+export type RegisterFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useRegisterForm = () => {
+  const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 

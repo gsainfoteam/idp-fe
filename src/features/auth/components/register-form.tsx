@@ -70,7 +70,7 @@ export function RegisterForm() {
         </div>
         <div>
           <Input
-            label={t(`register.phone`)}
+            label={t(`register.phoneNumber`)}
             error={formState.errors.phoneNumber?.message}
             type="tel"
             placeholder="010-0000-0000"

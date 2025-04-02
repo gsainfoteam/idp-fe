@@ -7,12 +7,25 @@
         "passwordConfirm": "Password Confirm",
         "name": "Name",
         "studentId": "Student ID",
-        "phone": "Phone Number",
-        "next": "Next"
+        "phoneNumber": "Phone Number",
+        "next": "Next",
+        "errors": {
+            "email": "Email is not valid.",
+            "password": "Password is not valid.",
+            "passwordConfirm": "Password does not match.",
+            "name": "Please enter your name.",
+            "studentId": "Please enter your student ID.",
+            "phoneNumber": "Please enter your phone number."
+        }
     },
     "login": {
         "login": "Login",
-        "register": "Register"
+        "register": "Register",
+        "errors": {
+            "password": "Please enter your password.",
+            "email": "Please enter your email.",
+            "unauthorized": "Email or password is incorrect."
+        }
     },
     "language": "en"
 }
