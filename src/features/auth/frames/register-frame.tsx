@@ -8,8 +8,8 @@ export function RegisterFrame() {
   const { form, onSubmit } = useRegisterForm();
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="flex flex-col w-full max-w-[400px] px-5 py-6">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex w-full max-w-[400px] flex-col px-5 py-6">
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <RegisterForm />

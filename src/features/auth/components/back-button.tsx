@@ -14,7 +14,7 @@ export function BackButton({
 
   return (
     <div
-      className={cn('flex gap-1 items-center w-fit cursor-pointer', className)}
+      className={cn('flex w-fit cursor-pointer items-center gap-1', className)}
       onClick={(e) => {
         if (router.history.canGoBack()) router.history.back();
         onClick?.(e);
