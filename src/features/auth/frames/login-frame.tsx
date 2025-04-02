@@ -15,9 +15,9 @@ export function LoginFrame() {
     form.formState.errors.password != null;
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full px-5 max-w-[400px]">
-        <div className="flex flex-col justify-center items-center">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="w-full max-w-[400px] px-5">
+        <div className="flex flex-col items-center justify-center">
           <InfoTeamLogo />
           <InfoTeamTextLogo />
         </div>
@@ -30,7 +30,7 @@ export function LoginFrame() {
           </FormProvider>
         </div>
         <div className="h-8" />
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
           <Button
             variant="primary"
             className="w-full"

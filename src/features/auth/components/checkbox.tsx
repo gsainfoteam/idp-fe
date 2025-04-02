@@ -36,7 +36,7 @@ export function Checkbox({
 
   return (
     <div
-      className={cn('flex items-center w-fit', className)}
+      className={cn('flex w-fit items-center', className)}
       onClick={() => {
         if (!disabled) setChecked(!isChecked);
       }}
@@ -54,7 +54,7 @@ export function Checkbox({
       </div>
       <div
         className={cn(
-          'ml-2 text-body-1 text-black',
+          'text-body-1 ml-2 text-black',
           disabled ? 'cursor-default' : 'cursor-pointer',
         )}
       >

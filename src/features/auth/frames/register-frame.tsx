@@ -10,8 +10,8 @@ export function RegisterFrame() {
   const hasError = Object.keys(form.formState.errors).length > 0;
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="flex flex-col w-full h-[800px] px-5 py-6 max-w-[400px]">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex h-[800px] w-full max-w-[400px] flex-col px-5 py-6">
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <RegisterForm />
