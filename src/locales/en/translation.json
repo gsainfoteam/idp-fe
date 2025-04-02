@@ -1,0 +1,14 @@
+{
+    "register": {
+        "title": "Register",
+        "defaultInfo": "Default Information",
+        "email": "GIST Email",
+        "password": "Password",
+        "passwordConfirm": "Password Confirm",
+        "name": "Name",
+        "studentId": "Student ID",
+        "phone": "Phone Number",
+        "next": "Next"
+    },
+    "language": "en"
+}
