@@ -6,57 +6,57 @@ import { Input } from '../components/input';
 export function ComponentTestFrame() {
   return (
     <div className="">
-      <h1 className="ml-10 mt-10 text-title-1">Typography</h1>
+      <h1 className="text-title-1 mt-10 ml-10">Typography</h1>
       <div className="m-10">
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-title-1">Title 1</div>
-          <div className="w-[120px] mr-4 text-title-1">22px</div>
-          <div className="w-[120px] mr-4 text-title-1">700</div>
-          <div className="w-[120px] text-title-1">150%</div>
+        <div className="mb-2 flex">
+          <div className="text-title-1 mr-4 w-[200px]">Title 1</div>
+          <div className="text-title-1 mr-4 w-[120px]">22px</div>
+          <div className="text-title-1 mr-4 w-[120px]">700</div>
+          <div className="text-title-1 w-[120px]">150%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-title-2">Title 2</div>
-          <div className="w-[120px] mr-4 text-title-2">18px</div>
-          <div className="w-[120px] mr-4 text-title-2">600</div>
-          <div className="w-[120px] text-title-2">150%</div>
+        <div className="mb-2 flex">
+          <div className="text-title-2 mr-4 w-[200px]">Title 2</div>
+          <div className="text-title-2 mr-4 w-[120px]">18px</div>
+          <div className="text-title-2 mr-4 w-[120px]">600</div>
+          <div className="text-title-2 w-[120px]">150%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-title-3">Title 3</div>
-          <div className="w-[120px] mr-4 text-title-3">16px</div>
-          <div className="w-[120px] mr-4 text-title-3">600</div>
-          <div className="w-[120px] text-title-3">150%</div>
+        <div className="mb-2 flex">
+          <div className="text-title-3 mr-4 w-[200px]">Title 3</div>
+          <div className="text-title-3 mr-4 w-[120px]">16px</div>
+          <div className="text-title-3 mr-4 w-[120px]">600</div>
+          <div className="text-title-3 w-[120px]">150%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-body-1">Body 1</div>
-          <div className="w-[120px] mr-4 text-body-1">16px</div>
-          <div className="w-[120px] mr-4 text-body-1">400</div>
-          <div className="w-[120px] text-body-1">150%</div>
+        <div className="mb-2 flex">
+          <div className="text-body-1 mr-4 w-[200px]">Body 1</div>
+          <div className="text-body-1 mr-4 w-[120px]">16px</div>
+          <div className="text-body-1 mr-4 w-[120px]">400</div>
+          <div className="text-body-1 w-[120px]">150%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-body-2">Body 2</div>
-          <div className="w-[120px] mr-4 text-body-2">14px</div>
-          <div className="w-[120px] mr-4 text-body-2">400</div>
-          <div className="w-[120px] text-body-2">140%</div>
+        <div className="mb-2 flex">
+          <div className="text-body-2 mr-4 w-[200px]">Body 2</div>
+          <div className="text-body-2 mr-4 w-[120px]">14px</div>
+          <div className="text-body-2 mr-4 w-[120px]">400</div>
+          <div className="text-body-2 w-[120px]">140%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-label-1">Label 1</div>
-          <div className="w-[120px] mr-4 text-label-1">14px</div>
-          <div className="w-[120px] mr-4 text-label-1">400</div>
-          <div className="w-[120px] text-label-1">120%</div>
+        <div className="mb-2 flex">
+          <div className="text-label-1 mr-4 w-[200px]">Label 1</div>
+          <div className="text-label-1 mr-4 w-[120px]">14px</div>
+          <div className="text-label-1 mr-4 w-[120px]">400</div>
+          <div className="text-label-1 w-[120px]">120%</div>
         </div>
-        <div className="flex mb-2">
-          <div className="w-[200px] mr-4 text-label-2">Label 2</div>
-          <div className="w-[120px] mr-4 text-label-2">12px</div>
-          <div className="w-[120px] mr-4 text-label-2">400</div>
-          <div className="w-[120px] text-label-2">120%</div>
+        <div className="mb-2 flex">
+          <div className="text-label-2 mr-4 w-[200px]">Label 2</div>
+          <div className="text-label-2 mr-4 w-[120px]">12px</div>
+          <div className="text-label-2 mr-4 w-[120px]">400</div>
+          <div className="text-label-2 w-[120px]">120%</div>
         </div>
       </div>
       <hr className="border-neutral-100" />
 
-      <h1 className="ml-10 mt-10 text-title-1">Color Palette</h1>
+      <h1 className="text-title-1 mt-10 ml-10">Color Palette</h1>
       <div className="m-10">
         <div className="text-title-2 mb-5">Primary</div>
-        <div className="w-[1280px] h-20 mb-5 gap-2 grid grid-cols-11 grid-rows-1">
+        <div className="mb-5 grid h-20 w-[1280px] grid-cols-11 grid-rows-1 gap-2">
           <div className="bg-primary-50 rounded-[8px]"></div>
           <div className="bg-primary-100 rounded-[8px]"></div>
           <div className="bg-primary-200 rounded-[8px]"></div>
@@ -71,39 +71,39 @@ export function ComponentTestFrame() {
         </div>
 
         <div className="text-title-2 mb-5">Red</div>
-        <div className="w-[1280px] h-20 mb-5 gap-2 grid grid-cols-11 grid-rows-1">
-          <div className="bg-red-50 rounded-[8px]"></div>
-          <div className="bg-red-100 rounded-[8px]"></div>
-          <div className="bg-red-200 rounded-[8px]"></div>
-          <div className="bg-red-300 rounded-[8px]"></div>
-          <div className="bg-red-400 rounded-[8px]"></div>
-          <div className="bg-red-500 rounded-[8px]"></div>
-          <div className="bg-red-600 rounded-[8px]"></div>
-          <div className="bg-red-700 rounded-[8px]"></div>
-          <div className="bg-red-800 rounded-[8px]"></div>
-          <div className="bg-red-900 rounded-[8px]"></div>
-          <div className="bg-red-950 rounded-[8px]"></div>
+        <div className="mb-5 grid h-20 w-[1280px] grid-cols-11 grid-rows-1 gap-2">
+          <div className="rounded-[8px] bg-red-50"></div>
+          <div className="rounded-[8px] bg-red-100"></div>
+          <div className="rounded-[8px] bg-red-200"></div>
+          <div className="rounded-[8px] bg-red-300"></div>
+          <div className="rounded-[8px] bg-red-400"></div>
+          <div className="rounded-[8px] bg-red-500"></div>
+          <div className="rounded-[8px] bg-red-600"></div>
+          <div className="rounded-[8px] bg-red-700"></div>
+          <div className="rounded-[8px] bg-red-800"></div>
+          <div className="rounded-[8px] bg-red-900"></div>
+          <div className="rounded-[8px] bg-red-950"></div>
         </div>
 
         <div className="text-title-2 mb-5">Neutral</div>
-        <div className="w-[1280px] h-20 mb-5 gap-2 grid grid-cols-11 grid-rows-1">
-          <div className="bg-neutral-50 rounded-[8px]"></div>
-          <div className="bg-neutral-100 rounded-[8px]"></div>
-          <div className="bg-neutral-200 rounded-[8px]"></div>
-          <div className="bg-neutral-300 rounded-[8px]"></div>
-          <div className="bg-neutral-400 rounded-[8px]"></div>
-          <div className="bg-neutral-500 rounded-[8px]"></div>
-          <div className="bg-neutral-600 rounded-[8px]"></div>
-          <div className="bg-neutral-700 rounded-[8px]"></div>
-          <div className="bg-neutral-800 rounded-[8px]"></div>
-          <div className="bg-neutral-900 rounded-[8px]"></div>
-          <div className="bg-neutral-950 rounded-[8px]"></div>
+        <div className="mb-5 grid h-20 w-[1280px] grid-cols-11 grid-rows-1 gap-2">
+          <div className="rounded-[8px] bg-neutral-50"></div>
+          <div className="rounded-[8px] bg-neutral-100"></div>
+          <div className="rounded-[8px] bg-neutral-200"></div>
+          <div className="rounded-[8px] bg-neutral-300"></div>
+          <div className="rounded-[8px] bg-neutral-400"></div>
+          <div className="rounded-[8px] bg-neutral-500"></div>
+          <div className="rounded-[8px] bg-neutral-600"></div>
+          <div className="rounded-[8px] bg-neutral-700"></div>
+          <div className="rounded-[8px] bg-neutral-800"></div>
+          <div className="rounded-[8px] bg-neutral-900"></div>
+          <div className="rounded-[8px] bg-neutral-950"></div>
         </div>
       </div>
       <hr className="border-neutral-100" />
 
-      <h1 className="ml-10 mt-10 text-title-1">Button Component</h1>
-      <div className="w-[700px] m-10 gap-5 grid grid-cols-4 grid-rows-3">
+      <h1 className="text-title-1 mt-10 ml-10">Button Component</h1>
+      <div className="m-10 grid w-[700px] grid-cols-4 grid-rows-3 gap-5">
         <Button variant="primary">Button</Button>
         <Button variant="secondary">Button</Button>
         <Button variant="text">Button</Button>
@@ -135,8 +135,8 @@ export function ComponentTestFrame() {
       </div>
       <hr className="border-neutral-100" />
 
-      <h1 className="ml-10 mt-10 text-title-1">Input Component</h1>
-      <div className="w-[300px] m-10">
+      <h1 className="text-title-1 mt-10 ml-10">Input Component</h1>
+      <div className="m-10 w-[300px]">
         <Input placeholder="텍스트를 입력하세요" className="mb-5" />
         <Input
           placeholder="텍스트를 입력하세요"
@@ -168,8 +168,8 @@ export function ComponentTestFrame() {
       </div>
       <hr className="border-neutral-100" />
 
-      <h1 className="ml-10 mt-10 text-title-1">Checkbox Component</h1>
-      <div className="w-auto m-10">
+      <h1 className="text-title-1 mt-10 ml-10">Checkbox Component</h1>
+      <div className="m-10 w-auto">
         <Checkbox className="mb-1">체크박스</Checkbox>
         <Checkbox className="mb-1" checked>
           체크박스
@@ -181,8 +181,8 @@ export function ComponentTestFrame() {
       </div>
       <hr className="border-neutral-100" />
 
-      <h1 className="ml-10 mt-10 text-title-1">Undo Component</h1>
-      <div className="w-auto m-10">
+      <h1 className="text-title-1 mt-10 ml-10">Undo Component</h1>
+      <div className="m-10 w-auto">
         <BackButton className="mb-1">로그인 화면으로 돌아가기</BackButton>
         <BackButton>뒤로가기</BackButton>
       </div>

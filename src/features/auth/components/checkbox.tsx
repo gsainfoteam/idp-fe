@@ -10,7 +10,7 @@ export const Checkbox = forwardRef<
 >(({ disabled = false, className, children, ...props }, ref) => {
   return (
     <div className="cursor-pointer">
-      <label className="flex items-center w-fit">
+      <label className="flex w-fit items-center">
         <input
           type="checkbox"
           className={cn('peer appearance-none', className)} // group:checked:bg-primary-500
@@ -20,10 +20,10 @@ export const Checkbox = forwardRef<
         />
         <div
           className={cn(
-            'w-5 h-5 m-1 rounded flex items-center justify-center transition-all',
-            'bg-white border border-neutral-500 peer-checked:bg-primary-500 peer-checked:border-none peer-checked:*:block',
+            'm-1 flex h-5 w-5 items-center justify-center rounded transition-all',
+            'peer-checked:bg-primary-500 border border-neutral-500 bg-white peer-checked:border-none peer-checked:*:block',
             disabled
-              ? 'bg-neutral-300 peer-checked:bg-neutral-300 cursor-default'
+              ? 'cursor-default bg-neutral-300 peer-checked:bg-neutral-300'
               : 'cursor-pointer',
           )}
         >
@@ -31,7 +31,7 @@ export const Checkbox = forwardRef<
         </div>
         <div
           className={cn(
-            'ml-2 text-body-1 text-black',
+            'text-body-1 ml-2 text-black',
             disabled ? 'cursor-default' : 'cursor-pointer',
           )}
         >
