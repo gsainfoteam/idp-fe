@@ -14,15 +14,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 // TODO: cva, cn 같은 함수에도 tailwindcss prettier 적용되게 하기
 
 const buttonStyle = cva(
-  'flex items-center justify-center text-center rounded-lg w-auto cursor-pointer text-title-3',
+  'text-title-3 flex w-auto cursor-pointer items-center justify-center rounded-lg text-center',
   {
     variants: {
       variant: {
         default:
-          'w-full py-3 bg-neutral-50 text-black border border-neutral-200',
-        primary: 'w-full py-3 bg-primary-600 text-white',
+          'w-full border border-neutral-200 bg-neutral-50 py-3 text-black',
+        primary: 'bg-primary-600 w-full py-3 text-white',
         secondary:
-          'w-full py-3 bg-white text-primary-600 border border-primary-600',
+          'text-primary-600 border-primary-600 w-full border bg-white py-3',
         text: 'text-primary-600',
         link: 'text-body-1 text-neutral-400 underline',
       },
@@ -39,12 +39,12 @@ const buttonStyle = cva(
       {
         variant: 'default',
         isLoading: true,
-        className: 'bg-neutral-200 border-neutral-300',
+        className: 'border-neutral-300 bg-neutral-200',
       },
       {
         variant: 'default',
         disabled: true,
-        className: 'bg-neutral-300 border-neutral-200',
+        className: 'border-neutral-200 bg-neutral-300',
       },
       {
         variant: 'primary',
@@ -69,7 +69,7 @@ const buttonStyle = cva(
       {
         variant: 'secondary',
         disabled: true,
-        className: 'bg-neutral-100 text-neutral-600 border-neutral-600',
+        className: 'border-neutral-600 bg-neutral-100 text-neutral-600',
       },
       {
         variant: 'text',
