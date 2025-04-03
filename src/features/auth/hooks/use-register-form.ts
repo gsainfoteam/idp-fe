@@ -1,36 +1,129 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { getJWTToken } from '../services/get-token';
+import { sendVerificationCode } from '../services/send-verification-code';
 import { register } from '../services/use-register';
 
-const schema = z
+export const RegisterSchema = z
   .object({
-    email: z.string().email('이메일 형식이 아닙니다'),
-    password: z.string().min(1, '비밀번호를 입력해주세요'),
-    passwordConfirm: z.string().min(1, '비밀번호를 입력해주세요'),
+    email: z
+      .string()
+      .regex(
+        /^\S+@(?:gm\.)?gist\.ac\.kr$/,
+        '지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요',
+      ),
+    code: z.string().min(1, '인증번호가 확인되지 않았습니다'),
+    password: z.string().min(12, '비밀번호는 12자리 이상이어야 합니다'),
+    passwordConfirm: z.string(),
     name: z.string().min(1, '이름을 입력해주세요'),
-    studentId: z.string().regex(/^\d{8}$/, '학번 형식이 아닙니다'),
+    studentId: z
+      .string()
+      .length(8, `${new Date().getFullYear()}0000 형태로 입력해주세요`),
     phoneNumber: z
       .string()
-      .regex(/^\d{3}-?\d{4}-?\d{4}$/, '전화번호 형식이 아닙니다'),
+      .regex(
+        /^(\+\d{1,2})?\s?\(?(\d{3})\)?[\s.-]?(\d{3,4})[\s.-]?(\d{4})$/,
+        '올바른 전화번호를 입력해주세요',
+      ),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다',
     path: ['passwordConfirm'],
   });
 
-export type RegisterFormSchema = z.infer<typeof schema>;
+export type RegisterFormSchema = z.infer<typeof RegisterSchema>;
 
 export const useRegisterForm = () => {
+  const [jwtToken, setJwtToken] = useState<string>('');
+
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(RegisterSchema),
     mode: 'onBlur',
   });
 
-  const onSubmit = form.handleSubmit(async (data) => {
-    await register(data);
-  });
+  const onSendVerificationCode = async (data: RegisterFormSchema) => {
+    try {
+      await sendVerificationCode({ email: data.email });
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        switch (err.response?.status) {
+          case 409:
+            form.setError('email', {
+              message: '해당 이메일은 이미 가입되어 있습니다',
+            });
+            break;
+          default:
+            console.error(err);
+        }
+      } else {
+        console.error(err);
+      }
+    }
+  };
 
-  return { form, onSubmit };
+  const onVerifyCode = async (data: RegisterFormSchema) => {
+    try {
+      console.log(data); // TEST: DEBUG
+      const verifyEmailResponse = await getJWTToken({
+        subject: data.email,
+        code: data.code,
+        hint: 'email',
+      });
+
+      console.log(verifyEmailResponse); // TEST: DEBUG
+      setJwtToken(verifyEmailResponse.verificationJwtToken);
+
+      return true;
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        switch (err.response?.status) {
+          case 403:
+            form.setError('code', { message: '인증번호가 잘못 되었습니다' });
+            break;
+          default:
+            console.error(err);
+        }
+      } else {
+        console.error(err);
+      }
+      return false;
+    }
+  };
+
+  const onRegister = async (data: RegisterFormSchema) => {
+    try {
+      await register({
+        ...data,
+        verificationJwtToken: jwtToken,
+      });
+
+      console.log('회원가입 성공'); // TEST: DEBUG
+      return true;
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        switch (err.response?.status) {
+          case 403:
+            form.setError('code', { message: '인증번호가 잘못 되었습니다' });
+            break;
+          case 409:
+            form.setError('email', {
+              message: '해당 이메일은 이미 가입되어 있습니다',
+            });
+            break;
+          default:
+            console.error(err);
+        }
+      } else {
+        console.error(err);
+      }
+
+      return false;
+    }
+  };
+
+  return { form, onSendVerificationCode, onVerifyCode, onRegister };
 };

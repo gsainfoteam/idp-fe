@@ -1,11 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 
-import InfoTeamLogo from '../../../assets/logo.svg?react';
 import InfoTeamTextLogo from '../../../assets/text-logo.svg?react';
-import { Button } from '../components/button';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
+
+import { Button } from '@/features/core';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
@@ -14,7 +14,6 @@ export function LoginFrame() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[400px] px-5">
         <div className="flex flex-col items-center justify-center">
-          <InfoTeamLogo />
           <InfoTeamTextLogo />
         </div>
         <div className="h-8" />

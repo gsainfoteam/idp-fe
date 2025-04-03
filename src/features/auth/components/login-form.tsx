@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { LoginFormSchema } from '../hooks/use-login-form';
 
-import { Input } from './input';
+import { Input } from '@/features/core';
 
 export function LoginForm({ disabled }: { disabled: boolean }) {
   const { register, formState } = useFormContext<LoginFormSchema>();
