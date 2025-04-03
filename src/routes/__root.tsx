@@ -1,6 +1,6 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router';
 
-import { LanguageSwitcher } from '../locales/langauge-switcher';
+import { LanguageSwitcher } from '../locales/language-switcher';
 
 export const Route = createRootRoute({
   component: RootComponent,
