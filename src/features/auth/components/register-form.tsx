@@ -29,7 +29,7 @@ export function RegisterForm() {
             label={t(`register.password`)}
             error={formState.errors.password?.message}
             type="password"
-            placeholder="비밀번호"
+            placeholder={t(`register.password`)}
             required
             {...register('password')}
           />
@@ -39,7 +39,7 @@ export function RegisterForm() {
             label={t(`register.passwordConfirm`)}
             error={formState.errors.passwordConfirm?.message}
             type="password"
-            placeholder="비밀번호 확인"
+            placeholder={t(`register.passwordConfirm`)}
             required
             {...register('passwordConfirm')}
           />
@@ -53,7 +53,7 @@ export function RegisterForm() {
             label={t(`register.name`)}
             error={formState.errors.name?.message}
             type="text"
-            placeholder="김지니"
+            placeholder={t(`register.examples.name`)}
             required
             {...register('name')}
           />

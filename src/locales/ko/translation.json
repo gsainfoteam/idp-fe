@@ -16,6 +16,9 @@
             "name": "이름을 입력해주세요.",
             "studentId": "학번을 입력해주세요.",
             "phoneNumber": "전화번호를 입력해주세요."
+        },
+        "examples": {
+            "name": "김지니"
         }
     },
     "login": {

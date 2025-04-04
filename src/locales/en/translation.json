@@ -16,6 +16,9 @@
             "name": "Please enter your name.",
             "studentId": "Please enter your student ID.",
             "phoneNumber": "Please enter your phone number."
+        },
+        "examples": {
+            "name": "Genie Kim"
         }
     },
     "login": {
