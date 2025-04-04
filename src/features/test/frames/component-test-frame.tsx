@@ -1,6 +1,10 @@
+import { useState } from 'react';
+
 import { BackButton, Button, Checkbox, Input } from '@/features/core';
 
 export function ComponentTestFrame() {
+  const [count, setCount] = useState(0);
+
   return (
     <div className="">
       <h1 className="text-title-1 mt-10 ml-10">Typography</h1>
@@ -106,13 +110,9 @@ export function ComponentTestFrame() {
         <Button variant="default">Button</Button>
         <Button variant="text">Button</Button>
         <Button variant="link">Button</Button>
-        <Button variant="primary" isLoading>
-          Button
-        </Button>
+        <Button variant="primary" isLoading />
         <div className="col-span-1" />
-        <Button variant="default" isLoading>
-          Button
-        </Button>
+        <Button variant="default" isLoading />
         <div className="col-span-1" />
         <div className="col-span-1" />
         <Button variant="primary" disabled>

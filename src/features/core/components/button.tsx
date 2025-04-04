@@ -11,8 +11,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 // TODO: isPressed -> active: 로 대체 가능
 
-// TODO: cva, cn 같은 함수에도 tailwindcss prettier 적용되게 하기
-
 const buttonStyle = cva(
   'text-title-3 flex w-auto cursor-pointer items-center justify-center rounded-lg text-center',
   {
@@ -112,7 +110,7 @@ export function Button({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onMouseDown={(e) => {
         setPressed(true);
         onMouseDown?.(e);

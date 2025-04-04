@@ -9,8 +9,6 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   suffix?: React.ReactNode;
 }
 
-// TODO: zod의 required 값과 sync할 수 있나?
-
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {

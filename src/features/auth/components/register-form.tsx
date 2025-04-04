@@ -5,9 +5,6 @@ import { Button } from '../../core/components/button';
 import { Input } from '../../core/components/input';
 import { RegisterFormSchema } from '../hooks/use-register-form';
 
-// TODO: isSubmitting 직접 구현해서 button loading 처리하기
-// TODO: 인증번호 발송 버튼 누르면 onBlur 되어서 모든 인풋 컴포넌트들에 에러 라벨 생김
-
 export function RegisterForm({
   onSendVerificationCode,
   onVerifyCode,
@@ -18,7 +15,9 @@ export function RegisterForm({
   const { register, formState, getFieldState, getValues } =
     useFormContext<RegisterFormSchema>();
 
-  const [isCodeSent, setCodeSent] = useState(false);
+  const [isCodeSent, setCodeSent] = useState<'none' | 'sending' | 'sent'>(
+    'none',
+  );
   const [isCodeValid, setCodeValid] = useState(false);
 
   // TODO: 인증번호 만료 타이머
@@ -41,6 +40,7 @@ export function RegisterForm({
           <Button
             variant="default"
             type="button"
+            isLoading={isCodeSent === 'sending'}
             disabled={(() => {
               console.log(getFieldState('email')); // TEST: DEBUG // TODO: 바로 맞게 입력하면 disabled가 해제가 안됨
               return (
@@ -49,15 +49,16 @@ export function RegisterForm({
               );
             })()}
             onClick={async () => {
-              setCodeSent(true);
+              setCodeSent('sending');
               await onSendVerificationCode(getValues());
+              setCodeSent('sent');
             }}
           >
-            {isCodeSent ? '인증번호 재발송' : '인증번호 발송'}
+            {isCodeSent === 'sent' ? '인증번호 재발송' : '인증번호 발송'}
           </Button>
         )}
       </div>
-      {isCodeSent && (
+      {isCodeSent === 'sent' && (
         <>
           <div className="h-5" />
           <Input
