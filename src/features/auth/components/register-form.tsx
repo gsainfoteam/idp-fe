@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { Button } from '../../core/components/button';
-import { Input } from '../../core/components/input';
 import { RegisterFormSchema } from '../hooks/use-register-form';
+
+import { Button, Input } from '@/features/core';
 
 export function RegisterForm({
   onSendVerificationCode,
@@ -12,7 +12,7 @@ export function RegisterForm({
   onSendVerificationCode: (data: RegisterFormSchema) => Promise<void>;
   onVerifyCode: (data: RegisterFormSchema) => Promise<boolean>;
 }) {
-  const { register, formState, getFieldState, getValues } =
+  const { register, formState, getValues, control } =
     useFormContext<RegisterFormSchema>();
 
   const [isCodeSent, setCodeSent] = useState<'none' | 'sending' | 'sent'>(
@@ -21,6 +21,7 @@ export function RegisterForm({
   const [isCodeValid, setCodeValid] = useState(false);
 
   // TODO: 인증번호 만료 타이머
+  // TODO: 비밀번호 보이게 하기 버튼
 
   return (
     <div className="flex flex-col">
@@ -37,25 +38,25 @@ export function RegisterForm({
           })}
         />
         {!isCodeValid && (
-          <Button
-            variant="default"
-            type="button"
-            isLoading={isCodeSent === 'sending'}
-            disabled={(() => {
-              console.log(getFieldState('email')); // TEST: DEBUG // TODO: 바로 맞게 입력하면 disabled가 해제가 안됨
-              return (
-                getFieldState('email').invalid ||
-                !getFieldState('email').isTouched
-              );
-            })()}
-            onClick={async () => {
-              setCodeSent('sending');
-              await onSendVerificationCode(getValues());
-              setCodeSent('sent');
-            }}
-          >
-            {isCodeSent === 'sent' ? '인증번호 재발송' : '인증번호 발송'}
-          </Button>
+          <Controller
+            control={control}
+            name="email"
+            render={({ fieldState }) => (
+              <Button
+                variant="default"
+                type="button"
+                isLoading={isCodeSent === 'sending'}
+                disabled={fieldState.invalid || !fieldState.isTouched}
+                onClick={async () => {
+                  setCodeSent('sending');
+                  await onSendVerificationCode(getValues());
+                  setCodeSent('sent');
+                }}
+              >
+                {isCodeSent === 'sent' ? '인증번호 재발송' : '인증번호 발송'}
+              </Button>
+            )}
+          />
         )}
       </div>
       {isCodeSent === 'sent' && (

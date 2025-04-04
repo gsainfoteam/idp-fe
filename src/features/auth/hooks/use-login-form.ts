@@ -20,9 +20,7 @@ export const useLoginForm = () => {
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
-      const response = await login(data);
-
-      console.log(response.accessToken); // TEST: DEBUG
+      console.log(await login(data)); // TEST: debug
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
         form.setError('email', { message: ' ' });

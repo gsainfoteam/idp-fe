@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -16,7 +15,7 @@ export const RegisterSchema = z
         /^\S+@(?:gm\.)?gist\.ac\.kr$/,
         '지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요',
       ),
-    code: z.string().min(1, '인증번호가 확인되지 않았습니다'),
+    code: z.string().min(1, '인증번호가 확인되지 않았습니다').default(''),
     password: z.string().min(12, '비밀번호는 12자리 이상이어야 합니다'),
     passwordConfirm: z.string(),
     name: z.string().min(1, '이름을 입력해주세요'),
@@ -29,6 +28,7 @@ export const RegisterSchema = z
         /^(\+\d{1,2})?\s?\(?(\d{3})\)?[\s.-]?(\d{3,4})[\s.-]?(\d{4})$/,
         '올바른 전화번호를 입력해주세요',
       ),
+    verificationJwtToken: z.string().default(''),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다',
@@ -38,8 +38,6 @@ export const RegisterSchema = z
 export type RegisterFormSchema = z.infer<typeof RegisterSchema>;
 
 export const useRegisterForm = () => {
-  const [jwtToken, setJwtToken] = useState<string>('');
-
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
     mode: 'onBlur',
@@ -67,15 +65,16 @@ export const useRegisterForm = () => {
 
   const onVerifyCode = async (data: RegisterFormSchema) => {
     try {
-      console.log(data); // TEST: DEBUG
       const verifyEmailResponse = await getJWTToken({
         subject: data.email,
         code: data.code,
         hint: 'email',
       });
 
-      console.log(verifyEmailResponse); // TEST: DEBUG
-      setJwtToken(verifyEmailResponse.verificationJwtToken);
+      form.setValue(
+        'verificationJwtToken',
+        verifyEmailResponse.verificationJwtToken,
+      );
 
       return true;
     } catch (err) {
@@ -96,12 +95,8 @@ export const useRegisterForm = () => {
 
   const onRegister = async (data: RegisterFormSchema) => {
     try {
-      await register({
-        ...data,
-        verificationJwtToken: jwtToken,
-      });
-
-      console.log('회원가입 성공'); // TEST: DEBUG
+      console.log(data);
+      await register(data);
       return true;
     } catch (err) {
       if (err instanceof AxiosError) {

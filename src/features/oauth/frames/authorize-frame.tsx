@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button, Checkbox } from '@/features/core';
 
 export function AuthorizeFrame() {
-  const [checked, setChecked] = useState([false, false, false]);
+  const [checked, setChecked] = useState([false, false]);
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -21,8 +21,10 @@ export function AuthorizeFrame() {
         </div>
         <div className="h-1" />
         <Checkbox
-          checked={checked[0]}
-          onChange={() => setChecked([!checked[0], !checked[0], !checked[0]])}
+          checked={checked.every(Boolean)}
+          onChange={() =>
+            setChecked((prev) => prev.map(() => !prev.every(Boolean)))
+          }
         >
           <div className="font-bold">전체 동의하기</div>
         </Checkbox>
@@ -41,17 +43,17 @@ export function AuthorizeFrame() {
           <div className="text-body-2 mb-1 text-neutral-800">선택</div>
           <div className="flex flex-col gap-1 pl-1">
             <Checkbox
-              checked={checked[1]}
+              checked={checked[0]}
               onChange={() =>
-                setChecked([!checked[1] && checked[2], !checked[1], checked[2]])
+                setChecked((prev) => prev.map((v, i) => (i === 0 ? !v : v)))
               }
             >
               학번
             </Checkbox>
             <Checkbox
-              checked={checked[2]}
+              checked={checked[1]}
               onChange={() =>
-                setChecked([checked[1] && !checked[2], checked[1], !checked[2]])
+                setChecked((prev) => prev.map((v, i) => (i === 1 ? !v : v)))
               }
             >
               전화번호
