@@ -9,6 +9,9 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   suffix?: React.ReactNode;
 }
 
+// TODO: 인증번호 만료 타이머
+// TODO: 비밀번호 보이게 하기 버튼
+
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {

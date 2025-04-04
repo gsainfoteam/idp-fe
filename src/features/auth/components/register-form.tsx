@@ -20,9 +20,6 @@ export function RegisterForm({
   );
   const [isCodeValid, setCodeValid] = useState(false);
 
-  // TODO: 인증번호 만료 타이머
-  // TODO: 비밀번호 보이게 하기 버튼
-
   return (
     <div className="flex flex-col">
       <div className="text-title-3 mb-2.5 text-neutral-900">이메일</div>

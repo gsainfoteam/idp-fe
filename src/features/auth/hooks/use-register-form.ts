@@ -95,7 +95,6 @@ export const useRegisterForm = () => {
 
   const onRegister = async (data: RegisterFormSchema) => {
     try {
-      console.log(data);
       await register(data);
       return true;
     } catch (err) {
