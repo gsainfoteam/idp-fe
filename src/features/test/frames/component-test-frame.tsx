@@ -1,10 +1,6 @@
-import { useState } from 'react';
-
 import { BackButton, Button, Checkbox, Input } from '@/features/core';
 
 export function ComponentTestFrame() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="">
       <h1 className="text-title-1 mt-10 ml-10">Typography</h1>
