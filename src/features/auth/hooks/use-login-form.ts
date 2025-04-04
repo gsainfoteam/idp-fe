@@ -19,18 +19,18 @@ export const useLoginForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    login(data)
-      .then((r) => console.log(r)) // NOTE: debug
-      .catch((error) => {
-        if (error instanceof AxiosError && error.response?.status === 401) {
-          form.setError('email', { message: ' ' });
-          form.setError('password', {
-            message: '잘못된 이메일과 비밀번호입니다',
-          });
-        } else {
-          console.error(error);
-        }
-      });
+    try {
+      console.log(await login(data)); // TEST: debug
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 401) {
+        form.setError('email', { message: ' ' });
+        form.setError('password', {
+          message: '이메일 또는 비밀번호를 확인해주세요',
+        });
+      } else {
+        console.error(error);
+      }
+    }
   });
 
   return { form, onSubmit };
