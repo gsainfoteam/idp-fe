@@ -4,14 +4,14 @@ import { LoginFormSchema } from '../hooks/use-login-form';
 
 import { Input } from '@/features/core';
 
-export function LoginForm({ disabled }: { disabled: boolean }) {
+export function LoginForm() {
   const { register, formState } = useFormContext<LoginFormSchema>();
 
   return (
     <div className="flex flex-col">
       <Input
         error={formState.errors.email?.message}
-        disabled={disabled}
+        disabled={formState.isSubmitting}
         type="email"
         placeholder="m@gm.gist.ac.kr"
         {...register('email')}
@@ -19,7 +19,7 @@ export function LoginForm({ disabled }: { disabled: boolean }) {
       <div className="h-4" />
       <Input
         error={formState.errors.password?.message}
-        disabled={disabled}
+        disabled={formState.isSubmitting}
         type="password"
         placeholder="password"
         {...register('password')}

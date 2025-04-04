@@ -119,7 +119,7 @@ export function RegisterForm({
         <Input
           label="학번"
           error={formState.errors.studentId?.message}
-          type="number"
+          type="text"
           placeholder={`${new Date().getFullYear()}0000`}
           required
           className="mb-5"

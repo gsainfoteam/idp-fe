@@ -20,7 +20,7 @@ export function LoginFrame() {
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
-              <LoginForm disabled={form.formState.isSubmitting} />
+              <LoginForm />
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-center justify-center">
