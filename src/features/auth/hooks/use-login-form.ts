@@ -1,20 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { login } from '../services/use-login';
 
-const schema = z.object({
-  email: z.string().email('이메일 형식이 아닙니다'),
-  password: z.string().min(1, '비밀번호를 확인해주세요'),
-});
+const createSchema = (t: TFunction<'translation', undefined>) =>
+  z.object({
+    email: z.string().email(t('login.errors.email')),
+    password: z.string().min(1, t('login.errors.password')),
+  });
 
-export type LoginFormSchema = z.infer<typeof schema>;
+export type LoginFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useLoginForm = () => {
+  const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 

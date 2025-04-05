@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { getJWTToken } from '../services/get-token';
@@ -38,6 +39,7 @@ export const RegisterSchema = z
 export type RegisterFormSchema = z.infer<typeof RegisterSchema>;
 
 export const useRegisterForm = () => {
+  const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
     mode: 'onBlur',

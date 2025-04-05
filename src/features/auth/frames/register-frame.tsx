@@ -1,5 +1,6 @@
 import { useRouter } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { RegisterForm } from '../components/register-form';
 import { useRegisterForm } from '../hooks/use-register-form';
@@ -33,7 +34,7 @@ export function RegisterFrame() {
                   router.navigate({ to: '/auth/register/done' });
               }}
             >
-              다음으로
+              {t('register.next')}
             </Button>
           </form>
         </FormProvider>
