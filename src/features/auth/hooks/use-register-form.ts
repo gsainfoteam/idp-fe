@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -8,40 +9,41 @@ import { getJWTToken } from '../services/get-token';
 import { sendVerificationCode } from '../services/send-verification-code';
 import { register } from '../services/use-register';
 
-export const RegisterSchema = z
-  .object({
-    email: z
-      .string()
-      .regex(
-        /^\S+@(?:gm\.)?gist\.ac\.kr$/,
-        '지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요',
+export const createSchema = (t: TFunction) =>
+  z
+    .object({
+      email: z
+        .string()
+        .regex(/^\S+@(?:gm\.)?gist\.ac\.kr$/, t('register.errors.email')),
+      code: z.string().min(1, t('register.errors.code')).default(''),
+      password: z.string().min(12, t('register.errors.password')),
+      passwordConfirm: z.string(),
+      name: z.string().min(1, t('register.errors.name')),
+      studentId: z.string().length(
+        8,
+        t('register.errors.studentId', {
+          form: `${new Date().getFullYear()}0000`,
+        }),
       ),
-    code: z.string().min(1, '인증번호가 확인되지 않았습니다').default(''),
-    password: z.string().min(12, '비밀번호는 12자리 이상이어야 합니다'),
-    passwordConfirm: z.string(),
-    name: z.string().min(1, '이름을 입력해주세요'),
-    studentId: z
-      .string()
-      .length(8, `${new Date().getFullYear()}0000 형태로 입력해주세요`),
-    phoneNumber: z
-      .string()
-      .regex(
-        /^(\+\d{1,2})?\s?\(?(\d{3})\)?[\s.-]?(\d{3,4})[\s.-]?(\d{4})$/,
-        '올바른 전화번호를 입력해주세요',
-      ),
-    verificationJwtToken: z.string().default(''),
-  })
-  .refine((data) => data.password === data.passwordConfirm, {
-    message: '비밀번호가 일치하지 않습니다',
-    path: ['passwordConfirm'],
-  });
+      phoneNumber: z
+        .string()
+        .regex(
+          /^(\+\d{1,2})?\s?\(?(\d{3})\)?[\s.-]?(\d{3,4})[\s.-]?(\d{4})$/,
+          t('register.errors.phoneNumber'),
+        ),
+      verificationJwtToken: z.string().default(''),
+    })
+    .refine((data) => data.password === data.passwordConfirm, {
+      message: t('register.errors.passwordConfirm'),
+      path: ['passwordConfirm'],
+    });
 
-export type RegisterFormSchema = z.infer<typeof RegisterSchema>;
+export type RegisterFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useRegisterForm = () => {
   const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(RegisterSchema),
+    resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 
@@ -53,7 +55,7 @@ export const useRegisterForm = () => {
         switch (err.response?.status) {
           case 409:
             form.setError('email', {
-              message: '해당 이메일은 이미 가입되어 있습니다',
+              message: t('register.errors.emailAlreadyExists'),
             });
             break;
           default:
@@ -83,7 +85,9 @@ export const useRegisterForm = () => {
       if (err instanceof AxiosError) {
         switch (err.response?.status) {
           case 403:
-            form.setError('code', { message: '인증번호가 잘못 되었습니다' });
+            form.setError('code', {
+              message: t('register.errors.invalidCode'),
+            });
             break;
           default:
             console.error(err);
@@ -103,11 +107,13 @@ export const useRegisterForm = () => {
       if (err instanceof AxiosError) {
         switch (err.response?.status) {
           case 403:
-            form.setError('code', { message: '인증번호가 잘못 되었습니다' });
+            form.setError('code', {
+              message: t('register.errors.invalidCode'),
+            });
             break;
           case 409:
             form.setError('email', {
-              message: '해당 이메일은 이미 가입되어 있습니다',
+              message: t('register.errors.emailAlreadyExists'),
             });
             break;
           default:

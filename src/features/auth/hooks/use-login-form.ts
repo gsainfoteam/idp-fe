@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { login } from '../services/use-login';
 
-const createSchema = (t: TFunction<'translation', undefined>) =>
+const createSchema = (t: TFunction) =>
   z.object({
     email: z.string().email(t('login.errors.email')),
     password: z.string().min(1, t('login.errors.password')),
@@ -29,7 +29,7 @@ export const useLoginForm = () => {
       if (error instanceof AxiosError && error.response?.status === 401) {
         form.setError('email', { message: ' ' });
         form.setError('password', {
-          message: '이메일 또는 비밀번호를 확인해주세요',
+          message: t('login.errors.unauthorized'),
         });
       } else {
         console.error(error);

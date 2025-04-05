@@ -1,33 +1,86 @@
 {
   "register": {
     "title": "회원가입",
-    "defaultInfo": "기본정보",
-    "email": "GIST 이메일",
-    "password": "비밀번호",
-    "passwordConfirm": "비밀번호 확인",
-    "name": "이름",
-    "studentId": "학번",
-    "phoneNumber": "전화번호",
-    "next": "다음으로",
-    "errors": {
-      "email": "이메일 형식이 올바르지 않습니다.",
-      "password": "비밀번호 형식이 올바르지 않습니다.",
-      "passwordConfirm": "비밀번호가 일치하지 않습니다.",
-      "name": "이름을 입력해주세요.",
-      "studentId": "학번을 입력해주세요.",
-      "phoneNumber": "전화번호를 입력해주세요."
+    "titles": {
+      "email": "이메일",
+      "password": "비밀번호",
+      "defaultInfo": "기본정보"
     },
-    "examples": {
-      "name": "김지니"
+    "fields": {
+      "email": "GIST 이메일",
+      "code": "인증번호",
+      "password": "비밀번호",
+      "passwordConfirm": "비밀번호 확인",
+      "name": "이름",
+      "studentId": "학번",
+      "phoneNumber": "전화번호"
+    },
+    "placeholders": {
+      "email": "m@gm.gist.ac.kr",
+      "code": "인증번호",
+      "password": "비밀번호",
+      "passwordConfirm": "비밀번호 확인",
+      "name": "김지니",
+      "studentId": "{{form}}",
+      "phoneNumber": "010-0000-0000"
+    },
+    "errors": {
+      "emailAlreadyExists": "해당 이메일은 이미 가입되어 있습니다",
+      "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
+      "invalidCode": "인증번호가 잘못 되었습니다",
+      "code": "인증번호가 확인되지 않았습니다",
+      "password": "비밀번호는 12자리 이상이어야 합니다",
+      "passwordConfirm": "비밀번호가 일치하지 않습니다",
+      "name": "이름을 입력해주세요",
+      "studentId": "{{form}}형태로 입력해주세요.",
+      "phoneNumber": "올바른 전화번호를 입력해주세요"
+    },
+    "buttons": {
+      "sendCode": "인증번호 발송",
+      "resendCode": "인증번호 재발송",
+      "verifyCode": "확인",
+      "next": "다음으로"
+    }
+  },
+  "register-done": {
+    "title": "회원가입",
+    "description": "회원가입이 완료되었습니다",
+    "buttons": {
+      "login": "로그인하기"
     }
   },
   "login": {
-    "login": "로그인",
-    "register": "회원가입",
+    "placeholders": {
+      "email": "m@gm.gist.ac.kr",
+      "password": "비밀번호"
+    },
     "errors": {
-      "password": "비밀번호를 입력해주세요.",
-      "email": "이메일을 입력해주세요.",
-      "unauthorized": "이메일 또는 비밀번호가 올바르지 않습니다."
+      "email": "이메일을 입력해주세요",
+      "password": "비밀번호를 입력해주세요",
+      "unauthorized": "이메일 또는 비밀번호를 확인해주세요"
+    },
+    "buttons": {
+      "login": "로그인",
+      "register": "회원가입"
+    }
+  },
+  "authorize": {
+    "title": "GIST 메일을 사용하여\n'지글' 서비스에\n로그인하려고 합니다",
+    "description": "계속하면 아래 정보가 '지글'에 제공됩니다",
+    "labels": {
+      "required": "필수",
+      "optional": "선택"
+    },
+    "checkboxes": {
+      "all-agree": "전체 동의하기",
+      "email": "이메일",
+      "name": "이름",
+      "studentId": "학번",
+      "phoneNumber": "전화번호"
+    },
+    "buttons": {
+      "cancel": "취소",
+      "continue": "계속하기"
     }
   },
   "language": "ko"

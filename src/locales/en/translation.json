@@ -1,33 +1,86 @@
 {
   "register": {
     "title": "Register",
-    "defaultInfo": "Default Information",
-    "email": "GIST Email",
-    "password": "Password",
-    "passwordConfirm": "Password Confirm",
-    "name": "Name",
-    "studentId": "Student ID",
-    "phoneNumber": "Phone Number",
-    "next": "Next",
-    "errors": {
-      "email": "Email is not valid.",
-      "password": "Password is not valid.",
-      "passwordConfirm": "Password does not match.",
-      "name": "Please enter your name.",
-      "studentId": "Please enter your student ID.",
-      "phoneNumber": "Please enter your phone number."
+    "titles": {
+      "email": "Email",
+      "password": "Password",
+      "defaultInfo": "Basic Information"
     },
-    "examples": {
-      "name": "Genie Kim"
+    "fields": {
+      "email": "GIST Email",
+      "code": "Verification Code",
+      "password": "Password",
+      "passwordConfirm": "Confirm Password",
+      "name": "Name",
+      "studentId": "Student ID",
+      "phoneNumber": "Phone Number"
+    },
+    "placeholders": {
+      "email": "m@gm.gist.ac.kr",
+      "code": "Verification Code",
+      "password": "Password",
+      "passwordConfirm": "Confirm Password",
+      "name": "Kim Jin-i",
+      "studentId": "{{form}}",
+      "phoneNumber": "010-0000-0000"
+    },
+    "errors": {
+      "emailAlreadyExists": "This email is already registered",
+      "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
+      "invalidCode": "The verification code is incorrect",
+      "code": "The verification code could not be verified",
+      "password": "Password must be at least 12 characters long",
+      "passwordConfirm": "Passwords do not match",
+      "name": "Please enter your name",
+      "studentId": "Please enter in the {{form}} format.",
+      "phoneNumber": "Please enter a valid phone number"
+    },
+    "buttons": {
+      "sendCode": "Send Verification Code",
+      "resendCode": "Resend Verification Code",
+      "verifyCode": "Verify",
+      "next": "Next"
+    }
+  },
+  "register-done": {
+    "title": "Register",
+    "description": "Registration is complete",
+    "buttons": {
+      "login": "Log In"
     }
   },
   "login": {
-    "login": "Login",
-    "register": "Register",
+    "placeholders": {
+      "email": "m@gm.gist.ac.kr",
+      "password": "Password"
+    },
     "errors": {
-      "password": "Please enter your password.",
-      "email": "Please enter your email.",
-      "unauthorized": "Email or password is incorrect."
+      "email": "Please enter your email",
+      "password": "Please enter your password",
+      "unauthorized": "Please check your email or password"
+    },
+    "buttons": {
+      "login": "Log In",
+      "register": "Register"
+    }
+  },
+  "authorize": {
+    "title": "You are trying to log in to\n'Ziggle' service with\nyour GIST email",
+    "description": "By continuing, the following information will be provided to 'Ziggle'",
+    "labels": {
+      "required": "Required",
+      "optional": "Optional"
+    },
+    "checkboxes": {
+      "all-agree": "Agree to All",
+      "email": "Email",
+      "name": "Name",
+      "studentId": "Student ID",
+      "phoneNumber": "Phone Number"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "continue": "Continue"
     }
   },
   "language": "en"

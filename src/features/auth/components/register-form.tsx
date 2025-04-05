@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { RegisterFormSchema } from '../hooks/use-register-form';
 
@@ -14,21 +15,26 @@ export function RegisterForm({
 }) {
   const { register, formState, getValues, control } =
     useFormContext<RegisterFormSchema>();
+  const { t } = useTranslation();
 
   const [isCodeSent, setCodeSent] = useState<'none' | 'sending' | 'sent'>(
     'none',
   );
   const [isCodeValid, setCodeValid] = useState(false);
 
+  // TODO: 인증번호 확인 버튼 width도 hug로 만들어야 다국어 지원 가능
+
   return (
     <div className="flex flex-col">
-      <div className="text-title-3 mb-2.5 text-neutral-900">이메일</div>
+      <div className="text-title-3 mb-2.5 text-neutral-900">
+        {t('register.titles.email')}
+      </div>
       <div className="flex flex-col gap-2">
         <Input
-          label="GIST 이메일"
+          label={t('register.fields.email')}
           error={formState.errors.email?.message}
           type="email"
-          placeholder="m@gm.gist.ac.kr"
+          placeholder={t('register.placeholders.email')}
           required
           {...register('email', {
             onChange: () => setCodeValid(false),
@@ -50,7 +56,9 @@ export function RegisterForm({
                   setCodeSent('sent');
                 }}
               >
-                {isCodeSent === 'sent' ? '인증번호 재발송' : '인증번호 발송'}
+                {isCodeSent === 'sent'
+                  ? t('register.buttons.resendCode')
+                  : t('register.buttons.sendCode')}
               </Button>
             )}
           />
@@ -60,10 +68,10 @@ export function RegisterForm({
         <>
           <div className="h-5" />
           <Input
-            label="인증번호"
+            label={t('register.fields.code')}
             error={formState.errors.code?.message}
             type="text"
-            placeholder="인증번호"
+            placeholder={t('register.placeholders.code')}
             required
             disabled={isCodeValid}
             {...register('code')}
@@ -77,7 +85,7 @@ export function RegisterForm({
                   setCodeValid(await onVerifyCode(getValues()))
                 }
               >
-                확인
+                {t('register.buttons.verifyCode')}
               </Button>
             }
           />
@@ -85,51 +93,57 @@ export function RegisterForm({
       )}
       <div className="h-8" />
       <div>
-        <div className="text-title-3 mb-2.5 text-neutral-900">비밀번호</div>
+        <div className="text-title-3 mb-2.5 text-neutral-900">
+          {t('register.titles.password')}
+        </div>
         <Input
-          label="비밀번호"
+          label={t('register.fields.password')}
           error={formState.errors.password?.message}
           type="password"
-          placeholder="비밀번호"
+          placeholder={t('register.placeholders.password')}
           required
           className="mb-5"
           {...register('password')}
         />
         <Input
-          label="비밀번호 확인"
+          label={t('register.fields.passwordConfirm')}
           error={formState.errors.passwordConfirm?.message}
           type="password"
-          placeholder="비밀번호 확인"
+          placeholder={t('register.placeholders.passwordConfirm')}
           required
           {...register('passwordConfirm')}
         />
       </div>
       <div className="h-8" />
       <div>
-        <div className="text-title-3 mb-2.5 text-neutral-900">기본정보</div>
+        <div className="text-title-3 mb-2.5 text-neutral-900">
+          {t('register.titles.defaultInfo')}
+        </div>
         <Input
-          label="이름"
+          label={t('register.fields.name')}
           error={formState.errors.name?.message}
           type="text"
-          placeholder="김지니"
+          placeholder={t('register.placeholders.name')}
           required
           className="mb-5"
           {...register('name')}
         />
         <Input
-          label="학번"
+          label={t('register.fields.studentId')}
           error={formState.errors.studentId?.message}
           type="text"
-          placeholder={`${new Date().getFullYear()}0000`}
+          placeholder={t('register.placeholders.studentId', {
+            form: `${new Date().getFullYear()}0000`,
+          })}
           required
           className="mb-5"
           {...register('studentId')}
         />
         <Input
-          label="전화번호"
+          label={t('register.fields.phoneNumber')}
           error={formState.errors.phoneNumber?.message}
           type="tel"
-          placeholder="010-0000-0000"
+          placeholder={t('register.placeholders.phoneNumber')}
           required
           {...register('phoneNumber')}
         />

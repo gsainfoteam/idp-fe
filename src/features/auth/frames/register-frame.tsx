@@ -10,13 +10,14 @@ import { Button } from '@/features/core';
 export function RegisterFrame() {
   const { form, onSendVerificationCode, onVerifyCode, onRegister } =
     useRegisterForm();
+  const { t } = useTranslation();
 
   const router = useRouter();
 
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex w-full max-w-[400px] flex-col px-5 py-6">
-        <div className="text-title-1 mb-4">회원가입</div>
+        <div className="text-title-1 mb-4">{t('register.title')}</div>
         <FormProvider {...form}>
           <form>
             <RegisterForm
@@ -34,7 +35,7 @@ export function RegisterFrame() {
                   router.navigate({ to: '/auth/register/done' });
               }}
             >
-              {t('register.next')}
+              {t('register.buttons.next')}
             </Button>
           </form>
         </FormProvider>

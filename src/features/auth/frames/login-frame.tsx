@@ -32,7 +32,7 @@ export function LoginFrame() {
                 disabled={!form.formState.isValid}
                 isLoading={form.formState.isSubmitting}
               >
-                {t(`login.login`)}
+                {t(`login.buttons.login`)}
               </Button>
               <div className="h-2" />
               <Link to="/auth/register">
@@ -40,7 +40,7 @@ export function LoginFrame() {
                   variant="link"
                   className="text-neutral-800 no-underline"
                 >
-                  {t('login.register')}
+                  {t('login.buttons.register')}
                 </Button>
               </Link>
             </div>
