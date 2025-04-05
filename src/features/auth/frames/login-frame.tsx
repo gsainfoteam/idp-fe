@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import InfoTeamLogo from '../../../assets/logo.svg?react';
 import InfoTeamTextLogo from '../../../assets/text-logo.svg?react';
@@ -9,6 +10,7 @@ import { useLoginForm } from '../hooks/use-login-form';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
+  const { t } = useTranslation();
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -31,7 +33,7 @@ export function LoginFrame() {
                 disabled={!form.formState.isValid}
                 isLoading={form.formState.isSubmitting}
               >
-                로그인
+                {t(`login.login`)}
               </Button>
               <div className="h-2" />
               <Link to="/auth/register">
@@ -39,7 +41,7 @@ export function LoginFrame() {
                   variant="link"
                   className="text-neutral-800 no-underline"
                 >
-                  회원가입
+                  {t('login.register')}
                 </Button>
               </Link>
             </div>
