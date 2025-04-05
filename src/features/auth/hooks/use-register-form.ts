@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { register } from '../services/use-register';
 
-const createSchema = (t: (key: string) => string) =>
+const createSchema = (t: TFunction<'translation', undefined>) =>
   z
     .object({
       email: z.string().email(t('register.errors.email')),
