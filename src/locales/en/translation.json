@@ -1,34 +1,34 @@
 {
-    "register": {
-        "title": "Register",
-        "defaultInfo": "Default Information",
-        "email": "GIST Email",
-        "password": "Password",
-        "passwordConfirm": "Password Confirm",
-        "name": "Name",
-        "studentId": "Student ID",
-        "phoneNumber": "Phone Number",
-        "next": "Next",
-        "errors": {
-            "email": "Email is not valid.",
-            "password": "Password is not valid.",
-            "passwordConfirm": "Password does not match.",
-            "name": "Please enter your name.",
-            "studentId": "Please enter your student ID.",
-            "phoneNumber": "Please enter your phone number."
-        },
-        "examples": {
-            "name": "Genie Kim"
-        }
+  "register": {
+    "title": "Register",
+    "defaultInfo": "Default Information",
+    "email": "GIST Email",
+    "password": "Password",
+    "passwordConfirm": "Password Confirm",
+    "name": "Name",
+    "studentId": "Student ID",
+    "phoneNumber": "Phone Number",
+    "next": "Next",
+    "errors": {
+      "email": "Email is not valid.",
+      "password": "Password is not valid.",
+      "passwordConfirm": "Password does not match.",
+      "name": "Please enter your name.",
+      "studentId": "Please enter your student ID.",
+      "phoneNumber": "Please enter your phone number."
     },
-    "login": {
-        "login": "Login",
-        "register": "Register",
-        "errors": {
-            "password": "Please enter your password.",
-            "email": "Please enter your email.",
-            "unauthorized": "Email or password is incorrect."
-        }
-    },
-    "language": "en"
+    "examples": {
+      "name": "Genie Kim"
+    }
+  },
+  "login": {
+    "login": "Login",
+    "register": "Register",
+    "errors": {
+      "password": "Please enter your password.",
+      "email": "Please enter your email.",
+      "unauthorized": "Email or password is incorrect."
+    }
+  },
+  "language": "en"
 }
