@@ -20,6 +20,7 @@ export function RegisterForm({
   const [isCodeSent, setCodeSent] = useState<'none' | 'sending' | 'sent'>(
     'none',
   );
+  const [isVerifying, setVerifying] = useState(false);
   const [isCodeValid, setCodeValid] = useState(false);
 
   // TODO: 인증번호 확인 버튼 width도 hug로 만들어야 다국어 지원 가능
@@ -77,13 +78,16 @@ export function RegisterForm({
             {...register('code')}
             suffix={
               <Button
-                variant="secondary"
+                variant="default"
                 type="button"
                 className="w-17.5"
+                isLoading={isVerifying}
                 disabled={isCodeValid}
-                onClick={async () =>
-                  setCodeValid(await onVerifyCode(getValues()))
-                }
+                onClick={async () => {
+                  setVerifying(true);
+                  setCodeValid(await onVerifyCode(getValues()));
+                  setVerifying(false);
+                }}
               >
                 {t('register.buttons.verifyCode')}
               </Button>

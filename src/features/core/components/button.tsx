@@ -42,7 +42,7 @@ const buttonStyle = cva(
       {
         variant: 'default',
         disabled: true,
-        className: 'border-neutral-200 bg-neutral-300',
+        className: 'border-neutral-300 bg-neutral-200',
       },
       {
         variant: 'primary',
@@ -62,6 +62,11 @@ const buttonStyle = cva(
       {
         variant: 'secondary',
         isPressed: true,
+        className: 'bg-primary-50',
+      },
+      {
+        variant: 'secondary',
+        isLoading: true,
         className: 'bg-primary-50',
       },
       {
@@ -121,10 +126,14 @@ export function Button({
       )}
       {...props}
     >
-      {(variant === 'default' || variant === 'primary') && isLoading ? (
+      {variant !== 'text' && variant !== 'link' && isLoading ? (
         <LoadingEllipse
           className={
-            variant === 'default' ? 'bg-neutral-600' : 'bg-neutral-200'
+            variant === 'default'
+              ? 'bg-neutral-600'
+              : variant === 'primary'
+                ? 'bg-neutral-200'
+                : 'bg-primary-600'
           }
         />
       ) : (
