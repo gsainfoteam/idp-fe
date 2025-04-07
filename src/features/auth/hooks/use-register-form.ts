@@ -84,7 +84,7 @@ export const useRegisterForm = () => {
     } catch (err) {
       if (err instanceof AxiosError) {
         switch (err.response?.status) {
-          case 403:
+          case 400:
             form.setError('code', {
               message: t('register.errors.invalidCode'),
             });
@@ -106,7 +106,7 @@ export const useRegisterForm = () => {
     } catch (err) {
       if (err instanceof AxiosError) {
         switch (err.response?.status) {
-          case 403:
+          case 400:
             form.setError('code', {
               message: t('register.errors.invalidCode'),
             });
