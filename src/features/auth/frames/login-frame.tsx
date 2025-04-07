@@ -2,11 +2,11 @@ import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import InfoTeamLogo from '../../../assets/logo.svg?react';
 import InfoTeamTextLogo from '../../../assets/text-logo.svg?react';
-import { Button } from '../components/button';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
+
+import { Button } from '@/features/core';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
@@ -16,14 +16,13 @@ export function LoginFrame() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[400px] px-5">
         <div className="flex flex-col items-center justify-center">
-          <InfoTeamLogo />
           <InfoTeamTextLogo />
         </div>
         <div className="h-8" />
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
-              <LoginForm disabled={form.formState.isSubmitting} />
+              <LoginForm />
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-center justify-center">
@@ -33,7 +32,7 @@ export function LoginFrame() {
                 disabled={!form.formState.isValid}
                 isLoading={form.formState.isSubmitting}
               >
-                {t(`login.login`)}
+                {t(`login.buttons.login`)}
               </Button>
               <div className="h-2" />
               <Link to="/auth/register">
@@ -41,7 +40,7 @@ export function LoginFrame() {
                   variant="link"
                   className="text-neutral-800 no-underline"
                 >
-                  {t('login.register')}
+                  {t('login.buttons.register')}
                 </Button>
               </Link>
             </div>

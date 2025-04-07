@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { login } from '../services/use-login';
 
-const createSchema = (t: TFunction<'translation', undefined>) =>
+const createSchema = (t: TFunction) =>
   z.object({
     email: z.string().email(t('login.errors.email')),
     password: z.string().min(1, t('login.errors.password')),
@@ -23,18 +23,18 @@ export const useLoginForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    login(data)
-      .then((r) => console.log(r)) // NOTE: debug
-      .catch((error) => {
-        if (error instanceof AxiosError && error.response?.status === 401) {
-          form.setError('email', { message: ' ' });
-          form.setError('password', {
-            message: t('login.errors.unauthorized'),
-          });
-        } else {
-          console.error(error);
-        }
-      });
+    try {
+      console.log(await login(data)); // TEST: debug
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 401) {
+        form.setError('email', { message: ' ' });
+        form.setError('password', {
+          message: t('login.errors.unauthorized'),
+        });
+      } else {
+        console.error(error);
+      }
+    }
   });
 
   return { form, onSubmit };

@@ -1,9 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
 
-import { LoadingEllipse } from './loading-ellipse';
-
-import { cn } from '@/features/core';
+import { cn, LoadingEllipse } from '@/features/core';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: NonNullable<VariantProps<typeof buttonStyle>['variant']>;
@@ -14,23 +12,46 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 // TODO: isPressed -> active: 로 대체 가능
 
 const buttonStyle = cva(
-  'flex items-center justify-center text-center rounded-lg w-auto cursor-pointer text-title-3',
+  'text-title-3 flex w-auto cursor-pointer items-center justify-center rounded-lg text-center',
   {
     variants: {
       variant: {
-        primary: 'w-full py-3 bg-primary-600 text-white',
+        default:
+          'w-full border border-neutral-200 bg-neutral-50 py-3 text-black',
+        primary: 'bg-primary-600 w-full py-3 text-white',
         secondary:
-          'w-full py-3 bg-white text-primary-600 border border-primary-600',
+          'text-primary-600 border-primary-600 w-full border bg-white py-3',
         text: 'text-primary-600',
         link: 'text-body-1 text-neutral-400 underline',
       },
       isPressed: { true: 'cursor-default', false: '' },
+      isLoading: { true: 'cursor-default', false: '' },
       disabled: { true: 'cursor-default', false: '' },
     },
     compoundVariants: [
       {
+        variant: 'default',
+        isPressed: true,
+        className: 'bg-neutral-100',
+      },
+      {
+        variant: 'default',
+        isLoading: true,
+        className: 'border-neutral-300 bg-neutral-200',
+      },
+      {
+        variant: 'default',
+        disabled: true,
+        className: 'border-neutral-300 bg-neutral-200',
+      },
+      {
         variant: 'primary',
         isPressed: true,
+        className: 'bg-primary-700',
+      },
+      {
+        variant: 'primary',
+        isLoading: true,
         className: 'bg-primary-700',
       },
       {
@@ -45,8 +66,13 @@ const buttonStyle = cva(
       },
       {
         variant: 'secondary',
+        isLoading: true,
+        className: 'bg-primary-50',
+      },
+      {
+        variant: 'secondary',
         disabled: true,
-        className: 'bg-neutral-100 text-neutral-600 border-neutral-600',
+        className: 'border-neutral-600 bg-neutral-100 text-neutral-600',
       },
       {
         variant: 'text',
@@ -89,16 +115,27 @@ export function Button({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onMouseDown={(e) => {
         setPressed(true);
         onMouseDown?.(e);
       }}
-      className={cn(buttonStyle({ variant, isPressed, disabled }), className)}
+      className={cn(
+        buttonStyle({ variant, isPressed, isLoading, disabled }),
+        className,
+      )}
       {...props}
     >
-      {variant === 'primary' && isLoading ? (
-        <LoadingEllipse className={isPressed ? 'bg-[#d9d9d9]' : 'bg-white'} />
+      {variant !== 'text' && variant !== 'link' && isLoading ? (
+        <LoadingEllipse
+          className={
+            variant === 'default'
+              ? 'bg-neutral-600'
+              : variant === 'primary'
+                ? 'bg-neutral-200'
+                : 'bg-primary-600'
+          }
+        />
       ) : (
         children
       )}

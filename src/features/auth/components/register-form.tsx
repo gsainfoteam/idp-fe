@@ -1,82 +1,156 @@
-import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { RegisterFormSchema } from '../hooks/use-register-form';
 
-import { Input } from './input';
+import { Button, Input } from '@/features/core';
 
-export function RegisterForm() {
-  const { register, formState } = useFormContext<RegisterFormSchema>();
+export function RegisterForm({
+  onSendVerificationCode,
+  onVerifyCode,
+}: {
+  onSendVerificationCode: (data: RegisterFormSchema) => Promise<void>;
+  onVerifyCode: (data: RegisterFormSchema) => Promise<boolean>;
+}) {
+  const { register, formState, getValues, control } =
+    useFormContext<RegisterFormSchema>();
   const { t } = useTranslation();
+
+  const [isCodeSent, setCodeSent] = useState<'none' | 'sending' | 'sent'>(
+    'none',
+  );
+  const [isVerifying, setVerifying] = useState(false);
+  const [isCodeValid, setCodeValid] = useState(false);
+
+  // TODO: 인증번호 확인 버튼 width도 hug로 만들어야 다국어 지원 가능
 
   return (
     <div className="flex flex-col">
-      <div className="text-title-1 mb-4">{t(`register.title`)}</div>
+      <div className="text-title-3 mb-2.5 text-neutral-900">
+        {t('register.titles.email')}
+      </div>
+      <div className="flex flex-col gap-2">
+        <Input
+          label={t('register.fields.email')}
+          error={formState.errors.email?.message}
+          type="email"
+          placeholder={t('register.placeholders.email')}
+          required
+          {...register('email', {
+            onChange: () => setCodeValid(false),
+          })}
+        />
+        {!isCodeValid && (
+          <Controller
+            control={control}
+            name="email"
+            render={({ fieldState }) => (
+              <Button
+                variant="default"
+                type="button"
+                isLoading={isCodeSent === 'sending'}
+                disabled={fieldState.invalid || !fieldState.isTouched}
+                onClick={async () => {
+                  setCodeSent('sending');
+                  await onSendVerificationCode(getValues());
+                  setCodeSent('sent');
+                }}
+              >
+                {isCodeSent === 'sent'
+                  ? t('register.buttons.resendCode')
+                  : t('register.buttons.sendCode')}
+              </Button>
+            )}
+          />
+        )}
+      </div>
+      {isCodeSent === 'sent' && (
+        <>
+          <div className="h-5" />
+          <Input
+            label={t('register.fields.code')}
+            error={formState.errors.code?.message}
+            type="text"
+            placeholder={t('register.placeholders.code')}
+            required
+            disabled={isCodeValid}
+            {...register('code')}
+            suffix={
+              <Button
+                variant="default"
+                type="button"
+                className="w-17.5"
+                isLoading={isVerifying}
+                disabled={isCodeValid}
+                onClick={async () => {
+                  setVerifying(true);
+                  setCodeValid(await onVerifyCode(getValues()));
+                  setVerifying(false);
+                }}
+              >
+                {t('register.buttons.verifyCode')}
+              </Button>
+            }
+          />
+        </>
+      )}
+      <div className="h-8" />
       <div>
-        <div className="text-title-3 mb-2.5">{t(`register.defaultInfo`)}</div>
-        <div className="mb-4">
-          <Input
-            label={t(`register.email`)}
-            error={formState.errors.email?.message}
-            type="email"
-            placeholder="m@gm.gist.ac.kr"
-            required
-            {...register('email')}
-          />
+        <div className="text-title-3 mb-2.5 text-neutral-900">
+          {t('register.titles.password')}
         </div>
-        <div className="mb-4">
-          <Input
-            label={t(`register.password`)}
-            error={formState.errors.password?.message}
-            type="password"
-            placeholder={t(`register.password`)}
-            required
-            {...register('password')}
-          />
-        </div>
-        <div>
-          <Input
-            label={t(`register.passwordConfirm`)}
-            error={formState.errors.passwordConfirm?.message}
-            type="password"
-            placeholder={t(`register.passwordConfirm`)}
-            required
-            {...register('passwordConfirm')}
-          />
-        </div>
+        <Input
+          label={t('register.fields.password')}
+          error={formState.errors.password?.message}
+          type="password"
+          placeholder={t('register.placeholders.password')}
+          required
+          className="mb-5"
+          {...register('password')}
+        />
+        <Input
+          label={t('register.fields.passwordConfirm')}
+          error={formState.errors.passwordConfirm?.message}
+          type="password"
+          placeholder={t('register.placeholders.passwordConfirm')}
+          required
+          {...register('passwordConfirm')}
+        />
       </div>
       <div className="h-8" />
       <div>
-        <div className="text-title-3 mb-2.5">{t(`register.defaultInfo`)}</div>
-        <div className="mb-4">
-          <Input
-            label={t(`register.name`)}
-            error={formState.errors.name?.message}
-            type="text"
-            placeholder={t(`register.examples.name`)}
-            required
-            {...register('name')}
-          />
+        <div className="text-title-3 mb-2.5 text-neutral-900">
+          {t('register.titles.defaultInfo')}
         </div>
-        <div className="mb-4">
-          <Input
-            label={t(`register.studentId`)}
-            error={formState.errors.studentId?.message}
-            type="number"
-            placeholder="20235000"
-            required
-            {...register('studentId')}
-          />
-        </div>
-        <div>
-          <Input
-            label={t(`register.phoneNumber`)}
-            error={formState.errors.phoneNumber?.message}
-            type="tel"
-            placeholder="010-0000-0000"
-            {...register('phoneNumber')}
-          />
-        </div>
+        <Input
+          label={t('register.fields.name')}
+          error={formState.errors.name?.message}
+          type="text"
+          placeholder={t('register.placeholders.name')}
+          required
+          className="mb-5"
+          {...register('name')}
+        />
+        <Input
+          label={t('register.fields.studentId')}
+          error={formState.errors.studentId?.message}
+          type="text"
+          placeholder={t('register.placeholders.studentId', {
+            form: `${new Date().getFullYear()}0000`,
+          })}
+          required
+          className="mb-5"
+          {...register('studentId')}
+        />
+        <Input
+          label={t('register.fields.phoneNumber')}
+          error={formState.errors.phoneNumber?.message}
+          type="tel"
+          placeholder={t('register.placeholders.phoneNumber')}
+          required
+          {...register('phoneNumber')}
+        />
       </div>
     </div>
   );

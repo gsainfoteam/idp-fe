@@ -1,7 +1,4 @@
-import { BackButton } from '../components/back-button';
-import { Button } from '../components/button';
-import { Checkbox } from '../components/checkbox';
-import { Input } from '../components/input';
+import { BackButton, Button, Checkbox, Input } from '@/features/core';
 
 export function ComponentTestFrame() {
   return (
@@ -103,27 +100,24 @@ export function ComponentTestFrame() {
       <hr className="border-neutral-100" />
 
       <h1 className="text-title-1 mt-10 ml-10">Button Component</h1>
-      <div className="m-10 grid w-[700px] grid-cols-4 grid-rows-3 gap-5">
+      <div className="m-10 grid w-[700px] grid-cols-5 grid-rows-3 gap-5">
         <Button variant="primary">Button</Button>
         <Button variant="secondary">Button</Button>
+        <Button variant="default">Button</Button>
         <Button variant="text">Button</Button>
         <Button variant="link">Button</Button>
-        <Button variant="primary" isLoading>
-          Button
-        </Button>
-        <Button variant="secondary" isLoading>
-          Button
-        </Button>
-        <Button variant="text" isLoading>
-          Button
-        </Button>
-        <Button variant="link" isLoading>
-          Button
-        </Button>
+        <Button variant="primary" isLoading />
+        <Button variant="secondary" isLoading />
+        <Button variant="default" isLoading />
+        <div className="col-span-1" />
+        <div className="col-span-1" />
         <Button variant="primary" disabled>
           Button
         </Button>
         <Button variant="secondary" disabled>
+          Button
+        </Button>
+        <Button variant="default" disabled>
           Button
         </Button>
         <Button variant="text" disabled>
@@ -143,6 +137,11 @@ export function ComponentTestFrame() {
           label="이 필드의 제목"
           required
           className="mb-5"
+          suffix={
+            <Button variant="secondary" className="w-17.5">
+              확인
+            </Button>
+          }
         />
         <Input placeholder="텍스트를 입력하세요" disabled className="mb-5" />
         <Input
@@ -150,6 +149,17 @@ export function ComponentTestFrame() {
           label="이 필드의 제목"
           disabled
           className="mb-5"
+        />
+        <Input
+          placeholder="텍스트를 입력하세요"
+          label="이 필드의 제목"
+          disabled
+          className="mb-5"
+          suffix={
+            <Button variant="secondary" className="w-17.5">
+              확인
+            </Button>
+          }
         />
         <Input placeholder="텍스트를 입력하세요" error className="mb-5" />
         <Input
@@ -163,7 +173,11 @@ export function ComponentTestFrame() {
           label="이 필드의 제목"
           error="에러가 발생했습니다"
           required
-          className="mb-5"
+          suffix={
+            <Button variant="secondary" className="w-17.5">
+              확인
+            </Button>
+          }
         />
       </div>
       <hr className="border-neutral-100" />
@@ -171,11 +185,11 @@ export function ComponentTestFrame() {
       <h1 className="text-title-1 mt-10 ml-10">Checkbox Component</h1>
       <div className="m-10 w-auto">
         <Checkbox className="mb-1">체크박스</Checkbox>
-        <Checkbox className="mb-1" checked>
+        <Checkbox className="mb-1" defaultChecked>
           체크박스
         </Checkbox>
         <Checkbox disabled>체크박스</Checkbox>
-        <Checkbox className="mb-1" checked disabled>
+        <Checkbox className="mb-1" defaultChecked disabled>
           체크박스
         </Checkbox>
       </div>
