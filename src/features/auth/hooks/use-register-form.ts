@@ -21,7 +21,7 @@ export const createSchema = (t: TFunction) =>
       name: z.string().min(1, t('register.errors.name')),
       studentId: z.string().length(
         8,
-        t('register.errors.studentId', {
+        t('register.errors.student_id', {
           form: `${new Date().getFullYear()}0000`,
         }),
       ),
@@ -29,12 +29,12 @@ export const createSchema = (t: TFunction) =>
         .string()
         .regex(
           /^(\+\d{1,2})?\s?\(?(\d{3})\)?[\s.-]?(\d{3,4})[\s.-]?(\d{4})$/,
-          t('register.errors.phoneNumber'),
+          t('register.errors.phone_number'),
         ),
       verificationJwtToken: z.string().default(''),
     })
     .refine((data) => data.password === data.passwordConfirm, {
-      message: t('register.errors.passwordConfirm'),
+      message: t('register.errors.password_confirm'),
       path: ['passwordConfirm'],
     });
 
@@ -55,7 +55,7 @@ export const useRegisterForm = () => {
         switch (err.response?.status) {
           case 409:
             form.setError('email', {
-              message: t('register.errors.emailAlreadyExists'),
+              message: t('register.errors.email_already_exists'),
             });
             break;
           default:
@@ -86,7 +86,7 @@ export const useRegisterForm = () => {
         switch (err.response?.status) {
           case 403:
             form.setError('code', {
-              message: t('register.errors.invalidCode'),
+              message: t('register.errors.invalid_code'),
             });
             break;
           default:
@@ -108,12 +108,12 @@ export const useRegisterForm = () => {
         switch (err.response?.status) {
           case 403:
             form.setError('code', {
-              message: t('register.errors.invalidCode'),
+              message: t('register.errors.invalid_code'),
             });
             break;
           case 409:
             form.setError('email', {
-              message: t('register.errors.emailAlreadyExists'),
+              message: t('register.errors.email_already_exists'),
             });
             break;
           default:
