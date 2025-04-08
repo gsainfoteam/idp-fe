@@ -24,7 +24,7 @@ export function AuthorizeFrame() {
             setChecked((prev) => prev.map(() => !prev.every(Boolean)))
           }
         >
-          <div className="font-bold">{t('authorize.checkboxes.all-agree')}</div>
+          <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
         </Checkbox>
         <div className="h-2.5" />
         <div className="rounded-lg border border-neutral-200 px-5 py-4">
@@ -50,7 +50,7 @@ export function AuthorizeFrame() {
                 setChecked((prev) => prev.map((v, i) => (i === 0 ? !v : v)))
               }
             >
-              {t('authorize.checkboxes.studentId')}
+              {t('authorize.checkboxes.student_id')}
             </Checkbox>
             <Checkbox
               checked={checked[1]}
@@ -58,7 +58,7 @@ export function AuthorizeFrame() {
                 setChecked((prev) => prev.map((v, i) => (i === 1 ? !v : v)))
               }
             >
-              {t('authorize.checkboxes.phoneNumber')}
+              {t('authorize.checkboxes.phone_number')}
             </Checkbox>
           </div>
         </div>

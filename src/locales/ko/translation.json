@@ -4,45 +4,45 @@
     "titles": {
       "email": "이메일",
       "password": "비밀번호",
-      "defaultInfo": "기본정보"
+      "default_info": "기본정보"
     },
     "fields": {
       "email": "GIST 이메일",
       "code": "인증번호",
       "password": "비밀번호",
-      "passwordConfirm": "비밀번호 확인",
+      "password_confirm": "비밀번호 확인",
       "name": "이름",
-      "studentId": "학번",
-      "phoneNumber": "전화번호"
+      "student_id": "학번",
+      "phone_number": "전화번호"
     },
     "placeholders": {
       "email": "m@gm.gist.ac.kr",
       "code": "인증번호",
       "password": "비밀번호",
-      "passwordConfirm": "비밀번호 확인",
+      "password_confirm": "비밀번호 확인",
       "name": "김지니",
-      "studentId": "{{form}}",
-      "phoneNumber": "010-0000-0000"
+      "student_id": "{{form}}",
+      "phone_number": "010-0000-0000"
     },
     "errors": {
-      "emailAlreadyExists": "해당 이메일은 이미 가입되어 있습니다",
+      "email_already_exists": "해당 이메일은 이미 가입되어 있습니다",
       "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
-      "invalidCode": "인증번호가 잘못 되었습니다",
+      "invalid_code": "인증번호가 잘못 되었습니다",
       "code": "인증번호가 확인되지 않았습니다",
       "password": "비밀번호는 12자리 이상이어야 합니다",
-      "passwordConfirm": "비밀번호가 일치하지 않습니다",
+      "password_confirm": "비밀번호가 일치하지 않습니다",
       "name": "이름을 입력해주세요",
-      "studentId": "{{form}}형태로 입력해주세요.",
-      "phoneNumber": "올바른 전화번호를 입력해주세요"
+      "student_id": "{{form}}형태로 입력해주세요.",
+      "phone_number": "올바른 전화번호를 입력해주세요"
     },
     "buttons": {
-      "sendCode": "인증번호 발송",
-      "resendCode": "인증번호 재발송",
-      "verifyCode": "확인",
+      "send_code": "인증번호 발송",
+      "resend_code": "인증번호 재발송",
+      "verify_code": "확인",
       "next": "다음으로"
     }
   },
-  "register-done": {
+  "register_done": {
     "title": "회원가입",
     "description": "회원가입이 완료되었습니다",
     "buttons": {
@@ -72,11 +72,14 @@
       "optional": "선택"
     },
     "checkboxes": {
-      "all-agree": "전체 동의하기",
+      "all_agree": "전체 동의하기",
       "email": "이메일",
       "name": "이름",
-      "studentId": "학번",
-      "phoneNumber": "전화번호"
+      "student_id": "학번",
+      "phone_number": "전화번호"
+    },
+    "errors": {
+      "client_id": "클라이언트 ID가 필요합니다"
     },
     "buttons": {
       "cancel": "취소",
