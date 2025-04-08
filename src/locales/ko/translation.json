@@ -28,6 +28,7 @@
       "emailAlreadyExists": "해당 이메일은 이미 가입되어 있습니다",
       "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
       "invalidCode": "인증번호가 잘못 되었습니다",
+      "invalidToken": "토큰이 잘못 되었습니다",
       "code": "인증번호가 확인되지 않았습니다",
       "password": "비밀번호는 12자리 이상이어야 합니다",
       "passwordConfirm": "비밀번호가 일치하지 않습니다",

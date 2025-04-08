@@ -111,6 +111,11 @@ export const useRegisterForm = () => {
               message: t('register.errors.invalidCode'),
             });
             break;
+          case 403:
+            form.setError('verificationJwtToken', {
+              message: t('register.errors.invalidToken'),
+            });
+            break;
           case 409:
             form.setError('email', {
               message: t('register.errors.emailAlreadyExists'),
