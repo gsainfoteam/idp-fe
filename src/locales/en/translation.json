@@ -4,46 +4,46 @@
     "titles": {
       "email": "Email",
       "password": "Password",
-      "defaultInfo": "Basic Information"
+      "default_info": "Basic Information"
     },
     "fields": {
       "email": "GIST Email",
       "code": "Verification Code",
       "password": "Password",
-      "passwordConfirm": "Confirm Password",
+      "password_confirm": "Confirm Password",
       "name": "Name",
-      "studentId": "Student ID",
-      "phoneNumber": "Phone Number"
+      "student_id": "Student ID",
+      "phone_number": "Phone Number"
     },
     "placeholders": {
       "email": "m@gm.gist.ac.kr",
       "code": "Verification Code",
       "password": "Password",
-      "passwordConfirm": "Confirm Password",
+      "password_confirm": "Confirm Password",
       "name": "Kim Jin-i",
-      "studentId": "{{form}}",
-      "phoneNumber": "010-0000-0000"
+      "student_id": "{{form}}",
+      "phone_number": "010-0000-0000"
     },
     "errors": {
-      "emailAlreadyExists": "This email is already registered",
+      "email_already_exists": "This email is already registered",
       "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
-      "invalidCode": "The verification code is incorrect",
-      "invalidToken": "The token is invalid",
+      "invalid_code": "The verification code is incorrect",
+      "invalid_token": "The token is invalid",
       "code": "The verification code could not be verified",
       "password": "Password must be at least 12 characters long",
-      "passwordConfirm": "Passwords do not match",
+      "password_confirm": "Passwords do not match",
       "name": "Please enter your name",
-      "studentId": "Please enter in the {{form}} format.",
-      "phoneNumber": "Please enter a valid phone number"
+      "student_id": "Please enter in the {{form}} format.",
+      "phone_number": "Please enter a valid phone number"
     },
     "buttons": {
-      "sendCode": "Send Verification Code",
-      "resendCode": "Resend Verification Code",
-      "verifyCode": "Verify",
+      "send_code": "Send Verification Code",
+      "resend_code": "Resend Verification Code",
+      "verify_code": "Verify",
       "next": "Next"
     }
   },
-  "register-done": {
+  "register_done": {
     "title": "Register",
     "description": "Registration is complete",
     "buttons": {
@@ -73,11 +73,14 @@
       "optional": "Optional"
     },
     "checkboxes": {
-      "all-agree": "Agree to All",
+      "all_agree": "Agree to All",
       "email": "Email",
       "name": "Name",
-      "studentId": "Student ID",
-      "phoneNumber": "Phone Number"
+      "student_id": "Student ID",
+      "phone_number": "Phone Number"
+    },
+    "errors": {
+      "client_id": "Client ID is required"
     },
     "buttons": {
       "cancel": "Cancel",

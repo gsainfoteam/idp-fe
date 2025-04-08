@@ -58,8 +58,8 @@ export function RegisterForm({
                 }}
               >
                 {isCodeSent === 'sent'
-                  ? t('register.buttons.resendCode')
-                  : t('register.buttons.sendCode')}
+                  ? t('register.buttons.resend_code')
+                  : t('register.buttons.send_code')}
               </Button>
             )}
           />
@@ -89,7 +89,7 @@ export function RegisterForm({
                   setVerifying(false);
                 }}
               >
-                {t('register.buttons.verifyCode')}
+                {t('register.buttons.verify_code')}
               </Button>
             }
           />
@@ -110,10 +110,10 @@ export function RegisterForm({
           {...register('password')}
         />
         <Input
-          label={t('register.fields.passwordConfirm')}
+          label={t('register.fields.password_confirm')}
           error={formState.errors.passwordConfirm?.message}
           type="password"
-          placeholder={t('register.placeholders.passwordConfirm')}
+          placeholder={t('register.placeholders.password_confirm')}
           required
           {...register('passwordConfirm')}
         />
@@ -121,7 +121,7 @@ export function RegisterForm({
       <div className="h-8" />
       <div>
         <div className="text-title-3 mb-2.5 text-neutral-900">
-          {t('register.titles.defaultInfo')}
+          {t('register.titles.default_info')}
         </div>
         <Input
           label={t('register.fields.name')}
@@ -133,10 +133,10 @@ export function RegisterForm({
           {...register('name')}
         />
         <Input
-          label={t('register.fields.studentId')}
+          label={t('register.fields.student_id')}
           error={formState.errors.studentId?.message}
           type="text"
-          placeholder={t('register.placeholders.studentId', {
+          placeholder={t('register.placeholders.student_id', {
             form: `${new Date().getFullYear()}0000`,
           })}
           required
@@ -144,10 +144,10 @@ export function RegisterForm({
           {...register('studentId')}
         />
         <Input
-          label={t('register.fields.phoneNumber')}
+          label={t('register.fields.phone_number')}
           error={formState.errors.phoneNumber?.message}
           type="tel"
-          placeholder={t('register.placeholders.phoneNumber')}
+          placeholder={t('register.placeholders.phone_number')}
           required
           {...register('phoneNumber')}
         />
