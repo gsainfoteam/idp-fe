@@ -28,6 +28,7 @@
       "email_already_exists": "This email is already registered",
       "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
       "invalid_code": "The verification code is incorrect",
+      "invalid_token": "The token is invalid",
       "code": "The verification code could not be verified",
       "password": "Password must be at least 12 characters long",
       "password_confirm": "Passwords do not match",
