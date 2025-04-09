@@ -9,8 +9,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
 }
 
-// TODO: isPressed -> active: 로 대체 가능
-
 const buttonStyle = cva(
   'text-title-3 flex w-auto cursor-pointer items-center justify-center rounded-lg text-center',
   {

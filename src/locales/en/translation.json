@@ -66,8 +66,8 @@
     }
   },
   "authorize": {
-    "title": "You are trying to log in to\n'Ziggle' service with\nyour GIST email",
-    "description": "By continuing, the following information will be provided to 'Ziggle'",
+    "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
+    "description": "Your information will be shared with '{{client}}' upon continuing.",
     "labels": {
       "required": "Required",
       "optional": "Optional"
@@ -77,7 +77,10 @@
       "email": "Email",
       "name": "Name",
       "student_id": "Student ID",
-      "phone_number": "Phone Number"
+      "phone_number": "Phone Number",
+      "profile": "Profile Image",
+      "openid": "OpenID",
+      "offline_access": "Offline Access"
     },
     "errors": {
       "client_id": "Client ID is required"

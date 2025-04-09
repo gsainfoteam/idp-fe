@@ -1,1 +1,1 @@
-export * from './frames/authorize-ziggle-frame';
+export * from './frames/authorize-frame';

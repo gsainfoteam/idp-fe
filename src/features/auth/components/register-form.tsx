@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -9,9 +10,11 @@ import { Button, Input } from '@/features/core';
 export function RegisterForm({
   onSendVerificationCode,
   onVerifyCode,
+  onRegister,
 }: {
   onSendVerificationCode: (data: RegisterFormSchema) => Promise<void>;
   onVerifyCode: (data: RegisterFormSchema) => Promise<boolean>;
+  onRegister: (data: RegisterFormSchema) => Promise<boolean>;
 }) {
   const { register, formState, getValues, control } =
     useFormContext<RegisterFormSchema>();
@@ -23,7 +26,7 @@ export function RegisterForm({
   const [isVerifying, setVerifying] = useState(false);
   const [isCodeValid, setCodeValid] = useState(false);
 
-  // TODO: 인증번호 확인 버튼 width도 hug로 만들어야 다국어 지원 가능
+  const navigate = useNavigate({ from: '/auth/register' });
 
   return (
     <div className="flex flex-col">
@@ -80,9 +83,9 @@ export function RegisterForm({
               <Button
                 variant="default"
                 type="button"
-                className="w-17.5"
+                className="w-fit px-5 text-nowrap"
                 isLoading={isVerifying}
-                disabled={isCodeValid}
+                disabled={isCodeValid || formState.errors.code != null}
                 onClick={async () => {
                   setVerifying(true);
                   setCodeValid(await onVerifyCode(getValues()));
@@ -152,6 +155,19 @@ export function RegisterForm({
           {...register('phoneNumber')}
         />
       </div>
+      <div className="h-16" />
+      <Button
+        variant="primary"
+        type="button"
+        disabled={!(formState.isValid && isCodeValid)}
+        isLoading={formState.isSubmitting}
+        onClick={async () => {
+          if (await onRegister(getValues()))
+            navigate({ to: '/auth/register/done' });
+        }}
+      >
+        {t('register.buttons.next')}
+      </Button>
     </div>
   );
 }

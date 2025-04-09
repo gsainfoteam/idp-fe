@@ -66,8 +66,8 @@
     }
   },
   "authorize": {
-    "title": "GIST 메일을 사용하여\n'지글' 서비스에\n로그인하려고 합니다",
-    "description": "계속하면 아래 정보가 '지글'에 제공됩니다",
+    "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
+    "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다",
     "labels": {
       "required": "필수",
       "optional": "선택"
@@ -77,7 +77,10 @@
       "email": "이메일",
       "name": "이름",
       "student_id": "학번",
-      "phone_number": "전화번호"
+      "phone_number": "전화번호",
+      "profile": "프로필 사진",
+      "openid": "OpenID",
+      "offline_access": "오프라인 접근"
     },
     "errors": {
       "client_id": "클라이언트 ID가 필요합니다"

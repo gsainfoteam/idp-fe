@@ -14,7 +14,12 @@ export function RegisterDoneFrame() {
           {t(`register_done.description`)}
         </div>
         <div className="h-100" />
-        <Link to="/auth/login">
+        <Link
+          from="/auth/register"
+          to="/auth/login"
+          search={(prev) => ({ ...prev })}
+          className="w-full"
+        >
           <Button variant="primary" type="button">
             {t(`register_done.buttons.login`)}
           </Button>

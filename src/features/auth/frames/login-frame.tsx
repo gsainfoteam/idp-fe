@@ -35,10 +35,15 @@ export function LoginFrame() {
                 {t(`login.buttons.login`)}
               </Button>
               <div className="h-2" />
-              <Link to="/auth/register">
+              <Link
+                from="/auth/login"
+                to="/auth/register"
+                search={(prev) => ({ ...prev })}
+              >
                 <Button
                   variant="link"
                   className="text-neutral-800 no-underline"
+                  type="button"
                 >
                   {t('login.buttons.register')}
                 </Button>
