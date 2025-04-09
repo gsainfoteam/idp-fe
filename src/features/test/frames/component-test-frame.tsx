@@ -138,7 +138,7 @@ export function ComponentTestFrame() {
           required
           className="mb-5"
           suffix={
-            <Button variant="secondary" className="w-17.5">
+            <Button variant="default" className="w-17.5">
               확인
             </Button>
           }
@@ -156,7 +156,7 @@ export function ComponentTestFrame() {
           disabled
           className="mb-5"
           suffix={
-            <Button variant="secondary" className="w-17.5">
+            <Button variant="default" className="w-17.5">
               확인
             </Button>
           }
@@ -174,7 +174,7 @@ export function ComponentTestFrame() {
           error="에러가 발생했습니다"
           required
           suffix={
-            <Button variant="secondary" className="w-17.5">
+            <Button variant="default" className="w-17.5">
               확인
             </Button>
           }
