@@ -28,11 +28,11 @@ export function AuthorizeFrame() {
       <div className="flex w-full max-w-[400px] flex-col px-5 py-8">
         {client != null && (
           <>
-            <div className="text-title-1 whitespace-pre-wrap">
+            <div className="text-title-1 text-pretty whitespace-pre-wrap">
               {t('authorize.title', { client: client.name })}
             </div>
             <div className="h-8" />
-            <div className="text-body-2 text-neutral-800">
+            <div className="text-body-2 text-pretty text-neutral-800">
               {t('authorize.description', { client: client.name })}
             </div>
             <div className="h-1" />

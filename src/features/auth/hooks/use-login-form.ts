@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
 import { TFunction } from 'i18next';
+import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -18,7 +19,9 @@ const createSchema = (t: TFunction) =>
 
 export type LoginFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
-export const useLoginForm = () => {
+export const useLoginForm = (
+  setLoginError: Dispatch<SetStateAction<string | null>>,
+) => {
   const { t } = useTranslation();
   const { saveToken } = useToken();
   const navigate = useNavigate({ from: '/auth/login' });
@@ -38,11 +41,8 @@ export const useLoginForm = () => {
       });
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
-        form.setError('email', { message: ' ' }); // NOTE: 이 구현 맘에 안듦
-        form.setError('password', {
-          message: t('login.errors.unauthorized'),
-        });
         form.resetField('password', { keepError: true });
+        setLoginError(t('login.errors.unauthorized'));
       } else {
         console.error(error);
       }

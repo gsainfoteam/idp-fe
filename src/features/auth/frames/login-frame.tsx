@@ -1,28 +1,30 @@
 import { Link } from '@tanstack/react-router';
+import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import InfoTeamTextLogo from '../../../assets/text-logo.svg?react';
+import TextLogo from '../../../assets/text-logo.svg?react';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
 import { Button } from '@/features/core';
 
 export function LoginFrame() {
-  const { form, onSubmit } = useLoginForm();
+  const [hasLoginError, setLoginError] = useState<string | null>(null);
+  const { form, onSubmit } = useLoginForm(setLoginError);
   const { t } = useTranslation();
 
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[400px] px-5">
         <div className="flex flex-col items-center justify-center">
-          <InfoTeamTextLogo />
+          <TextLogo />
         </div>
         <div className="h-8" />
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
-              <LoginForm />
+              <LoginForm loginErrorState={[hasLoginError, setLoginError]} />
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-center justify-center">
