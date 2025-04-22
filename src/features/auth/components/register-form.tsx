@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -10,11 +9,9 @@ import { Button, Input } from '@/features/core';
 export function RegisterForm({
   onSendVerificationCode,
   onVerifyCode,
-  onRegister,
 }: {
   onSendVerificationCode: (data: RegisterFormSchema) => Promise<void>;
   onVerifyCode: (data: RegisterFormSchema) => Promise<boolean>;
-  onRegister: (data: RegisterFormSchema) => Promise<boolean>;
 }) {
   const { register, formState, getValues, control } =
     useFormContext<RegisterFormSchema>();
@@ -25,8 +22,6 @@ export function RegisterForm({
   );
   const [isVerifying, setVerifying] = useState(false);
   const [isCodeValid, setCodeValid] = useState(false);
-
-  const navigate = useNavigate({ from: '/auth/register' });
 
   return (
     <div className="flex flex-col">
@@ -74,7 +69,7 @@ export function RegisterForm({
           <Input
             label={t('register.fields.code')}
             error={formState.errors.code?.message}
-            type="text"
+            type="number"
             placeholder={t('register.placeholders.code')}
             required
             disabled={isCodeValid}
@@ -138,7 +133,7 @@ export function RegisterForm({
         <Input
           label={t('register.fields.student_id')}
           error={formState.errors.studentId?.message}
-          type="text"
+          type="number"
           placeholder={t('register.placeholders.student_id', {
             form: `${new Date().getFullYear()}0000`,
           })}
@@ -158,13 +153,8 @@ export function RegisterForm({
       <div className="h-16" />
       <Button
         variant="primary"
-        type="button"
         disabled={!(formState.isValid && isCodeValid)}
         isLoading={formState.isSubmitting}
-        onClick={async () => {
-          if (await onRegister(getValues()))
-            navigate({ to: '/auth/register/done' });
-        }}
       >
         {t('register.buttons.next')}
       </Button>

@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -7,20 +6,14 @@ import { LoginFormSchema } from '../hooks/use-login-form';
 import { Input } from '@/features/core';
 
 export function LoginForm({
-  loginErrorState: [hasLoginError, setLoginError],
+  onChange,
+  hasLoginError,
 }: {
-  loginErrorState: [string | null, Dispatch<SetStateAction<string | null>>];
+  onChange: () => void;
+  hasLoginError: string | null;
 }) {
-  const { register, formState, clearErrors } =
-    useFormContext<LoginFormSchema>();
+  const { register, formState } = useFormContext<LoginFormSchema>();
   const { t } = useTranslation();
-
-  const handleChange = () => {
-    if (hasLoginError) {
-      setLoginError(null);
-      clearErrors();
-    }
-  };
 
   return (
     <div className="flex flex-col">
@@ -29,7 +22,7 @@ export function LoginForm({
         disabled={formState.isSubmitting}
         type="email"
         placeholder={t('login.placeholders.email')}
-        {...register('email', { onChange: handleChange })}
+        {...register('email', { onChange: onChange })}
       />
       <div className="h-4" />
       <Input
@@ -37,7 +30,7 @@ export function LoginForm({
         disabled={formState.isSubmitting}
         type="password"
         placeholder={t('login.placeholders.password')}
-        {...register('password', { onChange: handleChange })}
+        {...register('password', { onChange: onChange })}
       />
     </div>
   );

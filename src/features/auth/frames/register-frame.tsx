@@ -5,7 +5,7 @@ import { RegisterForm } from '../components/register-form';
 import { useRegisterForm } from '../hooks/use-register-form';
 
 export function RegisterFrame() {
-  const { form, onSendVerificationCode, onVerifyCode, onRegister } =
+  const { form, onSendVerificationCode, onVerifyCode, onSubmit } =
     useRegisterForm();
   const { t } = useTranslation();
 
@@ -14,11 +14,10 @@ export function RegisterFrame() {
       <div className="flex w-full max-w-[400px] flex-col px-5 py-6">
         <div className="text-title-1 mb-4">{t('register.title')}</div>
         <FormProvider {...form}>
-          <form>
+          <form onSubmit={onSubmit}>
             <RegisterForm
               onSendVerificationCode={onSendVerificationCode}
               onVerifyCode={onVerifyCode}
-              onRegister={onRegister}
             />
           </form>
         </FormProvider>

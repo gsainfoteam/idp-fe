@@ -4,6 +4,7 @@ export * from './components/checkbox';
 export * from './components/input';
 export * from './components/language-switcher';
 export * from './components/loading-ellipse';
+export * from './components/overlay';
 export * from './services/api';
 export * from './utils/cn';
 export * from './utils/constants';

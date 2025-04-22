@@ -7,24 +7,35 @@ import TextLogo from '../../../assets/text-logo.svg?react';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
-import { Button } from '@/features/core';
+import { Button, Overlay } from '@/features/core';
 
 export function LoginFrame() {
   const [hasLoginError, setLoginError] = useState<string | null>(null);
   const { form, onSubmit } = useLoginForm(setLoginError);
   const { t } = useTranslation();
 
+  const onChange = () => {
+    if (hasLoginError) {
+      setLoginError(null);
+      form.clearErrors();
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[400px] px-5">
         <div className="flex flex-col items-center justify-center">
-          <TextLogo />
+          <Overlay show={form.formState.isSubmitting}>
+            <TextLogo />
+          </Overlay>
         </div>
         <div className="h-8" />
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
-              <LoginForm loginErrorState={[hasLoginError, setLoginError]} />
+              <Overlay show={form.formState.isSubmitting}>
+                <LoginForm onChange={onChange} hasLoginError={hasLoginError} />
+              </Overlay>
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-center justify-center">

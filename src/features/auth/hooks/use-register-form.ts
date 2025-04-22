@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
 import { TFunction } from 'i18next';
 import { isValidPhoneNumber } from 'libphonenumber-js';
@@ -23,8 +24,8 @@ export const createSchema = (t: TFunction) =>
       password: z.string().min(12, t('register.errors.password')),
       passwordConfirm: z.string(),
       name: z.string().min(1, t('register.errors.name')),
-      studentId: z.string().length(
-        8,
+      studentId: z.string().regex(
+        /^\d{5}$|^\d{8}$/,
         t('register.errors.student_id', {
           form: `${new Date().getFullYear()}0000`,
         }),
@@ -45,6 +46,7 @@ export const createSchema = (t: TFunction) =>
 export type RegisterFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useRegisterForm = () => {
+  const navigate = useNavigate({ from: '/auth/register' });
   const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
@@ -103,10 +105,10 @@ export const useRegisterForm = () => {
     }
   };
 
-  const onRegister = async (data: RegisterFormSchema) => {
+  const onSubmit = form.handleSubmit(async (data: RegisterFormSchema) => {
     try {
       await register(data);
-      return true;
+      navigate({ to: '/auth/register/done' });
     } catch (err) {
       if (err instanceof AxiosError) {
         switch (err.response?.status) {
@@ -131,10 +133,8 @@ export const useRegisterForm = () => {
       } else {
         console.error(err);
       }
-
-      return false;
     }
-  };
+  });
 
-  return { form, onSendVerificationCode, onVerifyCode, onRegister };
+  return { form, onSendVerificationCode, onVerifyCode, onSubmit };
 };
