@@ -1,10 +1,11 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/features/core';
 
 export function RegisterDoneFrame() {
   const { t } = useTranslation();
+  const location = useLocation();
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -17,7 +18,10 @@ export function RegisterDoneFrame() {
         <Link
           from="/auth/register"
           to="/auth/login"
-          search={(prev) => ({ ...prev })}
+          search={(prev) => ({
+            redirectUrl: location.pathname,
+            ...prev,
+          })}
           className="w-full"
         >
           <Button variant="primary" type="button">
