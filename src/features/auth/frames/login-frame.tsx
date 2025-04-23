@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ export function LoginFrame() {
   const [hasLoginError, setLoginError] = useState<string | null>(null);
   const { form, onSubmit } = useLoginForm(setLoginError);
   const { t } = useTranslation();
+  const location = useLocation();
 
   const onChange = () => {
     if (hasLoginError) {
@@ -51,7 +52,10 @@ export function LoginFrame() {
               <Link
                 from="/auth/login"
                 to="/auth/register"
-                search={(prev) => ({ ...prev })}
+                search={(prev) => ({
+                  redirectUrl: location.pathname,
+                  ...prev,
+                })}
               >
                 <Button
                   variant="link"

@@ -9,9 +9,6 @@ import { api } from '@/features/core';
 export const register = async (
   requestBody: RegisterFormSchema & VerifyResponse,
 ) => {
-  // const { t } = useTranslation();
-  // createSchema(t).
-
   const parsedPhoneNumber = parsePhoneNumber(requestBody.phoneNumber, 'KR');
 
   if (!parsedPhoneNumber) {
