@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
@@ -9,7 +9,7 @@ import { GetClientResponse } from '../services/get-client';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
 export function AuthorizeForm({ client }: { client: GetClientResponse }) {
-  const { register, setValue, getValues, formState } =
+  const { control, setValue, getValues, formState } =
     useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
   const [allAgree, setAllAgree] = useState(false);
@@ -21,7 +21,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
     client.optionalScopes.forEach((scope) =>
       setValue(`scopes.${scope}`, false),
     );
-  }, [client.clientId, client.optionalScopes, client.scopes, setValue]);
+  }, [client, setValue]);
 
   const handleChange = () => {
     const allChecked = client.optionalScopes.every((scope) =>
@@ -30,18 +30,20 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
     setAllAgree(allChecked);
   };
 
+  const toggleAll = (checked: boolean) => {
+    client.optionalScopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, checked, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    });
+    setAllAgree(checked);
+  };
+
   return (
     <div className="flex flex-col">
       <LoadingOverlay show={formState.isSubmitting}>
-        <Checkbox
-          checked={allAgree}
-          onChange={() => {
-            client.optionalScopes.forEach((scope) =>
-              setValue(`scopes.${scope}`, !allAgree),
-            );
-            setAllAgree(!allAgree);
-          }}
-        >
+        <Checkbox checked={allAgree} onChange={() => toggleAll(!allAgree)}>
           <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
         </Checkbox>
         <div className="h-2.5" />
@@ -51,15 +53,23 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
           </div>
           <div className="flex flex-col gap-1 pl-1">
             {client.scopes.map((scope) => (
-              <Checkbox
+              <Controller
                 key={scope}
-                disabled
-                {...register(`scopes.${scope}`, {
-                  onChange: handleChange,
-                })}
-              >
-                {t(`authorize.checkboxes.${scope}`)}
-              </Checkbox>
+                name={`scopes.${scope}`}
+                control={control}
+                render={({ field }) => (
+                  <Checkbox
+                    checked={field.value}
+                    disabled
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChange();
+                    }}
+                  >
+                    {t(`authorize.checkboxes.${scope}`)}
+                  </Checkbox>
+                )}
+              />
             ))}
           </div>
           <div className="h-2.5" />
@@ -68,14 +78,22 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
           </div>
           <div className="flex flex-col gap-1 pl-1">
             {client.optionalScopes.map((scope) => (
-              <Checkbox
+              <Controller
                 key={scope}
-                {...register(`scopes.${scope}`, {
-                  onChange: handleChange,
-                })}
-              >
-                {t(`authorize.checkboxes.${scope}`)}
-              </Checkbox>
+                name={`scopes.${scope}`}
+                control={control}
+                render={({ field }) => (
+                  <Checkbox
+                    checked={field.value}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChange();
+                    }}
+                  >
+                    {t(`authorize.checkboxes.${scope}`)}
+                  </Checkbox>
+                )}
+              />
             ))}
           </div>
         </div>
