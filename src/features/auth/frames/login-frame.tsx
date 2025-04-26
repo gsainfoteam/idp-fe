@@ -6,7 +6,7 @@ import TextLogo from '../../../assets/text-logo.svg?react';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
-import { Button, Overlay } from '@/features/core';
+import { Button, LoadingOverlay } from '@/features/core';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
@@ -17,17 +17,17 @@ export function LoginFrame() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[400px] px-5">
         <div className="flex flex-col items-center justify-center">
-          <Overlay show={form.formState.isSubmitting}>
+          <LoadingOverlay show={form.formState.isSubmitting}>
             <TextLogo />
-          </Overlay>
+          </LoadingOverlay>
         </div>
         <div className="h-8" />
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
-              <Overlay show={form.formState.isSubmitting}>
+              <LoadingOverlay show={form.formState.isSubmitting}>
                 <LoginForm />
-              </Overlay>
+              </LoadingOverlay>
             </div>
             <div className="h-8" />
             <div className="flex flex-col items-center justify-center">

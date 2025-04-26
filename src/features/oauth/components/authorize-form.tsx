@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
 import { GetClientResponse } from '../services/get-client';
 
-import { Button, Checkbox, Overlay } from '@/features/core';
+import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
 export function AuthorizeForm({ client }: { client: GetClientResponse }) {
   const { register, setValue, getValues, formState } =
@@ -32,7 +32,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
 
   return (
     <div className="flex flex-col">
-      <Overlay show={formState.isSubmitting}>
+      <LoadingOverlay show={formState.isSubmitting}>
         <Checkbox
           checked={allAgree}
           onChange={() => {
@@ -79,7 +79,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
             ))}
           </div>
         </div>
-      </Overlay>
+      </LoadingOverlay>
       <div className="h-10" />
       <div className="flex gap-2.5">
         <Link

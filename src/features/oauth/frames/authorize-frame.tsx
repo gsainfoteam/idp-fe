@@ -7,7 +7,7 @@ import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorizeForm } from '../hooks/use-authorize-form';
 import { getClient, GetClientResponse } from '../services/get-client';
 
-import { Overlay } from '@/features/core';
+import { LoadingOverlay } from '@/features/core';
 
 export function AuthorizeFrame() {
   const { form, onSubmit } = useAuthorizeForm();
@@ -45,7 +45,7 @@ export function AuthorizeFrame() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex w-full max-w-[400px] flex-col px-5 py-8">
-        <Overlay show={form.formState.isSubmitting}>
+        <LoadingOverlay show={form.formState.isSubmitting}>
           <div className="text-title-1 text-pretty whitespace-pre-wrap">
             {t('authorize.title', { client: client.name })}
           </div>
@@ -53,7 +53,7 @@ export function AuthorizeFrame() {
           <div className="text-body-2 text-pretty text-neutral-800">
             {t('authorize.description', { client: client.name })}
           </div>
-        </Overlay>
+        </LoadingOverlay>
         <div className="h-1" />
         <FormProvider {...form}>
           <form onSubmit={onSubmit}>

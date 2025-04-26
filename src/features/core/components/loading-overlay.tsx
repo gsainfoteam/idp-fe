@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 import { cn } from '../utils/cn';
 
-export function Overlay({
+export function LoadingOverlay({
   children,
   show,
 }: PropsWithChildren<{ show: boolean }>) {
