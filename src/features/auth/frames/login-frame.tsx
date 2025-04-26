@@ -1,5 +1,4 @@
 import { Link, useLocation } from '@tanstack/react-router';
-import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -10,17 +9,9 @@ import { useLoginForm } from '../hooks/use-login-form';
 import { Button, Overlay } from '@/features/core';
 
 export function LoginFrame() {
-  const [hasLoginError, setLoginError] = useState<string | null>(null);
-  const { form, onSubmit } = useLoginForm(setLoginError);
+  const { form, onSubmit } = useLoginForm();
   const { t } = useTranslation();
   const location = useLocation();
-
-  const onChange = () => {
-    if (hasLoginError) {
-      setLoginError(null);
-      form.clearErrors();
-    }
-  };
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -35,7 +26,7 @@ export function LoginFrame() {
           <form onSubmit={onSubmit}>
             <div className="h-[150px]">
               <Overlay show={form.formState.isSubmitting}>
-                <LoginForm onChange={onChange} hasLoginError={hasLoginError} />
+                <LoginForm />
               </Overlay>
             </div>
             <div className="h-8" />
