@@ -15,8 +15,9 @@ export const useClient = (clientId: string) => {
   });
 
   useEffect(() => {
-    if (error || client == null) console.error('Error fetching client:', error); // TODO: error handling
-  }, [error, client]);
+    if (!isLoading && (error || client == null))
+      console.error('Error fetching client:', error); // TODO: error handling
+  }, [client, isLoading, error]);
 
-  return { client: client!, isLoading, error };
+  return { client: client, isLoading, error };
 };

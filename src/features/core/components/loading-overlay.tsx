@@ -4,8 +4,8 @@ import { cn } from '../utils/cn';
 
 export function LoadingOverlay({
   children,
-  show,
-}: PropsWithChildren<{ show: boolean }>) {
+  show = false,
+}: PropsWithChildren<{ show?: boolean }>) {
   return (
     <div
       className={cn(

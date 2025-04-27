@@ -16,7 +16,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
 
   useEffect(() => {
     setValue('client_id', client.clientId);
-
+    setAllAgree(false);
     client.scopes.forEach((scope) => setValue(`scopes.${scope}`, true));
     client.optionalScopes.forEach((scope) =>
       setValue(`scopes.${scope}`, false),
