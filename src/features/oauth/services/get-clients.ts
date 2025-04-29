@@ -1,23 +1,12 @@
 import { AxiosError } from 'axios';
 
-import { ScopeType } from '../hooks/use-authorize-form';
+import { GetClientResponse } from './get-client';
 
 import { api } from '@/features/core';
 
-export interface GetClientResponse {
-  clientId: string;
-  name: string;
-  urls: string[];
-  createdAt: string;
-  updatedAt: string;
-  scopes: ScopeType[];
-  optionalScopes: ScopeType[];
-  idTokenAllowed: boolean;
-}
-
-export const getClient = async (clientId: string) => {
+export const getClients = async () => {
   try {
-    const res = await api.get<GetClientResponse>(`/client/${clientId}`);
+    const res = await api.get<GetClientResponse[]>(`/client`);
     return res.data;
   } catch (error) {
     // TODO: error handling

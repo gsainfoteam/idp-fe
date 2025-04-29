@@ -53,8 +53,6 @@ export const useAuthorizeForm = () => {
     } catch (err) {
       console.error('consent error', err); // TODO: error handling
     }
-
-    // TODO: 해당 클라이언트 접속
   });
 
   return { form, onSubmit };

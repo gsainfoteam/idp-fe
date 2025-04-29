@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
+import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
@@ -9,26 +9,25 @@ import { GetClientResponse } from '../services/get-client';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
 export function AuthorizeForm({ client }: { client: GetClientResponse }) {
-  const { control, setValue, getValues, formState } =
-    useFormContext<ConsentFormSchema>();
+  const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const [allAgree, setAllAgree] = useState(false);
 
   useEffect(() => {
-    setValue('client_id', client.clientId);
-    setAllAgree(false);
-    client.scopes.forEach((scope) => setValue(`scopes.${scope}`, true));
-    client.optionalScopes.forEach((scope) =>
-      setValue(`scopes.${scope}`, false),
-    );
+    client.scopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, true);
+    });
+    client.optionalScopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, false);
+    });
   }, [client, setValue]);
 
-  const handleChange = () => {
-    const allChecked = client.optionalScopes.every((scope) =>
-      getValues(`scopes.${scope}`),
-    );
-    setAllAgree(allChecked);
-  };
+  const optionalScopeValues = useWatch<Record<string, boolean>>({
+    name: client.optionalScopes.map((scope) => `scopes.${scope}`),
+  });
+
+  const allAgree = useMemo(() => {
+    return optionalScopeValues.every((v) => v == true) ?? false;
+  }, [optionalScopeValues]);
 
   const toggleAll = (checked: boolean) => {
     client.optionalScopes.forEach((scope) => {
@@ -37,7 +36,6 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
         shouldDirty: true,
       });
     });
-    setAllAgree(checked);
   };
 
   return (
@@ -61,10 +59,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
                   <Checkbox
                     checked={field.value}
                     disabled
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleChange();
-                    }}
+                    onChange={field.onChange}
                   >
                     {t(`authorize.checkboxes.${scope}`)}
                   </Checkbox>
@@ -83,13 +78,7 @@ export function AuthorizeForm({ client }: { client: GetClientResponse }) {
                 name={`scopes.${scope}`}
                 control={control}
                 render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      handleChange();
-                    }}
-                  >
+                  <Checkbox checked={field.value} onChange={field.onChange}>
                     {t(`authorize.checkboxes.${scope}`)}
                   </Checkbox>
                 )}

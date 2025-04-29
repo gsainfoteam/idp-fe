@@ -20,7 +20,10 @@ export function RegisterFrame() {
             onSubmit={(e) => {
               onSubmit(e);
               // FIXME: https://github.com/TanStack/router/issues/3679 에러 발생
-              navigate({ to: '/auth/register/done' });
+              navigate({
+                to: '/auth/register/done',
+                search: (prev) => ({ ...prev }),
+              });
             }}
           >
             <RegisterForm

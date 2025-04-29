@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { RegisterFrame } from '@/features/auth';
 
 const schema = z.object({
+  clientId: z.string().min(1, 'Client ID is required'),
   redirectUrl: z.string().optional(),
 });
 
