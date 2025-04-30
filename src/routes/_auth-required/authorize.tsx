@@ -27,7 +27,7 @@ const schema = z
     state: z.string().optional(),
     scope: z
       .string()
-      .transform((scope) => scope.split(' '))
+      .transform((scope) => scope.split(' ').flatMap((s) => s.split('+')))
       .pipe(z.array(ScopeEnum))
       .superRefine((scopes, ctx) => {
         if (!scopes.includes('openid')) {
@@ -46,20 +46,9 @@ const schema = z
       .pipe(z.array(ResponseEnum)),
     prompt: z.enum(['none', 'login', 'consent']).optional(),
   })
-  .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
-    scopes: scope,
-    clientId: client_id,
-    redirectUri: redirect_uri,
-    responseTypes: response_type,
-    url: new URL(redirect_uri),
-    useImplicitFlow: (['token', 'id_token'] as const).some((type) =>
-      response_type.includes(type),
-    ),
-    ...rest,
-  }))
   .refine(
-    ({ scopes, prompt }) =>
-      !scopes.includes('offline_access') ||
+    ({ scope, prompt }) =>
+      !scope.includes('offline_access') ||
       prompt === 'consent' ||
       prompt === 'login',
     {
@@ -68,22 +57,22 @@ const schema = z
     },
   )
   .refine(
-    ({ scopes, responseTypes }) =>
-      !scopes.includes('offline_access') || responseTypes.includes('code'),
+    ({ scope, response_type }) =>
+      !scope.includes('offline_access') || response_type.includes('code'),
     {
       message: 'offline_access scope requires code response type',
       path: ['response_type'],
     },
   )
   .refine(
-    ({ nonce, responseTypes }) => !responseTypes.includes('id_token') || nonce,
+    ({ nonce, response_type }) => !response_type.includes('id_token') || nonce,
     {
       message: 'nonce is required for id_token response type',
       path: ['nonce'],
     },
   )
   .refine(
-    ({ nonce, responseTypes }) => responseTypes.includes('id_token') || !nonce,
+    ({ nonce, response_type }) => response_type.includes('id_token') || !nonce,
     {
       message: 'nonce is not required for non-id_token response type',
       path: ['nonce'],
