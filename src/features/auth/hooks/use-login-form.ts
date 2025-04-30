@@ -5,7 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { login } from '../services/use-login';
+import { login } from '../services/login';
+
+import { useAuth } from './use-auth';
+import { useToken } from './use-token';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -17,20 +20,22 @@ export type LoginFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useLoginForm = () => {
   const { t } = useTranslation();
+  const { saveToken } = useToken();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
+  const { refetch } = useAuth();
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
-      console.log(await login(data)); // TEST: debug
+      const response = await login(data);
+      saveToken(response.accessToken);
+      await refetch();
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === 401) {
-        form.setError('email', { message: ' ' });
-        form.setError('password', {
-          message: t('login.errors.unauthorized'),
-        });
+        form.resetField('password', { keepError: true });
+        form.setError('root', { message: t('login.errors.unauthorized') });
       } else {
         console.error(error);
       }

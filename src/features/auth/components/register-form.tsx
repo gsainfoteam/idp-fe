@@ -23,8 +23,6 @@ export function RegisterForm({
   const [isVerifying, setVerifying] = useState(false);
   const [isCodeValid, setCodeValid] = useState(false);
 
-  // TODO: 인증번호 확인 버튼 width도 hug로 만들어야 다국어 지원 가능
-
   return (
     <div className="flex flex-col">
       <div className="text-title-3 mb-2.5 text-neutral-900">
@@ -71,7 +69,7 @@ export function RegisterForm({
           <Input
             label={t('register.fields.code')}
             error={formState.errors.code?.message}
-            type="text"
+            type="number"
             placeholder={t('register.placeholders.code')}
             required
             disabled={isCodeValid}
@@ -80,9 +78,9 @@ export function RegisterForm({
               <Button
                 variant="default"
                 type="button"
-                className="w-17.5"
+                className="w-fit px-5 text-nowrap"
                 isLoading={isVerifying}
-                disabled={isCodeValid}
+                disabled={isCodeValid || formState.errors.code != null}
                 onClick={async () => {
                   setVerifying(true);
                   setCodeValid(await onVerifyCode(getValues()));
@@ -135,7 +133,7 @@ export function RegisterForm({
         <Input
           label={t('register.fields.student_id')}
           error={formState.errors.studentId?.message}
-          type="text"
+          type="number"
           placeholder={t('register.placeholders.student_id', {
             form: `${new Date().getFullYear()}0000`,
           })}
@@ -152,6 +150,14 @@ export function RegisterForm({
           {...register('phoneNumber')}
         />
       </div>
+      <div className="h-16" />
+      <Button
+        variant="primary"
+        disabled={!(formState.isValid && isCodeValid)}
+        isLoading={formState.isSubmitting}
+      >
+        {t('register.buttons.next')}
+      </Button>
     </div>
   );
 }

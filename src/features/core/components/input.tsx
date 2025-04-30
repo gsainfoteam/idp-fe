@@ -9,9 +9,6 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   suffix?: React.ReactNode;
 }
 
-// TODO: 인증번호 만료 타이머
-// TODO: 비밀번호 보이게 하기 버튼
-
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -43,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'text-body-1 text-neutral-950 placeholder:text-neutral-400',
               'focus:border-primary-400 border border-neutral-400 bg-white shadow-none focus:border focus:outline-none',
               error &&
-                'border-red-500 bg-white shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
+                'border-red-500 bg-white shadow-[inset_0_0_0_1px_theme(colors.red.500)] focus:border-red-500 focus:shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
               disabled &&
                 'border border-neutral-400 bg-neutral-100 text-neutral-600',
               inputClassName,
