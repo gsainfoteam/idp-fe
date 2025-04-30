@@ -1,6 +1,5 @@
-import { ScopeType } from '../hooks/use-authorize-form';
-
 import { api } from '@/features/core';
+import { ScopeType } from '@/routes/_auth-required/authorize';
 
 interface UserConsent {
   clientUuid: string;

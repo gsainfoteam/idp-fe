@@ -6,23 +6,7 @@ import { z } from 'zod';
 
 import { consent, ConsentRequestBody } from '../services/consent';
 
-export const ClientScopeList = [
-  'profile',
-  'name',
-  'email',
-  'phone_number',
-  'student_id',
-] as const;
-export const ClientScopeEnum = z.enum(ClientScopeList);
-export type ClientScopeType = z.infer<typeof ClientScopeEnum>;
-
-export const TokenScopeList = ['openid', 'offline_access'] as const;
-export const TokenScopeEnum = z.enum(TokenScopeList);
-export type TokenScopeType = z.infer<typeof TokenScopeEnum>;
-
-export const ScopeList = [...ClientScopeList, ...TokenScopeList] as const;
-export const ScopeEnum = z.enum(ScopeList);
-export type ScopeType = z.infer<typeof ScopeEnum>;
+import { ScopeEnum } from '@/routes/_auth-required/authorize';
 
 export const createSchema = (t: TFunction) =>
   z.object({

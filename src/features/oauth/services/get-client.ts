@@ -1,8 +1,7 @@
 import { AxiosError } from 'axios';
 
-import { ScopeType } from '../hooks/use-authorize-form';
-
 import { api } from '@/features/core';
+import { ScopeType } from '@/routes/_auth-required/authorize';
 
 export interface ClientResponse {
   clientId: string;

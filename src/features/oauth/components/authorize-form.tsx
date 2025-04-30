@@ -11,7 +11,7 @@ import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 export function AuthorizeForm({ client }: { client: ClientResponse }) {
   const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const { scope: clientScopes } = useSearch({
+  const { scopes: clientScopes } = useSearch({
     from: '/_auth-required/authorize',
   });
 
