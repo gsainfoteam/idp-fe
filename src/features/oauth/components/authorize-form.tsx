@@ -23,7 +23,7 @@ export function AuthorizeForm({ client }: { client: ClientResponse }) {
   });
 
   const allAgree = useMemo(() => {
-    return optionalScopeValues.every((v) => v == true) ?? false;
+    return optionalScopeValues.every(Boolean) ?? false;
   }, [optionalScopeValues]);
 
   const toggleAll = (checked: boolean) => {
