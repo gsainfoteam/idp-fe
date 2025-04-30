@@ -19,9 +19,13 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response.status === 401 && !error.config._retry) {
+    if (
+      error.response.status === 401 &&
+      !error.config._retry &&
+      error.config.url !== '/auth/refresh'
+    ) {
       const refreshRes = await api
-        .post<{ accessToken: string }>('/auth/refresh')
+        .post<{ accessToken: string }>('/auth/refresh', {})
         .catch(() => null);
       if (refreshRes) {
         useToken.getState().saveToken(refreshRes.data.accessToken);
