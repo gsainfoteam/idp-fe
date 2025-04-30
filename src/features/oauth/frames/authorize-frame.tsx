@@ -18,11 +18,15 @@ export function AuthorizeFrame() {
   });
   const { client } = useClient(clientId);
 
+  const authorize = () => {
+    window.location.href =
+      'https://api.idp.gistory.me/oauth/authorize' + window.location.search;
+  };
+
   // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
   if (!scopes.includes('offline_access')) {
     getUserConsent().then((consent) => {
-      if (consent.list.some((c) => c.clientUuid === clientId))
-        window.location.href = 'api.idp.gistory.me/oauth/authorize';
+      if (consent.list.some((c) => c.clientUuid === clientId)) authorize();
     });
   }
 
@@ -49,7 +53,7 @@ export function AuthorizeFrame() {
             <form
               onSubmit={async (e) => {
                 await onSubmit(e);
-                window.location.href = 'api.idp.gistory.me/oauth/authorize';
+                authorize();
               }}
             >
               <AuthorizeForm client={client} />
