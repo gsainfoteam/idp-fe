@@ -1,4 +1,4 @@
-import { useSearch } from '@tanstack/react-router';
+import { useLoaderData } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ import { LoadingOverlay } from '@/features/core';
 export function AuthorizeFrame() {
   const { form, onSubmit } = useAuthorizeForm();
   const { t } = useTranslation();
-  const { clientId, scopes } = useSearch({
+  const { clientId, scopes } = useLoaderData({
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
@@ -45,7 +45,7 @@ export function AuthorizeFrame() {
   }, [clientId, scopes]);
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
-  if (isLoading || client == null) {
+  if (isLoading || !client) {
     return (
       <div className="flex min-h-screen items-center justify-center"></div>
     );

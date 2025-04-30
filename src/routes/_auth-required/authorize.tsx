@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { zodValidator } from '@tanstack/zod-adapter';
 import { z } from 'zod';
 
 import { AuthorizeFrame } from '@/features/oauth';
@@ -20,35 +21,48 @@ export type ScopeType = z.infer<typeof ScopeEnum>;
 
 export const ResponseEnum = z.enum(['token', 'id_token', 'code']);
 
-const schema = z
-  .object({
-    client_id: z.string(),
-    redirect_uri: z.string().url(),
-    state: z.string().optional(),
-    scope: z
-      .string()
-      .transform((scope) => scope.split(' ').flatMap((s) => s.split('+')))
-      .pipe(z.array(ScopeEnum))
-      .superRefine((scopes, ctx) => {
-        if (!scopes.includes('openid')) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'openid scope is required',
-            fatal: true,
-          });
-          return z.never();
-        }
-      }),
-    nonce: z.string().optional(),
-    response_type: z
-      .string()
-      .transform((responseType) => responseType.split(' '))
-      .pipe(z.array(ResponseEnum)),
-    prompt: z.enum(['none', 'login', 'consent']).optional(),
-  })
+const schema = z.object({
+  client_id: z.string(),
+  redirect_uri: z.string().url(),
+  state: z.string().optional(),
+  scope: z
+    .string()
+    .transform((scope) => scope.split(' ').flatMap((s) => s.split('+')))
+    .pipe(z.array(ScopeEnum))
+    .superRefine((scopes, ctx) => {
+      if (!scopes.includes('openid')) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'openid scope is required',
+          fatal: true,
+        });
+        return z.never();
+      }
+    })
+    .transform((s) => s.join(' ')),
+  nonce: z.string().optional(),
+  response_type: z
+    .string()
+    .transform((responseType) => responseType.split(' '))
+    .pipe(z.array(ResponseEnum))
+    .transform((res) => res.join(' ')),
+  prompt: z.enum(['none', 'login', 'consent']).optional(),
+});
+
+const validateSchema = schema
+  .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
+    scopes: z.array(ScopeEnum).parse(scope.split(' ')),
+    clientId: client_id,
+    redirectUri: redirect_uri,
+    responseTypes: z.array(ResponseEnum).parse(response_type.split(' ')),
+    url: new URL(redirect_uri),
+    prompt: rest.prompt,
+    nonce: rest.nonce,
+    rest,
+  }))
   .refine(
-    ({ scope, prompt }) =>
-      !scope.includes('offline_access') ||
+    ({ scopes, prompt }) =>
+      !scopes.includes('offline_access') ||
       prompt === 'consent' ||
       prompt === 'login',
     {
@@ -57,22 +71,22 @@ const schema = z
     },
   )
   .refine(
-    ({ scope, response_type }) =>
-      !scope.includes('offline_access') || response_type.includes('code'),
+    ({ scopes, responseTypes }) =>
+      !scopes.includes('offline_access') || responseTypes.includes('code'),
     {
       message: 'offline_access scope requires code response type',
       path: ['response_type'],
     },
   )
   .refine(
-    ({ nonce, response_type }) => !response_type.includes('id_token') || nonce,
+    ({ nonce, responseTypes }) => !responseTypes.includes('id_token') || nonce,
     {
       message: 'nonce is required for id_token response type',
       path: ['nonce'],
     },
   )
   .refine(
-    ({ nonce, response_type }) => response_type.includes('id_token') || !nonce,
+    ({ nonce, responseTypes }) => responseTypes.includes('id_token') || !nonce,
     {
       message: 'nonce is not required for non-id_token response type',
       path: ['nonce'],
@@ -85,5 +99,9 @@ const AuthorizePage = () => {
 
 export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
-  validateSearch: schema,
+  validateSearch: zodValidator(schema),
+  loaderDeps: ({ search }) => search,
+  loader: ({ deps }) => {
+    return validateSchema.parse(deps);
+  },
 });
