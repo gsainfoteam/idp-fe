@@ -1,19 +1,16 @@
-import { Link, useNavigate, useSearch } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import TextLogo from '../../../assets/text-logo.svg?react';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
+import TextLogo from '@/assets/text-logo.svg?react';
 import { Button, LoadingOverlay } from '@/features/core';
-import { getClients } from '@/features/oauth';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
   const { t } = useTranslation();
-  const { clientId, redirectUrl } = useSearch({ from: '/auth/login' });
-  const navigate = useNavigate({ from: '/auth/login' });
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -25,30 +22,7 @@ export function LoginFrame() {
         </div>
         <div className="h-8" />
         <FormProvider {...form}>
-          <form
-            onSubmit={(e) => {
-              onSubmit(e);
-              // TEST: dummy client id: 8acf0a32-20a1-4c5d-a0d9-b43e24ea5d50
-              getClients().then((clients) => {
-                // 이미 인가 완료된 클라이언트인 경우 redirectUrl 혹은 프로필 페이지로 이동
-                if (clients.some((c) => c.clientId === clientId)) {
-                  if (redirectUrl != null) {
-                    window.location.href = redirectUrl;
-                  } else {
-                    navigate({
-                      to: '/profile',
-                      search: (prev) => ({ ...prev }),
-                    });
-                  }
-                } else {
-                  navigate({
-                    to: '/authorize',
-                    search: (prev) => ({ ...prev }),
-                  });
-                }
-              });
-            }}
-          >
+          <form onSubmit={onSubmit}>
             <div className="h-[150px]">
               <LoadingOverlay show={form.formState.isSubmitting}>
                 <LoginForm />
@@ -68,9 +42,7 @@ export function LoginFrame() {
               <Link
                 from="/auth/login"
                 to="/auth/register"
-                search={(prev) => ({
-                  ...prev,
-                })}
+                search={(prev) => ({ ...prev })}
               >
                 <Button
                   variant="link"

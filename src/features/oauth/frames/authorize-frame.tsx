@@ -1,4 +1,4 @@
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { useSearch } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -12,9 +12,10 @@ export function AuthorizeFrame() {
   const { form, onSubmit } = useAuthorizeForm();
   const { t } = useTranslation();
 
-  const { clientId, redirectUrl } = useSearch({ from: '/authorize' });
+  const { clientId, redirectUrl } = useSearch({
+    from: '/_auth-required/authorize',
+  });
   const { client, isLoading, error } = useClient(clientId);
-  const navigate = useNavigate({ from: '/authorize' });
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
   if (isLoading || error || client == null) {
@@ -37,16 +38,9 @@ export function AuthorizeFrame() {
           <div className="h-1" />
           <FormProvider {...form}>
             <form
-              onSubmit={(e) => {
-                onSubmit(e);
-                if (redirectUrl != null) {
-                  window.location.href = redirectUrl;
-                } else {
-                  navigate({
-                    to: '/profile',
-                    search: (prev) => ({ ...prev }),
-                  });
-                }
+              onSubmit={async (e) => {
+                await onSubmit(e);
+                window.location.href = redirectUrl;
               }}
             >
               <AuthorizeForm client={client} />
