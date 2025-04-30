@@ -15,10 +15,10 @@ export function AuthorizeFrame() {
   const { clientId, redirectUrl } = useSearch({
     from: '/_auth-required/authorize',
   });
-  const { client, isLoading, error } = useClient(clientId);
+  const { client } = useClient(clientId);
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
-  if (isLoading || error || client == null) {
+  if (client == null) {
     return (
       <div className="flex min-h-screen items-center justify-center"></div>
     );

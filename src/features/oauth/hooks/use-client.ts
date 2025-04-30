@@ -1,23 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { getClient, GetClientResponse } from '../services/get-client';
+import { getClient } from '../services/get-client';
 
 export const useClient = (clientId: string) => {
-  const {
-    data: client,
-    isLoading,
-    error,
-  } = useQuery<GetClientResponse>({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['client', clientId],
     queryFn: () => getClient(clientId),
     enabled: !!clientId,
   });
 
+  const client = useMemo(() => {
+    if (isLoading) return undefined;
+    if (error) return null;
+    return data;
+  }, [isLoading, error, data]);
+
   useEffect(() => {
-    if (!isLoading && (error || client == null))
+    if (!isLoading && (error || client == null)) {
       console.error('Error fetching client:', error); // TODO: error handling
+    }
   }, [client, isLoading, error]);
 
-  return { client: client, isLoading, error };
+  return { client, isLoading, error };
 };

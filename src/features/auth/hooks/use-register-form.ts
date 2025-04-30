@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { getJWTToken } from '../services/get-token';
+import { register } from '../services/register';
 import { sendVerificationCode } from '../services/send-verification-code';
-import { register } from '../services/use-register';
 
 export const createSchema = (t: TFunction) =>
   z

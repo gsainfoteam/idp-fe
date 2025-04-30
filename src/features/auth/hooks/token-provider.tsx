@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 
 import { getToken, setToken, TokenContext } from './use-token';
 
-export const TokenProvider = ({ children }: React.PropsWithChildren) => {
+export const TokenProvider = ({ children }: PropsWithChildren) => {
   const [token, setTokenState] = useState<string | null>(getToken);
 
   const saveToken = useCallback((newToken: string | null) => {

@@ -17,9 +17,7 @@ export function RegisterDoneFrame() {
         <Link
           from="/auth/register"
           to="/auth/login"
-          search={(prev) => ({
-            ...prev,
-          })}
+          search={(prev) => ({ ...prev })}
           className="w-full"
         >
           <Button variant="primary" type="button">

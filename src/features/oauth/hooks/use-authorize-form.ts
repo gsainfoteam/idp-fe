@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { consent, ConsentRequestBody } from '../services/use-consent';
+import { consent, ConsentRequestBody } from '../services/consent';
 
 export const ClientScopeList = [
   'profile',

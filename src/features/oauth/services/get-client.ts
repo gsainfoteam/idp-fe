@@ -4,7 +4,7 @@ import { ScopeType } from '../hooks/use-authorize-form';
 
 import { api } from '@/features/core';
 
-export interface GetClientResponse {
+export interface ClientResponse {
   clientId: string;
   name: string;
   urls: string[];
@@ -17,7 +17,7 @@ export interface GetClientResponse {
 
 export const getClient = async (clientId: string) => {
   try {
-    const res = await api.get<GetClientResponse>(`/client/${clientId}`);
+    const res = await api.get<ClientResponse>(`/client/${clientId}`);
     return res.data;
   } catch (error) {
     // TODO: error handling

@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 
-import { GetClientResponse } from './get-client';
+import { ClientResponse } from './get-client';
 
 import { api } from '@/features/core';
 
 export const getClients = async () => {
   try {
-    const res = await api.get<GetClientResponse[]>(`/client`);
+    const res = await api.get<ClientResponse[]>(`/client`);
     return res.data;
   } catch (error) {
     // TODO: error handling

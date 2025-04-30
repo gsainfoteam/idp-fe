@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { login } from '../services/use-login';
+import { login } from '../services/login';
 
 import { useAuth } from './use-auth';
 import { useToken } from './use-token';
