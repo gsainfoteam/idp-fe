@@ -29,23 +29,9 @@ const schema = z.object({
     .string()
     .transform((scope) => scope.split(' ').flatMap((s) => s.split('+')))
     .pipe(z.array(ScopeEnum))
-    .superRefine((scopes, ctx) => {
-      if (!scopes.includes('openid')) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'openid scope is required',
-          fatal: true,
-        });
-        return z.never();
-      }
-    })
     .transform((s) => s.join(' ')),
   nonce: z.string().optional(),
-  response_type: z
-    .string()
-    .transform((responseType) => responseType.split(' '))
-    .pipe(z.array(ResponseEnum))
-    .transform((res) => res.join(' ')),
+  response_type: z.string().refine((v) => v === 'code'),
   prompt: z.enum(['none', 'login', 'consent']).optional(),
 });
 
@@ -70,28 +56,14 @@ const validateSchema = schema
       path: ['prompt'],
     },
   )
-  .refine(
-    ({ scopes, responseTypes }) =>
-      !scopes.includes('offline_access') || responseTypes.includes('code'),
-    {
-      message: 'offline_access scope requires code response type',
-      path: ['response_type'],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => !responseTypes.includes('id_token') || nonce,
-    {
-      message: 'nonce is required for id_token response type',
-      path: ['nonce'],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => responseTypes.includes('id_token') || !nonce,
-    {
-      message: 'nonce is not required for non-id_token response type',
-      path: ['nonce'],
-    },
-  );
+  .refine(({ nonce, scopes }) => !scopes.includes('openid') || nonce, {
+    message: 'nonce is required for id_token',
+    path: ['nonce'],
+  })
+  .refine(({ nonce, scopes }) => scopes.includes('openid') || !nonce, {
+    message: 'nonce is not required for non-id_token',
+    path: ['nonce'],
+  });
 
 const AuthorizePage = () => {
   return <AuthorizeFrame />;
