@@ -1,8 +1,13 @@
-import { createFileRoute, Navigate, useRouter } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  Navigate,
+  Outlet,
+  useRouter,
+} from '@tanstack/react-router';
 
 import { useAuth } from '@/features/auth';
 
-const ProfilePage = () => {
+const AuthRequiredLayout = () => {
   const { user } = useAuth();
   // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함
   const router = useRouter();
@@ -15,9 +20,9 @@ const ProfilePage = () => {
         replace
       />
     );
-  return <div>Profile</div>;
+  return <Outlet />;
 };
 
-export const Route = createFileRoute('/')({
-  component: ProfilePage,
+export const Route = createFileRoute('/_auth-required')({
+  component: AuthRequiredLayout,
 });

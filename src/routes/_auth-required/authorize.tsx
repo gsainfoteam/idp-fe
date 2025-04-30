@@ -12,7 +12,7 @@ const AuthorizePage = () => {
   return <AuthorizeFrame />;
 };
 
-export const Route = createFileRoute('/authorize')({
+export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
   validateSearch: schema,
 });
