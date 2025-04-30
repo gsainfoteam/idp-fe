@@ -1,4 +1,4 @@
-import { Link, useSearch } from '@tanstack/react-router';
+import { useSearch } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
 import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -95,16 +95,16 @@ export function AuthorizeForm({ client }: { client: ClientResponse }) {
       </LoadingOverlay>
       <div className="h-10" />
       <div className="flex gap-2.5">
-        <Link
-          from="/authorize"
-          to="/auth/login"
-          search={(prev) => ({ ...prev })}
-          className="w-full"
+        <Button
+          variant="secondary"
+          type="button"
+          onClick={() => {
+            // TODO: 취소 페이지 UI
+            window.close();
+          }}
         >
-          <Button variant="secondary" type="button">
-            {t('authorize.buttons.cancel')}
-          </Button>
-        </Link>
+          {t('authorize.buttons.cancel')}
+        </Button>
         <Button variant="primary">{t('authorize.buttons.continue')}</Button>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorizeForm } from '../hooks/use-authorize-form';
 import { useClient } from '../hooks/use-client';
+import { getUserConsent } from '../services/get-user-consent';
 
 import { LoadingOverlay } from '@/features/core';
 
@@ -12,10 +13,18 @@ export function AuthorizeFrame() {
   const { form, onSubmit } = useAuthorizeForm();
   const { t } = useTranslation();
 
-  const { clientId, redirectUrl } = useSearch({
+  const { clientId, scope } = useSearch({
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
+
+  // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
+  if (!scope.includes('offline_access')) {
+    getUserConsent().then((consent) => {
+      if (consent.list.some((c) => c.clientUuid === clientId))
+        window.location.href = 'api.idp.gistory.me/oauth/authorize';
+    });
+  }
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
   if (client == null) {
@@ -40,7 +49,7 @@ export function AuthorizeFrame() {
             <form
               onSubmit={async (e) => {
                 await onSubmit(e);
-                window.location.href = redirectUrl;
+                window.location.href = 'api.idp.gistory.me/oauth/authorize';
               }}
             >
               <AuthorizeForm client={client} />
