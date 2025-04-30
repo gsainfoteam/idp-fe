@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import { ClientResponse } from './get-client';
+import { ClientResponse } from './get-client-public';
 
 import { api } from '@/features/core';
 

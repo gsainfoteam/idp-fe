@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
-import { getClient } from '../services/get-client';
+import { getClientPublic } from '../services/get-client-public';
 
 export const useClient = (clientId: string) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['client', clientId],
-    queryFn: () => getClient(clientId),
+    queryFn: () => getClientPublic(clientId),
     enabled: !!clientId,
   });
 

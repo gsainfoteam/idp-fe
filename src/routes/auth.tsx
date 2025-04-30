@@ -14,6 +14,6 @@ const AuthLayout = () => {
 export const Route = createFileRoute('/auth')({
   component: AuthLayout,
   validateSearch: z.object({
-    redirectUrl: z.string().optional(),
+    redirectUrl: z.string().url('Invalid redirect URL').optional(),
   }),
 });

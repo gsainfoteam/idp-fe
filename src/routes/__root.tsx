@@ -4,10 +4,6 @@ import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TokenProvider } from '@/features/auth';
 import { LanguageSwitcher } from '@/features/core';
 
-export const Route = createRootRoute({
-  component: RootComponent,
-});
-
 const queryClient = new QueryClient();
 
 function RootComponent() {
@@ -24,3 +20,7 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
+export const Route = createRootRoute({
+  component: RootComponent,
+});

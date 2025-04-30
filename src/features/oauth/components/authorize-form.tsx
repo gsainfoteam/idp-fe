@@ -4,7 +4,7 @@ import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
-import { ClientResponse } from '../services/get-client';
+import { ClientResponse } from '../services/get-client-public';
 
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 

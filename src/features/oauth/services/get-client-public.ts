@@ -15,9 +15,9 @@ export interface ClientResponse {
   idTokenAllowed: boolean;
 }
 
-export const getClient = async (clientId: string) => {
+export const getClientPublic = async (clientId: string) => {
   try {
-    const res = await api.get<ClientResponse>(`/client/${clientId}`);
+    const res = await api.get<ClientResponse>(`/client/${clientId}/public`);
     return res.data;
   } catch (error) {
     // TODO: error handling
