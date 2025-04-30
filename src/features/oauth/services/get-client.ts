@@ -1,22 +1,17 @@
 import { AxiosError } from 'axios';
 
 import { api } from '@/features/core';
-import { ScopeType } from '@/routes/_auth-required/authorize';
 
-export interface ClientResponse {
-  clientId: string;
-  name: string;
-  urls: string[];
-  createdAt: string;
-  updatedAt: string;
-  scopes: ScopeType[];
-  optionalScopes: ScopeType[];
-  idTokenAllowed: boolean;
-}
+export type ClientResponse = NonNullable<
+  Awaited<ReturnType<typeof getClientPublic>>
+>;
 
 export const getClientPublic = async (clientId: string) => {
   try {
-    const res = await api.get<ClientResponse>(`/client/${clientId}/public`);
+    const res = await api.GET('/client/{clientId}/public', {
+      params: { path: { clientId } },
+    });
+    if (res.error || !res.data) throw res.error;
     return res.data;
   } catch (error) {
     // TODO: error handling

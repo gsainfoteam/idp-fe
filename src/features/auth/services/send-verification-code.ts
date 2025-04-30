@@ -1,14 +1,10 @@
-import { RegisterFormSchema } from '../hooks/use-register-form';
-
+import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-interface SendVerificationRequestBody {
-  email: RegisterFormSchema['email'];
-}
-
 export const sendVerificationCode = async (
-  requestBody: SendVerificationRequestBody,
+  requestBody: paths['/verify/email']['post']['requestBody']['content']['application/json'],
 ) => {
-  const res = await api.post<void>('/verify/email', requestBody);
+  const res = await api.POST('/verify/email', { body: requestBody });
+  if (res.error || !res.data) throw res.error;
   return res.data;
 };
