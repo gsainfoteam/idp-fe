@@ -16,6 +16,20 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use((response) => {
-  return response;
-});
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response.status === 401 && !error.config._retry) {
+      const refreshRes = await api
+        .post<{ accessToken: string }>('/auth/refresh')
+        .catch(() => null);
+      if (refreshRes) {
+        useToken.getState().saveToken(refreshRes.data.accessToken);
+        error.config._retry = true;
+        return api.request(error.config);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
