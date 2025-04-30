@@ -1,5 +1,5 @@
 import { useSearch } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -18,27 +18,32 @@ export function AuthorizeFrame() {
   });
   const { client } = useClient(clientId);
 
-  const [skipRender, setSkipRender] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const authorize = () => {
     window.location.href =
       'https://api.idp.gistory.me/oauth/authorize' + window.location.search;
   };
 
-  // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
-  if (!scopes.includes('offline_access')) {
-    getUserConsent().then((consent) => {
-      if (consent.list.some((c) => c.clientUuid === clientId)) {
-        authorize();
-        setSkipRender(true);
+  useEffect(() => {
+    // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
+    const checkConsent = async () => {
+      if (!scopes.includes('offline_access')) {
+        const consents = await getUserConsent();
+        if (consents.list.some((c) => c.clientUuid === clientId)) {
+          authorize();
+          return;
+        }
       }
-    });
-  }
 
-  if (skipRender) return null;
+      setLoading(false);
+    };
+
+    checkConsent();
+  }, [clientId, scopes]);
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
-  if (client == null) {
+  if (isLoading || client == null) {
     return (
       <div className="flex min-h-screen items-center justify-center"></div>
     );
