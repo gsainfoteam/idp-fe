@@ -1,13 +1,16 @@
-import createClient from 'openapi-fetch';
+import createClient, { MergedOptions, Middleware } from 'openapi-fetch';
 
 import type { paths } from '@/@types/api-schema';
-import { Middleware } from '@/@types/openapi-fetch';
 import { useToken } from '@/features/auth';
 
 export const api = createClient<paths>({
   baseUrl: 'https://api.stg.idp.gistory.me',
   credentials: 'include',
 });
+
+interface AuxiliaryOptions extends MergedOptions {
+  retry?: boolean;
+}
 
 const middleware: Middleware = {
   async onRequest({ request }) {
@@ -20,19 +23,21 @@ const middleware: Middleware = {
     return request;
   },
   async onResponse({ request, response, options }) {
-    if (response?.status === 401 && !options.retry) {
+    const auxiliaryOptions = options as AuxiliaryOptions;
+    if (response?.status === 401) {
+      if (auxiliaryOptions.retry) {
+        useToken.getState().saveToken(null); // Clear token if response is not ok
+        return Promise.resolve(response);
+      }
       const refreshRes = await fetch(
         'https://api.stg.idp.gistory.me/auth/refresh',
-        {
-          method: 'POST',
-          credentials: 'include',
-        },
+        { method: 'POST', credentials: 'include' },
       ).catch(() => null);
 
       if (refreshRes && refreshRes.ok) {
         const { accessToken } = await refreshRes.json();
         useToken.getState().saveToken(accessToken);
-        options.retry = true;
+        auxiliaryOptions.retry = true;
 
         const retriedRequest = new Request(request, {
           headers: new Headers({
@@ -44,8 +49,11 @@ const middleware: Middleware = {
       }
     }
 
-    useToken.getState().saveToken(null); // Clear token if response is not ok
-    return Promise.resolve(response);
+    if (response.status >= 400) {
+      return Promise.reject(response);
+    }
+
+    return response;
   },
   async onError({ error, request }) {
     if (request.url === 'https://api.stg.idp.gistory.me/auth/refresh') {
