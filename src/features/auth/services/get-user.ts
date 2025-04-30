@@ -1,17 +1,7 @@
 import { api } from '@/features/core';
 
-export interface UserResponse {
-  name: string;
-  uuid: string;
-  profile: string;
-  email: string;
-  studentId: string;
-  phoneNumber: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export const getUser = async () => {
-  const res = await api.get<UserResponse>('/user');
+  const res = await api.GET('/user');
+  if (res.error || !res.data) throw res.error;
   return res.data;
 };

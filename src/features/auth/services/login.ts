@@ -1,12 +1,10 @@
-import { LoginFormSchema } from '../hooks/use-login-form';
-
+import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-interface LoginResponse {
-  accessToken: string;
-}
-
-export const login = async (requestBody: LoginFormSchema) => {
-  const res = await api.post<LoginResponse>('/auth/login', requestBody);
+export const login = async (
+  requestBody: paths['/auth/login']['post']['requestBody']['content']['application/json'],
+) => {
+  const res = await api.POST('/auth/login', { body: requestBody });
+  if (res.error || !res.data) throw res.error;
   return res.data;
 };

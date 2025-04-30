@@ -24,13 +24,13 @@ export const useAuthorizeForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
-    const requestBody: ConsentRequestBody = {
+    const requestBody = {
       client_id: data.client_id,
       scope: Object.entries(data.scopes)
         .filter(([, value]) => value === true)
         .map(([key]) => key)
         .join(' '),
-    };
+    } satisfies ConsentRequestBody;
 
     try {
       await consent(requestBody);
