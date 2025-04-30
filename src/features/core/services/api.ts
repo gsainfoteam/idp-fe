@@ -4,6 +4,7 @@ import { useToken } from '@/features/auth';
 
 export const api = axios.create({
   baseURL: 'https://api.stg.idp.gistory.me',
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
