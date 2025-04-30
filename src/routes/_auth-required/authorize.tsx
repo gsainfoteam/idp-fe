@@ -73,7 +73,5 @@ export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
   validateSearch: zodValidator(schema),
   loaderDeps: ({ search }) => search,
-  loader: ({ deps }) => {
-    return validateSchema.parse(deps);
-  },
+  loader: ({ deps }) => validateSchema.parse(deps),
 });
