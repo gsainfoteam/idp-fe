@@ -19,6 +19,7 @@ export const useAuth = () => {
     if (error) return null;
     return data;
   }, [token, isLoading, error, data]);
+  // console.log(user);
 
   return { user };
 };

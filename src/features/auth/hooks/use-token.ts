@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const getToken = () => {
   return localStorage.getItem('token');
 };
 
 export const useToken = () => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('token'),
+  );
 
   const saveToken = useCallback((token: string | null) => {
     if (token) {
@@ -13,10 +15,6 @@ export const useToken = () => {
     } else {
       localStorage.removeItem('token');
     }
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
     setToken(token);
   }, []);
 
