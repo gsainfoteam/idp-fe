@@ -1,22 +1,16 @@
-import { useCallback, useState } from 'react';
+import { createContext, useContext } from 'react';
 
-export const getToken = () => {
-  return localStorage.getItem('token');
+type TokenContextType = {
+  token: string | null;
+  saveToken: (token: string | null) => void;
 };
 
+export const TokenContext = createContext<TokenContextType | null>(null);
+
 export const useToken = () => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem('token'),
-  );
-
-  const saveToken = useCallback((token: string | null) => {
-    if (token) {
-      localStorage.setItem('token', token);
-    } else {
-      localStorage.removeItem('token');
-    }
-    setToken(token);
-  }, []);
-
-  return { saveToken, token };
+  const context = useContext(TokenContext);
+  if (!context) {
+    throw new Error('useToken must be used within a TokenProvider');
+  }
+  return context;
 };

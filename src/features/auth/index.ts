@@ -8,3 +8,4 @@ export * from './hooks/use-login-form';
 export * from './hooks/use-register-form';
 export * from './hooks/use-token';
 export * from './hooks/use-auth';
+export * from './hooks/token-provider';

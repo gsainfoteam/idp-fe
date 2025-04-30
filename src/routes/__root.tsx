@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Outlet, createRootRoute } from '@tanstack/react-router';
 
+import { TokenProvider } from '@/features/auth';
 import { LanguageSwitcher } from '@/features/core';
 
 export const Route = createRootRoute({
@@ -12,12 +13,14 @@ const queryClient = new QueryClient();
 function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="relative min-h-screen">
-        <Outlet />
-        <div className="absolute right-4 bottom-4">
-          <LanguageSwitcher />
+      <TokenProvider>
+        <div className="relative min-h-screen">
+          <Outlet />
+          <div className="absolute right-4 bottom-4">
+            <LanguageSwitcher />
+          </div>
         </div>
-      </div>
+      </TokenProvider>
     </QueryClientProvider>
   );
 }
