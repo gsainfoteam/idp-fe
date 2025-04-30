@@ -90,5 +90,19 @@
       "continue": "계속하기"
     }
   },
+  "profile": {
+    "title": "프로필",
+    "edit": {
+      "title": "프로필 수정"
+    },
+    "password": {
+      "title": "비밀번호 변경"
+    },
+    "logout": "로그아웃",
+    "withdrawal": "계정 탈퇴"
+  },
+  "developer": {
+    "menuItem": "개발자 센터"
+  },
   "language": "ko"
 }
