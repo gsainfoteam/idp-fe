@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
-import { getClientPublic } from '../services/get-client-public';
+import { getClientPublic } from '../services/get-client';
 
 export const useClient = (clientId: string) => {
   const { data, isLoading, error } = useQuery({
@@ -22,5 +22,5 @@ export const useClient = (clientId: string) => {
     }
   }, [client, isLoading, error]);
 
-  return { client, isLoading, error };
+  return { client };
 };

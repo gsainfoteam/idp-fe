@@ -1,28 +1,25 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useSearch } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
 import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
-import { ClientResponse } from '../services/get-client-public';
+import { ClientResponse } from '../services/get-client';
 
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
 export function AuthorizeForm({ client }: { client: ClientResponse }) {
   const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
+  const { scope: clientScopes } = useSearch({
+    from: '/_auth-required/authorize',
+  });
 
-  useEffect(() => {
-    client.scopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, true);
-    });
-    client.optionalScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, false);
-    });
-  }, [client, setValue]);
+  const scopes = clientScopes.filter(client.scopes.includes);
+  const optionalScopes = clientScopes.filter(client.optionalScopes.includes);
 
   const optionalScopeValues = useWatch<Record<string, boolean>>({
-    name: client.optionalScopes.map((scope) => `scopes.${scope}`),
+    name: optionalScopes.map((scope) => `scopes.${scope}`),
   });
 
   const allAgree = useMemo(() => {
@@ -30,13 +27,22 @@ export function AuthorizeForm({ client }: { client: ClientResponse }) {
   }, [optionalScopeValues]);
 
   const toggleAll = (checked: boolean) => {
-    client.optionalScopes.forEach((scope) => {
+    optionalScopes.forEach((scope) => {
       setValue(`scopes.${scope}`, checked, {
         shouldValidate: true,
         shouldDirty: true,
       });
     });
   };
+
+  useEffect(() => {
+    scopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, true);
+    });
+    optionalScopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, false);
+    });
+  }, [scopes, optionalScopes, setValue]);
 
   return (
     <div className="flex flex-col">
@@ -50,7 +56,7 @@ export function AuthorizeForm({ client }: { client: ClientResponse }) {
             {t('authorize.labels.required')}
           </div>
           <div className="flex flex-col gap-1 pl-1">
-            {client.scopes.map((scope) => (
+            {scopes.map((scope) => (
               <Controller
                 key={scope}
                 name={`scopes.${scope}`}
@@ -72,7 +78,7 @@ export function AuthorizeForm({ client }: { client: ClientResponse }) {
             {t('authorize.labels.optional')}
           </div>
           <div className="flex flex-col gap-1 pl-1">
-            {client.optionalScopes.map((scope) => (
+            {optionalScopes.map((scope) => (
               <Controller
                 key={scope}
                 name={`scopes.${scope}`}
