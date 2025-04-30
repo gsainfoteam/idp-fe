@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsr generate && tsc -b && vite build",
+    "build": "npm run gen-oas && tsr generate && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "gen-oas": "npx openapi-typescript https://api.stg.idp.gistory.me/api-json -o ./src/@types/api-schema.d.ts"
