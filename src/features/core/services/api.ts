@@ -20,8 +20,8 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.config.url === '/auth/refresh') return error;
-    if (error.response.status === 401 && !error.config._retry) {
+    if (error.config?.url === '/auth/refresh') return Promise.reject(error);
+    if (error.response?.status === 401 && !error.config?._retry) {
       const refreshRes = await api
         .post<{ accessToken: string }>('/auth/refresh', {})
         .catch(() => null);
