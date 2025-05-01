@@ -11,7 +11,7 @@ import { useAuth } from '@/features/auth';
 
 export function ProfileFrame() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   if (!user) throw new Error('User not found');
 
   return (
@@ -29,31 +29,32 @@ export function ProfileFrame() {
         </div>
         <div className="flex flex-col items-stretch gap-3">
           <Link to=".">
-            <button className="flex w-full items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
+            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
               <ProfileIcon />
               <div>{t('profile.edit.title')}</div>
             </button>
           </Link>
           <Link to=".">
-            <button className="flex w-full items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
+            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
               <PasswordIcon />
               <div>{t('profile.password.title')}</div>
             </button>
           </Link>
           <Link to=".">
-            <button className="flex w-full items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
+            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
               <DeveloperIcon />
               <div>{t('developer.menuItem')}</div>
             </button>
           </Link>
+          <button
+            className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3"
+            onClick={signOut}
+          >
+            <LogoutIcon />
+            <div>{t('profile.logout')}</div>
+          </button>
           <Link to=".">
-            <button className="flex w-full items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
-              <LogoutIcon />
-              <div>{t('profile.logout')}</div>
-            </button>
-          </Link>
-          <Link to=".">
-            <button className="flex w-full items-center gap-2.5 rounded-lg bg-red-50 px-4 py-3">
+            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-red-50 px-4 py-3">
               <WithdrawalIcon />
               <div className="text-red-900">{t('profile.withdrawal')}</div>
             </button>
