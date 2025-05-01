@@ -117,5 +117,11 @@
     "logout": "Log Out",
     "withdrawal": "Delete Account"
   },
+  "services": {
+    "list": {
+      "title": "My Services",
+      "description": "You can check the services you have registered here"
+    }
+  },
   "language": "en"
 }
