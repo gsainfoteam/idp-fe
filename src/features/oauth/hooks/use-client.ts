@@ -6,9 +6,8 @@ export const useClient = (clientId: string) => {
   const { data, isLoading, error } = $api.useQuery(
     'get',
     '/client/{clientId}/public',
-    {
-      params: { path: { clientId } },
-    },
+    { params: { path: { clientId } } },
+    { enabled: !!clientId },
   );
 
   const client = useMemo(() => {

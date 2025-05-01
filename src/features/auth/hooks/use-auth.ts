@@ -6,7 +6,12 @@ import { $api } from '@/features/core';
 
 export const useAuth = () => {
   const { token } = useToken();
-  const { data, isLoading, error, refetch } = $api.useQuery('get', '/user');
+  const { data, isLoading, error, refetch } = $api.useQuery(
+    'get',
+    '/user',
+    {},
+    { enabled: !!token },
+  );
 
   const user = useMemo(() => {
     if (!token) return null;
