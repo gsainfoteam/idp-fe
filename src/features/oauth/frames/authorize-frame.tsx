@@ -1,4 +1,4 @@
-import { useLoaderData } from '@tanstack/react-router';
+import { useLoaderData, useSearch } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,18 +17,22 @@ export function AuthorizeFrame() {
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
+  const { prompt, ...search } = useSearch({
+    from: '/_auth-required/authorize',
+  });
 
   const [isLoading, setLoading] = useState(true);
 
   const authorize = () => {
     window.location.href =
-      'https://api.idp.gistory.me/oauth/authorize' + window.location.search;
+      'https://api.idp.gistory.me/oauth/authorize?' +
+      new URLSearchParams(search).toString();
   };
 
   useEffect(() => {
     // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
     const checkConsent = async () => {
-      if (!scopes.includes('offline_access')) {
+      if (!scopes.includes('offline_access') && !prompt) {
         const { data, error } = await getUserConsent();
 
         if (!data || error) throw error;
