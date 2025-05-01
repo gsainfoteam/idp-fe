@@ -3,6 +3,11 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
+enum VerifyStatus {
+  INVALID_CERTIFICATE = 400,
+  SERVER_ERROR = 500,
+}
+
 export const postVerify = async (
   requestBody: paths['/verify']['post']['requestBody']['content']['application/json'],
 ) => {
@@ -16,7 +21,7 @@ export const postVerify = async (
       ErrorStatus
     >;
 
-    return { error, status };
+    return { error, status: VerifyStatus[status] as keyof typeof VerifyStatus };
   }
 
   return { data };

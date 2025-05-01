@@ -3,6 +3,10 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
+enum VerifyEmailStatus {
+  SERVER_ERROR = 500,
+}
+
 export const postVerifyEmail = async (
   requestBody: paths['/verify/email']['post']['requestBody']['content']['application/json'],
 ) => {
@@ -16,7 +20,10 @@ export const postVerifyEmail = async (
       ErrorStatus
     >;
 
-    return { error, status };
+    return {
+      error,
+      status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+    };
   }
 
   return { data };

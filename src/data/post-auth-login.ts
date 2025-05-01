@@ -3,6 +3,11 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
+enum AuthLoginStatus {
+  LOGIN_FAILURE = 401,
+  SERVER_ERROR = 500,
+}
+
 export const postAuthLogin = async (
   requestBody: paths['/auth/login']['post']['requestBody']['content']['application/json'],
 ) => {
@@ -16,7 +21,10 @@ export const postAuthLogin = async (
       ErrorStatus
     >;
 
-    return { error, status };
+    return {
+      error,
+      status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+    };
   }
 
   return { data };

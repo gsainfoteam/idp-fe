@@ -1,21 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
 import { useToken } from './use-token';
 
-import { getUser } from '@/data/get-user';
+import { $api } from '@/features/core';
 
 export const useAuth = () => {
   const { token } = useToken();
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const { data, error } = await getUser();
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!token,
-  });
+  const { data, isLoading, error, refetch } = $api.useQuery('get', '/user');
 
   const user = useMemo(() => {
     if (!token) return null;

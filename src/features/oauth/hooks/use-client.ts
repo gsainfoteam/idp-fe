@@ -1,18 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
-import { getClientPublic } from '@/data/get-client-public';
+import { $api } from '@/features/core';
 
 export const useClient = (clientId: string) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['client', clientId],
-    queryFn: async () => {
-      const { data, error } = await getClientPublic(clientId);
-      if (error) throw error;
-      return data;
+  const { data, isLoading, error } = $api.useQuery(
+    'get',
+    '/client/{clientId}/public',
+    {
+      params: { path: { clientId } },
     },
-    enabled: !!clientId,
-  });
+  );
 
   const client = useMemo(() => {
     if (isLoading) return undefined;

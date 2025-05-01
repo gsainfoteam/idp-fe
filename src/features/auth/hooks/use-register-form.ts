@@ -57,7 +57,7 @@ export const useRegisterForm = () => {
 
     if (status) {
       switch (status) {
-        case 500:
+        case 'SERVER_ERROR':
           console.error('Server error');
           break;
       }
@@ -73,12 +73,12 @@ export const useRegisterForm = () => {
 
     if (!data && status) {
       switch (status) {
-        case 400:
+        case 'INVALID_CERTIFICATE':
           form.setError('code', {
             message: t('register.errors.invalid_code'),
           });
           break;
-        case 500:
+        case 'SERVER_ERROR':
           console.error('Server error');
           break;
       }
@@ -95,17 +95,17 @@ export const useRegisterForm = () => {
 
     if (status) {
       switch (status) {
-        case 403:
+        case 'INVALID_TOKEN':
           form.setError('verificationJwtToken', {
             message: t('register.errors.invalid_token'),
           });
           break;
-        case 409:
+        case 'USER_ALREADY_EXISTS':
           form.setError('email', {
             message: t('register.errors.email_already_exists'),
           });
           break;
-        case 500:
+        case 'SERVER_ERROR':
           console.error('Server error');
           break;
       }

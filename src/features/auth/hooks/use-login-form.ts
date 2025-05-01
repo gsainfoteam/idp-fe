@@ -31,11 +31,11 @@ export const useLoginForm = () => {
 
     if (!data && status) {
       switch (status) {
-        case 401:
+        case 'LOGIN_FAILURE':
           form.resetField('password', { keepError: true });
           form.setError('root', { message: t('login.errors.unauthorized') });
           break;
-        case 500:
+        case 'SERVER_ERROR':
           console.error('Server error');
           break;
       }

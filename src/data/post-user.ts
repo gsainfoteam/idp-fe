@@ -6,6 +6,12 @@ import { RegisterFormSchema } from '../features/auth/hooks/use-register-form';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
+enum UserStatus {
+  INVALID_TOKEN = 403,
+  USER_ALREADY_EXISTS = 409,
+  SERVER_ERROR = 500,
+}
+
 export const postUser = async (
   requestBody: RegisterFormSchema &
     paths['/user']['post']['requestBody']['content']['application/json'],
@@ -31,7 +37,7 @@ export const postUser = async (
       ErrorStatus
     >;
 
-    return { error, status };
+    return { error, status: UserStatus[status] as keyof typeof UserStatus };
   }
 
   return { data };
