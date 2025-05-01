@@ -1,5 +1,5 @@
 import { useLoaderData, useSearch } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -23,11 +23,11 @@ export function AuthorizeFrame() {
 
   const [isLoading, setLoading] = useState(true);
 
-  const authorize = () => {
+  const authorize = useCallback(() => {
     window.location.href =
       'https://api.idp.gistory.me/oauth/authorize?' +
       new URLSearchParams(search).toString();
-  };
+  }, [search]);
 
   useEffect(() => {
     // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
