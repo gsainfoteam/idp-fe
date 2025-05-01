@@ -61,11 +61,6 @@ export function AuthorizeFrame() {
   const { clientId } = useLoaderData({ from: '/_auth-required/authorize' });
   const { client } = useClient(clientId);
 
-  if (!client) {
-    return (
-      <div className="flex min-h-screen items-center justify-center"></div>
-    );
-  } else {
-    <Inner client={client} />;
-  }
+  if (client) return <Inner client={client} />;
+  return <div className="flex min-h-screen items-center justify-center"></div>;
 }
