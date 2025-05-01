@@ -8,11 +8,52 @@ import ProfileIcon from '../icons/profile.svg?react';
 import WithdrawalIcon from '../icons/withdrawal.svg?react';
 
 import { useAuth } from '@/features/auth';
+import { cn } from '@/features/core';
+
+const colorMaps = [
+  {
+    background: '#FFECB3',
+    border: '#FFD54F',
+    text: '#5D4037',
+  },
+  {
+    background: '#FFCDD2',
+    border: '#E57373',
+    text: '#B71C1C',
+  },
+  {
+    background: '#BBDEFB',
+    border: '#64B5F6',
+    text: '#0D47A1',
+  },
+  {
+    background: '#C8E6C9',
+    border: '#81C784',
+    text: '#1B5E20',
+  },
+  {
+    background: '#F8BBD0',
+    border: '#F06292',
+    text: '#880E4F',
+  },
+  {
+    background: '#D1C4E9',
+    border: '#9575CD',
+    text: '#4A148C',
+  },
+  {
+    background: '#FFCCBC',
+    border: '#FF8A65',
+    text: '#BF360C',
+  },
+];
 
 export function ProfileFrame() {
   const { t } = useTranslation();
   const { user, signOut } = useAuth();
   if (!user) return null;
+
+  const colorMap = colorMaps[user.name.charCodeAt(0) % colorMaps.length];
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -21,7 +62,16 @@ export function ProfileFrame() {
           {t('profile.title')}
         </div>
         <div className="flex items-center gap-3 px-3">
-          <div className="text-title-1 flex size-16 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 select-none">
+          <div
+            className={cn(
+              'text-title-1 flex size-16 items-center justify-center rounded-full border select-none',
+            )}
+            style={{
+              background: colorMap?.background,
+              borderColor: colorMap?.border,
+              color: colorMap?.text,
+            }}
+          >
             {user.name.charAt(0)}
           </div>
           <div className="flex flex-col">
