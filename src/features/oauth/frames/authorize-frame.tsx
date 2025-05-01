@@ -46,7 +46,7 @@ export function AuthorizeFrame() {
     };
 
     checkConsent();
-  }, [clientId, scopes]);
+  }, [authorize, clientId, prompt, scopes]);
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함
   if (isLoading || !client) {
