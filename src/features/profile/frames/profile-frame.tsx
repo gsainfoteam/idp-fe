@@ -21,7 +21,9 @@ export function ProfileFrame() {
           {t('profile.title')}
         </div>
         <div className="flex items-center gap-3 px-3">
-          <div className="size-16 rounded-full bg-neutral-100"></div>
+          <div className="text-title-1 flex size-16 items-center justify-center rounded-full border border-neutral-200 bg-neutral-100 select-none">
+            {user.name.charAt(0)}
+          </div>
           <div className="flex flex-col">
             <div className="text-title-3">{user.name}</div>
             <div className="text-body-2 text-neutral-400">{user.email}</div>
