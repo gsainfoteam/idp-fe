@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
-import TextLogo from '@/assets/text-logo.svg?react';
+import TextLogo from '@/assets/logos/text-logo.svg?react';
 import { Button, LoadingOverlay } from '@/features/core';
 
 export function LoginFrame() {
