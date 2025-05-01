@@ -1,10 +1,11 @@
-import createFetchClient, { MergedOptions, Middleware } from 'openapi-fetch';
+import createFetchClient, { Middleware } from 'openapi-fetch';
 import createClient from 'openapi-react-query';
 
 import type { paths } from '@/@types/api-schema';
+import { postAuthRefresh } from '@/data/post-auth-refresh';
 import { useToken } from '@/features/auth';
 
-interface AuxiliaryOptions extends MergedOptions {
+interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
 }
 
@@ -19,29 +20,20 @@ const middleware: Middleware = {
     return request;
   },
   async onResponse({ request, response, options }) {
-    const auxiliaryOptions = options as AuxiliaryOptions;
+    const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
-      if (auxiliaryOptions.retry) {
-        useToken.getState().saveToken(null); // Clear token if response is not ok
+      if (auxiliaryRequest.retry) {
+        useToken.getState().saveToken(null);
         return Promise.resolve(response);
       }
-      const refreshRes = await fetch(
-        'https://api.stg.idp.gistory.me/auth/refresh',
-        { method: 'POST', credentials: 'include' },
-      ).catch(() => null);
+      const refreshRes = await postAuthRefresh();
 
-      if (refreshRes && refreshRes.ok) {
-        const { accessToken } = await refreshRes.json();
-        useToken.getState().saveToken(accessToken);
-        auxiliaryOptions.retry = true;
-
-        const retriedRequest = new Request(request, {
-          headers: new Headers({
-            ...Object.fromEntries(request.headers),
-            Authorization: `Bearer ${accessToken}`,
-          }),
-        });
-        return fetch(retriedRequest);
+      if (refreshRes && refreshRes.data) {
+        useToken.getState().saveToken(refreshRes.data.accessToken);
+        auxiliaryRequest.retry = true;
+        return options.fetch(auxiliaryRequest);
+      } else {
+        useToken.getState().saveToken(null);
       }
     }
 
@@ -52,7 +44,7 @@ const middleware: Middleware = {
     return response;
   },
   async onError({ error, request }) {
-    if (request.url === 'https://api.stg.idp.gistory.me/auth/refresh') {
+    if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
     } else {
       return Promise.reject(`Error in request: ${error}`);
@@ -61,7 +53,7 @@ const middleware: Middleware = {
 };
 
 export const api = createFetchClient<paths>({
-  baseUrl: 'https://api.stg.idp.gistory.me',
+  baseUrl: import.meta.env.VITE_API_URL,
   credentials: 'include',
 });
 api.use(middleware);

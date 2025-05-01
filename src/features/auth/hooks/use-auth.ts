@@ -1,11 +1,12 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { useToken } from './use-token';
 
+import { deleteAuthLogout } from '@/data/delete-auth-logout';
 import { $api } from '@/features/core';
 
 export const useAuth = () => {
-  const { token } = useToken();
+  const { token, saveToken } = useToken();
   const { data, isLoading, error, refetch } = $api.useQuery(
     'get',
     '/user',
@@ -26,5 +27,10 @@ export const useAuth = () => {
     }
   }, [refetch, token]);
 
-  return { user, refetch };
+  const signOut = useCallback(async () => {
+    await deleteAuthLogout();
+    saveToken(null);
+  }, [saveToken]);
+
+  return { user, refetch, signOut };
 };
