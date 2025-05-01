@@ -1,5 +1,7 @@
 #!/bin/bash
 
+env
+
 if [[ $ENV == "production" ]]; then
   npm run build -- --mode=production
 else
