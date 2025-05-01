@@ -1,10 +1,11 @@
-import createFetchClient, { MergedOptions, Middleware } from 'openapi-fetch';
+import createFetchClient, { Middleware } from 'openapi-fetch';
 import createClient from 'openapi-react-query';
 
 import type { paths } from '@/@types/api-schema';
+import { postAuthRefresh } from '@/data/post-auth-refresh';
 import { useToken } from '@/features/auth';
 
-interface AuxiliaryOptions extends MergedOptions {
+interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
 }
 
@@ -19,29 +20,19 @@ const middleware: Middleware = {
     return request;
   },
   async onResponse({ request, response, options }) {
-    const auxiliaryOptions = options as AuxiliaryOptions;
+    console.log(request);
+    const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
-      if (auxiliaryOptions.retry) {
+      if (auxiliaryRequest.retry) {
         useToken.getState().saveToken(null);
         return Promise.resolve(response);
       }
-      const refreshRes = await fetch(
-        'https://api.stg.idp.gistory.me/auth/refresh',
-        { method: 'POST', credentials: 'include' },
-      ).catch(() => null);
+      const refreshRes = await postAuthRefresh();
 
-      if (refreshRes && refreshRes.ok) {
-        const { accessToken } = await refreshRes.json();
-        useToken.getState().saveToken(accessToken);
-        auxiliaryOptions.retry = true;
-
-        const retriedRequest = new Request(request, {
-          headers: new Headers({
-            ...Object.fromEntries(request.headers),
-            Authorization: `Bearer ${accessToken}`,
-          }),
-        });
-        return options.fetch(retriedRequest);
+      if (refreshRes && refreshRes.data) {
+        useToken.getState().saveToken(refreshRes.data.accessToken);
+        auxiliaryRequest.retry = true;
+        return options.fetch(auxiliaryRequest);
       } else {
         useToken.getState().saveToken(null);
       }
