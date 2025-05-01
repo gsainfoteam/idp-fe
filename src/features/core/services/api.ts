@@ -44,7 +44,7 @@ const middleware: Middleware = {
     return response;
   },
   async onError({ error, request }) {
-    if (request.url === 'https://api.stg.idp.gistory.me/auth/refresh') {
+    if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
     } else {
       return Promise.reject(`Error in request: ${error}`);
@@ -53,7 +53,7 @@ const middleware: Middleware = {
 };
 
 export const api = createFetchClient<paths>({
-  baseUrl: 'https://api.stg.idp.gistory.me',
+  baseUrl: import.meta.env.VITE_API_URL,
   credentials: 'include',
 });
 api.use(middleware);
