@@ -20,7 +20,6 @@ const middleware: Middleware = {
     return request;
   },
   async onResponse({ request, response, options }) {
-    console.log(request);
     const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
       if (auxiliaryRequest.retry) {
