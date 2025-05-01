@@ -24,9 +24,7 @@ export function AuthorizeFrame() {
   const [isLoading, setLoading] = useState(true);
 
   const authorize = useCallback(() => {
-    window.location.href =
-      'https://api.idp.gistory.me/oauth/authorize?' +
-      new URLSearchParams(search).toString();
+    window.location.href = `${import.meta.env.VITE_API_URL}/oauth/authorize?${new URLSearchParams(search).toString()}`;
   }, [search]);
 
   useEffect(() => {

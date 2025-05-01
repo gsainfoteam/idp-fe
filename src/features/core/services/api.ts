@@ -53,7 +53,7 @@ const middleware: Middleware = {
 };
 
 export const api = createFetchClient<paths>({
-  baseUrl: 'https://api.stg.idp.gistory.me',
+  baseUrl: import.meta.env.VITE_API_URL,
   credentials: 'include',
 });
 api.use(middleware);
