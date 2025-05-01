@@ -10,6 +10,14 @@ import { useClient } from '../hooks/use-client';
 import { getUserConsent } from '@/data/get-user-consent';
 import { LoadingOverlay } from '@/features/core';
 
+/**
+ * Displays the OAuth authorization UI, handling user consent and redirecting if consent already exists.
+ *
+ * Renders an authorization form for the user to grant access to a client application, or automatically redirects to the OAuth endpoint if prior consent is detected and offline access is not requested.
+ *
+ * @remark
+ * If the user has already consented to the client and the requested scopes do not include "offline_access", the component bypasses the UI and redirects immediately.
+ */
 export function AuthorizeFrame() {
   const { form, onSubmit } = useAuthorizeForm();
   const { t } = useTranslation();

@@ -8,6 +8,13 @@ import { ConsentFormSchema } from '../hooks/use-authorize-form';
 import { components } from '@/@types/api-schema';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
+/**
+ * Renders a consent form for authorizing required and optional scopes for an OAuth client.
+ *
+ * Displays required scopes as checked and disabled, and optional scopes as selectable checkboxes. Includes a master "All Agree" checkbox to toggle all optional scopes, and provides "Cancel" and "Continue" actions.
+ *
+ * @param client - The OAuth client whose scopes are being authorized.
+ */
 export function AuthorizeForm({
   client,
 }: {
