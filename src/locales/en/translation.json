@@ -90,5 +90,19 @@
       "continue": "Continue"
     }
   },
+  "profile": {
+    "title": "Profile",
+    "edit": {
+      "title": "Edit Profile"
+    },
+    "password": {
+      "title": "Change Password"
+    },
+    "logout": "Log Out",
+    "withdrawal": "Withdrawal"
+  },
+  "developer": {
+    "menuItem": "Developer Center"
+  },
   "language": "en"
 }

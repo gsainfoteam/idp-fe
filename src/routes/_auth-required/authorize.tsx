@@ -20,42 +20,30 @@ export type ScopeType = z.infer<typeof ScopeEnum>;
 
 export const ResponseEnum = z.enum(['token', 'id_token', 'code']);
 
-const schema = z
-  .object({
-    client_id: z.string(),
-    redirect_uri: z.string().url(),
-    state: z.string().optional(),
-    scope: z
-      .string()
-      .transform((scope) => scope.split(' '))
-      .pipe(z.array(ScopeEnum))
-      .superRefine((scopes, ctx) => {
-        if (!scopes.includes('openid')) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'openid scope is required',
-            fatal: true,
-          });
-          return z.never();
-        }
-      }),
-    nonce: z.string().optional(),
-    response_type: z
-      .string()
-      .transform((responseType) => responseType.split(' '))
-      .pipe(z.array(ResponseEnum)),
-    prompt: z.enum(['none', 'login', 'consent']).optional(),
-  })
+const schema = z.object({
+  client_id: z.string(),
+  redirect_uri: z.string().url(),
+  state: z.string().optional(),
+  scope: z
+    .string()
+    .transform((scope) => scope.split(' ').flatMap((s) => s.split('+')))
+    .pipe(z.array(ScopeEnum))
+    .transform((s) => s.join(' ')),
+  nonce: z.string().optional(),
+  response_type: z.string().refine((v) => v === 'code'),
+  prompt: z.enum(['none', 'login', 'consent']).optional(),
+});
+
+const validateSchema = schema
   .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
-    scopes: scope,
+    scopes: z.array(ScopeEnum).parse(scope.split(' ')),
     clientId: client_id,
     redirectUri: redirect_uri,
-    responseTypes: response_type,
+    responseTypes: z.array(ResponseEnum).parse(response_type.split(' ')),
     url: new URL(redirect_uri),
-    useImplicitFlow: (['token', 'id_token'] as const).some((type) =>
-      response_type.includes(type),
-    ),
-    ...rest,
+    prompt: rest.prompt,
+    nonce: rest.nonce,
+    rest,
   }))
   .refine(
     ({ scopes, prompt }) =>
@@ -67,28 +55,14 @@ const schema = z
       path: ['prompt'],
     },
   )
-  .refine(
-    ({ scopes, responseTypes }) =>
-      !scopes.includes('offline_access') || responseTypes.includes('code'),
-    {
-      message: 'offline_access scope requires code response type',
-      path: ['response_type'],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => !responseTypes.includes('id_token') || nonce,
-    {
-      message: 'nonce is required for id_token response type',
-      path: ['nonce'],
-    },
-  )
-  .refine(
-    ({ nonce, responseTypes }) => responseTypes.includes('id_token') || !nonce,
-    {
-      message: 'nonce is not required for non-id_token response type',
-      path: ['nonce'],
-    },
-  );
+  .refine(({ nonce, scopes }) => !scopes.includes('openid') || nonce, {
+    message: 'nonce is required for id_token',
+    path: ['nonce'],
+  })
+  .refine(({ nonce, scopes }) => scopes.includes('openid') || !nonce, {
+    message: 'nonce is not required for non-id_token',
+    path: ['nonce'],
+  });
 
 const AuthorizePage = () => {
   return <AuthorizeFrame />;
@@ -97,4 +71,6 @@ const AuthorizePage = () => {
 export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
   validateSearch: schema,
+  loaderDeps: ({ search }) => search,
+  loader: ({ deps }) => validateSchema.parse(deps),
 });

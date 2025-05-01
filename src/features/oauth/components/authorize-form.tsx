@@ -1,6 +1,6 @@
-import { useSearch } from '@tanstack/react-router';
+import { useLoaderData } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
-import { useFormContext, Controller, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
@@ -15,12 +15,16 @@ export function AuthorizeForm({
 }) {
   const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const { scopes: clientScopes } = useSearch({
+  const { scopes: clientScopes } = useLoaderData({
     from: '/_auth-required/authorize',
   });
 
-  const scopes = clientScopes.filter(client.scopes.includes);
-  const optionalScopes = clientScopes.filter(client.optionalScopes.includes);
+  console.log(client, clientScopes);
+
+  const scopes = clientScopes.filter((v) => client.scopes.includes(v));
+  const optionalScopes = clientScopes.filter((v) =>
+    client.optionalScopes.includes(v),
+  );
 
   const optionalScopeValues = useWatch<Record<string, boolean>>({
     name: optionalScopes.map((scope) => `scopes.${scope}`),

@@ -22,7 +22,7 @@ const middleware: Middleware = {
     const auxiliaryOptions = options as AuxiliaryOptions;
     if (response?.status === 401) {
       if (auxiliaryOptions.retry) {
-        useToken.getState().saveToken(null); // Clear token if response is not ok
+        useToken.getState().saveToken(null);
         return Promise.resolve(response);
       }
       const refreshRes = await fetch(
@@ -41,7 +41,9 @@ const middleware: Middleware = {
             Authorization: `Bearer ${accessToken}`,
           }),
         });
-        return fetch(retriedRequest);
+        return options.fetch(retriedRequest);
+      } else {
+        useToken.getState().saveToken(null);
       }
     }
 
