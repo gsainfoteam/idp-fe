@@ -32,6 +32,8 @@ const schema = z.object({
   nonce: z.string().optional(),
   response_type: z.string().refine((v) => v === 'code'),
   prompt: z.enum(['none', 'login', 'consent']).optional(),
+  code_challenge: z.string(),
+  code_challenge_method: z.enum(['S256', 'plain']),
 });
 
 const validateSchema = schema
