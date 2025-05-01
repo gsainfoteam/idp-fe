@@ -12,7 +12,7 @@ import { useAuth } from '@/features/auth';
 export function ProfileFrame() {
   const { t } = useTranslation();
   const { user, signOut } = useAuth();
-  if (!user) throw new Error('User not found');
+  if (!user) return null;
 
   return (
     <div className="flex min-h-screen items-center justify-center">
