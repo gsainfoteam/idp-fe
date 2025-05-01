@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { zodValidator } from '@tanstack/zod-adapter';
 import { z } from 'zod';
 
 import { AuthorizeFrame } from '@/features/oauth';
@@ -71,7 +70,7 @@ const AuthorizePage = () => {
 
 export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
-  validateSearch: zodValidator(schema),
+  validateSearch: schema,
   loaderDeps: ({ search }) => search,
   loader: ({ deps }) => validateSchema.parse(deps),
 });
