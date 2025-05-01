@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 
-import { getUser } from '../services/get-user';
-
 import { useToken } from './use-token';
+
+import { getUser } from '@/data/get-user';
 
 export const useAuth = () => {
   const { token } = useToken();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['user'],
-    queryFn: getUser,
+    queryFn: async () => {
+      const { data, error } = await getUser();
+      if (error) throw error;
+      return data;
+    },
     enabled: !!token,
   });
 

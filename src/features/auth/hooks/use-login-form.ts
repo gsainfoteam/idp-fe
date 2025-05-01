@@ -1,14 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
 import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { login } from '../services/login';
-
 import { useAuth } from './use-auth';
 import { useToken } from './use-token';
+
+import { postAuthLogin } from '@/data/post-auth-login';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -27,19 +26,25 @@ export const useLoginForm = () => {
   });
   const { refetch } = useAuth();
 
-  const onSubmit = form.handleSubmit(async (data) => {
-    try {
-      const response = await login(data);
-      saveToken(response.accessToken);
-      await refetch();
-    } catch (error) {
-      if (error instanceof AxiosError && error.response?.status === 401) {
-        form.resetField('password', { keepError: true });
-        form.setError('root', { message: t('login.errors.unauthorized') });
-      } else {
-        console.error(error);
+  const onSubmit = form.handleSubmit(async (formData) => {
+    const { data, status } = await postAuthLogin(formData);
+
+    if (!data && status) {
+      switch (status) {
+        case 401:
+          form.resetField('password', { keepError: true });
+          form.setError('root', { message: t('login.errors.unauthorized') });
+          break;
+        case 500:
+          console.error('Server error');
+          break;
       }
+
+      return;
     }
+
+    saveToken(data.accessToken);
+    await refetch();
   });
 
   return { form, onSubmit };

@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorizeForm } from '../hooks/use-authorize-form';
 import { useClient } from '../hooks/use-client';
-import { getUserConsent } from '../services/get-user-consent';
 
+import { getUserConsent } from '@/data/get-user-consent';
 import { LoadingOverlay } from '@/features/core';
 
 export function AuthorizeFrame() {
@@ -29,8 +29,10 @@ export function AuthorizeFrame() {
     // scope에 offline_access가 없을 때, 유저가 이미 인가를 한 경우 인가 페이지 패스
     const checkConsent = async () => {
       if (!scopes.includes('offline_access')) {
-        const consents = await getUserConsent();
-        if (consents.list.some((c) => c.clientUuid === clientId)) {
+        const { data, error } = await getUserConsent();
+
+        if (!data || error) throw error;
+        if (data.list.some((c) => c.clientUuid === clientId)) {
           authorize();
           return;
         }

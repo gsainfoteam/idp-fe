@@ -1,11 +1,12 @@
 import parsePhoneNumber from 'libphonenumber-js';
+import type { ErrorStatus } from 'openapi-typescript-helpers';
 
-import { RegisterFormSchema } from '../hooks/use-register-form';
+import { RegisterFormSchema } from '../features/auth/hooks/use-register-form';
 
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-export const register = async (
+export const postUser = async (
   requestBody: RegisterFormSchema &
     paths['/user']['post']['requestBody']['content']['application/json'],
 ) => {
@@ -20,7 +21,18 @@ export const register = async (
     phoneNumber: parsedPhoneNumber.number,
   };
 
-  const res = await api.POST('/user', { body: modifiedRequestBody });
-  if (res.error || !res.data) throw res.error;
-  return res.data;
+  const { data, error, response } = await api.POST('/user', {
+    body: modifiedRequestBody,
+  });
+
+  if (error || !data) {
+    const status = response.status as Extract<
+      keyof paths['/user']['post']['responses'],
+      ErrorStatus
+    >;
+
+    return { error, status };
+  }
+
+  return { data };
 };
