@@ -1,8 +1,6 @@
 #!/bin/bash
 
-env
-
-if [[ $ENV == "production" ]]; then
+if [[ $ENVIRONMENT == "production" ]]; then
   npm run build -- --mode=production
 else
   npm run build -- --mode=staging
