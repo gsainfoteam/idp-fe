@@ -113,11 +113,15 @@
     "password": {
       "title": "비밀번호 변경"
     },
+    "developer": "개발자 센터",
     "logout": "로그아웃",
     "withdrawal": "계정 탈퇴"
   },
-  "developer": {
-    "menuItem": "개발자 센터"
+  "services": {
+    "list": {
+      "title": "내 서비스 목록",
+      "description": "내가 등록한 서비스를 여기에서 확인할 수 있어요"
+    }
   },
   "language": "ko"
 }

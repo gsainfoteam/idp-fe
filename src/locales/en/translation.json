@@ -113,11 +113,9 @@
     "password": {
       "title": "Change Password"
     },
+    "developer": "Developer Center",
     "logout": "Log Out",
     "withdrawal": "Delete Account"
-  },
-  "developer": {
-    "menuItem": "Developer Center"
   },
   "language": "en"
 }
