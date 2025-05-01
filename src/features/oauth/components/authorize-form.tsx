@@ -19,20 +19,23 @@ export function AuthorizeForm({
     from: '/_auth-required/authorize',
   });
 
-  console.log(client, clientScopes);
-
-  const scopes = clientScopes.filter((v) => client.scopes.includes(v));
-  const optionalScopes = clientScopes.filter((v) =>
-    client.optionalScopes.includes(v),
+  const scopes = useMemo(
+    () => clientScopes.filter((v) => client.scopes.includes(v)),
+    [clientScopes, client.scopes],
+  );
+  const optionalScopes = useMemo(
+    () => clientScopes.filter((v) => client.optionalScopes.includes(v)),
+    [clientScopes, client.optionalScopes],
   );
 
-  const optionalScopeValues = useWatch<Record<string, boolean>>({
-    name: optionalScopes.map((scope) => `scopes.${scope}`),
+  const optionalScopeValues = useWatch({
+    name: optionalScopes.map((scope) => `scopes.${scope}` as const),
   });
 
-  const allAgree = useMemo(() => {
-    return optionalScopeValues.every(Boolean) ?? false;
-  }, [optionalScopeValues]);
+  const allAgree = useMemo(
+    () => optionalScopeValues.every(Boolean) ?? false,
+    [optionalScopeValues],
+  );
 
   const toggleAll = (checked: boolean) => {
     optionalScopes.forEach((scope) => {
