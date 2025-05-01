@@ -81,38 +81,62 @@ export function ProfileFrame() {
         </div>
         <div className="flex flex-col items-stretch gap-3">
           <Link to=".">
-            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
-              <ProfileIcon />
-              <div>{t('profile.edit.title')}</div>
-            </button>
+            <MenuButton
+              icon={<ProfileIcon />}
+              label={t('profile.edit.title')}
+            />
           </Link>
           <Link to=".">
-            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
-              <PasswordIcon />
-              <div>{t('profile.password.title')}</div>
-            </button>
+            <MenuButton
+              icon={<PasswordIcon />}
+              label={t('profile.password.title')}
+            />
           </Link>
           <Link to=".">
-            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3">
-              <DeveloperIcon />
-              <div>{t('developer.menuItem')}</div>
-            </button>
+            <MenuButton
+              icon={<DeveloperIcon />}
+              label={t('developer.menuItem')}
+            />
           </Link>
-          <button
-            className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3"
+          <MenuButton
+            icon={<LogoutIcon />}
+            label={t('profile.logout')}
             onClick={signOut}
-          >
-            <LogoutIcon />
-            <div>{t('profile.logout')}</div>
-          </button>
+          />
           <Link to=".">
-            <button className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-red-50 px-4 py-3">
-              <WithdrawalIcon />
-              <div className="text-red-900">{t('profile.withdrawal')}</div>
-            </button>
+            <MenuButton
+              icon={<WithdrawalIcon />}
+              label={t('profile.withdrawal')}
+              destructive
+            />
           </Link>
         </div>
       </div>
     </div>
   );
 }
+
+const MenuButton = ({
+  icon,
+  label,
+  destructive = false,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  destructive?: boolean;
+  onClick?: () => void;
+}) => {
+  return (
+    <button
+      className={cn(
+        'flex w-full cursor-pointer items-center gap-2.5 rounded-lg bg-neutral-50 px-4 py-3',
+        destructive && 'bg-red-50 text-red-900',
+      )}
+      onClick={onClick}
+    >
+      {icon}
+      <div>{label}</div>
+    </button>
+  );
+};
