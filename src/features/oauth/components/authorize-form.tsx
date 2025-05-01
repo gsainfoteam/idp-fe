@@ -4,11 +4,15 @@ import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ConsentFormSchema } from '../hooks/use-authorize-form';
-import { ClientResponse } from '../services/get-client';
 
+import { components } from '@/@types/api-schema';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
 
-export function AuthorizeForm({ client }: { client: ClientResponse }) {
+export function AuthorizeForm({
+  client,
+}: {
+  client: components['schemas']['ClientPublicResDto'];
+}) {
   const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
   const { scopes: clientScopes } = useSearch({

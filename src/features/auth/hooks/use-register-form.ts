@@ -1,14 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
 import { TFunction } from 'i18next';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { getJWTToken } from '../services/get-token';
-import { register } from '../services/register';
-import { sendVerificationCode } from '../services/send-verification-code';
+import { postUser } from '@/data/post-user';
+import { postVerify } from '@/data/post-verify';
+import { postVerifyEmail } from '@/data/post-verify-email';
 
 export const createSchema = (t: TFunction) =>
   z
@@ -51,84 +50,64 @@ export const useRegisterForm = () => {
     mode: 'onBlur',
   });
 
-  const onSendVerificationCode = async (data: RegisterFormSchema) => {
-    try {
-      await sendVerificationCode({ email: data.email });
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        switch (err.response?.status) {
-          case 409:
-            form.setError('email', {
-              message: t('register.errors.email_already_exists'),
-            });
-            break;
-          default:
-            console.error(err);
-        }
-      } else {
-        console.error(err);
+  const onSendVerificationCode = async (formData: RegisterFormSchema) => {
+    const { status } = await postVerifyEmail({
+      email: formData.email,
+    });
+
+    if (status) {
+      switch (status) {
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
       }
     }
   };
 
-  const onVerifyCode = async (data: RegisterFormSchema) => {
-    try {
-      const verifyEmailResponse = await getJWTToken({
-        subject: data.email,
-        code: data.code,
-        hint: 'email',
-      });
+  const onVerifyCode = async (formData: RegisterFormSchema) => {
+    const { data, status } = await postVerify({
+      subject: formData.email,
+      code: formData.code,
+      hint: 'email',
+    });
 
-      form.setValue(
-        'verificationJwtToken',
-        verifyEmailResponse.verificationJwtToken,
-      );
-
-      return true;
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        switch (err.response?.status) {
-          case 400:
-            form.setError('code', {
-              message: t('register.errors.invalid_code'),
-            });
-            break;
-          default:
-            console.error(err);
-        }
-      } else {
-        console.error(err);
+    if (!data && status) {
+      switch (status) {
+        case 'INVALID_CERTIFICATE':
+          form.setError('code', {
+            message: t('register.errors.invalid_code'),
+          });
+          break;
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
       }
+
       return false;
     }
+
+    form.setValue('verificationJwtToken', data.verificationJwtToken);
+    return true;
   };
 
-  const onSubmit = form.handleSubmit(async (data: RegisterFormSchema) => {
-    try {
-      await register(data);
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        switch (err.response?.status) {
-          case 400:
-            form.setError('code', {
-              message: t('register.errors.invalid_code'),
-            });
-            break;
-          case 403:
-            form.setError('verificationJwtToken', {
-              message: t('register.errors.invalid_token'),
-            });
-            break;
-          case 409:
-            form.setError('email', {
-              message: t('register.errors.email_already_exists'),
-            });
-            break;
-          default:
-            console.error(err);
-        }
-      } else {
-        console.error(err);
+  const onSubmit = form.handleSubmit(async (formData: RegisterFormSchema) => {
+    const { status } = await postUser(formData);
+
+    if (status) {
+      switch (status) {
+        case 'INVALID_TOKEN':
+          form.setError('verificationJwtToken', {
+            message: t('register.errors.invalid_token'),
+          });
+          break;
+        case 'USER_ALREADY_EXISTS':
+          form.setError('email', {
+            message: t('register.errors.email_already_exists'),
+          });
+          break;
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
       }
     }
   });

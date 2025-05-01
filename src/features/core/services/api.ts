@@ -1,12 +1,8 @@
-import createClient, { MergedOptions, Middleware } from 'openapi-fetch';
+import createFetchClient, { MergedOptions, Middleware } from 'openapi-fetch';
+import createClient from 'openapi-react-query';
 
 import type { paths } from '@/@types/api-schema';
 import { useToken } from '@/features/auth';
-
-export const api = createClient<paths>({
-  baseUrl: 'https://api.stg.idp.gistory.me',
-  credentials: 'include',
-});
 
 interface AuxiliaryOptions extends MergedOptions {
   retry?: boolean;
@@ -64,4 +60,10 @@ const middleware: Middleware = {
   },
 };
 
+export const api = createFetchClient<paths>({
+  baseUrl: 'https://api.stg.idp.gistory.me',
+  credentials: 'include',
+});
 api.use(middleware);
+
+export const $api = createClient(api);

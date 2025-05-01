@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { consent, ConsentRequestBody } from '../services/consent';
-
+import { postOauthConsent } from '@/data/post-oauth-consent';
 import { ScopeEnum } from '@/routes/_auth-required/authorize';
 
 export const createSchema = (t: TFunction) =>
@@ -30,13 +29,9 @@ export const useAuthorizeForm = () => {
         .filter(([, value]) => value === true)
         .map(([key]) => key)
         .join(' '),
-    } satisfies ConsentRequestBody;
+    };
 
-    try {
-      await consent(requestBody);
-    } catch (err) {
-      console.error('consent error', err); // TODO: error handling
-    }
+    await postOauthConsent(requestBody);
   });
 
   return { form, onSubmit };
