@@ -64,6 +64,8 @@ export const useInfoForm = ({
           console.error('Server error');
           break;
       }
+
+      return;
     }
 
     onNext(formData);
