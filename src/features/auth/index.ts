@@ -1,7 +1,5 @@
 export * from './components/login-form';
-export * from './components/register-form';
 export * from './frames/login-frame';
-export * from './frames/register-done-frame';
 export * from './frames/register-frame';
 export * from './hooks/use-auth';
 export * from './hooks/use-login-form';
