@@ -1,55 +1,86 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useRef, useState } from 'react';
+
+import { cn } from '../utils/cn';
 
 import { BackButton } from './back-button';
 
 interface FunnelStepProps {
-  screenName?: string;
   title?: string;
+  stepTitle: string;
   description?: string;
   button?: React.ReactNode;
 }
 
 export function FunnelStep({
-  screenName,
   title,
+  stepTitle,
   description,
   button,
   children,
 }: PropsWithChildren<FunnelStepProps>) {
+  const [scrollAmount, setScrollAmount] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) setScrollAmount(scrollRef.current.scrollTop);
+  };
+
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="relative h-screen w-full pt-12.5 pb-8.5 md:w-full md:max-w-[450px] md:py-8">
-        <div className="flex h-full w-full flex-col px-5 py-6">
-          {screenName && (
-            <>
+      <div className="relative h-screen w-full md:aspect-[450/800] md:w-auto">
+        <div className="flex h-full w-full flex-col bg-white py-6">
+          {/* Title Bar */}
+          {title && (
+            <div className="z-10 w-full bg-white px-5">
               <div className="relative flex h-12 items-center justify-center">
                 <div className="absolute left-0">
                   <BackButton />
                 </div>
-                <div className="text-center font-medium">{screenName}</div>
+                <div className="text-center font-medium">{title}</div>
               </div>
               <div className="h-6" />
-            </>
+            </div>
           )}
-          <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
-            {title}
+
+          {/* Step Title Box */}
+          <div
+            className={cn(
+              'z-10 w-full bg-white px-5',
+              scrollAmount > 0 && 'shadow-[0_8px_8px_0] shadow-white',
+            )}
+          >
+            <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
+              {stepTitle}
+            </div>
+            {description && (
+              <>
+                <div className="h-2" />
+                <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
+                  {description}
+                </div>
+              </>
+            )}
+            <div className="h-6" />
           </div>
-          {description && (
-            <>
-              <div className="h-2" />
-              <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
-                {description}
-              </div>
-            </>
-          )}
-          <div className="h-8" />
-          <div className="flex-1 overflow-y-auto">{children}</div>
-          {button && (
-            <>
-              <div className="h-8" />
-              <div className="z-10 mt-auto">{button}</div>
-            </>
-          )}
+
+          {/* Content Box */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="relative z-0 w-full flex-1 overflow-y-auto bg-white px-5"
+          >
+            {children}
+          </div>
+
+          {/* CTA Button Box */}
+          <div className="z-10 w-full bg-white px-5 shadow-[0_-8px_8px_0] shadow-white">
+            {button && (
+              <>
+                <div className="h-4" />
+                <div className="mt-auto">{button}</div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

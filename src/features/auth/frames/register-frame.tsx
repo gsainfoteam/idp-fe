@@ -1,38 +1,63 @@
-import { useNavigate } from '@tanstack/react-router';
-import { FormProvider } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { useFunnel } from '@use-funnel/browser';
 
-import { RegisterForm } from '../components/register-form';
-import { useRegisterForm } from '../hooks/use-register-form';
+import { CodeStep } from './steps/code-step';
+import { CompleteStep } from './steps/complete-step';
+import { EmailStep } from './steps/email-step';
+import { InfoStep } from './steps/info-step';
+import { PasswordStep } from './steps/password-step';
+
+import { postUser } from '@/data/post-user';
+import { Pretty, RequireKeys } from '@/features/core';
+
+type RegisterContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
+
+export type RegisterSteps = {
+  email: RegisterContext;
+  code: RequireKeys<RegisterSteps['email'], 'email'>;
+  password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
+  info: RequireKeys<RegisterSteps['password'], 'password'>;
+  complete: RequireKeys<
+    RegisterSteps['info'],
+    'name' | 'studentId' | 'phoneNumber'
+  >;
+};
 
 export function RegisterFrame() {
-  const { form, onSendVerificationCode, onVerifyCode, onSubmit } =
-    useRegisterForm();
-  const { t } = useTranslation();
-  const navigate = useNavigate({ from: '/auth/register' });
+  const funnel = useFunnel<RegisterSteps>({
+    id: 'register',
+    initial: {
+      context: {},
+      step: 'email',
+    },
+  });
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="flex w-full max-w-[400px] flex-col px-5 py-6">
-        <div className="text-title-1 mb-4">{t('register.title')}</div>
-        <FormProvider {...form}>
-          <form
-            onSubmit={(e) => {
-              onSubmit(e);
-              // FIXME: https://github.com/TanStack/router/issues/3679 에러 발생
-              navigate({
-                to: '/auth/register/done',
-                search: (prev) => ({ ...prev }),
-              });
-            }}
-          >
-            <RegisterForm
-              onSendVerificationCode={onSendVerificationCode}
-              onVerifyCode={onVerifyCode}
-            />
-          </form>
-        </FormProvider>
-      </div>
-    </div>
+    <funnel.Render
+      email={({ history, context }) => (
+        <EmailStep
+          context={context}
+          onNext={(data) => history.push('code', data)}
+        />
+      )}
+      code={({ history, context }) => (
+        <CodeStep
+          context={context}
+          onNext={(data) => history.push('password', data)}
+        />
+      )}
+      password={({ history, context }) => (
+        <PasswordStep
+          context={context}
+          onNext={(data) => history.push('info', data)}
+        />
+      )}
+      info={({ history, context }) => (
+        <InfoStep
+          context={context}
+          onNext={(data) => history.push('complete', data)}
+        />
+      )}
+      complete={() => <CompleteStep />}
+    />
   );
 }

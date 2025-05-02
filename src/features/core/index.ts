@@ -8,4 +8,4 @@ export * from './components/loading-ellipse';
 export * from './components/loading-overlay';
 export * from './services/api';
 export * from './utils/cn';
-export * from './utils/constants';
+export * from './utils/type-functions';
