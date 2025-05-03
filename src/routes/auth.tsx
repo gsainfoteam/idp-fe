@@ -5,15 +5,15 @@ import { useAuth } from '@/features/auth';
 
 const AuthLayout = () => {
   const { user } = useAuth();
-  const { redirectUrl } = Route.useSearch();
+  const { redirect } = Route.useSearch();
   if (user === undefined) return null;
-  if (user !== null) return <Navigate to={redirectUrl ?? '/'} />;
+  if (user !== null) return <Navigate to={redirect ?? '/'} />;
   return <Outlet />;
 };
 
 export const Route = createFileRoute('/auth')({
   component: AuthLayout,
   validateSearch: z.object({
-    redirectUrl: z.string().optional(),
+    redirect: z.string().optional(),
   }),
 });
