@@ -1,25 +1,24 @@
 import { useLoaderData, useSearch } from '@tanstack/react-router';
 import { useCallback, useEffect } from 'react';
 
+import { useAuthorizeForm } from './use-authorize-form';
 import { useRecentLogin } from './use-recent-login';
 
 import { components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
-
+import { ClientScopeType } from '@/routes/_auth-required/authorize';
 export const useAuthorize = ({
-  authorize,
   client,
 }: {
-  authorize: () => void;
-
   client: components['schemas']['ClientPublicResDto'];
 }) => {
   const { recentLogin } = useRecentLogin();
   const { user, signOut } = useAuth();
-  const { clientId, scopes, consents, url, state } = useLoaderData({
-    from: '/_auth-required/authorize',
-  });
-  const { prompt } = useSearch({
+  const { clientId, clientScopes, tokenScopes, consents, url, state } =
+    useLoaderData({
+      from: '/_auth-required/authorize',
+    });
+  const { prompt, ...search } = useSearch({
     from: '/_auth-required/authorize',
   });
 
@@ -37,14 +36,28 @@ export const useAuthorize = ({
     [url, state],
   );
 
+  const authorize = useCallback(
+    (agreed: ClientScopeType[]) => {
+      const query = new URLSearchParams(search);
+      query.set('scope', [...tokenScopes, ...agreed].join(' '));
+      window.location.href = `${import.meta.env.VITE_API_URL}/oauth/authorize?${query.toString()}`;
+    },
+    [search, tokenScopes],
+  );
+
   useEffect(() => {
     const consentedClient = consents.data?.list.find(
       (c) => c.clientUuid === clientId,
     );
-    const requiredScopes = scopes.filter((v) => client.scopes.includes(v));
+    const requiredScopes = clientScopes.filter((v) =>
+      client.scopes.includes(v),
+    );
     const consented = consentedClient
       ? requiredScopes.every((s) => consentedClient.scopes.includes(s))
       : false;
+
+    const consentedScopes =
+      (consentedClient?.scopes as ClientScopeType[]) ?? [];
 
     if (prompt === 'none') {
       if (!user)
@@ -58,12 +71,12 @@ export const useAuthorize = ({
           error: 'access_denied',
           error_description: 'consent_required',
         });
-      if (scopes.includes('offline_access'))
+      if (tokenScopes.includes('offline_access'))
         return redirect({
           error: 'access_denied',
           error_description: 'consent_required',
         });
-      return authorize();
+      return authorize(consentedScopes);
     }
 
     if (prompt === 'login') {
@@ -74,21 +87,27 @@ export const useAuthorize = ({
     if (prompt === 'consent') return; // show consent screen
 
     if (consented) {
-      if (scopes.includes('offline_access')) return;
-      return authorize();
+      if (tokenScopes.includes('offline_access')) return;
+      return authorize(consentedScopes);
     }
   }, [
     authorize,
     client.scopes,
     clientId,
+    clientScopes,
     consents.data?.list,
     prompt,
     recentLogin,
     redirect,
-    scopes,
     signOut,
     state,
+    tokenScopes,
     url,
     user,
   ]);
+
+  return useAuthorizeForm({
+    clientId: client.clientId,
+    onDone: authorize,
+  });
 };

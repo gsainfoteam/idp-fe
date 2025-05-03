@@ -7,7 +7,6 @@ import { ConsentFormSchema } from '../hooks/use-authorize-form';
 
 import { components } from '@/@types/api-schema';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
-import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 
 export function AuthorizeForm({
   client,
@@ -16,22 +15,16 @@ export function AuthorizeForm({
 }) {
   const { control, setValue, formState } = useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const { scopes: clientScopes } = useLoaderData({
+  const { clientScopes } = useLoaderData({
     from: '/_auth-required/authorize',
   });
 
   const scopes = useMemo(
-    () =>
-      ClientScopeEnum.options
-        .filter((v) => clientScopes.includes(v))
-        .filter((v) => client.scopes.includes(v)),
+    () => clientScopes.filter((v) => client.scopes.includes(v)),
     [clientScopes, client.scopes],
   );
   const optionalScopes = useMemo(
-    () =>
-      ClientScopeEnum.options
-        .filter((v) => clientScopes.includes(v))
-        .filter((v) => client.optionalScopes.includes(v)),
+    () => clientScopes.filter((v) => client.optionalScopes.includes(v)),
     [clientScopes, client.optionalScopes],
   );
 
