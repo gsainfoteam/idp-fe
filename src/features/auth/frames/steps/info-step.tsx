@@ -15,6 +15,7 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
 
   return (
     <FunnelStep
+      isLoading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.info.title')}
       button={

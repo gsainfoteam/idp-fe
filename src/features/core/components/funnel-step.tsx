@@ -3,6 +3,7 @@ import { PropsWithChildren, useRef, useState } from 'react';
 import { cn } from '../utils/cn';
 
 import { BackButton } from './back-button';
+import { LoadingOverlay } from './loading-overlay';
 
 interface FunnelStepProps {
   title: string;
@@ -10,6 +11,7 @@ interface FunnelStepProps {
   description?: string;
   button?: React.ReactNode;
   hideUndo?: boolean;
+  isLoading?: boolean;
 }
 
 // TODO: loading overlay
@@ -20,6 +22,7 @@ export function FunnelStep({
   description,
   button,
   hideUndo = false,
+  isLoading = false,
   children,
 }: PropsWithChildren<FunnelStepProps>) {
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -55,27 +58,29 @@ export function FunnelStep({
             onScroll={handleScroll}
             className="flex h-full w-full flex-col overflow-y-auto bg-white"
           >
-            {/* Step Title Box */}
-            <div className="z-0 w-full bg-white px-5">
-              <div className="h-6" />
-              <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
-                {stepTitle}
+            <LoadingOverlay show={isLoading}>
+              {/* Step Title Box */}
+              <div className="z-0 w-full bg-white px-5">
+                <div className="h-6" />
+                <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
+                  {stepTitle}
+                </div>
+                {description && (
+                  <>
+                    <div className="h-2" />
+                    <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
+                      {description}
+                    </div>
+                  </>
+                )}
+                <div className="h-6" />
               </div>
-              {description && (
-                <>
-                  <div className="h-2" />
-                  <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
-                    {description}
-                  </div>
-                </>
-              )}
-              <div className="h-6" />
-            </div>
 
-            {/* Content Box */}
-            <div className="relative z-0 flex w-full flex-col bg-white px-5">
-              {children}
-            </div>
+              {/* Content Box */}
+              <div className="relative z-0 flex w-full flex-col bg-white px-5">
+                {children}
+              </div>
+            </LoadingOverlay>
           </div>
 
           {/* CTA Button Box */}

@@ -17,6 +17,7 @@ export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
 
   return (
     <FunnelStep
+      isLoading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.code.title')}
       button={

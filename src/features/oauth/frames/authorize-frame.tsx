@@ -53,6 +53,7 @@ export function AuthorizeFrame() {
     return (
       <FunnelStep
         hideUndo
+        isLoading={form.formState.isSubmitting}
         title={t('authorize.title')}
         stepTitle={t('authorize.step_title', { client: client.name })}
         description={t('authorize.description', { client: client.name })}

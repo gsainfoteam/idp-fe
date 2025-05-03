@@ -33,6 +33,7 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
 
   return (
     <FunnelStep
+      isLoading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.email.title')}
       button={
