@@ -34,7 +34,7 @@ export function LoginFrame() {
                 variant="primary"
                 className="w-full"
                 disabled={!form.formState.isValid}
-                isLoading={form.formState.isSubmitting}
+                loading={form.formState.isSubmitting}
               >
                 {t(`login.buttons.login`)}
               </Button>

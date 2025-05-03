@@ -14,7 +14,7 @@ interface FunnelStepProps {
   isLoading?: boolean;
 }
 
-// TODO: loading overlay
+// TODO: 버튼 width를 w-full에서 w-fit로 바꾸면서 이상해진거 고치기
 
 export function FunnelStep({
   title,
@@ -88,7 +88,7 @@ export function FunnelStep({
             {button && (
               <>
                 <div className="h-4" />
-                <div className="mt-auto">{button}</div>
+                <div className="mt-auto w-full">{button}</div>
               </>
             )}
           </div>

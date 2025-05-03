@@ -40,7 +40,7 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
         <Button
           variant="primary"
           onClick={onSubmit}
-          isLoading={isSubmitting}
+          loading={isSubmitting}
           disabled={!(isValid && isDirty)}
         >
           {t('register.steps.email.button')}

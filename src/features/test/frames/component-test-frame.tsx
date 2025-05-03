@@ -106,9 +106,9 @@ export function ComponentTestFrame() {
         <Button variant="default">Button</Button>
         <Button variant="text">Button</Button>
         <Button variant="link">Button</Button>
-        <Button variant="primary" isLoading />
-        <Button variant="secondary" isLoading />
-        <Button variant="default" isLoading />
+        <Button variant="primary" loading />
+        <Button variant="secondary" loading />
+        <Button variant="default" loading />
         <div className="col-span-1" />
         <div className="col-span-1" />
         <Button variant="primary" disabled>

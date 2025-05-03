@@ -24,7 +24,7 @@ export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
         <Button
           variant="primary"
           onClick={onSubmit}
-          isLoading={isSubmitting}
+          loading={isSubmitting}
           disabled={!(isValid && isDirty)}
         >
           {t('register.steps.code.button')}

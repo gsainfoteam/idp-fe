@@ -22,7 +22,7 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
         <Button
           variant="primary"
           onClick={onSubmit}
-          isLoading={isSubmitting}
+          loading={isSubmitting}
           disabled={!(isValid && isDirty)}
         >
           {t('register.steps.info.button')}
