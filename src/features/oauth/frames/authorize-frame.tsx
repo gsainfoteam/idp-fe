@@ -1,11 +1,9 @@
-import { useLoaderData, useSearch } from '@tanstack/react-router';
-import { useCallback } from 'react';
+import { useLoaderData } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
-import { useAuthorizeForm } from '../hooks/use-authorize-form';
 import { useClient } from '../hooks/use-client';
 
 import { components } from '@/@types/api-schema';
@@ -18,19 +16,7 @@ const Inner = ({
 }) => {
   const { t } = useTranslation();
 
-  const { prompt: _, ...search } = useSearch({
-    from: '/_auth-required/authorize',
-  });
-
-  const authorize = useCallback(() => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/oauth/authorize?${new URLSearchParams(search).toString()}`;
-  }, [search]);
-
-  useAuthorize({ authorize, client });
-  const { form, onSubmit } = useAuthorizeForm({
-    clientId: client.clientId,
-    onDone: authorize,
-  });
+  const { form, onSubmit } = useAuthorize({ client });
 
   return (
     <div className="flex min-h-screen items-center justify-center">

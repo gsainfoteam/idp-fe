@@ -3,10 +3,13 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { postOauthConsent } from '@/data/post-oauth-consent';
-import { ScopeEnum } from '@/routes/_auth-required/authorize';
+import {
+  ClientScopeEnum,
+  ClientScopeType,
+} from '@/routes/_auth-required/authorize';
 
 export const createSchema = () =>
-  z.object({ scopes: z.record(ScopeEnum, z.boolean()).default({}) });
+  z.object({ scopes: z.record(ClientScopeEnum, z.boolean()) });
 
 export type ConsentFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
@@ -15,24 +18,25 @@ export const useAuthorizeForm = ({
   onDone,
 }: {
   clientId: string;
-  onDone: () => void;
+  onDone: (scopes: ClientScopeType[]) => void;
 }) => {
   const form = useForm({
     resolver: zodResolver(createSchema()),
     mode: 'onBlur',
+    defaultValues: { scopes: {} },
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
+    const scopes = Object.entries(data.scopes)
+      .filter(([, value]) => value === true)
+      .map(([key]) => key as ClientScopeType);
     const requestBody = {
       client_id: clientId,
-      scope: Object.entries(data.scopes)
-        .filter(([, value]) => value === true)
-        .map(([key]) => key)
-        .join(' '),
+      scope: scopes.join(' '),
     };
 
     await postOauthConsent(requestBody);
-    onDone();
+    onDone(scopes);
   });
 
   return { form, onSubmit };

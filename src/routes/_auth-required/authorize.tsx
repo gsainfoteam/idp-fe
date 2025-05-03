@@ -45,6 +45,13 @@ const validateSchema = schema
     url: new URL(redirect_uri),
     ...rest,
   }))
+  .transform((rest) => ({
+    clientScopes: ClientScopeEnum.options.filter((v) =>
+      rest.scopes.includes(v),
+    ),
+    tokenScopes: TokenScopeEnum.options.filter((v) => rest.scopes.includes(v)),
+    ...rest,
+  }))
   .refine(
     ({ scopes, prompt }) =>
       !scopes.includes('offline_access') ||
