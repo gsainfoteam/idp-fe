@@ -75,12 +75,9 @@
     "checkboxes": {
       "all_agree": "전체 동의하기",
       "email": "이메일",
-      "name": "이름",
       "student_id": "학번",
       "phone_number": "전화번호",
-      "profile": "프로필 사진",
-      "openid": "OpenID",
-      "offline_access": "오프라인 접근"
+      "profile": "프로필(이름, 사진)"
     },
     "errors": {
       "client_id": "클라이언트 ID가 필요합니다"

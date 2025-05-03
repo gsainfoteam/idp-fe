@@ -75,12 +75,9 @@
     "checkboxes": {
       "all_agree": "Agree to All",
       "email": "Email",
-      "name": "Name",
       "student_id": "Student ID",
       "phone_number": "Phone Number",
-      "profile": "Profile Image",
-      "openid": "OpenID",
-      "offline_access": "Offline Access"
+      "profile": "Profile(Name, Image)"
     },
     "errors": {
       "client_id": "Client ID is required"
