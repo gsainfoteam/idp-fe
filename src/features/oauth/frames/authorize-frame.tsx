@@ -16,7 +16,6 @@ const Inner = ({
 }: {
   client: components['schemas']['ClientPublicResDto'];
 }) => {
-  const { form, onSubmit } = useAuthorizeForm();
   const { t } = useTranslation();
 
   const { prompt: _, ...search } = useSearch({
@@ -28,6 +27,10 @@ const Inner = ({
   }, [search]);
 
   useAuthorize({ authorize, client });
+  const { form, onSubmit } = useAuthorizeForm({
+    clientId: client.clientId,
+    onDone: authorize,
+  });
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -43,12 +46,7 @@ const Inner = ({
         </LoadingOverlay>
         <div className="h-1" />
         <FormProvider {...form}>
-          <form
-            onSubmit={async (e) => {
-              await onSubmit(e);
-              authorize();
-            }}
-          >
+          <form onSubmit={onSubmit}>
             <AuthorizeForm client={client} />
           </form>
         </FormProvider>
@@ -58,7 +56,9 @@ const Inner = ({
 };
 
 export function AuthorizeFrame() {
-  const { clientId } = useLoaderData({ from: '/_auth-required/authorize' });
+  const { clientId } = useLoaderData({
+    from: '/_auth-required/authorize',
+  });
   const { client } = useClient(clientId);
 
   if (client) return <Inner client={client} />;
