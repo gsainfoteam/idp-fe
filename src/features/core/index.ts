@@ -6,6 +6,7 @@ export * from './components/input';
 export * from './components/language-switcher';
 export * from './components/loading-ellipse';
 export * from './components/loading-overlay';
+export * from './components/multi-state-switch';
 export * from './services/api';
 export * from './utils/cn';
 export * from './utils/type-functions';
