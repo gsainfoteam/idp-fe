@@ -7,6 +7,7 @@ import { ConsentFormSchema } from '../hooks/use-authorize-form';
 
 import { components } from '@/@types/api-schema';
 import { Button, Checkbox, LoadingOverlay } from '@/features/core';
+import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 
 export function AuthorizeForm({
   client,
@@ -20,11 +21,17 @@ export function AuthorizeForm({
   });
 
   const scopes = useMemo(
-    () => clientScopes.filter((v) => client.scopes.includes(v)),
+    () =>
+      ClientScopeEnum.options
+        .filter((v) => clientScopes.includes(v))
+        .filter((v) => client.scopes.includes(v)),
     [clientScopes, client.scopes],
   );
   const optionalScopes = useMemo(
-    () => clientScopes.filter((v) => client.optionalScopes.includes(v)),
+    () =>
+      ClientScopeEnum.options
+        .filter((v) => clientScopes.includes(v))
+        .filter((v) => client.optionalScopes.includes(v)),
     [clientScopes, client.optionalScopes],
   );
 

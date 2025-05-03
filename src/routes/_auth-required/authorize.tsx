@@ -6,7 +6,6 @@ import { AuthorizeFrame } from '@/features/oauth';
 
 export const ClientScopeEnum = z.enum([
   'profile',
-  'name',
   'email',
   'phone_number',
   'student_id',
