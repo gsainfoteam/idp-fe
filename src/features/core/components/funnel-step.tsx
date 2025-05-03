@@ -5,17 +5,21 @@ import { cn } from '../utils/cn';
 import { BackButton } from './back-button';
 
 interface FunnelStepProps {
-  title?: string;
+  title: string;
   stepTitle: string;
   description?: string;
   button?: React.ReactNode;
+  hideUndo?: boolean;
 }
+
+// TODO: loading overlay
 
 export function FunnelStep({
   title,
   stepTitle,
   description,
   button,
+  hideUndo = false,
   children,
 }: PropsWithChildren<FunnelStepProps>) {
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -30,46 +34,48 @@ export function FunnelStep({
       <div className="relative h-screen w-full md:aspect-[450/800] md:w-auto">
         <div className="flex h-full w-full flex-col bg-white py-6">
           {/* Title Bar */}
-          {title && (
-            <div className="z-10 w-full bg-white px-5">
-              <div className="relative flex h-12 items-center justify-center">
-                <div className="absolute left-0">
-                  <BackButton />
-                </div>
-                <div className="text-center font-medium">{title}</div>
-              </div>
-              <div className="h-6" />
-            </div>
-          )}
-
-          {/* Step Title Box */}
           <div
             className={cn(
               'z-10 w-full bg-white px-5',
               scrollAmount > 0 && 'shadow-[0_8px_8px_0] shadow-white',
             )}
           >
-            <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
-              {stepTitle}
-            </div>
-            {description && (
-              <>
-                <div className="h-2" />
-                <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
-                  {description}
+            <div className="relative flex h-12 items-center justify-center">
+              {!hideUndo && (
+                <div className="absolute left-0">
+                  <BackButton />
                 </div>
-              </>
-            )}
-            <div className="h-6" />
+              )}
+              <div className="text-center font-medium">{title}</div>
+            </div>
           </div>
 
-          {/* Content Box */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="relative z-0 w-full flex-1 overflow-y-auto bg-white px-5"
+            className="flex h-full w-full flex-col overflow-y-auto bg-white"
           >
-            {children}
+            {/* Step Title Box */}
+            <div className="z-0 w-full bg-white px-5">
+              <div className="h-6" />
+              <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
+                {stepTitle}
+              </div>
+              {description && (
+                <>
+                  <div className="h-2" />
+                  <div className="text-body-1 text-pretty whitespace-pre-wrap text-neutral-500">
+                    {description}
+                  </div>
+                </>
+              )}
+              <div className="h-6" />
+            </div>
+
+            {/* Content Box */}
+            <div className="relative z-0 flex w-full flex-col bg-white px-5">
+              {children}
+            </div>
           </div>
 
           {/* CTA Button Box */}

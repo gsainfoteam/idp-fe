@@ -66,13 +66,6 @@
       "phone_number": "올바른 전화번호를 입력해주세요"
     }
   },
-  "register_done": {
-    "title": "회원가입",
-    "description": "회원가입이 완료되었습니다",
-    "buttons": {
-      "login": "로그인하기"
-    }
-  },
   "login": {
     "placeholders": {
       "email": "m@gm.gist.ac.kr",
@@ -89,7 +82,8 @@
     }
   },
   "authorize": {
-    "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
+    "title": "서비스 인가",
+    "step_title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
     "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다",
     "labels": {
       "required": "필수",
