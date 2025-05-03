@@ -16,7 +16,7 @@ const AuthRequiredLayout = () => {
     return (
       <Navigate
         to="/auth/login"
-        search={{ redirectUrl: router.history.location.href }}
+        search={{ redirect: router.history.location.href }}
         replace
       />
     );

@@ -8,6 +8,7 @@ import { useAuth } from './use-auth';
 import { useToken } from './use-token';
 
 import { postAuthLogin } from '@/data/post-auth-login';
+import { useRecentLogin } from '@/features/oauth';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -25,6 +26,7 @@ export const useLoginForm = () => {
     mode: 'onBlur',
   });
   const { refetch } = useAuth();
+  const { setRecentLogin } = useRecentLogin();
 
   const onSubmit = form.handleSubmit(async (formData) => {
     const { data, status } = await postAuthLogin(formData);
@@ -45,6 +47,7 @@ export const useLoginForm = () => {
 
     saveToken(data.accessToken);
     await refetch();
+    setRecentLogin(new Date());
   });
 
   return { form, onSubmit };

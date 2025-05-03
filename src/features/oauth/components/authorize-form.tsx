@@ -74,7 +74,7 @@ export function AuthorizeForm({
                 control={control}
                 render={({ field }) => (
                   <Checkbox
-                    checked={field.value}
+                    checked={field.value ?? true}
                     disabled
                     onChange={field.onChange}
                   >
@@ -95,7 +95,10 @@ export function AuthorizeForm({
                 name={`scopes.${scope}`}
                 control={control}
                 render={({ field }) => (
-                  <Checkbox checked={field.value} onChange={field.onChange}>
+                  <Checkbox
+                    checked={field.value ?? false}
+                    onChange={field.onChange}
+                  >
                     {t(`authorize.checkboxes.${scope}`)}
                   </Checkbox>
                 )}
