@@ -80,7 +80,8 @@
       "profile": "프로필(이름, 사진)"
     },
     "errors": {
-      "client_id": "클라이언트 ID가 필요합니다"
+      "client_id": "클라이언트 ID가 필요합니다",
+      "invalid_request": "잘못된 요청입니다.\n앱 업데이트가 필요할 수 있습니다.\n개발자인 경우, <0>문서</0>를 참고해주세요."
     },
     "buttons": {
       "cancel": "취소",

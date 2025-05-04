@@ -80,7 +80,8 @@
       "profile": "Profile(Name, Image)"
     },
     "errors": {
-      "client_id": "Client ID is required"
+      "client_id": "Client ID is required",
+      "invalid_request": "Invalid request.\nAn update may be needed.\nSee <0>document</0> for developers."
     },
     "buttons": {
       "cancel": "Cancel",

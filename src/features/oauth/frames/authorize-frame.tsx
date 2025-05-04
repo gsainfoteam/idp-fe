@@ -1,6 +1,6 @@
 import { useLoaderData } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
@@ -47,6 +47,16 @@ export function AuthorizeFrame() {
   });
   const { client } = useClient(clientId);
 
+  if (client === undefined) return null;
   if (client) return <Inner client={client} />;
-  return <div className="flex min-h-screen items-center justify-center"></div>;
+  return (
+    <div className="flex min-h-screen items-center justify-center whitespace-pre-wrap">
+      <Trans
+        i18nKey="authorize.errors.invalid_request"
+        components={[
+          <a href="https://infoteam-rulrudino.notion.site/GSA-OAuth2-OIDC-fa09594e4b2548758e1343c84d7da008?pvs=4" />,
+        ]}
+      />
+    </div>
+  );
 }
