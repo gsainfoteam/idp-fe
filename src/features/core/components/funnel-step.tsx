@@ -11,7 +11,7 @@ interface FunnelStepProps {
   description?: string;
   button?: React.ReactNode;
   hideUndo?: boolean;
-  isLoading?: boolean;
+  loading?: boolean;
 }
 
 // TODO: 버튼 width를 w-full에서 w-fit로 바꾸면서 이상해진거 고치기
@@ -22,7 +22,7 @@ export function FunnelStep({
   description,
   button,
   hideUndo = false,
-  isLoading = false,
+  loading = false,
   children,
 }: PropsWithChildren<FunnelStepProps>) {
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -58,7 +58,7 @@ export function FunnelStep({
             onScroll={handleScroll}
             className="flex h-full w-full flex-col overflow-y-auto bg-white"
           >
-            <LoadingOverlay show={isLoading}>
+            <LoadingOverlay show={loading}>
               {/* Step Title Box */}
               <div className="z-0 w-full bg-white px-5">
                 <div className="h-6" />
@@ -77,7 +77,7 @@ export function FunnelStep({
               </div>
 
               {/* Content Box */}
-              <div className="relative z-0 flex w-full flex-col bg-white px-5">
+              <div className="relative z-0 w-full bg-white px-5">
                 {children}
               </div>
             </LoadingOverlay>

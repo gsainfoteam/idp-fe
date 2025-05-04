@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCodeForm } from '../../hooks/steps/use-code-form';
 
-import { Button, FunnelStep, Input } from '@/features/core';
+import { Button, FunnelStep, Input, Label } from '@/features/core';
 
 // TODO: 만료 타이머, 5회 횟수 제한 기능, 인증번호 재요청
 
@@ -17,12 +17,13 @@ export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
 
   return (
     <FunnelStep
-      isLoading={isSubmitting}
+      loading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.code.title')}
       button={
         <Button
           variant="primary"
+          className="w-full"
           onClick={onSubmit}
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
@@ -31,14 +32,16 @@ export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
         </Button>
       }
     >
-      <Input
-        type="text"
-        label={t('register.inputs.code.label')}
-        placeholder={t('register.inputs.code.placeholder')}
-        error={errors.code?.message}
-        disabled={isSubmitting}
-        {...register('code')}
-      />
+      <Label text={t('register.inputs.code.label')} htmlFor="code">
+        <Input
+          type="text"
+          id="code"
+          placeholder={t('register.inputs.code.placeholder')}
+          error={errors.code?.message}
+          disabled={isSubmitting}
+          {...register('code')}
+        />
+      </Label>
     </FunnelStep>
   );
 }

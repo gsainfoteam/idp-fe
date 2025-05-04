@@ -51,10 +51,10 @@ export function ButtonTestFrame() {
       </div>
       <div className="h-5" />
       <div className="flex gap-5 px-10">
-        <Button variant="primary" startIcon={<ArrowLeftIcon />}>
+        <Button variant="primary" prefixIcon={<ArrowLeftIcon />}>
           Back
         </Button>
-        <Button variant="primary" endIcon={<CheckIcon />}>
+        <Button variant="primary" suffixIcon={<CheckIcon />}>
           Checked
         </Button>
       </div>

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import CheckIcon from '@/assets/icons/check.svg?react';
+import CheckIcon from '@/assets/icons/checkbox.svg?react';
 import { cn } from '@/features/core';
 
 export const Checkbox = forwardRef<

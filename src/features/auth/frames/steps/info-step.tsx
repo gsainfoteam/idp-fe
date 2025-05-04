@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useInfoForm } from '../../hooks/steps/use-info-form';
 
-import { Button, FunnelStep, Input } from '@/features/core';
+import { Button, FunnelStep, Input, Label } from '@/features/core';
 
 export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
   const {
@@ -15,12 +15,13 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
 
   return (
     <FunnelStep
-      isLoading={isSubmitting}
+      loading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.info.title')}
       button={
         <Button
           variant="primary"
+          className="w-full"
           onClick={onSubmit}
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
@@ -30,32 +31,41 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
       }
     >
       <div className="flex flex-col gap-5">
-        <Input
-          type="text"
-          label={t('register.inputs.name.label')}
-          placeholder={t('register.inputs.name.placeholder')}
-          error={errors.name?.message || !!errors.root}
-          disabled={isSubmitting}
-          {...register('name')}
-        />
-        <Input
-          type="text"
-          label={t('register.inputs.student_id.label')}
-          placeholder={t('register.inputs.student_id.placeholder', {
-            format: `${new Date().getFullYear()}0000`,
-          })}
-          error={errors.studentId?.message || !!errors.root}
-          disabled={isSubmitting}
-          {...register('studentId')}
-        />
-        <Input
-          type="tel"
-          label={t('register.inputs.phone_number.label')}
-          placeholder={t('register.inputs.phone_number.placeholder')}
-          error={errors.phoneNumber?.message || errors.root?.message}
-          disabled={isSubmitting}
-          {...register('phoneNumber')}
-        />
+        <Label text={t('register.inputs.name.label')} htmlFor="name">
+          <Input
+            id="name"
+            type="text"
+            placeholder={t('register.inputs.name.placeholder')}
+            error={errors.name?.message || !!errors.root}
+            disabled={isSubmitting}
+            {...register('name')}
+          />
+        </Label>
+        <Label text={t('register.inputs.student_id.label')} htmlFor="studentId">
+          <Input
+            id="studentId"
+            type="text"
+            placeholder={t('register.inputs.student_id.placeholder', {
+              format: `${new Date().getFullYear()}0000`,
+            })}
+            error={errors.studentId?.message || !!errors.root}
+            disabled={isSubmitting}
+            {...register('studentId')}
+          />
+        </Label>
+        <Label
+          text={t('register.inputs.phone_number.label')}
+          htmlFor="phoneNumber"
+        >
+          <Input
+            id="phoneNumber"
+            type="tel"
+            placeholder={t('register.inputs.phone_number.placeholder')}
+            error={errors.phoneNumber?.message || errors.root?.message}
+            disabled={isSubmitting}
+            {...register('phoneNumber')}
+          />
+        </Label>
       </div>
     </FunnelStep>
   );

@@ -6,8 +6,8 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: NonNullable<VariantProps<typeof buttonStyle>['variant']>;
   loading?: boolean;
-  startIcon?: React.ReactNode;
-  endIcon?: React.ReactNode;
+  prefixIcon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
 }
 
 const buttonStyle = cva(
@@ -61,8 +61,8 @@ export function Button({
   variant,
   disabled = false,
   loading = false,
-  startIcon,
-  endIcon,
+  prefixIcon,
+  suffixIcon,
   className,
   children,
   ...props
@@ -82,9 +82,9 @@ export function Button({
           showEllipse && 'invisible',
         )}
       >
-        {startIcon}
+        {prefixIcon}
         {children}
-        {endIcon}
+        {suffixIcon}
       </div>
 
       {/* loading ellipse */}

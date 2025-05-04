@@ -45,8 +45,8 @@ export function LoginFrame() {
                 search={(prev) => ({ ...prev })}
               >
                 <Button
-                  variant="link"
-                  className="text-neutral-800 no-underline"
+                  variant="text"
+                  className="text-body-1 py-0 text-neutral-800"
                   type="button"
                 >
                   {t('login.buttons.register')}

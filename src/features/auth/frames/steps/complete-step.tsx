@@ -14,7 +14,7 @@ export function CompleteStep() {
       stepTitle={t('register.steps.complete.title')}
       button={
         <Link to="/auth/login" search={(prev) => ({ ...prev })}>
-          <Button variant="primary">
+          <Button variant="primary" className="w-full">
             {t('register.steps.complete.button')}
           </Button>
         </Link>

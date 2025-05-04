@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { usePasswordForm } from '../../hooks/steps/use-password-form';
 
-import { Button, FunnelStep, Input } from '@/features/core';
-
-// TODO: 만료 타이머, 5회 횟수 제한 기능
+import { Button, FunnelStep, Label, PasswordInput } from '@/features/core';
 
 export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
   const {
@@ -22,6 +20,7 @@ export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
       button={
         <Button
           variant="primary"
+          className="w-full"
           onClick={onSubmit}
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
@@ -31,22 +30,27 @@ export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
       }
     >
       <div className="flex flex-col gap-5">
-        <Input
-          type="password"
-          label={t('register.inputs.password.label')}
-          placeholder={t('register.inputs.password.placeholder')}
-          error={errors.password?.message}
-          disabled={isSubmitting}
-          {...register('password')}
-        />
-        <Input
-          type="password"
-          label={t('register.inputs.password_confirm.label')}
-          placeholder={t('register.inputs.password_confirm.placeholder')}
-          error={errors.passwordConfirm?.message}
-          disabled={isSubmitting}
-          {...register('passwordConfirm')}
-        />
+        <Label text={t('register.inputs.password.label')} htmlFor="password">
+          <PasswordInput
+            id="password"
+            placeholder={t('register.inputs.password.placeholder')}
+            error={errors.password?.message}
+            disabled={isSubmitting}
+            {...register('password')}
+          />
+        </Label>
+        <Label
+          text={t('register.inputs.password_confirm.label')}
+          htmlFor="passwordConfirm"
+        >
+          <PasswordInput
+            id="passwordConfirm"
+            placeholder={t('register.inputs.password_confirm.placeholder')}
+            error={errors.passwordConfirm?.message}
+            disabled={isSubmitting}
+            {...register('passwordConfirm')}
+          />
+        </Label>
       </div>
     </FunnelStep>
   );

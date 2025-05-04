@@ -53,7 +53,7 @@ export function AuthorizeFrame() {
     return (
       <FunnelStep
         hideUndo
-        isLoading={form.formState.isSubmitting}
+        loading={form.formState.isSubmitting}
         title={t('authorize.title')}
         stepTitle={t('authorize.step_title', { client: client.name })}
         description={t('authorize.description', { client: client.name })}
@@ -61,6 +61,7 @@ export function AuthorizeFrame() {
           <div className="flex gap-2.5">
             <Button
               variant="secondary"
+              className="w-full"
               type="button"
               onClick={() => {
                 // TODO: 취소 페이지 UI
@@ -71,6 +72,7 @@ export function AuthorizeFrame() {
             </Button>
             <Button
               variant="primary"
+              className="w-full"
               type="button"
               onClick={async (e) => {
                 await onSubmit(e);

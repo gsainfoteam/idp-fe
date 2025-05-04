@@ -3,25 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useEmailForm } from '../../hooks/steps/use-email-form';
 
-import { Button, FunnelStep, Input } from '@/features/core';
+import { Button, FunnelStep, Input, Label } from '@/features/core';
 
 // TODO: 이용 약관 동의 오버레이 기능 추가
-
-// function Control({ control, onSubmit }) {
-//   const { isSubmitting, isValid, isDirty } = useFormState({ control });
-//   const { t } = useTranslation();
-
-//   return (
-//     <Button
-//       variant="primary"
-//       onClick={onSubmit}
-//       isLoading={isSubmitting}
-//       disabled={!(isValid && isDirty)}
-//     >
-//       {t('register.steps.email.button')}
-//     </Button>
-//   );
-// }
 
 export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const {
@@ -33,12 +17,13 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
 
   return (
     <FunnelStep
-      isLoading={isSubmitting}
+      loading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.email.title')}
       button={
         <Button
           variant="primary"
+          className="w-full"
           onClick={onSubmit}
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
@@ -47,14 +32,16 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
         </Button>
       }
     >
-      <Input
-        type="email"
-        label={t('register.inputs.email.label')}
-        placeholder={t('register.inputs.email.placeholder')}
-        error={errors.email?.message}
-        disabled={isSubmitting}
-        {...register('email')}
-      />
+      <Label text={t('register.inputs.email.label')} htmlFor="email">
+        <Input
+          type="email"
+          id="email"
+          placeholder={t('register.inputs.email.placeholder')}
+          error={errors.email?.message}
+          disabled={isSubmitting}
+          {...register('email')}
+        />
+      </Label>
     </FunnelStep>
   );
 }
