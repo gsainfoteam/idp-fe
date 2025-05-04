@@ -53,6 +53,7 @@ export function AuthorizeFrame() {
     <div className="flex min-h-screen items-center justify-center whitespace-pre-wrap">
       <Trans
         i18nKey="authorize.errors.invalid_request"
+        parent="div"
         components={[
           <a href="https://infoteam-rulrudino.notion.site/GSA-OAuth2-OIDC-fa09594e4b2548758e1343c84d7da008?pvs=4" />,
         ]}
