@@ -50,10 +50,6 @@ const buttonStyle = cva(
         className: 'bg-primary-50',
       },
     ],
-    defaultVariants: {
-      loading: false,
-      disabled: false,
-    },
   },
 );
 
