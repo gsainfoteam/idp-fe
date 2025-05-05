@@ -1,37 +1,42 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postOauthConsent } from '@/data/post-oauth-consent';
-import { ScopeEnum } from '@/routes/_auth-required/authorize';
+import {
+  ClientScopeEnum,
+  ClientScopeType,
+} from '@/routes/_auth-required/authorize';
 
-export const createSchema = (t: TFunction) =>
-  z.object({
-    client_id: z.string().min(1, t('authorize.errors.client_id')),
-    scopes: z.record(ScopeEnum, z.boolean()).default({}),
-  });
+export const createSchema = () =>
+  z.object({ scopes: z.record(ClientScopeEnum, z.boolean()) });
 
 export type ConsentFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
-export const useAuthorizeForm = () => {
-  const { t } = useTranslation();
+export const useAuthorizeForm = ({
+  clientId,
+  onDone,
+}: {
+  clientId: string;
+  onDone: (scopes: ClientScopeType[]) => void;
+}) => {
   const form = useForm({
-    resolver: zodResolver(createSchema(t)),
+    resolver: zodResolver(createSchema()),
     mode: 'onBlur',
+    defaultValues: { scopes: {} },
   });
 
   const onSubmit = form.handleSubmit(async (data) => {
+    const scopes = Object.entries(data.scopes)
+      .filter(([, value]) => value === true)
+      .map(([key]) => key as ClientScopeType);
     const requestBody = {
-      client_id: data.client_id,
-      scope: Object.entries(data.scopes)
-        .filter(([, value]) => value === true)
-        .map(([key]) => key)
-        .join(' '),
+      client_id: clientId,
+      scope: scopes.join(' '),
     };
 
     await postOauthConsent(requestBody);
+    onDone(scopes);
   });
 
   return { form, onSubmit };

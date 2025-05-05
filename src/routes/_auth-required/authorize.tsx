@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
+import { getUserConsent } from '@/data/get-user-consent';
 import { AuthorizeFrame } from '@/features/oauth';
 
 export const ClientScopeEnum = z.enum([
   'profile',
-  'name',
   'email',
   'phone_number',
   'student_id',
@@ -43,9 +43,14 @@ const validateSchema = schema
     redirectUri: redirect_uri,
     responseTypes: z.array(ResponseEnum).parse(response_type.split(' ')),
     url: new URL(redirect_uri),
-    prompt: rest.prompt,
-    nonce: rest.nonce,
-    rest,
+    ...rest,
+  }))
+  .transform((rest) => ({
+    clientScopes: ClientScopeEnum.options.filter((v) =>
+      rest.scopes.includes(v),
+    ),
+    tokenScopes: TokenScopeEnum.options.filter((v) => rest.scopes.includes(v)),
+    ...rest,
   }))
   .refine(
     ({ scopes, prompt }) =>
@@ -74,5 +79,8 @@ export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
   validateSearch: schema,
   loaderDeps: ({ search }) => search,
-  loader: ({ deps }) => validateSchema.parse(deps),
+  loader: async ({ deps }) => ({
+    ...validateSchema.parse(deps),
+    consents: await getUserConsent(),
+  }),
 });
