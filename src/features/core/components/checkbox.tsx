@@ -12,7 +12,7 @@ export const Checkbox = forwardRef<
       <label className="flex w-fit items-center">
         <input
           type="checkbox"
-          className={cn('peer appearance-none', className)} // group:checked:bg-primary-500
+          className={cn('peer appearance-none', className)}
           ref={ref}
           disabled={disabled}
           {...props}
