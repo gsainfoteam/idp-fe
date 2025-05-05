@@ -10,16 +10,12 @@ export function MultiStateSwitch({
   labels,
   selected: initialSelected = 0,
   onChangeIndex,
-  onChange,
   ...props
 }: MultiStateSwitchProps) {
   const [selected, setSelected] = useState(initialSelected);
 
-  if (selected < 0 || selected >= labels.length) {
-    throw new Error(
-      `Selected index (${selected}) is out of bounds (0-${labels.length - 1})`,
-    );
-  }
+  if (selected < 0) setSelected(0);
+  if (selected >= labels.length) setSelected(labels.length - 1);
 
   return (
     <div className="flex h-fit w-full rounded-lg bg-neutral-100" {...props}>
@@ -28,9 +24,8 @@ export function MultiStateSwitch({
           <div
             key={idx}
             className="text-title-3 flex w-full items-center justify-center rounded-lg bg-white py-3 text-center text-black shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]"
-            onClick={(e) => {
+            onClick={() => {
               setSelected(idx);
-              onChange?.(e);
               onChangeIndex?.(idx, label);
             }}
           >
@@ -40,9 +35,8 @@ export function MultiStateSwitch({
           <div
             key={idx}
             className="text-body-1 flex w-full items-center justify-center rounded-lg bg-transparent py-3 text-center text-neutral-500"
-            onClick={(e) => {
+            onClick={() => {
               setSelected(idx);
-              onChange?.(e);
               onChangeIndex?.(idx, label);
             }}
           >

@@ -8,7 +8,7 @@ export const Checkbox = forwardRef<
   React.InputHTMLAttributes<HTMLInputElement>
 >(({ disabled = false, className, children, ...props }, ref) => {
   return (
-    <div className="cursor-pointer">
+    <div className="w-fit cursor-pointer">
       <label className="flex w-fit items-center">
         <input
           type="checkbox"
@@ -19,7 +19,7 @@ export const Checkbox = forwardRef<
         />
         <div
           className={cn(
-            'm-1 flex h-5 w-5 items-center justify-center rounded transition-all',
+            'm-1 flex size-6 items-center justify-center rounded transition-all',
             'peer-checked:bg-primary-500 border border-neutral-500 bg-white peer-checked:border-none peer-checked:*:block',
             disabled
               ? 'cursor-default bg-neutral-300 peer-checked:bg-neutral-300'
