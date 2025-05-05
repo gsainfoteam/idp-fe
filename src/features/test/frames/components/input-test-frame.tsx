@@ -1,5 +1,6 @@
-import CheckIcon from '@/assets/icons/check.svg?react';
-import ClipboardIcon from '@/assets/icons/clipboard.svg?react';
+import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
+import CheckIcon from '@/assets/icons/line/check.svg?react';
+import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
 import { Input, Label, PasswordInput } from '@/features/core';
 
 export function InputTestFrame() {
@@ -39,15 +40,26 @@ export function InputTestFrame() {
           <Input
             className="w-[200px]"
             placeholder="텍스트를 입력하세요"
+            error
+            prefixIcon={
+              <WithdrawIcon
+                stroke="var(--color-red-800)"
+                fill="var(--color-red-200)"
+              />
+            }
+          />
+          <Input
+            className="w-[200px]"
+            placeholder="텍스트를 입력하세요"
             suffixIcon={<ClipboardIcon onClick={() => alert('Copied!')} />}
           />
           <Input
             className="w-[100px]"
-            placeholder="텍스트를 입력하세요"
+            placeholder="체중"
             suffixIcon={<div className="text-label-1">kg</div>}
           />
           <PasswordInput
-            className="w-[200px]"
+            className="w-[250px]"
             placeholder="비밀번호를 입력하세요"
           />
         </div>

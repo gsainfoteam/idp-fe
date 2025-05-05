@@ -6,7 +6,7 @@ import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
 
 interface FunnelStepProps {
-  title: string;
+  title?: string;
   stepTitle: string;
   description?: string;
   button?: React.ReactNode;
@@ -43,25 +43,27 @@ export function FunnelStep({
               scrollAmount > 0 && 'shadow-[0_8px_8px_0] shadow-white',
             )}
           >
-            <div className="relative flex h-12 items-center justify-center">
-              {!hideUndo && (
+            <div className="relative flex h-fit items-center justify-center">
+              {title && !hideUndo && (
                 <div className="absolute left-0">
-                  <BackButton />
+                  <BackButton style={{ color: 'var(--color-neutral-600)' }} />
                 </div>
               )}
-              <div className="text-center font-medium">{title}</div>
+              <div className="font-title-3 text-center text-neutral-600">
+                {title}
+              </div>
             </div>
+            <div className="h-4" />
           </div>
 
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex h-full w-full flex-col overflow-y-auto bg-white"
+            className="flex h-full w-full flex-col overflow-y-auto"
           >
             <LoadingOverlay show={loading}>
               {/* Step Title Box */}
-              <div className="z-0 w-full bg-white px-5">
-                <div className="h-6" />
+              <div className="z-0 w-full bg-white px-5 pt-2 pb-6">
                 <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
                   {stepTitle}
                 </div>
@@ -73,7 +75,6 @@ export function FunnelStep({
                     </div>
                   </>
                 )}
-                <div className="h-6" />
               </div>
 
               {/* Content Box */}

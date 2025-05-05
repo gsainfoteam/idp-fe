@@ -8,6 +8,7 @@ export interface ButtonProps
   loading?: boolean;
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
+  labelClassName?: string;
 }
 
 const buttonStyle = cva(
@@ -60,6 +61,7 @@ export function Button({
   prefixIcon,
   suffixIcon,
   className,
+  labelClassName,
   children,
   ...props
 }: ButtonProps) {
@@ -76,6 +78,7 @@ export function Button({
         className={cn(
           'flex items-center justify-center gap-2',
           showEllipse && 'invisible',
+          labelClassName,
         )}
       >
         {prefixIcon}

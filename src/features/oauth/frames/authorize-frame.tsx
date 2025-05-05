@@ -47,7 +47,6 @@ function Inner({
     <FunnelStep
       hideUndo
       loading={form.formState.isSubmitting}
-      title={t('authorize.title')}
       stepTitle={t('authorize.step_title', { client: client.name })}
       description={t('authorize.description', { client: client.name })}
       button={

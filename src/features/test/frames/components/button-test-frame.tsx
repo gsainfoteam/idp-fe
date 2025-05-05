@@ -1,5 +1,5 @@
-import ArrowLeftIcon from '@/assets/icons/arrow-left.svg?react';
-import CheckIcon from '@/assets/icons/check.svg?react';
+import ArrowLeftIcon from '@/assets/icons/line/arrow-left.svg?react';
+import CheckIcon from '@/assets/icons/line/check.svg?react';
 import { Button } from '@/features/core';
 
 export function ButtonTestFrame() {

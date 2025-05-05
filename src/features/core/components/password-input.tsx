@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { Input, InputProps } from './input';
 
-import EyeCloseIcon from '@/assets/icons/eye-close.svg?react';
-import EyeOpenIcon from '@/assets/icons/eye-open.svg?react';
+import EyeCloseIcon from '@/assets/icons/line/eye-close.svg?react';
+import EyeOpenIcon from '@/assets/icons/line/eye-open.svg?react';
 
 export function PasswordInput({
   ...props
