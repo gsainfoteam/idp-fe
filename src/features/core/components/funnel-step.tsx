@@ -85,12 +85,8 @@ export function FunnelStep({
 
           {/* CTA Button Box */}
           <div className="z-10 w-full bg-white px-5 shadow-[0_-8px_8px_0] shadow-white">
-            {button && (
-              <>
-                <div className="h-4" />
-                <div className="mt-auto w-full">{button}</div>
-              </>
-            )}
+            <div className="h-4" />
+            {button && <div className="mt-auto w-full">{button}</div>}
           </div>
         </div>
       </div>
