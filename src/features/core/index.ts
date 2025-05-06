@@ -8,6 +8,7 @@ export * from './components/label';
 export * from './components/language-switcher';
 export * from './components/loading-ellipse';
 export * from './components/loading-overlay';
+export * from './components/modal';
 export * from './components/multi-state-switch';
 export * from './components/password-input';
 export * from './components/switch';

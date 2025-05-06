@@ -3,13 +3,16 @@ import React, { PropsWithChildren } from 'react';
 import { cn } from '../utils/cn';
 
 interface BackdropProps extends React.HTMLAttributes<HTMLDivElement> {
-  open?: boolean;
+  open: boolean;
+  onClose: () => void;
 }
 
 export function Backdrop({
-  open = true,
+  open,
+  onClose,
   children,
-  className = '',
+  className,
+  onClick,
   ...props
 }: PropsWithChildren<BackdropProps>) {
   return (
@@ -18,6 +21,10 @@ export function Backdrop({
         'fixed inset-0 z-50 transition-opacity duration-75',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
       )}
+      onClick={(e) => {
+        onClick?.(e);
+        onClose();
+      }}
       {...props}
     >
       <div
