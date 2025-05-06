@@ -1,5 +1,6 @@
 export * from './components/back-button';
 export * from './components/backdrop';
+export * from './components/bottom-sheet';
 export * from './components/button';
 export * from './components/checkbox';
 export * from './components/funnel-step';

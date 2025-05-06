@@ -1,4 +1,5 @@
 export * from './frames/components/backdrop-test-frame';
+export * from './frames/components/bottom-sheet-test-frame';
 export * from './frames/components/button-test-frame';
 export * from './frames/components/checkbox-test-frame';
 export * from './frames/components/input-test-frame';

@@ -4,16 +4,14 @@ import { cn } from '../utils/cn';
 
 import { Backdrop } from './backdrop';
 
-import ExitIcon from '@/assets/icons/line/exit.svg?react';
-
-interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
   onClose: () => void;
   title: string;
   button: React.ReactNode;
 }
 
-export function Modal({
+export function BottomSheet({
   open,
   onClose,
   title,
@@ -21,17 +19,18 @@ export function Modal({
   children,
   className,
   ...props
-}: PropsWithChildren<ModalProps>) {
+}: PropsWithChildren<BottomSheetProps>) {
   return (
     <Backdrop open={open} onClose={onClose}>
       <div
-        className={cn('flex flex-col rounded-[20px] bg-white p-7', className)}
+        className={cn(
+          'relative flex flex-col rounded-[20px] bg-white px-5 pt-9 pb-5',
+          className,
+        )}
         {...props}
       >
-        <div className="relative flex w-full flex-col gap-2.5">
-          <div className="absolute top-0 right-0 cursor-pointer">
-            <ExitIcon color="var(--color-neutral-600)" onClick={onClose} />
-          </div>
+        <div className="absolute top-2 left-1/2 h-1.5 w-12.5 -translate-x-1/2 rounded-full bg-neutral-200" />
+        <div className="flex w-full flex-col gap-2">
           <div className="text-title-1 w-full text-pretty text-neutral-950">
             {title}
           </div>
