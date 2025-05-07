@@ -39,7 +39,7 @@ export const useCodeForm = ({
       hint: 'email',
     });
 
-    if (!data && status) {
+    if (!data || status) {
       switch (status) {
         case 'INVALID_CERTIFICATE':
           form.setError('code', {
