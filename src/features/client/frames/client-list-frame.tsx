@@ -1,10 +1,15 @@
 import { useTranslation } from 'react-i18next';
 
+import { useClientList } from '../hooks/use-client-list';
+
 import puzzleImage from '@/assets/icons/color/puzzle.png';
-import { Button, FunnelLayout } from '@/features/core';
+import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
+import { Avatar, Button, FunnelLayout } from '@/features/core';
 
 export function ClientListFrame() {
   const { t } = useTranslation();
+  const { clients } = useClientList();
+
   return (
     <FunnelLayout
       stepTitle={t('services.list.title')}
@@ -16,14 +21,38 @@ export function ClientListFrame() {
         </Button>
       }
     >
-      <div className="flex h-full flex-col justify-center">
-        <div className="flex flex-col items-center">
+      {clients?.length ? (
+        <div className="flex flex-col gap-3">
+          {clients.map((client) => (
+            <div
+              key={client.clientId}
+              className="flex items-center gap-2 rounded-lg border border-neutral-100 p-3"
+            >
+              <Avatar
+                size={10}
+                name={client.name}
+                className="text-title-1 rounded-lg"
+              />
+              <div className="flex-1">
+                <div className="text-title-3 text-neutral-900">
+                  {client.name}
+                </div>
+                <div className="text-label-2 text-neutral-400">
+                  ID: {client.clientId}
+                </div>
+              </div>
+              <ChevronRightIcon className="text-neutral-400" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center">
           <img src={puzzleImage} className="size-[100px] opacity-40" />
           <div className="text-body-1 text-center whitespace-pre-wrap text-neutral-600">
             {t('services.list.empty')}
           </div>
         </div>
-      </div>
+      )}
     </FunnelLayout>
   );
 }
