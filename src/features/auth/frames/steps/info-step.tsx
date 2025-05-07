@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useInfoForm } from '../../hooks/steps/use-info-form';
 
-import { Button, FunnelStep, Input, Label } from '@/features/core';
+import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
 export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
   const {
@@ -14,7 +14,7 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
   const { t } = useTranslation();
 
   return (
-    <FunnelStep
+    <FunnelLayout
       loading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.info.title')}
@@ -31,9 +31,8 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
       }
     >
       <div className="flex flex-col gap-5">
-        <Label text={t('register.inputs.name.label')} htmlFor="name">
+        <Label text={t('register.inputs.name.label')}>
           <Input
-            id="name"
             type="text"
             placeholder={t('register.inputs.name.placeholder')}
             error={errors.name?.message || !!errors.root}
@@ -41,9 +40,8 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
             {...register('name')}
           />
         </Label>
-        <Label text={t('register.inputs.student_id.label')} htmlFor="studentId">
+        <Label text={t('register.inputs.student_id.label')}>
           <Input
-            id="studentId"
             type="text"
             placeholder={t('register.inputs.student_id.placeholder', {
               format: `${new Date().getFullYear()}0000`,
@@ -53,12 +51,8 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
             {...register('studentId')}
           />
         </Label>
-        <Label
-          text={t('register.inputs.phone_number.label')}
-          htmlFor="phoneNumber"
-        >
+        <Label text={t('register.inputs.phone_number.label')}>
           <Input
-            id="phoneNumber"
             type="tel"
             placeholder={t('register.inputs.phone_number.placeholder')}
             error={errors.phoneNumber?.message || errors.root?.message}
@@ -67,6 +61,6 @@ export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
           />
         </Label>
       </div>
-    </FunnelStep>
+    </FunnelLayout>
   );
 }

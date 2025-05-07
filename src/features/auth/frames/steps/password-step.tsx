@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { usePasswordForm } from '../../hooks/steps/use-password-form';
 
-import { Button, FunnelStep, Label, PasswordInput } from '@/features/core';
+import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
 export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
   const {
@@ -14,7 +14,7 @@ export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
   const { t } = useTranslation();
 
   return (
-    <FunnelStep
+    <FunnelLayout
       title={t('register.title')}
       stepTitle={t('register.steps.password.title')}
       button={
@@ -30,21 +30,16 @@ export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
       }
     >
       <div className="flex flex-col gap-5">
-        <Label text={t('register.inputs.password.label')} htmlFor="password">
+        <Label text={t('register.inputs.password.label')}>
           <PasswordInput
-            id="password"
             placeholder={t('register.inputs.password.placeholder')}
             error={errors.password?.message}
             disabled={isSubmitting}
             {...register('password')}
           />
         </Label>
-        <Label
-          text={t('register.inputs.password_confirm.label')}
-          htmlFor="passwordConfirm"
-        >
+        <Label text={t('register.inputs.password_confirm.label')}>
           <PasswordInput
-            id="passwordConfirm"
             placeholder={t('register.inputs.password_confirm.placeholder')}
             error={errors.passwordConfirm?.message}
             disabled={isSubmitting}
@@ -52,6 +47,6 @@ export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
           />
         </Label>
       </div>
-    </FunnelStep>
+    </FunnelLayout>
   );
 }

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { cn } from '../utils/cn';
+
 interface MultiStateSwitchProps extends React.HTMLAttributes<HTMLDivElement> {
   labels: string[];
   selected?: number;
@@ -19,31 +21,23 @@ export function MultiStateSwitch({
 
   return (
     <div className="flex h-fit w-full rounded-lg bg-neutral-100" {...props}>
-      {labels.map((label, idx) => {
-        return idx === selected ? (
-          <div
-            key={idx}
-            className="text-title-3 flex w-full items-center justify-center rounded-lg bg-white py-3 text-center text-black shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]"
-            onClick={() => {
-              setSelected(idx);
-              onChangeIndex?.(idx, label);
-            }}
-          >
-            {label}
-          </div>
-        ) : (
-          <div
-            key={idx}
-            className="text-body-1 flex w-full items-center justify-center rounded-lg bg-transparent py-3 text-center text-neutral-500"
-            onClick={() => {
-              setSelected(idx);
-              onChangeIndex?.(idx, label);
-            }}
-          >
-            {label}
-          </div>
-        );
-      })}
+      {labels.map((label, idx) => (
+        <div
+          key={idx}
+          className={cn(
+            'flex w-full items-center justify-center rounded-lg py-3 text-center',
+            idx === selected
+              ? 'text-title-3 bg-white text-black shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]'
+              : 'text-body-1 bg-transparent text-neutral-500',
+          )}
+          onClick={() => {
+            setSelected(idx);
+            onChangeIndex?.(idx, label);
+          }}
+        >
+          {label}
+        </div>
+      ))}
     </div>
   );
 }

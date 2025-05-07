@@ -6,5 +6,5 @@ export * from './frames/components/input-test-frame';
 export * from './frames/components/modal-test-frame';
 export * from './frames/components/multi-state-switch-test-frame';
 export * from './frames/components/switch-test-frame';
-export * from './frames/components/thumbnail-test-frame';
+export * from './frames/components/avatar-test-frame';
 export * from './frames/funnel-test-frame';

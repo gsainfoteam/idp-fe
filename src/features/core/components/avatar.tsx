@@ -1,6 +1,6 @@
 import { cn } from '../utils/cn';
 
-interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   name?: string;
   img?: string;
   size?: number;
@@ -30,20 +30,18 @@ const colorMap = [
   },
 ];
 
-export function Thumbnail({ name, img, size = 16, className }: ThumbnailProps) {
+export function Avatar({ name, img, size = 16, className }: AvatarProps) {
   if (img) {
     return (
-      <div
-        className={cn('rounded-full', className)}
-        style={{
-          width: size * 4,
-          height: size * 4,
-        }}
-      >
+      <div className="h-fit w-fit">
         <img
           src={img}
           alt={img}
-          className="h-full w-full rounded-full object-cover"
+          style={{
+            width: size * 4,
+            height: size * 4,
+          }}
+          className={cn('rounded-full', className)}
         />
       </div>
     );

@@ -1,11 +1,11 @@
-import { PropsWithChildren, useRef, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 
 import { cn } from '../utils/cn';
 
 import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
 
-interface FunnelStepProps {
+interface FunnelLayoutProps {
   title?: string;
   stepTitle: string;
   description?: string;
@@ -14,9 +14,7 @@ interface FunnelStepProps {
   loading?: boolean;
 }
 
-// TODO: 버튼 width를 w-full에서 w-fit로 바꾸면서 이상해진거 고치기
-
-export function FunnelStep({
+export function FunnelLayout({
   title,
   stepTitle,
   description,
@@ -24,17 +22,18 @@ export function FunnelStep({
   hideUndo = false,
   loading = false,
   children,
-}: PropsWithChildren<FunnelStepProps>) {
+}: PropsWithChildren<FunnelLayoutProps>) {
   const [scrollAmount, setScrollAmount] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useCallback((div: HTMLDivElement) => {
+    const handler = () => setScrollAmount(div.scrollTop);
 
-  const handleScroll = () => {
-    if (scrollRef.current) setScrollAmount(scrollRef.current.scrollTop);
-  };
+    div.addEventListener('scroll', handler);
+    return () => div.removeEventListener('scroll', handler);
+  }, []);
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="relative h-screen w-full md:aspect-[450/800] md:w-auto">
+    <div className="flex h-dvh items-center justify-center">
+      <div className="relative h-dvh w-full md:aspect-[420/800] md:w-auto">
         <div className="flex h-full w-full flex-col bg-white py-6">
           {/* Title Bar */}
           <div
@@ -58,7 +57,6 @@ export function FunnelStep({
 
           <div
             ref={scrollRef}
-            onScroll={handleScroll}
             className="flex h-full w-full flex-col overflow-y-auto"
           >
             <LoadingOverlay show={loading}>

@@ -7,7 +7,7 @@ import { useAuthorize } from '../hooks/use-authorize';
 import { useClient } from '../hooks/use-client';
 
 import { components } from '@/@types/api-schema';
-import { Button, FunnelStep } from '@/features/core';
+import { Button, FunnelLayout } from '@/features/core';
 
 export function AuthorizeFrame() {
   const { clientId } = useLoaderData({
@@ -44,7 +44,7 @@ function Inner({
   const { form, onSubmit } = useAuthorize({ client });
 
   return (
-    <FunnelStep
+    <FunnelLayout
       hideUndo
       loading={form.formState.isSubmitting}
       stepTitle={t('authorize.step_title', { client: client.name })}
@@ -56,7 +56,7 @@ function Inner({
             className="w-full"
             type="button"
             onClick={() => {
-              // TODO: 취소 페이지 UI
+              // TODO: 에러 메시지 담아서 redirect
               window.close();
             }}
           >
@@ -78,6 +78,6 @@ function Inner({
           <AuthorizeForm client={client} />
         </form>
       </FormProvider>
-    </FunnelStep>
+    </FunnelLayout>
   );
 }

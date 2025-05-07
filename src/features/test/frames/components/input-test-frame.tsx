@@ -70,12 +70,8 @@ export function InputTestFrame() {
           <Label text="라벨입니다" required>
             <Input className="w-[200px]" placeholder="텍스트를 입력하세요" />
           </Label>
-          <Label text="라벨입니다" required htmlFor="input">
-            <Input
-              className="w-[200px]"
-              placeholder="텍스트를 입력하세요"
-              id="input"
-            />
+          <Label text="라벨입니다" required>
+            <Input className="w-[200px]" placeholder="텍스트를 입력하세요" />
           </Label>
         </div>
       </div>

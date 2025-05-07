@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useEmailForm } from '../../hooks/steps/use-email-form';
 
-import { Button, FunnelStep, Input, Label } from '@/features/core';
+import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
 // TODO: 이용 약관 동의 오버레이 기능 추가
 
@@ -16,7 +16,7 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const { t } = useTranslation();
 
   return (
-    <FunnelStep
+    <FunnelLayout
       loading={isSubmitting}
       title={t('register.title')}
       stepTitle={t('register.steps.email.title')}
@@ -32,16 +32,15 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
         </Button>
       }
     >
-      <Label text={t('register.inputs.email.label')} htmlFor="email">
+      <Label text={t('register.inputs.email.label')}>
         <Input
           type="email"
-          id="email"
           placeholder={t('register.inputs.email.placeholder')}
           error={errors.email?.message}
           disabled={isSubmitting}
           {...register('email')}
         />
       </Label>
-    </FunnelStep>
+    </FunnelLayout>
   );
 }
