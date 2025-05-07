@@ -13,10 +13,11 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - name: build
         run: |
-          npm install
-          npm run build -- --mode production
+          bun install
+          bun run build -- --mode production
       - name: Deploy to production
         uses: cloudflare/pages-action@v1.5.0
         with:
