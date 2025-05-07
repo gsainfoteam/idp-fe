@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { cn } from '../utils/cn';
 
@@ -16,8 +16,10 @@ export function MultiStateSwitch({
 }: MultiStateSwitchProps) {
   const [selected, setSelected] = useState(initialSelected);
 
-  if (selected < 0) setSelected(0);
-  if (selected >= labels.length) setSelected(labels.length - 1);
+  useEffect(() => {
+    if (selected < 0) setSelected(0);
+    if (selected >= labels.length) setSelected(labels.length - 1);
+  }, [selected, setSelected, labels]);
 
   return (
     <div className="flex h-fit w-full rounded-lg bg-neutral-100" {...props}>
