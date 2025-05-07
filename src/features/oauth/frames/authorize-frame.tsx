@@ -20,7 +20,7 @@ export function AuthorizeFrame() {
     return null;
   } else if (client === null) {
     return (
-      <div className="flex min-h-screen items-center justify-center whitespace-pre-wrap">
+      <div className="flex min-h-dvh items-center justify-center whitespace-pre-wrap">
         <Trans
           i18nKey="authorize.errors.invalid_request"
           parent="div"
