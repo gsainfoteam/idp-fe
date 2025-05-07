@@ -13,6 +13,7 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - name: build
         run: |
           bun install
