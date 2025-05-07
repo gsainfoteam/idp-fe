@@ -59,7 +59,7 @@ export function FunnelLayout({
             ref={scrollRef}
             className="flex h-full w-full flex-col overflow-y-auto"
           >
-            <LoadingOverlay show={loading}>
+            <LoadingOverlay show={loading} className="h-full">
               {/* Step Title Box */}
               <div className="z-0 w-full bg-white px-5 pt-2 pb-6">
                 <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
@@ -76,7 +76,7 @@ export function FunnelLayout({
               </div>
 
               {/* Content Box */}
-              <div className="relative z-0 w-full bg-white px-5">
+              <div className="relative z-0 h-full w-full bg-white px-5">
                 {children}
               </div>
             </LoadingOverlay>
