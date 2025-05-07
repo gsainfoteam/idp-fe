@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LoginFormSchema } from '../hooks/use-login-form';
 
-import { Input } from '@/features/core';
+import { Input, PasswordInput } from '@/features/core';
 
 export function LoginForm() {
   const { register, formState, clearErrors } =
@@ -26,13 +26,12 @@ export function LoginForm() {
         {...register('email', { onChange })}
       />
       <div className="h-4" />
-      <Input
+      <PasswordInput
         error={
           formState.errors.password?.message ||
           (formState.errors.root?.message ?? false)
         }
         disabled={formState.isSubmitting}
-        type="password"
         placeholder={t('login.placeholders.password')}
         {...register('password', { onChange })}
       />

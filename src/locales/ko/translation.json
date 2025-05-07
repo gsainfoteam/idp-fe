@@ -1,28 +1,57 @@
 {
   "register": {
     "title": "회원가입",
-    "titles": {
-      "email": "이메일",
-      "password": "비밀번호",
-      "default_info": "기본정보"
+    "steps": {
+      "email": {
+        "title": "이메일을 입력해주세요",
+        "button": "인증번호 보내기"
+      },
+      "code": {
+        "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기"
+      },
+      "password": {
+        "title": "비밀번호를 입력해주세요",
+        "button": "다음으로"
+      },
+      "info": {
+        "title": "기본정보를 입력해주세요",
+        "button": "회원가입"
+      },
+      "complete": {
+        "title": "회원가입이 완료되었습니다",
+        "button": "로그인하기"
+      }
     },
-    "fields": {
-      "email": "GIST 이메일",
-      "code": "인증번호",
-      "password": "비밀번호",
-      "password_confirm": "비밀번호 확인",
-      "name": "이름",
-      "student_id": "학번",
-      "phone_number": "전화번호"
-    },
-    "placeholders": {
-      "email": "m@gm.gist.ac.kr",
-      "code": "인증번호",
-      "password": "비밀번호",
-      "password_confirm": "비밀번호 확인",
-      "name": "김지니",
-      "student_id": "{{form}}",
-      "phone_number": "010-0000-0000"
+    "inputs": {
+      "email": {
+        "label": "GIST 이메일",
+        "placeholder": "m@gm.gist.ac.kr"
+      },
+      "code": {
+        "label": "인증번호",
+        "placeholder": "000000"
+      },
+      "password": {
+        "label": "비밀번호",
+        "placeholder": "비밀번호"
+      },
+      "password_confirm": {
+        "label": "비밀번호 확인",
+        "placeholder": "비밀번호 확인"
+      },
+      "name": {
+        "label": "이름",
+        "placeholder": "김지니"
+      },
+      "student_id": {
+        "label": "학번",
+        "placeholder": "{{format}}"
+      },
+      "phone_number": {
+        "label": "전화번호",
+        "placeholder": "010-0000-0000"
+      }
     },
     "errors": {
       "email_already_exists": "해당 이메일은 이미 가입되어 있습니다",
@@ -33,21 +62,8 @@
       "password": "비밀번호는 12자리 이상이어야 합니다",
       "password_confirm": "비밀번호가 일치하지 않습니다",
       "name": "이름을 입력해주세요",
-      "student_id": "{{form}}형태로 입력해주세요.",
+      "student_id": "{{format}}형태로 입력해주세요.",
       "phone_number": "올바른 전화번호를 입력해주세요"
-    },
-    "buttons": {
-      "send_code": "인증번호 발송",
-      "resend_code": "인증번호 재발송",
-      "verify_code": "확인",
-      "next": "다음으로"
-    }
-  },
-  "register_done": {
-    "title": "회원가입",
-    "description": "회원가입이 완료되었습니다",
-    "buttons": {
-      "login": "로그인하기"
     }
   },
   "login": {
@@ -66,7 +82,8 @@
     }
   },
   "authorize": {
-    "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
+    "title": "서비스 인가",
+    "step_title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
     "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다",
     "labels": {
       "required": "필수",

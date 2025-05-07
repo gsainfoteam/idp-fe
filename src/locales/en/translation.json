@@ -1,53 +1,69 @@
 {
   "register": {
     "title": "Register",
-    "titles": {
-      "email": "Email",
-      "password": "Password",
-      "default_info": "Basic Information"
+    "steps": {
+      "email": {
+        "title": "Please enter your email",
+        "button": "Send Verification Code"
+      },
+      "code": {
+        "title": "Enter the 6-digit code\nsent to your email",
+        "button": "Verify"
+      },
+      "password": {
+        "title": "Please enter your password",
+        "button": "Next"
+      },
+      "info": {
+        "title": "Please enter your basic information",
+        "button": "Register"
+      },
+      "complete": {
+        "title": "Registration is complete",
+        "button": "Log In"
+      }
     },
-    "fields": {
-      "email": "GIST Email",
-      "code": "Verification Code",
-      "password": "Password",
-      "password_confirm": "Confirm Password",
-      "name": "Name",
-      "student_id": "Student ID",
-      "phone_number": "Phone Number"
-    },
-    "placeholders": {
-      "email": "m@gm.gist.ac.kr",
-      "code": "Verification Code",
-      "password": "Password",
-      "password_confirm": "Confirm Password",
-      "name": "Kim Jin-i",
-      "student_id": "{{form}}",
-      "phone_number": "010-0000-0000"
+    "inputs": {
+      "email": {
+        "label": "GIST Email",
+        "placeholder": "m@gm.gist.ac.kr"
+      },
+      "code": {
+        "label": "Verification Code",
+        "placeholder": "000000"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Password"
+      },
+      "password_confirm": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm Password"
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "Kim Jin-i"
+      },
+      "student_id": {
+        "label": "Student ID",
+        "placeholder": "{{format}}"
+      },
+      "phone_number": {
+        "label": "Phone Number",
+        "placeholder": "010-0000-0000"
+      }
     },
     "errors": {
       "email_already_exists": "This email is already registered",
       "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
       "invalid_code": "The verification code is incorrect",
       "invalid_token": "The token is invalid",
-      "code": "The verification code could not be verified",
+      "code": "Verification code has not been confirmed",
       "password": "Password must be at least 12 characters long",
       "password_confirm": "Passwords do not match",
       "name": "Please enter your name",
-      "student_id": "Please enter in the {{form}} format.",
+      "student_id": "Please enter in the {{format}} format.",
       "phone_number": "Please enter a valid phone number"
-    },
-    "buttons": {
-      "send_code": "Send Verification Code",
-      "resend_code": "Resend Verification Code",
-      "verify_code": "Verify",
-      "next": "Next"
-    }
-  },
-  "register_done": {
-    "title": "Register",
-    "description": "Registration is complete",
-    "buttons": {
-      "login": "Log In"
     }
   },
   "login": {
@@ -66,8 +82,9 @@
     }
   },
   "authorize": {
-    "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
-    "description": "Your information will be shared with '{{client}}' upon continuing.",
+    "title": "Authorization",
+    "step_title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
+    "description": "By continuing, the following information will be shared with '{{client}}'",
     "labels": {
       "required": "Required",
       "optional": "Optional"
@@ -97,7 +114,7 @@
       "title": "Change Password"
     },
     "logout": "Log Out",
-    "withdrawal": "Withdrawal"
+    "withdrawal": "Delete Account"
   },
   "developer": {
     "menuItem": "Developer Center"

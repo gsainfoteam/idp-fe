@@ -9,6 +9,9 @@
 @theme {
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-dimmed-20: rgba(0, 0, 0, 0.2);
+  --color-dimmed-50: rgba(0, 0, 0, 0.5);
+  --color-dimmed-80: rgba(0, 0, 0, 0.8);
   --color-red-50: #fff0f1;
   --color-red-100: #ffdddf;
   --color-red-200: #ffc1c5;

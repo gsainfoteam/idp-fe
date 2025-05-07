@@ -7,6 +7,7 @@ import { useRecentLogin } from './use-recent-login';
 import { components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
 import { ClientScopeType } from '@/routes/_auth-required/authorize';
+
 export const useAuthorize = ({
   client,
 }: {
@@ -27,8 +28,9 @@ export const useAuthorize = ({
       const searchParams = new URLSearchParams();
       Object.entries(params)
         .filter(([, value]) => value !== undefined)
-        .forEach(([key, value]) => searchParams.append(key, value as string));
+        .forEach(([key, value]) => searchParams.append(key, value));
       if (state) searchParams.append('state', state);
+
       const newUrl = new URL(url);
       newUrl.search = searchParams.toString();
       window.location.href = newUrl.toString();

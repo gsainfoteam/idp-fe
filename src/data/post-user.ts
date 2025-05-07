@@ -1,8 +1,6 @@
 import parsePhoneNumber from 'libphonenumber-js';
 import type { ErrorStatus } from 'openapi-typescript-helpers';
 
-import { RegisterFormSchema } from '../features/auth/hooks/use-register-form';
-
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
@@ -13,8 +11,7 @@ enum UserStatus {
 }
 
 export const postUser = async (
-  requestBody: RegisterFormSchema &
-    paths['/user']['post']['requestBody']['content']['application/json'],
+  requestBody: paths['/user']['post']['requestBody']['content']['application/json'],
 ) => {
   const parsedPhoneNumber = parsePhoneNumber(requestBody.phoneNumber, 'KR');
 

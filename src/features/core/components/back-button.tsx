@@ -1,7 +1,6 @@
 import { useRouter } from '@tanstack/react-router';
 
-import UndoIcon from '../../../assets/arrow-left.svg?react';
-
+import UndoIcon from '@/assets/icons/line/arrow-left.svg?react';
 import { cn } from '@/features/core';
 
 export function BackButton({

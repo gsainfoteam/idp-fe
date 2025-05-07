@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { LoginForm } from '../components/login-form';
 import { useLoginForm } from '../hooks/use-login-form';
 
-import TextLogo from '@/assets/text-logo.svg?react';
+import TextLogo from '@/assets/logos/text-logo.svg?react';
 import { Button, LoadingOverlay } from '@/features/core';
 
 export function LoginFrame() {
@@ -34,7 +34,7 @@ export function LoginFrame() {
                 variant="primary"
                 className="w-full"
                 disabled={!form.formState.isValid}
-                isLoading={form.formState.isSubmitting}
+                loading={form.formState.isSubmitting}
               >
                 {t(`login.buttons.login`)}
               </Button>
@@ -45,8 +45,8 @@ export function LoginFrame() {
                 search={(prev) => ({ ...prev })}
               >
                 <Button
-                  variant="link"
-                  className="text-neutral-800 no-underline"
+                  variant="text"
+                  className="text-body-1 py-0 text-neutral-800"
                   type="button"
                 >
                   {t('login.buttons.register')}

@@ -30,12 +30,12 @@ export const useAuthorizeForm = ({
     const scopes = Object.entries(data.scopes)
       .filter(([, value]) => value === true)
       .map(([key]) => key as ClientScopeType);
-    const requestBody = {
+
+    await postOauthConsent({
       client_id: clientId,
       scope: scopes.join(' '),
-    };
+    });
 
-    await postOauthConsent(requestBody);
     onDone(scopes);
   });
 

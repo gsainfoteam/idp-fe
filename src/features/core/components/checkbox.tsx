@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 
-import CheckIcon from '../../../assets/check.svg?react';
-
+import CheckIcon from '@/assets/icons/line/checkbox.svg?react';
 import { cn } from '@/features/core';
 
 export const Checkbox = forwardRef<
@@ -9,18 +8,18 @@ export const Checkbox = forwardRef<
   React.InputHTMLAttributes<HTMLInputElement>
 >(({ disabled = false, className, children, ...props }, ref) => {
   return (
-    <div className="cursor-pointer">
+    <div className="w-fit cursor-pointer">
       <label className="flex w-fit items-center">
         <input
           type="checkbox"
-          className={cn('peer appearance-none', className)} // group:checked:bg-primary-500
+          className={cn('peer appearance-none', className)}
           ref={ref}
           disabled={disabled}
           {...props}
         />
         <div
           className={cn(
-            'm-1 flex h-5 w-5 items-center justify-center rounded transition-all',
+            'm-1 flex size-6 items-center justify-center rounded transition-all',
             'peer-checked:bg-primary-500 border border-neutral-500 bg-white peer-checked:border-none peer-checked:*:block',
             disabled
               ? 'cursor-default bg-neutral-300 peer-checked:bg-neutral-300'
