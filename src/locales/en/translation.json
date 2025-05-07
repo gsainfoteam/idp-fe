@@ -120,7 +120,9 @@
   "services": {
     "list": {
       "title": "My Services",
-      "description": "You can check the services you have registered here"
+      "description": "You can check the services you have registered here",
+      "add": "Add Service",
+      "empty": "You have no registered services!\nClick the button below to register a new service."
     }
   },
   "language": "en"
