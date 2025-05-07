@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { useClientList } from '../hooks/use-client-list';
@@ -24,25 +25,28 @@ export function ClientListFrame() {
       {clients?.length ? (
         <div className="flex flex-col gap-3">
           {clients.map((client) => (
-            <div
+            <Link
               key={client.clientId}
-              className="flex items-center gap-2 rounded-lg border border-neutral-100 p-3"
+              to="/clients/$id"
+              params={{ id: client.clientId }}
             >
-              <Avatar
-                size={10}
-                name={client.name}
-                className="text-title-1 rounded-lg"
-              />
-              <div className="flex-1">
-                <div className="text-title-3 text-neutral-900">
-                  {client.name}
+              <div className="flex items-center gap-2 rounded-lg border border-neutral-100 p-3">
+                <Avatar
+                  size={10}
+                  name={client.name}
+                  className="text-title-1 rounded-lg"
+                />
+                <div className="flex-1">
+                  <div className="text-title-3 text-neutral-900">
+                    {client.name}
+                  </div>
+                  <div className="text-label-2 text-neutral-400">
+                    ID: {client.clientId}
+                  </div>
                 </div>
-                <div className="text-label-2 text-neutral-400">
-                  ID: {client.clientId}
-                </div>
+                <ChevronRightIcon className="text-neutral-400" />
               </div>
-              <ChevronRightIcon className="text-neutral-400" />
-            </div>
+            </Link>
           ))}
         </div>
       ) : (
