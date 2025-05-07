@@ -9,16 +9,16 @@ enum UserStatus {
 }
 
 export const getUser = async () => {
-  const { data, error, response } = await api.GET('/user');
+  try {
+    const { data } = await api.GET('/user');
 
-  if (error || !data) {
-    const status = response.status as Extract<
+    return { data };
+  } catch (err) {
+    const status = (err as Response).status as Extract<
       keyof paths['/user']['get']['responses'],
       ErrorStatus
     >;
 
-    return { error, status: UserStatus[status] as keyof typeof UserStatus };
+    return { status: UserStatus[status] as keyof typeof UserStatus };
   }
-
-  return { data };
 };

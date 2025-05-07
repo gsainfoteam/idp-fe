@@ -31,7 +31,7 @@ export const useLoginForm = () => {
   const onSubmit = form.handleSubmit(async (formData) => {
     const { data, status } = await postAuthLogin(formData);
 
-    if (!data && status) {
+    if (!data || status) {
       switch (status) {
         case 'LOGIN_FAILURE':
           form.resetField('password', { keepError: true });

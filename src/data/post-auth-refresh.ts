@@ -8,21 +8,20 @@ enum AuthRefreshStatus {
 }
 
 export const postAuthRefresh = async () => {
-  const { data, error, response } = await api.POST('/auth/refresh', {
-    retry: true,
-  });
+  try {
+    const { data } = await api.POST('/auth/refresh', {
+      retry: true,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/auth/login']['post']['responses'],
+    return { data };
+  } catch (err) {
+    const status = (err as Response).status as Extract<
+      keyof paths['/auth/refresh']['post']['responses'],
       ErrorStatus
     >;
 
     return {
-      error,
       status: AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus,
     };
   }
-
-  return { data };
 };

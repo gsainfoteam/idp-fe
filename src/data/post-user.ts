@@ -24,18 +24,20 @@ export const postUser = async (
     phoneNumber: parsedPhoneNumber.number,
   };
 
-  const { data, error, response } = await api.POST('/user', {
-    body: modifiedRequestBody,
-  });
+  try {
+    const { data } = await api.POST('/user', {
+      body: modifiedRequestBody,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
+    return { data };
+  } catch (err) {
+    const status = (err as Response).status as Extract<
       keyof paths['/user']['post']['responses'],
       ErrorStatus
     >;
 
-    return { error, status: UserStatus[status] as keyof typeof UserStatus };
+    return {
+      status: UserStatus[status] as keyof typeof UserStatus,
+    };
   }
-
-  return { data };
 };
