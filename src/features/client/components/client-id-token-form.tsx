@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientDetailsFormSchema } from '../hooks/use-client-scopes-form';
+import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
 import { Switch } from '@/features/core';
 

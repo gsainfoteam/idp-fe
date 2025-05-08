@@ -11,6 +11,7 @@ import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 const schema = z.object({
   idTokenAllowed: z.boolean(),
   scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
+  urls: z.array(z.string().url()),
 });
 
 export type ClientDetailsFormSchema = z.infer<typeof schema>;
@@ -24,12 +25,14 @@ export const useClientDetailsForm = (client: Client) => {
         ...client.scopes.map((v) => [v, 'required']),
         ...client.optionalScopes.map((v) => [v, 'optional']),
       ]),
+      urls: [...client.urls, ''],
     },
   });
 
   const isFirst = useRef(true);
   const [updateRequired, setUpdateRequired] = useState(false);
   const values = useWatch({ control: form.control });
+  console.log(values);
 
   useEffect(() => {
     if (!updateRequired) return;
@@ -55,6 +58,7 @@ export const useClientDetailsForm = (client: Client) => {
           .filter(([, value]) => value === 'optional')
           .map(([key]) => key),
         idTokenAllowed: values.idTokenAllowed,
+        urls: values.urls?.filter((url) => url !== ''),
       });
       setUpdateRequired(false);
     }, 1000);

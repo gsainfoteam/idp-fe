@@ -168,6 +168,10 @@
           "optional": "선택",
           "required": "필수"
         }
+      },
+      "urls": {
+        "title": "URLs",
+        "placeholder": "redirect_uri를 입력하세요"
       }
     }
   },

@@ -168,6 +168,10 @@
         "optional": "Optional",
         "required": "Required"
       }
+    },
+    "urls": {
+      "title": "URLs",
+      "placeholder": "Enter redirect_uri"
     }
   },
   "language": "en"
