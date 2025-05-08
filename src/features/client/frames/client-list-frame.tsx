@@ -17,9 +17,11 @@ export function ClientListFrame() {
       title={t('profile.developer')}
       description={t('services.list.description')}
       button={
-        <Button variant="primary" className="w-full">
-          {t('services.list.add')}
-        </Button>
+        <Link to="/clients/new">
+          <Button variant="primary" className="w-full">
+            {t('services.list.add')}
+          </Button>
+        </Link>
       }
     >
       {clients?.length ? (
