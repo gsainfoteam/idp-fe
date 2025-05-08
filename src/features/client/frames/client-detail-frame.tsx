@@ -4,7 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { useClient } from '../hooks/use-client';
 
 import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
-import { Button, FunnelLayout, Input, Label } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Input,
+  Label,
+  MultiStateSwitch,
+  Switch,
+} from '@/features/core';
 
 export function ClientDetailFrame() {
   const { t } = useTranslation();
@@ -68,7 +75,7 @@ export function ClientDetailFrame() {
           <div className="flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <div>{t('services.detail.id_token.enable')}</div>
-              <div>toggle</div>
+              <Switch />
             </div>
           </div>
         </div>
@@ -80,19 +87,43 @@ export function ClientDetailFrame() {
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <div>{t('services.detail.scopes.type.profile')}</div>
-              <div>toggle</div>
+              <MultiStateSwitch
+                labels={[
+                  t('services.detail.scopes.choices.no'),
+                  t('services.detail.scopes.choices.optional'),
+                  t('services.detail.scopes.choices.required'),
+                ]}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <div>{t('services.detail.scopes.type.student_id')}</div>
-              <div>toggle</div>
+              <MultiStateSwitch
+                labels={[
+                  t('services.detail.scopes.choices.no'),
+                  t('services.detail.scopes.choices.optional'),
+                  t('services.detail.scopes.choices.required'),
+                ]}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <div>{t('services.detail.scopes.type.email')}</div>
-              <div>toggle</div>
+              <MultiStateSwitch
+                labels={[
+                  t('services.detail.scopes.choices.no'),
+                  t('services.detail.scopes.choices.optional'),
+                  t('services.detail.scopes.choices.required'),
+                ]}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <div>{t('services.detail.scopes.type.phone_number')}</div>
-              <div>toggle</div>
+              <MultiStateSwitch
+                labels={[
+                  t('services.detail.scopes.choices.no'),
+                  t('services.detail.scopes.choices.optional'),
+                  t('services.detail.scopes.choices.required'),
+                ]}
+              />
             </div>
           </div>
         </div>
