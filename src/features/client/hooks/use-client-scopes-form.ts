@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,10 +27,16 @@ export const useClientScopesForm = (client: Client) => {
     },
   });
 
+  const isFirst = useRef(true);
   const values = useWatch({ control: form.control });
 
   useEffect(() => {
     const timer = setTimeout(async () => {
+      if (isFirst.current) {
+        isFirst.current = false;
+        return;
+      }
+
       await patchClient(client.clientId, {
         scopes: Object.entries(values.scopes ?? {})
           .filter(([, value]) => value === 'required')
