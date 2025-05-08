@@ -31,10 +31,23 @@ export const useAuthorizeForm = ({
       .filter(([, value]) => value === true)
       .map(([key]) => key as ClientScopeType);
 
-    await postOauthConsent({
+    const { status } = await postOauthConsent({
       client_id: clientId,
       scope: scopes.join(' '),
     });
+
+    if (status) {
+      switch (status) {
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
+          break;
+      }
+
+      return;
+    }
 
     onDone(scopes);
   });

@@ -14,13 +14,19 @@ export const getUserConsent = async () => {
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/user/consent']['get']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/user/consent']['get']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: UserConsentStatus[status] as keyof typeof UserConsentStatus,
+      };
+    }
 
     return {
-      status: UserConsentStatus[status] as keyof typeof UserConsentStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

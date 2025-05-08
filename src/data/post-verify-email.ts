@@ -17,13 +17,19 @@ export const postVerifyEmail = async (
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/verify/email']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/verify/email']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+      };
+    }
 
     return {
-      status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

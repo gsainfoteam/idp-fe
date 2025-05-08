@@ -18,13 +18,19 @@ export const postAuthLogin = async (
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/auth/login']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/auth/login']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+      };
+    }
 
     return {
-      status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

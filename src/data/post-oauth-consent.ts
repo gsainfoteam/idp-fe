@@ -17,13 +17,19 @@ export const postOauthConsent = async (
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/oauth/consent']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/oauth/consent']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: OauthConsentStatus[status] as keyof typeof OauthConsentStatus,
+      };
+    }
 
     return {
-      status: OauthConsentStatus[status] as keyof typeof OauthConsentStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

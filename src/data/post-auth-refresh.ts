@@ -15,13 +15,19 @@ export const postAuthRefresh = async () => {
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/auth/refresh']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/auth/refresh']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus,
+      };
+    }
 
     return {
-      status: AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

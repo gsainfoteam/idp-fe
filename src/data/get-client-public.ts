@@ -17,13 +17,19 @@ export const getClientPublic = async (clientId: string) => {
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/client/{clientId}/public']['get']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/client/{clientId}/public']['get']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: ClientPublicStatus[status] as keyof typeof ClientPublicStatus,
+      };
+    }
 
     return {
-      status: ClientPublicStatus[status] as keyof typeof ClientPublicStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

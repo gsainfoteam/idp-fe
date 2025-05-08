@@ -60,6 +60,9 @@ export const useRegisterForm = () => {
         case 'SERVER_ERROR':
           console.error('Server error');
           break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
+          break;
       }
     }
   };
@@ -80,6 +83,9 @@ export const useRegisterForm = () => {
           break;
         case 'SERVER_ERROR':
           console.error('Server error');
+          break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
           break;
       }
 
@@ -107,6 +113,9 @@ export const useRegisterForm = () => {
           break;
         case 'SERVER_ERROR':
           console.error('Server error');
+          break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
           break;
       }
     }

@@ -18,13 +18,19 @@ export const postVerify = async (
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/verify']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/verify']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: VerifyStatus[status] as keyof typeof VerifyStatus,
+      };
+    }
 
     return {
-      status: VerifyStatus[status] as keyof typeof VerifyStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };

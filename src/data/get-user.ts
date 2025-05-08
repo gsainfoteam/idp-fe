@@ -14,11 +14,19 @@ export const getUser = async () => {
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/user']['get']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/user']['get']['responses'],
+        ErrorStatus
+      >;
 
-    return { status: UserStatus[status] as keyof typeof UserStatus };
+      return {
+        status: UserStatus[status] as keyof typeof UserStatus,
+      };
+    }
+
+    return {
+      status: 'UNKNOWN_ERROR' as const,
+    };
   }
 };

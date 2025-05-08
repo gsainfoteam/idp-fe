@@ -13,13 +13,19 @@ export const deleteAuthLogout = async () => {
 
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/auth/logout']['delete']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/auth/logout']['delete']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: AuthLogoutStatus[status] as keyof typeof AuthLogoutStatus,
+      };
+    }
 
     return {
-      status: AuthLogoutStatus[status] as keyof typeof AuthLogoutStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };
