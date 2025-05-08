@@ -151,8 +151,8 @@
         }
       }
     },
-    "id_token": {
-      "title": "id_token",
+    "openid": {
+      "title": "OpenID",
       "enable": "Enable id_token"
     },
     "scopes": {

@@ -1,21 +1,36 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Client } from './use-client';
 
-const schema = z.object({});
+import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
+
+const schema = z.object({
+  idTokenAllowed: z.boolean(),
+  scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
+});
 
 export type ClientScopesFormSchema = z.infer<typeof schema>;
 
 export const useClientScopesForm = (client: Client) => {
   const form = useForm<ClientScopesFormSchema>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      idTokenAllowed: client.idTokenAllowed,
+      scopes: Object.fromEntries([
+        ...client.scopes.map((v) => [v, 'required']),
+        ...client.optionalScopes.map((v) => [v, 'optional']),
+      ]),
+    },
   });
 
-  const onSubmit = form.handleSubmit((data) => {
-    console.log(data);
-  });
+  const values = useWatch({ control: form.control });
 
-  return { form, onSubmit };
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
+  return { form };
 };

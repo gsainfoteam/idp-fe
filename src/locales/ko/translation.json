@@ -151,8 +151,8 @@
           "description": "변경사항은 즉시 적용되며,\n작동중인 서비스가 중단될 수 있습니다"
         }
       },
-      "id_token": {
-        "title": "id_token",
+      "openid": {
+        "title": "OpenID",
         "enable": "id_token 활성화"
       },
       "scopes": {
