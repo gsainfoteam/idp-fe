@@ -2,6 +2,7 @@ import { useFunnel } from '@use-funnel/browser';
 
 import { CodeStep } from './steps/code-step';
 import { CompleteStep } from './steps/complete-step';
+import { EmailOverlayStep } from './steps/email-overlay-step';
 import { EmailStep } from './steps/email-step';
 import { InfoStep } from './steps/info-step';
 import { PasswordStep } from './steps/password-step';
@@ -13,6 +14,7 @@ type RegisterContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
 
 export type RegisterSteps = {
   email: RegisterContext;
+  emailOverlay: RequireKeys<RegisterSteps['email'], 'email'>;
   code: RequireKeys<RegisterSteps['email'], 'email'>;
   password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
@@ -36,9 +38,20 @@ export function RegisterFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('code', data)}
+          onNext={(data) => history.push('emailOverlay', data)}
         />
       )}
+      emailOverlay={funnel.Render.overlay({
+        render({ context, history, close }) {
+          return (
+            <EmailOverlayStep
+              context={context}
+              onNext={() => history.push('code', {})}
+              close={close}
+            />
+          );
+        },
+      })}
       code={({ history, context }) => (
         <CodeStep
           context={context}

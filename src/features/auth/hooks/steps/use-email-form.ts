@@ -6,7 +6,6 @@ import { z } from 'zod';
 
 import { RegisterSteps } from '../../frames/register-frame';
 
-import { postVerifyEmail } from '@/data/post-verify-email';
 import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
@@ -21,7 +20,10 @@ export const useEmailForm = ({
 }: {
   context: RegisterSteps['email'];
   onNext: (
-    data: DifferenceNonNullable<RegisterSteps['code'], RegisterSteps['email']>,
+    data: DifferenceNonNullable<
+      RegisterSteps['emailOverlay'],
+      RegisterSteps['email']
+    >,
   ) => void;
 }) => {
   const { t } = useTranslation();
@@ -31,21 +33,6 @@ export const useEmailForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { status } = await postVerifyEmail(formData);
-
-    if (status) {
-      switch (status) {
-        case 'SERVER_ERROR':
-          console.error('Server error');
-          break;
-        case 'UNKNOWN_ERROR':
-          console.error('Unknown error');
-          break;
-      }
-
-      return;
-    }
-
     onNext(formData);
   });
 

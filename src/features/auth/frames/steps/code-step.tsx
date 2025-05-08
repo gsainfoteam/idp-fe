@@ -5,7 +5,7 @@ import { useCodeForm } from '../../hooks/steps/use-code-form';
 
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
-// TODO: 만료 타이머, 5회 횟수 제한 기능, 인증번호 재요청
+// TODO: code step 이후 부터는 뒤로가기 버튼 누를 시 모달로 얼럿 표시하기
 
 export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
   const {

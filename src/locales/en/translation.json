@@ -6,6 +6,11 @@
         "title": "Please enter your email",
         "button": "Send Verification Code"
       },
+      "emailOverlay": {
+        "title": "Please agree to the terms of use to use GIST email login",
+        "button": "Agree",
+        "sub_button": "Close"
+      },
       "code": {
         "title": "Enter the 6-digit code\nsent to your email",
         "button": "Verify"

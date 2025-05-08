@@ -33,8 +33,10 @@ export function Backdrop({
           className,
         )}
       />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div onClick={(e) => e.stopPropagation()}>{children}</div>
+      <div className="absolute inset-0 h-full w-full">
+        <div onClick={(e) => e.stopPropagation()} className="h-full w-full">
+          {children}
+        </div>
       </div>
     </div>
   );

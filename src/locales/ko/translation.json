@@ -6,6 +6,11 @@
         "title": "이메일을 입력해주세요",
         "button": "인증번호 보내기"
       },
+      "emailOverlay": {
+        "title": "GIST 메일로 로그인을 사용하려면\n약관에 동의해주세요",
+        "button": "동의하기",
+        "sub_button": "닫기"
+      },
       "code": {
         "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
         "button": "인증하기"

@@ -1,3 +1,4 @@
+import { RouterHistory } from '@tanstack/react-router';
 import { PropsWithChildren, useCallback, useState } from 'react';
 
 import { cn } from '../utils/cn';
@@ -12,6 +13,7 @@ interface FunnelLayoutProps {
   button?: React.ReactNode;
   hideUndo?: boolean;
   loading?: boolean;
+  onUndoClick?: (history: RouterHistory) => void;
 }
 
 export function FunnelLayout({
@@ -21,6 +23,7 @@ export function FunnelLayout({
   button,
   hideUndo = false,
   loading = false,
+  onUndoClick,
   children,
 }: PropsWithChildren<FunnelLayoutProps>) {
   const [scrollAmount, setScrollAmount] = useState(0);
@@ -45,7 +48,10 @@ export function FunnelLayout({
             <div className="relative flex h-fit items-center justify-center">
               {title && !hideUndo && (
                 <div className="absolute left-0">
-                  <BackButton style={{ color: 'var(--color-neutral-600)' }} />
+                  <BackButton
+                    style={{ color: 'var(--color-neutral-600)' }}
+                    onUndoClick={onUndoClick}
+                  />
                 </div>
               )}
               <div className="font-title-3 text-center text-neutral-600">
