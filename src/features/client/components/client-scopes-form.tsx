@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientScopesFormSchema } from '../hooks/use-client-scopes-form';
+import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
 import { MultiStateSwitch } from '@/features/core';
 
@@ -37,7 +37,7 @@ const ScopeSwitch = ({
 
 export function ClientScopesForm() {
   const { t } = useTranslation();
-  const { control } = useFormContext<ClientScopesFormSchema>();
+  const { control } = useFormContext<ClientDetailsFormSchema>();
 
   return (
     <div className="flex flex-col gap-4">

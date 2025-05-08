@@ -1,13 +1,13 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientScopesFormSchema } from '../hooks/use-client-scopes-form';
+import { ClientDetailsFormSchema } from '../hooks/use-client-scopes-form';
 
 import { Switch } from '@/features/core';
 
 export function ClientIdTokenForm() {
   const { t } = useTranslation();
-  const { control } = useFormContext<ClientScopesFormSchema>();
+  const { control } = useFormContext<ClientDetailsFormSchema>();
 
   return (
     <div className="flex flex-col gap-4">

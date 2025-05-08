@@ -13,10 +13,10 @@ const schema = z.object({
   scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
 });
 
-export type ClientScopesFormSchema = z.infer<typeof schema>;
+export type ClientDetailsFormSchema = z.infer<typeof schema>;
 
-export const useClientScopesForm = (client: Client) => {
-  const form = useForm<ClientScopesFormSchema>({
+export const useClientDetailsForm = (client: Client) => {
+  const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
       idTokenAllowed: client.idTokenAllowed,

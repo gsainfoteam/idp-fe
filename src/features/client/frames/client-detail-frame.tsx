@@ -6,15 +6,15 @@ import { ClientIdTokenForm } from '../components/client-id-token-form';
 import { ClientInfoForm } from '../components/client-info-form';
 import { ClientScopesForm } from '../components/client-scopes-form';
 import { Client, useClient } from '../hooks/use-client';
+import { useClientDetailsForm } from '../hooks/use-client-details-form';
 import { useClientInfoForm } from '../hooks/use-client-info-form';
-import { useClientScopesForm } from '../hooks/use-client-scopes-form';
 
 import { FunnelLayout } from '@/features/core';
 
 const Inner = ({ client }: { client: Client }) => {
   const { t } = useTranslation();
   const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
-  const { form: scopesForm } = useClientScopesForm(client);
+  const { form: scopesForm } = useClientDetailsForm(client);
 
   return (
     <FunnelLayout
