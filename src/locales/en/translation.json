@@ -135,6 +135,37 @@
       },
       "help": "Need help with the connection?",
       "create": "Create"
+    },
+    "detail": {
+      "title": "Service Detail",
+      "info": {
+        "title": "Service Information",
+        "id": "Service ID (client id)",
+        "secret": "Service Secret (client secret)",
+        "regenerate_secret": {
+          "action": "Regenerate",
+          "title": "Are you sure you want to regenerate?",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "id_token": {
+      "title": "id_token",
+      "enable": "Enable id_token"
+    },
+    "scopes": {
+      "title": "Scopes (Scopes)",
+      "type": {
+        "profile": "Profile",
+        "student_id": "Student ID",
+        "phone_number": "Phone Number",
+        "email": "GIST Email"
+      },
+      "choices": {
+        "no": "None",
+        "optional": "Optional",
+        "required": "Required"
+      }
     }
   },
   "language": "en"
