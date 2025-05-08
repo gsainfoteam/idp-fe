@@ -5,8 +5,6 @@ import { useEmailForm } from '../../hooks/steps/use-email-form';
 
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
-// TODO: 이용 약관 동의 오버레이 기능 추가
-
 export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const {
     form: { register, control },

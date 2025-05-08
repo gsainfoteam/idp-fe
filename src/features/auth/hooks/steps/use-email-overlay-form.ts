@@ -6,12 +6,13 @@ import { RegisterSteps } from '../../frames/register-frame';
 
 import { postVerifyEmail } from '@/data/post-verify-email';
 
-// TODO: 특정 스텝부터는 뒤로가기 버튼 누를 시 alert
+// TODO: code 스텝부터는 뒤로가기 버튼 누를 시 alert -> modal로 대신
 // TODO: 뒤로가기 누를 때 오버레이 스텝 무시하기
 // TODO: 인증번호 재요청 버튼 + 로직 + 디바운스
 // TODO: 인증번호 5번 제한 구현 + 5번 틀리면 맞아도 못들어가게
 // TODO: 인증번호 타이머 구현
 // TODO: 회원가입 완료 시 아바타 + 아바타 컴포넌트 내의 텍스트를 디자인 시스템의 타이포그래피 사용하지 말고 size prop를 사용하여 만들기
+// TODO: 모달에서 취소 버튼은 괜찮은데, X 버튼이 이상함
 
 export const useEmailOverlayForm = ({
   context,
