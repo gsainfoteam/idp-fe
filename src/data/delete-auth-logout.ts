@@ -3,17 +3,29 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
+enum AuthLogoutStatus {
+  SERVER_ERROR = 500,
+}
+
 export const deleteAuthLogout = async () => {
-  const { data, error, response } = await api.DELETE('/auth/logout');
+  try {
+    const { data } = await api.DELETE('/auth/logout');
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/auth/logout']['delete']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/auth/logout']['delete']['responses'],
+        ErrorStatus
+      >;
 
-    return { error, status };
+      return {
+        status: AuthLogoutStatus[status] as keyof typeof AuthLogoutStatus,
+      };
+    }
+
+    return {
+      status: 'UNKNOWN_ERROR' as const,
+    };
   }
-
-  return { data };
 };

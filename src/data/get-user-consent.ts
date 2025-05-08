@@ -9,19 +9,24 @@ enum UserConsentStatus {
 }
 
 export const getUserConsent = async () => {
-  const { data, error, response } = await api.GET('/user/consent');
+  try {
+    const { data } = await api.GET('/user/consent');
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/user/consent']['get']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/user/consent']['get']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: UserConsentStatus[status] as keyof typeof UserConsentStatus,
+      };
+    }
 
     return {
-      error,
-      status: UserConsentStatus[status] as keyof typeof UserConsentStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
-
-  return { data };
 };

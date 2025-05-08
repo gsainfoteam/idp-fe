@@ -38,6 +38,9 @@ export const useEmailForm = ({
         case 'SERVER_ERROR':
           console.error('Server error');
           break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
+          break;
       }
 
       return;
