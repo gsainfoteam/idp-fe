@@ -16,31 +16,32 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const { t } = useTranslation();
 
   return (
-    <FunnelLayout
-      loading={isSubmitting}
-      title={t('register.title')}
-      stepTitle={t('register.steps.email.title')}
-      button={
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={onSubmit}
-          loading={isSubmitting}
-          disabled={!(isValid && isDirty)}
-        >
-          {t('register.steps.email.button')}
-        </Button>
-      }
-    >
-      <Label text={t('register.inputs.email.label')}>
-        <Input
-          type="email"
-          placeholder={t('register.inputs.email.placeholder')}
-          error={errors.email?.message}
-          disabled={isSubmitting}
-          {...register('email')}
-        />
-      </Label>
-    </FunnelLayout>
+    <form onSubmit={onSubmit}>
+      <FunnelLayout
+        loading={isSubmitting}
+        title={t('register.title')}
+        stepTitle={t('register.steps.email.title')}
+        button={
+          <Button
+            variant="primary"
+            className="w-full"
+            loading={isSubmitting}
+            disabled={!(isValid && isDirty)}
+          >
+            {t('register.steps.email.button')}
+          </Button>
+        }
+      >
+        <Label text={t('register.inputs.email.label')}>
+          <Input
+            type="email"
+            placeholder={t('register.inputs.email.placeholder')}
+            error={errors.email?.message}
+            disabled={isSubmitting}
+            {...register('email')}
+          />
+        </Label>
+      </FunnelLayout>
+    </form>
   );
 }

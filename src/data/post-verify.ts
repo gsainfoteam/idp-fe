@@ -11,18 +11,26 @@ enum VerifyStatus {
 export const postVerify = async (
   requestBody: paths['/verify']['post']['requestBody']['content']['application/json'],
 ) => {
-  const { data, error, response } = await api.POST('/verify', {
-    body: requestBody,
-  });
+  try {
+    const { data } = await api.POST('/verify', {
+      body: requestBody,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/verify']['post']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/verify']['post']['responses'],
+        ErrorStatus
+      >;
 
-    return { error, status: VerifyStatus[status] as keyof typeof VerifyStatus };
+      return {
+        status: VerifyStatus[status] as keyof typeof VerifyStatus,
+      };
+    }
+
+    return {
+      status: 'UNKNOWN_ERROR' as const,
+    };
   }
-
-  return { data };
 };

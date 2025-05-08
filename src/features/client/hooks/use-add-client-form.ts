@@ -24,20 +24,27 @@ export const useAddClientForm = ({
     mode: 'onBlur',
   });
 
-  const handleSubmit = form.handleSubmit(async (formData) => {
+  const onSubmit = form.handleSubmit(async (formData) => {
     const { data, status } = await postClient({ name: formData.name });
 
     if (!data || status) {
-      if (status === 'DUPLICATED_CLIENT_ID') {
-        form.setError('name', { message: t('services.add.name.duplicated') });
+      switch (status) {
+        case 'DUPLICATED_CLIENT_ID':
+          form.setError('name', { message: t('services.add.name.duplicated') });
+          break;
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
+          break;
       }
-      if (status === 'SERVER_ERROR') {
-        console.error('Server error');
-      }
+
       return;
     }
+
     onSuccess(data);
   });
 
-  return { form, handleSubmit };
+  return { form, onSubmit };
 };

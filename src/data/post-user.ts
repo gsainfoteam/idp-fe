@@ -24,18 +24,26 @@ export const postUser = async (
     phoneNumber: parsedPhoneNumber.number,
   };
 
-  const { data, error, response } = await api.POST('/user', {
-    body: modifiedRequestBody,
-  });
+  try {
+    const { data } = await api.POST('/user', {
+      body: modifiedRequestBody,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/user']['post']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/user']['post']['responses'],
+        ErrorStatus
+      >;
 
-    return { error, status: UserStatus[status] as keyof typeof UserStatus };
+      return {
+        status: UserStatus[status] as keyof typeof UserStatus,
+      };
+    }
+
+    return {
+      status: 'UNKNOWN_ERROR' as const,
+    };
   }
-
-  return { data };
 };

@@ -28,7 +28,21 @@ export const useAuth = () => {
   }, [refetch, token]);
 
   const signOut = useCallback(async () => {
-    await deleteAuthLogout();
+    const { status } = await deleteAuthLogout();
+
+    if (status) {
+      switch (status) {
+        case 'SERVER_ERROR':
+          console.error('Server error');
+          break;
+        case 'UNKNOWN_ERROR':
+          console.error('Unknown error');
+          break;
+      }
+
+      return;
+    }
+
     saveToken(null);
   }, [saveToken]);
 

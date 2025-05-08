@@ -10,21 +10,26 @@ enum VerifyEmailStatus {
 export const postVerifyEmail = async (
   requestBody: paths['/verify/email']['post']['requestBody']['content']['application/json'],
 ) => {
-  const { data, error, response } = await api.POST('/verify/email', {
-    body: requestBody,
-  });
+  try {
+    const { data } = await api.POST('/verify/email', {
+      body: requestBody,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/verify/email']['post']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/verify/email']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+      };
+    }
 
     return {
-      error,
-      status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
-
-  return { data };
 };

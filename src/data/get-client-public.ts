@@ -10,21 +10,26 @@ enum ClientPublicStatus {
 }
 
 export const getClientPublic = async (clientId: string) => {
-  const { data, error, response } = await api.GET('/client/{clientId}/public', {
-    params: { path: { clientId } },
-  });
+  try {
+    const { data } = await api.GET('/client/{clientId}/public', {
+      params: { path: { clientId } },
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/client/{clientId}/public']['get']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/client/{clientId}/public']['get']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: ClientPublicStatus[status] as keyof typeof ClientPublicStatus,
+      };
+    }
 
     return {
-      error,
-      status: ClientPublicStatus[status] as keyof typeof ClientPublicStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
-
-  return { data };
 };

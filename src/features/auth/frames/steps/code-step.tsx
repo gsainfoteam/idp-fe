@@ -16,31 +16,32 @@ export function CodeStep(props: Parameters<typeof useCodeForm>[0]) {
   const { t } = useTranslation();
 
   return (
-    <FunnelLayout
-      loading={isSubmitting}
-      title={t('register.title')}
-      stepTitle={t('register.steps.code.title')}
-      button={
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={onSubmit}
-          loading={isSubmitting}
-          disabled={!(isValid && isDirty)}
-        >
-          {t('register.steps.code.button')}
-        </Button>
-      }
-    >
-      <Label text={t('register.inputs.code.label')}>
-        <Input
-          type="text"
-          placeholder={t('register.inputs.code.placeholder')}
-          error={errors.code?.message}
-          disabled={isSubmitting}
-          {...register('code')}
-        />
-      </Label>
-    </FunnelLayout>
+    <form onSubmit={onSubmit}>
+      <FunnelLayout
+        loading={isSubmitting}
+        title={t('register.title')}
+        stepTitle={t('register.steps.code.title')}
+        button={
+          <Button
+            variant="primary"
+            className="w-full"
+            loading={isSubmitting}
+            disabled={!(isValid && isDirty)}
+          >
+            {t('register.steps.code.button')}
+          </Button>
+        }
+      >
+        <Label text={t('register.inputs.code.label')}>
+          <Input
+            type="text"
+            placeholder={t('register.inputs.code.placeholder')}
+            error={errors.code?.message}
+            disabled={isSubmitting}
+            {...register('code')}
+          />
+        </Label>
+      </FunnelLayout>
+    </form>
   );
 }

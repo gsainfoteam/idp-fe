@@ -11,21 +11,26 @@ enum AuthLoginStatus {
 export const postAuthLogin = async (
   requestBody: paths['/auth/login']['post']['requestBody']['content']['application/json'],
 ) => {
-  const { data, error, response } = await api.POST('/auth/login', {
-    body: requestBody,
-  });
+  try {
+    const { data } = await api.POST('/auth/login', {
+      body: requestBody,
+    });
 
-  if (error || !data) {
-    const status = response.status as Extract<
-      keyof paths['/auth/login']['post']['responses'],
-      ErrorStatus
-    >;
+    return { data };
+  } catch (err) {
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/auth/login']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+      };
+    }
 
     return {
-      error,
-      status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
-
-  return { data };
 };

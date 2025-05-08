@@ -51,7 +51,7 @@ export function Avatar({ name, img, size = 16, className }: AvatarProps) {
     return (
       <div
         className={cn(
-          'text-title-2 flex items-center justify-center rounded-full text-[30px] text-white',
+          'text-title-2 flex items-center justify-center rounded-full text-white',
           className,
         )}
         style={{
