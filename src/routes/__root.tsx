@@ -10,7 +10,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="relative min-h-screen">
         <Outlet />
-        <div className="absolute right-4 bottom-4">
+        <div className="absolute right-4 bottom-4 z-10">
           <LanguageSwitcher />
         </div>
       </div>

@@ -83,7 +83,7 @@ export function ProfileFrame() {
               {t('profile.password.title')}
             </MenuButton>
           </Link>
-          <Link to=".">
+          <Link to="/clients">
             <MenuButton
               icon={
                 <CodeIcon
@@ -92,7 +92,7 @@ export function ProfileFrame() {
                 />
               }
             >
-              {t('developer.menuItem')}
+              {t('profile.developer')}
             </MenuButton>
           </Link>
           <MenuButton
