@@ -69,6 +69,13 @@
       "name": "Please enter your name",
       "student_id": "Please enter in the {{format}} format.",
       "phone_number": "Please enter a valid phone number"
+    },
+    "warnings": {
+      "undo": {
+        "title": "Continuing will result in data loss",
+        "button": "Continue",
+        "cancel": "Cancel"
+      }
     }
   },
   "login": {

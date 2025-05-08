@@ -69,6 +69,13 @@
       "name": "이름을 입력해주세요",
       "student_id": "{{format}}형태로 입력해주세요.",
       "phone_number": "올바른 전화번호를 입력해주세요"
+    },
+    "warnings": {
+      "undo": {
+        "title": "계속 진행하면 데이터가 소실됩니다",
+        "button": "진행하기",
+        "cancel": "취소하기"
+      }
     }
   },
   "login": {
