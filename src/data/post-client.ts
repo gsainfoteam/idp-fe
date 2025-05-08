@@ -15,13 +15,19 @@ export const postClient = async (
     const { data } = await api.POST('/client', { body: requestBody });
     return { data };
   } catch (err) {
-    const status = (err as Response).status as Extract<
-      keyof paths['/client']['post']['responses'],
-      ErrorStatus
-    >;
+    if (err instanceof Response) {
+      const status = err.status as Extract<
+        keyof paths['/client']['post']['responses'],
+        ErrorStatus
+      >;
+
+      return {
+        status: ClientStatus[status] as keyof typeof ClientStatus,
+      };
+    }
 
     return {
-      status: ClientStatus[status] as keyof typeof ClientStatus,
+      status: 'UNKNOWN_ERROR' as const,
     };
   }
 };
