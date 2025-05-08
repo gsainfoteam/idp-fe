@@ -52,7 +52,11 @@ export function ProfileFrame() {
     <FunnelLayout stepTitle={t('profile.title')}>
       <div className="flex flex-col gap-6">
         <div className="flex h-fit w-full items-center gap-3 px-3">
-          <Avatar name={user.name} img={user.picture ?? undefined} />
+          <Avatar
+            name={user.name}
+            img={user.picture ?? undefined}
+            className="text-title-1"
+          />
           <div className="flex flex-col">
             <div className="text-title-3">{user.name}</div>
             <div className="text-body-2 text-neutral-400">{user.email}</div>
