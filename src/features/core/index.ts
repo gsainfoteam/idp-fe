@@ -17,3 +17,4 @@ export * from './components/avatar';
 export * from './services/api';
 export * from './utils/cn';
 export * from './utils/type-functions';
+export * from './utils/uuid-to-seed';

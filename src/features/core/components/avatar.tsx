@@ -2,35 +2,42 @@ import { cn } from '../utils/cn';
 
 interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   name?: string;
+  seed?: number;
   img?: string;
   size?: number;
 }
 
 const colorMap = [
   {
-    background: '#D1D1D1',
+    background: '#BDBDBD',
   },
   {
-    background: '#FFCDD2',
+    background: '#EF9A9A',
   },
   {
-    background: '#BAD9FF',
+    background: '#90CAF9',
   },
   {
-    background: '#C8E6C9',
+    background: '#A5D6A7',
   },
   {
-    background: '#F8BBD0',
+    background: '#F48FB1',
   },
   {
-    background: '#D1C4E9',
+    background: '#B39DDB',
   },
   {
-    background: '#FFD1A5',
+    background: '#FFCC80',
   },
 ];
 
-export function Avatar({ name, img, size = 16, className }: AvatarProps) {
+export function Avatar({
+  name,
+  img,
+  size = 16,
+  seed = 0,
+  className,
+}: AvatarProps) {
   if (img) {
     return (
       <div className="h-fit w-fit">
@@ -46,17 +53,18 @@ export function Avatar({ name, img, size = 16, className }: AvatarProps) {
       </div>
     );
   } else if (name) {
-    const { background } = colorMap[name.charCodeAt(0) % colorMap.length]!;
+    const { background } = colorMap[seed % colorMap.length]!;
 
     return (
       <div
         className={cn(
-          'text-title-2 flex items-center justify-center rounded-full text-white',
+          'flex items-center justify-center rounded-full font-extrabold text-white',
           className,
         )}
         style={{
           width: size * 4,
           height: size * 4,
+          fontSize: size * 2,
           background,
         }}
       >

@@ -5,7 +5,7 @@ import { useClientList } from '../hooks/use-client-list';
 
 import puzzleImage from '@/assets/icons/color/puzzle.png';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-import { Avatar, Button, FunnelLayout } from '@/features/core';
+import { Avatar, Button, FunnelLayout, uuidToSeed } from '@/features/core';
 
 export function ClientListFrame() {
   const { t } = useTranslation();
@@ -32,10 +32,11 @@ export function ClientListFrame() {
               to="/clients/$id"
               params={{ id: client.clientId }}
             >
-              <div className="flex items-center gap-2 rounded-lg border border-neutral-100 p-3">
+              <div className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3">
                 <Avatar
                   size={10}
                   name={client.name}
+                  seed={uuidToSeed(client.clientId)}
                   className="text-title-1 rounded-lg"
                 />
                 <div className="flex-1">

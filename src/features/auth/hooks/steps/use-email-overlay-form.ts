@@ -6,6 +6,7 @@ import { RegisterSteps } from '../../frames/register-frame';
 
 import { postVerifyEmail } from '@/data/post-verify-email';
 
+// TODO: undo alert modal test
 // TODO: 뒤로가기 누를 때 오버레이 스텝 무시하기
 // TODO: 인증번호 재요청 버튼 + 로직 + 디바운스
 // TODO: 인증번호 5번 제한 구현 + 5번 틀리면 맞아도 못들어가게
