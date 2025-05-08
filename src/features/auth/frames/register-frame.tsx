@@ -70,7 +70,7 @@ export function RegisterFrame() {
           onNext={(data) => history.push('complete', data)}
         />
       )}
-      complete={() => <CompleteStep />}
+      complete={({ context }) => <CompleteStep context={context} />}
     />
   );
 }

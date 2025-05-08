@@ -1,11 +1,15 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout } from '@/features/core';
+import { RegisterSteps } from '../register-frame';
 
-// TODO: 프로필
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
-export function CompleteStep() {
+export function CompleteStep({
+  context,
+}: {
+  context: RegisterSteps['complete'];
+}) {
   const { t } = useTranslation();
 
   return (
@@ -19,6 +23,22 @@ export function CompleteStep() {
           </Button>
         </Link>
       }
-    />
+    >
+      <div className="flex h-full flex-col items-center justify-center">
+        <Avatar
+          size={32}
+          name={context.name}
+          seed={uniqueKey(context.studentId)}
+        />
+        <div className="mt-3 flex flex-col items-center">
+          <div className="text-title-1 text-center text-neutral-950">
+            {context.name}
+          </div>
+          <div className="text-body-1 text-center text-neutral-400">
+            {context.email}
+          </div>
+        </div>
+      </div>
+    </FunnelLayout>
   );
 }
