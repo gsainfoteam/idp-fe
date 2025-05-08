@@ -1,13 +1,22 @@
 import { useParams } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
+import { useClient } from '../hooks/use-client';
+
+import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
-import { useClient } from '@/features/oauth';
 
 export function ClientDetailFrame() {
   const { t } = useTranslation();
   const { id } = useParams({ from: '/_auth-required/clients/$id' });
-  const { client } = useClient(id);
+  const {
+    client,
+    clientSecret,
+    copyClientId,
+    copyClientSecret,
+    regenerateClientSecret,
+    isSecretLoading,
+  } = useClient(id);
 
   if (!client) return null;
 
@@ -21,12 +30,30 @@ export function ClientDetailFrame() {
           <div className="text-title-3">{t('services.detail.info.title')}</div>
           <div className="flex flex-col gap-5">
             <Label text={t('services.detail.info.id')}>
-              <Input />
+              <Input
+                value={client.clientId}
+                readOnly
+                suffixIcon={<ClipboardIcon onClick={copyClientId} />}
+              />
             </Label>
             <Label text={t('services.detail.info.secret')}>
               <div className="flex gap-2">
-                <Input className="flex-1" />
-                <Button variant="default">
+                <Input
+                  className="flex-1"
+                  value={clientSecret ?? client.clientId}
+                  readOnly
+                  type={clientSecret ? 'text' : 'password'}
+                  suffixIcon={
+                    clientSecret ? (
+                      <ClipboardIcon onClick={copyClientSecret} />
+                    ) : null
+                  }
+                />
+                <Button
+                  variant="default"
+                  onClick={regenerateClientSecret}
+                  disabled={isSecretLoading}
+                >
                   {t('services.detail.info.regenerate_secret.action')}
                 </Button>
               </div>
