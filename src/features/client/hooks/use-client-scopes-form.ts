@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -28,15 +28,25 @@ export const useClientScopesForm = (client: Client) => {
   });
 
   const isFirst = useRef(true);
+  const [updateRequired, setUpdateRequired] = useState(false);
   const values = useWatch({ control: form.control });
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (isFirst.current) {
-        isFirst.current = false;
-        return;
-      }
+    if (!updateRequired) return;
+    window.onbeforeunload = () => true;
 
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [updateRequired]);
+
+  useEffect(() => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
+    setUpdateRequired(true);
+    const timer = setTimeout(async () => {
       await patchClient(client.clientId, {
         scopes: Object.entries(values.scopes ?? {})
           .filter(([, value]) => value === 'required')
@@ -46,6 +56,7 @@ export const useClientScopesForm = (client: Client) => {
           .map(([key]) => key),
         idTokenAllowed: values.idTokenAllowed,
       });
+      setUpdateRequired(false);
     }, 1000);
 
     return () => clearTimeout(timer);
