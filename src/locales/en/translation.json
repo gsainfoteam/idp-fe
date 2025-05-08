@@ -123,6 +123,18 @@
       "description": "You can check the services you have registered here",
       "add": "Add Service",
       "empty": "You have no registered services!\nClick the button below to register a new service."
+    },
+    "add": {
+      "title": "Add Service",
+      "stepTitle": "Add Service",
+      "description": "You can link your GIST email to your\nself-made service",
+      "name": {
+        "label": "Service Name (client name)",
+        "placeholder": "Enter the name of your app",
+        "duplicated": "This name already exists"
+      },
+      "help": "Need help with the connection?",
+      "create": "Create"
     }
   },
   "language": "en"

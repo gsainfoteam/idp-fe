@@ -123,6 +123,18 @@
       "description": "내가 등록한 서비스를 여기에서 확인할 수 있어요",
       "add": "서비스 추가하기",
       "empty": "아직 등록한 서비스가 없어요!\n아래의 버튼을 눌러 새 서비스를 등록하세요."
+    },
+    "add": {
+      "title": "서비스 추가",
+      "stepTitle": "서비스 추가하기",
+      "description": "직접 만든 서비스에\nGIST 메일로 로그인을 연동할 수 있어요",
+      "name": {
+        "label": "서비스 이름 (client name)",
+        "placeholder": "앱 이름을 입력해주세요",
+        "duplicated": "이미 존재하는 이름입니다"
+      },
+      "help": "연동에 도움이 필요하신가요?",
+      "create": "생성하기"
     }
   },
   "language": "ko"
