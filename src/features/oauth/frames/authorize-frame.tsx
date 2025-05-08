@@ -44,40 +44,35 @@ function Inner({
   const { form, onSubmit } = useAuthorize({ client });
 
   return (
-    <FunnelLayout
-      hideUndo
-      loading={form.formState.isSubmitting}
-      stepTitle={t('authorize.step_title', { client: client.name })}
-      description={t('authorize.description', { client: client.name })}
-      button={
-        <div className="flex gap-2.5">
-          <Button
-            variant="secondary"
-            className="w-full"
-            type="button"
-            onClick={() => {
-              // TODO: 에러 메시지 담아서 redirect
-              window.close();
-            }}
-          >
-            {t('authorize.buttons.cancel')}
-          </Button>
-          <Button
-            variant="primary"
-            className="w-full"
-            type="button"
-            onClick={onSubmit}
-          >
-            {t('authorize.buttons.continue')}
-          </Button>
-        </div>
-      }
-    >
-      <FormProvider {...form}>
-        <form>
+    <FormProvider {...form}>
+      <form onSubmit={onSubmit}>
+        <FunnelLayout
+          hideUndo
+          loading={form.formState.isSubmitting}
+          stepTitle={t('authorize.step_title', { client: client.name })}
+          description={t('authorize.description', { client: client.name })}
+          button={
+            <div className="flex gap-2.5">
+              <Button
+                variant="secondary"
+                className="w-full"
+                type="button"
+                onClick={() => {
+                  // TODO: 에러 메시지 담아서 redirect
+                  window.close();
+                }}
+              >
+                {t('authorize.buttons.cancel')}
+              </Button>
+              <Button variant="primary" className="w-full">
+                {t('authorize.buttons.continue')}
+              </Button>
+            </div>
+          }
+        >
           <AuthorizeForm client={client} />
-        </form>
-      </FormProvider>
-    </FunnelLayout>
+        </FunnelLayout>
+      </form>
+    </FormProvider>
   );
 }

@@ -24,7 +24,7 @@ export const useAddClientForm = ({
     mode: 'onBlur',
   });
 
-  const handleSubmit = form.handleSubmit(async (formData) => {
+  const onSubmit = form.handleSubmit(async (formData) => {
     const { data, status } = await postClient({ name: formData.name });
 
     if (!data || status) {
@@ -46,5 +46,5 @@ export const useAddClientForm = ({
     onSuccess(data);
   });
 
-  return { form, handleSubmit };
+  return { form, onSubmit };
 };

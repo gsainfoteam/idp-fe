@@ -12,11 +12,11 @@ export function ClientAddFrame({
   onSuccess: (client: { clientId: string; clientSecret: string }) => void;
 }) {
   const { t } = useTranslation();
-  const { form, handleSubmit } = useAddClientForm({ onSuccess });
+  const { form, onSubmit } = useAddClientForm({ onSuccess });
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <FunnelLayout
           title={t('services.add.title')}
           stepTitle={t('services.add.stepTitle')}
