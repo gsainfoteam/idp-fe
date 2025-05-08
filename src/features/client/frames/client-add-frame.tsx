@@ -23,13 +23,24 @@ export function ClientAddFrame({
           description={t('services.add.description')}
           loading={form.formState.isSubmitting}
           button={
-            <Button
-              variant="primary"
-              className="w-full"
-              loading={form.formState.isSubmitting}
-            >
-              {t('services.add.create')}
-            </Button>
+            <div className="flex flex-col items-center gap-4">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://infoteam-rulrudino.notion.site/GSA-OAuth2-OIDC-fa09594e4b2548758e1343c84d7da008?pvs=4"
+              >
+                <Button variant="link" type="button">
+                  {t('services.add.help')}
+                </Button>
+              </a>
+              <Button
+                variant="primary"
+                className="w-full"
+                loading={form.formState.isSubmitting}
+              >
+                {t('services.add.create')}
+              </Button>
+            </div>
           }
         >
           <ClientAddForm />
