@@ -141,7 +141,9 @@
       "info": {
         "title": "서비스 정보",
         "id": "서비스 ID (client id)",
+        "id_copied": "서비스 ID가 복사되었어요",
         "secret": "서비스 비밀번호 (client secret)",
+        "secret_copied": "서비스 비밀번호가 복사되었어요",
         "regenerate_secret": {
           "action": "재생성",
           "title": "정말 재생성 하시겠습니까?",

@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { ClientInfoFormSchema } from '../hooks/use-client-info-form';
@@ -6,8 +7,9 @@ import { ClientInfoFormSchema } from '../hooks/use-client-info-form';
 import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
 import { Button, Input, Label } from '@/features/core';
 
-const copy = (text: string) => {
+const copy = (text: string, message: string) => {
   navigator.clipboard.writeText(text);
+  toast.success(message);
 };
 
 export function ClientInfoForm() {
@@ -24,7 +26,11 @@ export function ClientInfoForm() {
           <Input
             value={id}
             readOnly
-            suffixIcon={<ClipboardIcon onClick={() => copy(id)} />}
+            suffixIcon={
+              <ClipboardIcon
+                onClick={() => copy(id, t('services.detail.info.id_copied'))}
+              />
+            }
           />
         </Label>
         <Label text={t('services.detail.info.secret')}>
@@ -35,7 +41,13 @@ export function ClientInfoForm() {
               readOnly
               type={secret ? 'text' : 'password'}
               suffixIcon={
-                secret ? <ClipboardIcon onClick={() => copy(secret)} /> : null
+                secret ? (
+                  <ClipboardIcon
+                    onClick={() =>
+                      copy(secret, t('services.detail.info.secret_copied'))
+                    }
+                  />
+                ) : null
               }
             />
             <Button variant="default" disabled={formState.isSubmitting}>

@@ -141,7 +141,9 @@
       "info": {
         "title": "Service Information",
         "id": "Service ID (client id)",
+        "id_copied": "Service ID has been copied",
         "secret": "Service Secret (client secret)",
+        "secret_copied": "Service secret has been copied",
         "regenerate_secret": {
           "action": "Regenerate",
           "title": "Are you sure you want to regenerate?",
