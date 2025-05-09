@@ -77,7 +77,7 @@
       "undo": {
         "title": "Continuing will result in data loss",
         "content": "Continue?",
-        "button": "Undo",
+        "button": "Continue",
         "cancel": "Cancel"
       }
     }
