@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -17,7 +17,7 @@ const schema = z.object({
 
 export type ClientDetailsFormSchema = z.infer<typeof schema>;
 
-export const useClientDetailsForm = (client: Client) => {
+export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -30,10 +30,10 @@ export const useClientDetailsForm = (client: Client) => {
     },
   });
 
-  const isFirst = useRef(true);
   const [updateRequired, setUpdateRequired] = useState(false);
-  const values = useWatch({ control: form.control });
   const { t } = useTranslation();
+  const values = useWatch({ control: form.control });
+  const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
 
   useEffect(() => {
     if (!updateRequired) return;
@@ -45,11 +45,7 @@ export const useClientDetailsForm = (client: Client) => {
   }, [updateRequired]);
 
   useEffect(() => {
-    if (isFirst.current) {
-      isFirst.current = false;
-      return;
-    }
-    setUpdateRequired(true);
+    if (!updateRequired) return;
     const timer = setTimeout(async () => {
       const { data, status } = await patchClient(client.clientId, {
         scopes: Object.entries(values.scopes ?? {})
@@ -67,12 +63,28 @@ export const useClientDetailsForm = (client: Client) => {
             form.setError('root', { message: t('common.errors.forbidden') });
             break;
         }
+        return;
       }
       setUpdateRequired(false);
+      onUpdated();
+      form.reset({
+        idTokenAllowed: data.idTokenAllowed,
+        scopes: Object.fromEntries([
+          ...data.scopes.map((v) => [v, 'required']),
+          ...data.optionalScopes.map((v) => [v, 'optional']),
+        ]),
+        urls: [...data.urls, ''],
+      });
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [client.clientId, form, t, values]);
+  }, [client.clientId, form, onUpdated, t, updateRequired, values]);
+
+  useEffect(() => {
+    if (hasDirty) {
+      setUpdateRequired(true);
+    }
+  }, [hasDirty]);
 
   return { form };
 };

@@ -1,5 +1,6 @@
 import { useParams } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { ClientIdTokenForm } from '../components/client-id-token-form';
@@ -15,7 +16,9 @@ import { FunnelLayout } from '@/features/core';
 const Inner = ({ client }: { client: Client }) => {
   const { t } = useTranslation();
   const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
-  const { form: scopesForm } = useClientDetailsForm(client);
+  const { form: scopesForm } = useClientDetailsForm(client, () => {
+    toast.success(t('services.detail.updated'));
+  });
 
   return (
     <FunnelLayout

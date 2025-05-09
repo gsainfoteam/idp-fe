@@ -144,6 +144,7 @@
     },
     "detail": {
       "title": "Service Detail",
+      "success": "Changes have been saved",
       "info": {
         "title": "Service Information",
         "id": "Service ID (client id)",
