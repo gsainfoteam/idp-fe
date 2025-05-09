@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postOauthConsent } from '@/data/post-oauth-consent';
@@ -20,6 +22,7 @@ export const useAuthorizeForm = ({
   clientId: string;
   onDone: (scopes: ClientScopeType[]) => void;
 }) => {
+  const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(createSchema()),
     mode: 'onBlur',
@@ -39,10 +42,10 @@ export const useAuthorizeForm = ({
     if (status) {
       switch (status) {
         case 'SERVER_ERROR':
-          console.error('Server error');
+          toast.error(t('toast.server_error'));
           break;
         case 'UNKNOWN_ERROR':
-          console.error('Unknown error');
+          toast.error(t('toast.unknown_error'));
           break;
       }
 

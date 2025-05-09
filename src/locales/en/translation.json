@@ -150,5 +150,10 @@
       "create": "Create"
     }
   },
+  "toast": {
+    "server_error": "A server error has occurred",
+    "unknown_error": "An unexpected error has occurred",
+    "fetch_error": "Failed to load data"
+  },
   "language": "en"
 }
