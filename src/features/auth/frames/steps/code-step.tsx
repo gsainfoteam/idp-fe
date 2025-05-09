@@ -13,32 +13,42 @@ import {
   timeString,
 } from '@/features/core';
 
+const CODE_EXPIRED_TIME = 10;
+
+// FIXME: 인증 번호 만료 상황에서 form validate error가 뜨면 만료 에러 메시지를 덮어 씌우고 이후 사라지면 에러가 아예 사라짐
+
 export function CodeStep({
   context,
   onNext,
   onUndo,
 }: Parameters<typeof useCodeForm>[0] & { onUndo: () => void }) {
-  const [remainTime, setRemainTime] = useState(300);
+  const [remainTime, setRemainTime] = useState(CODE_EXPIRED_TIME);
   const { t } = useTranslation();
   const {
-    form: { register, control },
+    form: { register, control, setError },
     onSubmit,
   } = useCodeForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { onResetTimer, isLoading: isResending } = useResendCode({
     context,
-    resetTimer: () => setRemainTime(300),
+    resetTimer: () => setRemainTime(CODE_EXPIRED_TIME),
   });
 
   useEffect(() => {
-    if (remainTime <= 0) return;
+    if (remainTime <= 0) {
+      setError('code', {
+        message: t('register.errors.code_expired'),
+        type: 'value',
+      });
+      return;
+    }
 
     const interval = setTimeout(() => {
       setRemainTime((prev) => prev - 1);
     }, 1000);
 
     return () => clearTimeout(interval);
-  }, [remainTime]);
+  }, [remainTime, setError, t]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -52,7 +62,7 @@ export function CodeStep({
             variant="primary"
             className="w-full"
             loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
+            disabled={!(isValid && isDirty && remainTime > 0)}
           >
             {t('register.steps.code.button')}
           </Button>

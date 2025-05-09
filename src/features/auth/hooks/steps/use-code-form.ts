@@ -45,6 +45,7 @@ export const useCodeForm = ({
         case 'INVALID_CERTIFICATE':
           form.setError('code', {
             message: t('register.errors.invalid_code'),
+            type: 'validate',
           });
           break;
         case 'SERVER_ERROR':
