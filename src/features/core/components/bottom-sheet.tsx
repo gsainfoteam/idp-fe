@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
 import { cn } from '../utils/cn';
 
@@ -15,6 +15,17 @@ export function BottomSheet({
   children,
   className,
 }: PropsWithChildren<BottomSheetProps>) {
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && open) {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscKey);
+    return () => window.removeEventListener('keydown', handleEscKey);
+  }, [open, onClose]);
+
   return (
     <Backdrop open={open} onClick={onClose}>
       <div
