@@ -32,21 +32,21 @@ export function BackdropTestFrame() {
       <Backdrop
         className="bg-dimmed-20"
         open={isOpen[0]!}
-        onClose={() => setIsOpen([false, false, false])}
+        onClick={() => setIsOpen([false, false, false])}
       >
         <Logo />
       </Backdrop>
       <Backdrop
         className="bg-dimmed-50"
         open={isOpen[1]!}
-        onClose={() => setIsOpen([false, false, false])}
+        onClick={() => setIsOpen([false, false, false])}
       >
         <Logo />
       </Backdrop>
       <Backdrop
         className="bg-dimmed-80"
         open={isOpen[2]!}
-        onClose={() => setIsOpen([false, false, false])}
+        onClick={() => setIsOpen([false, false, false])}
       >
         <Logo />
       </Backdrop>

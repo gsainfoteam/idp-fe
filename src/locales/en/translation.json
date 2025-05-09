@@ -7,7 +7,7 @@
         "button": "Send Verification Code"
       },
       "emailOverlay": {
-        "title": "Please agree to the terms of use to use GIST email login",
+        "title": "Please agree to the terms of\nuse to use GIST email login",
         "button": "Agree",
         "sub_button": "Close"
       },
@@ -73,7 +73,8 @@
     "warnings": {
       "undo": {
         "title": "Continuing will result in data loss",
-        "button": "Continue",
+        "content": "Continue?",
+        "button": "Undo",
         "cancel": "Cancel"
       }
     }

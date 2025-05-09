@@ -53,7 +53,7 @@ export function ClientListFrame() {
           ))}
         </div>
       ) : (
-        <div className="flex h-full flex-col items-center justify-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
           <img src={puzzleImage} className="size-[100px] opacity-40" />
           <div className="text-body-1 text-center whitespace-pre-wrap text-neutral-600">
             {t('services.list.empty')}

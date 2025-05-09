@@ -18,3 +18,4 @@ export * from './services/api';
 export * from './utils/cn';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
+export * from './hooks/use-funnel';

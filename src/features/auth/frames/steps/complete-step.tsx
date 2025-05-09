@@ -7,8 +7,10 @@ import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function CompleteStep({
   context,
+  onUndo,
 }: {
   context: RegisterSteps['complete'];
+  onUndo: () => void;
 }) {
   const { t } = useTranslation();
 
@@ -16,6 +18,7 @@ export function CompleteStep({
     <FunnelLayout
       title={t('register.title')}
       stepTitle={t('register.steps.complete.title')}
+      onUndoClick={onUndo}
       button={
         <Link to="/auth/login" search={(prev) => ({ ...prev })}>
           <Button variant="primary" className="w-full">
@@ -24,7 +27,7 @@ export function CompleteStep({
         </Link>
       }
     >
-      <div className="flex h-full flex-col items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
         <Avatar
           size={32}
           name={context.name}
