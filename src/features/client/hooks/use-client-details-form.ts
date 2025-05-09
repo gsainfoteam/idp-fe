@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { Client } from './use-client';
@@ -32,7 +33,7 @@ export const useClientDetailsForm = (client: Client) => {
   const isFirst = useRef(true);
   const [updateRequired, setUpdateRequired] = useState(false);
   const values = useWatch({ control: form.control });
-  console.log(values);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!updateRequired) return;
@@ -50,7 +51,7 @@ export const useClientDetailsForm = (client: Client) => {
     }
     setUpdateRequired(true);
     const timer = setTimeout(async () => {
-      await patchClient(client.clientId, {
+      const { data, status } = await patchClient(client.clientId, {
         scopes: Object.entries(values.scopes ?? {})
           .filter(([, value]) => value === 'required')
           .map(([key]) => key),
@@ -60,11 +61,18 @@ export const useClientDetailsForm = (client: Client) => {
         idTokenAllowed: values.idTokenAllowed,
         urls: values.urls?.filter((url) => url !== ''),
       });
+      if (!data || status) {
+        switch (status) {
+          case 'FORBIDDEN':
+            form.setError('root', { message: t('common.errors.forbidden') });
+            break;
+        }
+      }
       setUpdateRequired(false);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [client.clientId, values]);
+  }, [client.clientId, form, t, values]);
 
   return { form };
 };
