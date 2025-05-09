@@ -20,7 +20,7 @@ export function CodeStep({
   context,
   onNext,
   onUndo,
-}: Parameters<typeof useCodeForm>[0] & { onUndo: () => void }) {
+}: Omit<Parameters<typeof useCodeForm>[0], 'count'> & { onUndo: () => void }) {
   const [remainTime, setRemainTime] = useState(CODE_EXPIRED_TIME);
   const [count, setCount] = useState(0);
 
