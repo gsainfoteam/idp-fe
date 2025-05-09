@@ -1,4 +1,9 @@
 {
+  "common": {
+    "errors": {
+      "copy_failed": "복사에 실패했어요"
+    }
+  },
   "register": {
     "title": "회원가입",
     "steps": {

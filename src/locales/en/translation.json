@@ -1,4 +1,9 @@
 {
+  "common": {
+    "errors": {
+      "copy_failed": "Copy failed"
+    }
+  },
   "register": {
     "title": "Register",
     "steps": {

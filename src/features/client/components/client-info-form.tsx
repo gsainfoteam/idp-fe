@@ -7,9 +7,18 @@ import { ClientInfoFormSchema } from '../hooks/use-client-info-form';
 import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
 import { Button, Input, Label } from '@/features/core';
 
-const copy = (text: string, message: string) => {
-  navigator.clipboard.writeText(text);
-  toast.success(message);
+const useCopy = () => {
+  const { t } = useTranslation();
+  const copy = async (text: string, message: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(message);
+    } catch (err) {
+      console.error(err);
+      toast.error(t('common.errors.copy_failed'));
+    }
+  };
+  return copy;
 };
 
 export function ClientInfoForm() {
@@ -17,6 +26,7 @@ export function ClientInfoForm() {
   const { watch, formState } = useFormContext<ClientInfoFormSchema>();
   const id = watch('clientId');
   const secret = watch('clientSecret');
+  const copy = useCopy();
 
   return (
     <div className="flex flex-col gap-4">
