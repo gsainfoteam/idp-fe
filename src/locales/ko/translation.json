@@ -36,7 +36,8 @@
       },
       "code": {
         "label": "인증번호",
-        "placeholder": "000000"
+        "placeholder": "000000",
+        "invalid_format": "6자리 숫자를 입력해주세요"
       },
       "password": {
         "label": "비밀번호",
@@ -62,9 +63,9 @@
     "errors": {
       "email_already_exists": "해당 이메일은 이미 가입되어 있습니다",
       "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
-      "invalid_code": "인증번호가 잘못 되었습니다",
       "invalid_token": "토큰이 잘못 되었습니다",
-      "code": "인증번호가 확인되지 않았습니다",
+      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+      "code_max_try": "인증번호를 다시 요청해주세요",
       "code_expired": "인증번호가 만료되었습니다",
       "password": "비밀번호는 12자리 이상이어야 합니다",
       "password_confirm": "비밀번호가 일치하지 않습니다",

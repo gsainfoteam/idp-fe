@@ -36,7 +36,8 @@
       },
       "code": {
         "label": "Verification Code",
-        "placeholder": "000000"
+        "placeholder": "000000",
+        "invalid_format": "Please enter a 6-digit number"
       },
       "password": {
         "label": "Password",
@@ -62,9 +63,9 @@
     "errors": {
       "email_already_exists": "This email is already registered",
       "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
-      "invalid_code": "The verification code is incorrect",
       "invalid_token": "The token is invalid",
-      "code": "The verification code has not been confirmed",
+      "code_invalid": "The verification code is incorrect ({{count}}/{{max}})",
+      "code_max_try": "Please request the verification code again",
       "code_expired": "The verification code has expired",
       "password": "Password must be at least 12 characters long",
       "password_confirm": "Passwords do not match",

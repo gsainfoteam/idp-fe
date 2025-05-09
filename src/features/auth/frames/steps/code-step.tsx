@@ -13,9 +13,8 @@ import {
   timeString,
 } from '@/features/core';
 
-const CODE_EXPIRED_TIME = 10;
-
-// FIXME: 인증 번호 만료 상황에서 form validate error가 뜨면 만료 에러 메시지를 덮어 씌우고 이후 사라지면 에러가 아예 사라짐
+const CODE_EXPIRED_TIME = 300;
+export const CODE_MAX_COUNT = 5;
 
 export function CodeStep({
   context,
@@ -23,15 +22,21 @@ export function CodeStep({
   onUndo,
 }: Parameters<typeof useCodeForm>[0] & { onUndo: () => void }) {
   const [remainTime, setRemainTime] = useState(CODE_EXPIRED_TIME);
+  const [count, setCount] = useState(0);
+
   const { t } = useTranslation();
   const {
-    form: { register, control, setError },
+    form: { register, control, setError, clearErrors },
     onSubmit,
-  } = useCodeForm({ context, onNext });
+  } = useCodeForm({ context, onNext, count });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { onResetTimer, isLoading: isResending } = useResendCode({
     context,
-    resetTimer: () => setRemainTime(CODE_EXPIRED_TIME),
+    resetTimer: () => {
+      setRemainTime(CODE_EXPIRED_TIME);
+      setCount(0);
+      clearErrors();
+    },
   });
 
   useEffect(() => {
@@ -40,18 +45,29 @@ export function CodeStep({
         message: t('register.errors.code_expired'),
         type: 'value',
       });
-      return;
     }
 
-    const interval = setTimeout(() => {
+    if (count >= CODE_MAX_COUNT) {
+      setError('code', {
+        message: t('register.errors.code_max_try'),
+        type: 'value',
+      });
+    }
+
+    const timer = setTimeout(() => {
       setRemainTime((prev) => prev - 1);
     }, 1000);
 
-    return () => clearTimeout(interval);
-  }, [remainTime, setError, t]);
+    return () => clearTimeout(timer);
+  }, [count, remainTime, setError, t]);
 
   return (
-    <form onSubmit={onSubmit}>
+    <form
+      onSubmit={(e) => {
+        setCount((prev) => prev + 1);
+        onSubmit(e);
+      }}
+    >
       <FunnelLayout
         onUndoClick={onUndo}
         loading={isSubmitting}
@@ -62,7 +78,9 @@ export function CodeStep({
             variant="primary"
             className="w-full"
             loading={isSubmitting}
-            disabled={!(isValid && isDirty && remainTime > 0)}
+            disabled={
+              !(isValid && isDirty && remainTime > 0 && count < CODE_MAX_COUNT)
+            }
           >
             {t('register.steps.code.button')}
           </Button>
@@ -77,14 +95,19 @@ export function CodeStep({
               disabled={isSubmitting}
               suffixAdornment={
                 <div className="text-label-1 text-neutral-600">
-                  {timeString(remainTime)}
+                  {timeString(Math.max(remainTime, 0))}
                 </div>
               }
               {...register('code')}
             />
           </Label>
           <div className="mt-1 flex w-full justify-end">
-            <Button variant="link" onClick={onResetTimer} loading={isResending}>
+            <Button
+              variant="link"
+              onClick={onResetTimer}
+              loading={isResending}
+              type="button"
+            >
               {t('register.steps.code.resend')}
             </Button>
           </div>

@@ -3,16 +3,7 @@ import { useEffect, useState } from 'react';
 import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
 import CheckIcon from '@/assets/icons/line/check.svg?react';
 import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
-import { Input, Label, PasswordInput } from '@/features/core';
-
-function timeString(sec: number) {
-  const minutes = Math.floor(sec / 60);
-  const seconds = sec % 60;
-
-  return `${minutes.toString().padStart(2, '0')}:${seconds
-    .toString()
-    .padStart(2, '0')}`;
-}
+import { Input, Label, PasswordInput, timeString } from '@/features/core';
 
 export function InputTestFrame() {
   const [remainTime, setRemainTime] = useState(30);

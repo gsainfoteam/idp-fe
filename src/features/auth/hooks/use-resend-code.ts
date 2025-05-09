@@ -30,6 +30,7 @@ export const useResendCode = ({
           break;
       }
 
+      setIsLoading(false);
       return;
     }
 

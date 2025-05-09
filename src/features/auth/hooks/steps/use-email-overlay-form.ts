@@ -9,8 +9,6 @@ import { RegisterSteps } from '../../frames/register-frame';
 import { postVerifyEmail } from '@/data/post-verify-email';
 import { DifferenceNonNullable } from '@/features/core';
 
-// TODO: 인증번호 5번 제한 구현 + 5번 틀리면 맞아도 못들어가게
-
 export const useEmailOverlayForm = ({
   context,
   onNext,
