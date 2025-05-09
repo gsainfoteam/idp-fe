@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
+import { ClientDetailFrame } from '@/features/client';
+
 const ClientDetailPage = () => {
-  return <div>Hello "/_auth-required/clients/$id"!</div>;
+  return <ClientDetailFrame />;
 };
 
 export const Route = createFileRoute('/_auth-required/clients/$id')({

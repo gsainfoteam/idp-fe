@@ -1,4 +1,10 @@
 {
+  "common": {
+    "errors": {
+      "copy_failed": "복사에 실패했어요",
+      "forbidden": "권한이 없어요"
+    }
+  },
   "register": {
     "title": "회원가입",
     "steps": {
@@ -135,6 +141,45 @@
       },
       "help": "연동에 도움이 필요하신가요?",
       "create": "생성하기"
+    },
+    "detail": {
+      "title": "서비스 상세",
+      "updated": "변경사항이 저장되었어요",
+      "info": {
+        "title": "서비스 정보",
+        "id": "서비스 ID (client id)",
+        "id_copied": "서비스 ID가 복사되었어요",
+        "secret": "서비스 비밀번호 (client secret)",
+        "secret_copied": "서비스 비밀번호가 복사되었어요",
+        "regenerate_secret": {
+          "action": "재생성",
+          "title": "정말 재생성 하시겠습니까?",
+          "cancel": "취소",
+          "description": "변경사항은 즉시 적용되며,\n작동중인 서비스가 중단될 수 있습니다"
+        }
+      },
+      "openid": {
+        "title": "OpenID",
+        "enable": "id_token 활성화"
+      },
+      "scopes": {
+        "title": "스코프 (Scopes)",
+        "type": {
+          "profile": "프로필",
+          "student_id": "학번",
+          "phone_number": "전화번호",
+          "email": "GIST 메일"
+        },
+        "choices": {
+          "no": "없음",
+          "optional": "선택",
+          "required": "필수"
+        }
+      },
+      "urls": {
+        "title": "URLs",
+        "placeholder": "redirect_uri를 입력하세요"
+      }
     }
   },
   "language": "ko"

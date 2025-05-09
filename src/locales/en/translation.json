@@ -1,4 +1,10 @@
 {
+  "common": {
+    "errors": {
+      "copy_failed": "Copy failed",
+      "forbidden": "Forbidden"
+    }
+  },
   "register": {
     "title": "Register",
     "steps": {
@@ -135,6 +141,44 @@
       },
       "help": "Need help with the connection?",
       "create": "Create"
+    },
+    "detail": {
+      "title": "Service Detail",
+      "success": "Changes have been saved",
+      "info": {
+        "title": "Service Information",
+        "id": "Service ID (client id)",
+        "id_copied": "Service ID has been copied",
+        "secret": "Service Secret (client secret)",
+        "secret_copied": "Service secret has been copied",
+        "regenerate_secret": {
+          "action": "Regenerate",
+          "title": "Are you sure you want to regenerate?",
+          "cancel": "Cancel"
+        }
+      }
+    },
+    "openid": {
+      "title": "OpenID",
+      "enable": "Enable id_token"
+    },
+    "scopes": {
+      "title": "Scopes (Scopes)",
+      "type": {
+        "profile": "Profile",
+        "student_id": "Student ID",
+        "phone_number": "Phone Number",
+        "email": "GIST Email"
+      },
+      "choices": {
+        "no": "None",
+        "optional": "Optional",
+        "required": "Required"
+      }
+    },
+    "urls": {
+      "title": "URLs",
+      "placeholder": "Enter redirect_uri"
     }
   },
   "language": "en"
