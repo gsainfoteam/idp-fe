@@ -45,6 +45,7 @@ export function ClientDetailFrame() {
   const { id } = useParams({ from: '/_auth-required/clients/$id' });
   const { client } = useClient(id);
 
+  // TODO: Loading, Error 상태에 대한 UI를 추가해야 함 -> 모달 컴포넌트로 Error 메시지 띄우기, Loading Spinner 띄우기
   if (!client) return null;
 
   return <Inner client={client} />;
