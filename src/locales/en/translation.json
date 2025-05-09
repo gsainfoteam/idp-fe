@@ -1,7 +1,8 @@
 {
   "common": {
     "errors": {
-      "copy_failed": "Copy failed"
+      "copy_failed": "Copy failed",
+      "forbidden": "Forbidden"
     }
   },
   "register": {

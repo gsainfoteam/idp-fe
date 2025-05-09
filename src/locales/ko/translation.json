@@ -1,7 +1,8 @@
 {
   "common": {
     "errors": {
-      "copy_failed": "복사에 실패했어요"
+      "copy_failed": "복사에 실패했어요",
+      "forbidden": "권한이 없어요"
     }
   },
   "register": {

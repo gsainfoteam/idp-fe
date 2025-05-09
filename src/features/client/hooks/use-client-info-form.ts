@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { Client } from './use-client';
@@ -21,9 +22,18 @@ export const useClientInfoForm = (client: Client) => {
       clientSecret: null,
     },
   });
+  const { t } = useTranslation();
 
   const onSubmit = form.handleSubmit(async () => {
-    const { data } = await patchClientSecret(client.clientId);
+    const { data, status } = await patchClientSecret(client.clientId);
+    if (!data || status) {
+      switch (status) {
+        case 'FORBIDDEN':
+          form.setError('root', { message: t('common.errors.forbidden') });
+          break;
+      }
+      return;
+    }
     form.setValue('clientSecret', data?.clientSecret ?? null);
   });
 
