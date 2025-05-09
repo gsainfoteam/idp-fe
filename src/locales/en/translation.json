@@ -13,7 +13,8 @@
       },
       "code": {
         "title": "Enter the 6-digit code\nsent to your email",
-        "button": "Verify"
+        "button": "Verify",
+        "resend": "Resend Code"
       },
       "password": {
         "title": "Please enter your password",

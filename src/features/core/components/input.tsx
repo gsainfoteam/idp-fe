@@ -6,8 +6,8 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string | boolean;
   inputClassName?: string;
-  prefixIcon?: React.ReactNode;
-  suffixIcon?: React.ReactNode;
+  prefixAdornment?: React.ReactNode;
+  suffixAdornment?: React.ReactNode;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -15,8 +15,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       error,
       inputClassName,
-      prefixIcon,
-      suffixIcon,
+      prefixAdornment,
+      suffixAdornment,
       disabled = false,
       className,
       ...props
@@ -64,14 +64,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               ref={prefixRef}
               className="absolute ml-4 flex h-full cursor-pointer items-center justify-center"
             >
-              {prefixIcon}
+              {prefixAdornment}
             </div>
             <input
               disabled={disabled}
               ref={ref}
               style={{
-                paddingLeft: prefixPadding + 16 + (prefixIcon ? 8 : 0),
-                paddingRight: suffixPadding + 16 + (suffixIcon ? 8 : 0),
+                paddingLeft: prefixPadding + 16 + (prefixAdornment ? 8 : 0),
+                paddingRight: suffixPadding + 16 + (suffixAdornment ? 8 : 0),
               }}
               className={cn(
                 'w-full rounded-lg py-3',
@@ -89,7 +89,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               ref={suffixRef}
               className="absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center"
             >
-              {suffixIcon}
+              {suffixAdornment}
             </div>
           </div>
         </div>

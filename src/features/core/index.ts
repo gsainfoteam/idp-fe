@@ -16,6 +16,7 @@ export * from './components/switch';
 export * from './components/avatar';
 export * from './services/api';
 export * from './utils/cn';
+export * from './utils/time-string';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
 export * from './hooks/use-funnel';
