@@ -12,9 +12,15 @@
         "title": "이메일을 입력해주세요",
         "button": "인증번호 보내기"
       },
+      "emailOverlay": {
+        "title": "GIST 메일로 로그인을 사용하려면\n약관에 동의해주세요",
+        "button": "동의하기",
+        "sub_button": "닫기"
+      },
       "code": {
         "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
-        "button": "인증하기"
+        "button": "인증하기",
+        "resend": "인증번호 재요청"
       },
       "password": {
         "title": "비밀번호를 입력해주세요",
@@ -36,7 +42,8 @@
       },
       "code": {
         "label": "인증번호",
-        "placeholder": "000000"
+        "placeholder": "000000",
+        "invalid_format": "6자리 숫자를 입력해주세요"
       },
       "password": {
         "label": "비밀번호",
@@ -62,14 +69,23 @@
     "errors": {
       "email_already_exists": "해당 이메일은 이미 가입되어 있습니다",
       "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
-      "invalid_code": "인증번호가 잘못 되었습니다",
       "invalid_token": "토큰이 잘못 되었습니다",
-      "code": "인증번호가 확인되지 않았습니다",
+      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+      "code_max_try": "인증번호를 다시 요청해주세요",
+      "code_expired": "인증번호가 만료되었습니다",
       "password": "비밀번호는 12자리 이상이어야 합니다",
       "password_confirm": "비밀번호가 일치하지 않습니다",
       "name": "이름을 입력해주세요",
       "student_id": "{{format}}형태로 입력해주세요.",
       "phone_number": "올바른 전화번호를 입력해주세요"
+    },
+    "warnings": {
+      "undo": {
+        "title": "계속 진행하면 데이터가 소실됩니다",
+        "content": "계속 진행하시겠습니까?",
+        "button": "계속하기",
+        "cancel": "그만두기"
+      }
     }
   },
   "login": {
@@ -181,6 +197,11 @@
         "placeholder": "redirect_uri를 입력하세요"
       }
     }
+  },
+  "toast": {
+    "server_error": "서버 오류가 발생했어요",
+    "unknown_error": "알 수 없는 오류가 발생했어요",
+    "fetch_error": "데이터를 불러오는 데 실패했어요"
   },
   "language": "ko"
 }

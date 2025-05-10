@@ -1,8 +1,11 @@
 import { useEffect, useMemo } from 'react';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { $api } from '@/features/core';
 
 export const useClient = (clientId: string) => {
+  const { t } = useTranslation();
   const { data, isLoading, error } = $api.useQuery(
     'get',
     '/client/{clientId}/public',
@@ -18,9 +21,9 @@ export const useClient = (clientId: string) => {
 
   useEffect(() => {
     if (!isLoading && (error || client == null)) {
-      console.error('Error fetching client:', error); // TODO: error handling
+      toast.error(t('toast.fetch_error'));
     }
-  }, [client, isLoading, error]);
+  }, [client, isLoading, error, t]);
 
   return { client };
 };

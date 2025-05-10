@@ -2,7 +2,6 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { Toaster } from 'react-hot-toast';
 
 import { routeTree } from './routeTree.gen';
-
 const router = createRouter({ routeTree, defaultPreload: 'intent' });
 
 declare module '@tanstack/react-router' {

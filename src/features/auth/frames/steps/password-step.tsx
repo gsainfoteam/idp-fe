@@ -5,17 +5,22 @@ import { usePasswordForm } from '../../hooks/steps/use-password-form';
 
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
-export function PasswordStep(props: Parameters<typeof usePasswordForm>[0]) {
+export function PasswordStep({
+  context,
+  onNext,
+  onUndo,
+}: Parameters<typeof usePasswordForm>[0] & { onUndo: () => void }) {
   const {
     form: { register, control },
     onSubmit,
-  } = usePasswordForm(props);
+  } = usePasswordForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
+        onUndoClick={onUndo}
         title={t('register.title')}
         stepTitle={t('register.steps.password.title')}
         button={

@@ -5,17 +5,22 @@ import { useInfoForm } from '../../hooks/steps/use-info-form';
 
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
-export function InfoStep(props: Parameters<typeof useInfoForm>[0]) {
+export function InfoStep({
+  context,
+  onNext,
+  onUndo,
+}: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
   const {
     form: { register, control },
     onSubmit,
-  } = useInfoForm(props);
+  } = useInfoForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
+        onUndoClick={onUndo}
         loading={isSubmitting}
         title={t('register.title')}
         stepTitle={t('register.steps.info.title')}

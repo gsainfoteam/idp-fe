@@ -13,7 +13,7 @@ export function PasswordInput({
   return (
     <Input
       type={show ? 'text' : 'password'}
-      suffixIcon={
+      suffixAdornment={
         <div onClick={() => setShow((b) => !b)}>
           {show ? (
             <EyeCloseIcon style={{ color: 'var(--color-neutral-800)' }} />

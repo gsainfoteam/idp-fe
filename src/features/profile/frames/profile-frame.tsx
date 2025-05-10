@@ -8,7 +8,7 @@ import LogoutIcon from '@/assets/icons/duo/logout.svg?react';
 import UserIcon from '@/assets/icons/duo/user.svg?react';
 import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
 import { useAuth } from '@/features/auth';
-import { Button, FunnelLayout, Avatar } from '@/features/core';
+import { Button, FunnelLayout, Avatar, uniqueKey } from '@/features/core';
 
 interface MenuButtonProps {
   icon: ReactNode;
@@ -55,6 +55,7 @@ export function ProfileFrame() {
           <Avatar
             name={user.name}
             img={user.picture ?? undefined}
+            seed={uniqueKey(user.studentId)}
             className="text-title-1"
           />
           <div className="flex flex-col">

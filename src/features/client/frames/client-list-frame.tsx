@@ -5,7 +5,7 @@ import { useClientList } from '../hooks/use-client-list';
 
 import puzzleImage from '@/assets/icons/color/puzzle.png';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-import { Avatar, Button, FunnelLayout } from '@/features/core';
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function ClientListFrame() {
   const { t } = useTranslation();
@@ -32,10 +32,11 @@ export function ClientListFrame() {
               to="/clients/$id"
               params={{ id: client.clientId }}
             >
-              <div className="flex items-center gap-2 rounded-lg border border-neutral-100 p-3">
+              <div className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3">
                 <Avatar
                   size={10}
                   name={client.name}
+                  seed={uniqueKey(client.clientId)}
                   className="text-title-1 rounded-lg"
                 />
                 <div className="flex-1">
@@ -52,7 +53,7 @@ export function ClientListFrame() {
           ))}
         </div>
       ) : (
-        <div className="flex h-full flex-col items-center justify-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
           <img src={puzzleImage} className="size-[100px] opacity-40" />
           <div className="text-body-1 text-center whitespace-pre-wrap text-neutral-600">
             {t('services.list.empty')}

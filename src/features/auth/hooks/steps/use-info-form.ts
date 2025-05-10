@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
@@ -61,10 +62,10 @@ export const useInfoForm = ({
           });
           break;
         case 'SERVER_ERROR':
-          console.error('Server error');
+          toast.error(t('toast.server_error'));
           break;
         case 'UNKNOWN_ERROR':
-          console.error('Unknown error');
+          toast.error(t('toast.unknown_error'));
           break;
       }
 

@@ -1,25 +1,31 @@
-import { useFunnel } from '@use-funnel/browser';
-
 import { CodeStep } from './steps/code-step';
 import { CompleteStep } from './steps/complete-step';
+import { EmailOverlayStep } from './steps/email-overlay-step';
 import { EmailStep } from './steps/email-step';
 import { InfoStep } from './steps/info-step';
 import { PasswordStep } from './steps/password-step';
+import { UndoWarningStep } from './steps/undo-warning-step';
 
 import { postUser } from '@/data/post-user';
-import { Pretty, RequireKeys } from '@/features/core';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
-type RegisterContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
+type RegisterContext = Pretty<
+  Partial<Parameters<typeof postUser>[0]> & {
+    emailAgree?: boolean;
+  }
+>;
 
 export type RegisterSteps = {
   email: RegisterContext;
-  code: RequireKeys<RegisterSteps['email'], 'email'>;
+  emailOverlay: RequireKeys<RegisterSteps['email'], 'email'>;
+  code: RequireKeys<RegisterSteps['emailOverlay'], 'emailAgree'>;
   password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
     RegisterSteps['info'],
     'name' | 'studentId' | 'phoneNumber'
   >;
+  undoOverlay: RegisterContext;
 };
 
 export function RegisterFrame() {
@@ -36,28 +42,48 @@ export function RegisterFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('code', data)}
+          onNext={(data) => history.push('emailOverlay', data)}
         />
       )}
+      emailOverlay={funnel.Render.overlay({
+        render: ({ context, history, close }) => (
+          <EmailOverlayStep
+            context={context}
+            onNext={(data) => history.push('code', data)}
+            close={close}
+          />
+        ),
+      })}
+      undoOverlay={funnel.Render.overlay({
+        // undoOverlay -> complete/info/password/code -> emailOverlay -> email
+        render: ({ history, close }) => (
+          <UndoWarningStep onNext={() => history.go(-3)} close={close} />
+        ),
+      })}
       code={({ history, context }) => (
         <CodeStep
           context={context}
-          onNext={(data) => history.push('password', data)}
+          onNext={(data) => history.replace('password', data)}
+          onUndo={() => history.push('undoOverlay', {})}
         />
       )}
       password={({ history, context }) => (
         <PasswordStep
           context={context}
-          onNext={(data) => history.push('info', data)}
+          onNext={(data) => history.replace('info', data)}
+          onUndo={() => history.push('undoOverlay', {})}
         />
       )}
       info={({ history, context }) => (
         <InfoStep
           context={context}
-          onNext={(data) => history.push('complete', data)}
+          onNext={(data) => history.replace('complete', data)}
+          onUndo={() => history.push('undoOverlay', {})}
         />
       )}
-      complete={() => <CompleteStep />}
+      complete={({ history, context }) => (
+        <CompleteStep context={context} onUndo={() => history.go(-2)} />
+      )}
     />
   );
 }

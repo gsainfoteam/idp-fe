@@ -1,22 +1,25 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { RegisterSteps } from '../../frames/register-frame';
+import { CODE_MAX_COUNT } from '../../frames/steps/code-step';
 
 import { postVerify } from '@/data/post-verify';
 import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    code: z.string().regex(/^\d{6}$/, t('register.errors.code')),
+    code: z.string().regex(/^\d{6}$/, t('register.inputs.code.invalid_format')),
   });
 
 export const useCodeForm = ({
   context,
   onNext,
+  count,
 }: {
   context: RegisterSteps['code'];
   onNext: (
@@ -25,6 +28,7 @@ export const useCodeForm = ({
       RegisterSteps['code']
     >,
   ) => void;
+  count: number;
 }) => {
   const { t } = useTranslation();
   const form = useForm({
@@ -42,15 +46,21 @@ export const useCodeForm = ({
     if (!data || status) {
       switch (status) {
         case 'INVALID_CERTIFICATE':
-          form.setError('code', {
-            message: t('register.errors.invalid_code'),
-          });
+          if (count < CODE_MAX_COUNT) {
+            form.setError('code', {
+              message: t('register.errors.code_invalid', {
+                count: count + 1,
+                max: CODE_MAX_COUNT,
+              }),
+              type: 'value',
+            });
+          }
           break;
         case 'SERVER_ERROR':
-          console.error('Server error');
+          toast.error(t('toast.server_error'));
           break;
         case 'UNKNOWN_ERROR':
-          console.error('Unknown error');
+          toast.error(t('toast.unknown_error'));
           break;
       }
 
