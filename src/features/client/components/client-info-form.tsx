@@ -36,7 +36,7 @@ export function ClientInfoForm() {
           <Input
             value={id}
             readOnly
-            suffixIcon={
+            suffixAdornment={
               <ClipboardIcon
                 onClick={() => copy(id, t('services.detail.info.id_copied'))}
               />
@@ -50,7 +50,7 @@ export function ClientInfoForm() {
               value={secret ?? id}
               readOnly
               type={secret ? 'text' : 'password'}
-              suffixIcon={
+              suffixAdornment={
                 secret ? (
                   <ClipboardIcon
                     onClick={() =>
