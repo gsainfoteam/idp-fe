@@ -38,6 +38,13 @@ export const useAuthorize = ({
     [url, state],
   );
 
+  const onCancel = useCallback(() => {
+    redirect({
+      error: 'access_denied',
+      error_description: 'user_cancelled',
+    });
+  }, [redirect]);
+
   const authorize = useCallback(
     (agreed: ClientScopeType[]) => {
       const query = new URLSearchParams(search);
@@ -108,8 +115,11 @@ export const useAuthorize = ({
     user,
   ]);
 
-  return useAuthorizeForm({
-    clientId: client.clientId,
-    onDone: authorize,
-  });
+  return {
+    ...useAuthorizeForm({
+      clientId: client.clientId,
+      onDone: authorize,
+    }),
+    onCancel,
+  };
 };
