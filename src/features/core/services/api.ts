@@ -20,7 +20,7 @@ const middleware: Middleware = {
 
     return request;
   },
-  async onResponse({ request, response }) {
+  async onResponse({ request, response, options }) {
     const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
       if (auxiliaryRequest.retry) {
@@ -33,7 +33,7 @@ const middleware: Middleware = {
         if (refreshRes && refreshRes.data) {
           useToken.getState().saveToken(refreshRes.data.accessToken);
           auxiliaryRequest.retry = true;
-          return fetch(auxiliaryRequest);
+          return options.fetch(auxiliaryRequest);
         } else {
           if (!auxiliaryRequest.keepToken) {
             useToken.getState().saveToken(null);
