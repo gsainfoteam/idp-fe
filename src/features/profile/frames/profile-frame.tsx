@@ -111,7 +111,7 @@ export function ProfileFrame() {
           >
             {t('profile.logout')}
           </MenuButton>
-          <Link to=".">
+          <Link to="/withdraw">
             <MenuButton
               variant="danger"
               icon={
