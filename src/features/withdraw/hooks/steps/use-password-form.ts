@@ -35,7 +35,7 @@ export function usePasswordForm({
       password: data.password,
     });
 
-    if (!data || status) {
+    if (status) {
       switch (status) {
         case 'LOGIN_FAILURE':
           resetField('password', { keepError: true });
