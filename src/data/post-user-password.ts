@@ -5,23 +5,22 @@ import { api } from '@/features/core';
 
 enum ClientStatus {
   INVALID_BODY = 400,
-  INVALID_TOKEN = 401,
-  INVALID_PASSWORD = 403,
+  INVALID_EMAIL = 403,
   SERVER_ERROR = 500,
 }
 
-export const patchUserPassword = async (
-  requestBody: paths['/user/password']['patch']['requestBody']['content']['application/json'],
+export const postUserPassword = async (
+  requestBody: paths['/user/password']['post']['requestBody']['content']['application/json'],
 ) => {
   try {
-    await api.PATCH('/user/password', {
+    await api.POST('/user/password', {
       body: requestBody,
     });
     return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/user/password']['patch']['responses'],
+        keyof paths['/user/password']['post']['responses'],
         ErrorStatus
       >;
 

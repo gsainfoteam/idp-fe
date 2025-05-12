@@ -173,7 +173,7 @@
           "action": "Regenerate",
           "title": "Are you sure you want to regenerate?",
           "cancel": "Cancel",
-          "description": "Changes are applied immediately,\n\nThe service in operation may be stopped"
+          "description": "Changes are applied immediately,\nThe service in operation may be stopped"
         }
       },
       "openid": {
@@ -264,7 +264,7 @@
       "token_not_found": "Token not found"
     }
   },
-  "find_password": {
+  "issue_password": {
     "title": "Find Password",
     "steps": {
       "email": {
@@ -314,7 +314,8 @@
       "code_max_try": "Please request the verification code again",
       "password_confirm": "Passwords do not match",
       "password_format": "Password must be at least 12 characters long",
-      "token_invalid": "The token is invalid"
+      "token_invalid": "The token is invalid",
+      "invalid_email": "No user found for this email"
     }
   },
   "withdraw": {
@@ -343,7 +344,8 @@
   "toast": {
     "server_error": "A server error has occurred",
     "unknown_error": "An unexpected error has occurred",
-    "fetch_error": "Failed to load data"
+    "fetch_error": "Failed to load data",
+    "invalid_body": "Invalid API Body"
   },
   "language": "en"
 }

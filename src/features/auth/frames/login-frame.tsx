@@ -52,7 +52,7 @@ export function LoginFrame() {
                 <div className="text-body-2 text-neutral-400">
                   {t('login.buttons.or')}
                 </div>
-                <Link to="/find-password" search={(prev) => ({ ...prev })}>
+                <Link to="/issue-password" search={(prev) => ({ ...prev })}>
                   <Button
                     variant="text"
                     className="text-body-2 p-0 text-neutral-800"

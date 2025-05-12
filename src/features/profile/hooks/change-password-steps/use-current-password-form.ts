@@ -63,7 +63,7 @@ export const useCurrentPasswordForm = ({
     }
 
     saveToken(data.accessToken);
-    onNext({ email: user.email });
+    onNext({ oldPassword: formData.password });
   });
 
   return { form, onSubmit };

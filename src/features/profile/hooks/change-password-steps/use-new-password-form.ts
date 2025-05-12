@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { ChangePasswordSteps } from '../../frames/change-password-frame';
 
 import { patchUserPassword } from '@/data/patch-user-password';
-import { useToken } from '@/features/auth';
 import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
@@ -37,27 +36,31 @@ export const useNewPasswordForm = ({
   ) => void;
 }) => {
   const { t } = useTranslation();
-  const { token } = useToken();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 
-  // impossible case, just type guard
-  if (!token) throw new Error('Token not found');
-
   const onSubmit = form.handleSubmit(async (formData) => {
     const { status } = await patchUserPassword({
-      email: context.email,
-      verificationJwtToken: token,
+      oldPassword: context.oldPassword,
       password: formData.password,
     });
 
     if (status) {
       switch (status) {
+        case 'INVALID_BODY':
+          toast.error(t('toast.invalid_body'));
+          break;
         case 'INVALID_TOKEN':
           form.setError('root', {
             message: t('change_password.errors.token_invalid'),
+            type: 'value',
+          });
+          break;
+        case 'INVALID_PASSWORD':
+          form.setError('password', {
+            message: t('change_password.errors.password_invalid'),
             type: 'value',
           });
           break;

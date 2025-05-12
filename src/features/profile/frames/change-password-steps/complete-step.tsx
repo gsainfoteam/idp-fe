@@ -1,12 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
+import thumbsUpImg from '@/assets/icons/color/thumbs-up.png';
 import { useAuth } from '@/features/auth';
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { Button, FunnelLayout } from '@/features/core';
 
 export function CompleteStep() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   if (!user) return null;
 
@@ -24,22 +25,14 @@ export function CompleteStep() {
             )
           }
         >
-          <Button variant="primary" className="w-full">
+          <Button variant="primary" className="w-full" onClick={signOut}>
             {t('change_password.steps.complete.button')}
           </Button>
         </Link>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <Avatar size={32} name={user.name} seed={uniqueKey(user.studentId)} />
-        <div className="mt-3 flex flex-col items-center">
-          <div className="text-title-1 text-center text-neutral-950">
-            {user.name}
-          </div>
-          <div className="text-body-1 text-center text-neutral-400">
-            {user.email}
-          </div>
-        </div>
+        <img src={thumbsUpImg} className="size-[125px] opacity-40" />
       </div>
     </FunnelLayout>
   );

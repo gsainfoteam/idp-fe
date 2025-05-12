@@ -9,8 +9,8 @@ export function CompleteStep() {
 
   return (
     <FunnelLayout
-      title={t('find_password.title')}
-      stepTitle={t('find_password.steps.complete.title')}
+      title={t('issue_password.title')}
+      stepTitle={t('issue_password.steps.complete.title')}
       hideUndo
       button={
         <Link
@@ -22,7 +22,7 @@ export function CompleteStep() {
           }
         >
           <Button variant="primary" className="w-full">
-            {t('find_password.steps.complete.button')}
+            {t('issue_password.steps.complete.button')}
           </Button>
         </Link>
       }

@@ -9,12 +9,14 @@ import { patchUserPassword } from '@/data/patch-user-password';
 import { useAuth, useToken } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
-// TODO: BE에서 authorized 상태에서 비밀번호 변경 api를 만들어주면, 반영하기
 type StepContext = Pretty<Partial<Parameters<typeof patchUserPassword>[0]>>;
 
 export type ChangePasswordSteps = {
   currentPassword: StepContext;
-  newPassword: RequireKeys<ChangePasswordSteps['currentPassword'], 'email'>;
+  newPassword: RequireKeys<
+    ChangePasswordSteps['currentPassword'],
+    'oldPassword'
+  >;
   complete: RequireKeys<ChangePasswordSteps['newPassword'], 'password'>;
 };
 
