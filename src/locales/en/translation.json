@@ -203,7 +203,10 @@
       "title": "Please enter your current password",
       "label": "Password",
       "placeholder": "Current Password",
-      "action": "Continue"
+      "action": "Continue",
+      "errors": {
+        "unauthorized": "The password is incorrect"
+      }
     },
     "confirm": {
       "title": "Are you sure you want to withdraw?",

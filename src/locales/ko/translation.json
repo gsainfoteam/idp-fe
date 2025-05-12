@@ -204,7 +204,10 @@
       "title": "현재 비밀번호를 입력해주세요",
       "label": "비밀번호",
       "placeholder": "현재 비밀번호",
-      "action": "계속하기"
+      "action": "계속하기",
+      "errors": {
+        "unauthorized": "비밀번호가 일치하지 않아요"
+      }
     },
     "confirm": {
       "title": "정말로 탈퇴하시겠어요?",
