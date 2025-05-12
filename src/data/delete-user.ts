@@ -3,27 +3,24 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-enum AuthRefreshStatus {
+enum DeleteUserStatus {
+  INVALID_PASSWORD = 403,
   SERVER_ERROR = 500,
 }
 
-export const postAuthRefresh = async () => {
+export const deleteUser = async ({ password }: { password: string }) => {
   try {
-    const { data } = await api.POST('/auth/refresh', {
-      retry: true,
-      keepToken: true,
-    });
-
-    return { data };
+    await api.DELETE('/user', { body: { password } });
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/auth/refresh']['post']['responses'],
+        keyof paths['/user']['delete']['responses'],
         ErrorStatus
       >;
 
       return {
-        status: AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus,
+        status: DeleteUserStatus[status] as keyof typeof DeleteUserStatus,
       };
     }
 

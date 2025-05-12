@@ -41,7 +41,7 @@ function Inner({
   client: components['schemas']['ClientPublicResDto'];
 }) {
   const { t } = useTranslation();
-  const { form, onSubmit } = useAuthorize({ client });
+  const { form, onSubmit, onCancel } = useAuthorize({ client });
 
   return (
     <FormProvider {...form}>
@@ -57,9 +57,7 @@ function Inner({
                 variant="secondary"
                 className="w-full"
                 type="button"
-                onClick={() => {
-                  window.close();
-                }}
+                onClick={onCancel}
               >
                 {t('authorize.buttons.cancel')}
               </Button>

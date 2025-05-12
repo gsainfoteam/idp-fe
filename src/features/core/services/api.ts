@@ -20,26 +20,24 @@ const middleware: Middleware = {
 
     return request;
   },
-  async onResponse({ request, response }) {
+  async onResponse({ request, response, options }) {
     const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
       if (auxiliaryRequest.retry) {
         if (!auxiliaryRequest.keepToken) {
           useToken.getState().saveToken(null);
-          return Promise.resolve(response);
-        } else {
-          return Promise.reject(response);
         }
-      }
-      const refreshRes = await postAuthRefresh();
-
-      if (refreshRes && refreshRes.data) {
-        useToken.getState().saveToken(refreshRes.data.accessToken);
-        auxiliaryRequest.retry = true;
-        return fetch(auxiliaryRequest);
       } else {
-        if (!auxiliaryRequest.keepToken) {
-          useToken.getState().saveToken(null);
+        const refreshRes = await postAuthRefresh();
+
+        if (refreshRes && refreshRes.data) {
+          useToken.getState().saveToken(refreshRes.data.accessToken);
+          auxiliaryRequest.retry = true;
+          return options.fetch(auxiliaryRequest);
+        } else {
+          if (!auxiliaryRequest.keepToken) {
+            useToken.getState().saveToken(null);
+          }
         }
       }
     }
