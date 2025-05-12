@@ -7,6 +7,8 @@ import { useFunnel } from '@/features/core';
 
 export function WithdrawFrame() {
   const { signOut, user } = useAuth();
+  /* assert user is not null */
+  if (!user) throw new Error('User not found');
   const funnel = useFunnel<{
     password: {
       password?: string;
@@ -23,7 +25,7 @@ export function WithdrawFrame() {
     done: { password: string; name: string; email: string; studentId: string };
   }>({
     id: 'withdraw',
-    initial: { context: user!, step: 'password' },
+    initial: { context: user, step: 'password' },
   });
 
   return (
