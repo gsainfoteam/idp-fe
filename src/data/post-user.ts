@@ -25,11 +25,11 @@ export const postUser = async (
   };
 
   try {
-    const { data } = await api.POST('/user', {
+    await api.POST('/user', {
       body: modifiedRequestBody,
     });
 
-    return { data };
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
@@ -38,7 +38,10 @@ export const postUser = async (
       >;
 
       return {
-        status: UserStatus[status] as keyof typeof UserStatus,
+        status:
+          status in UserStatus
+            ? (UserStatus[status] as keyof typeof UserStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

@@ -5,7 +5,7 @@ import { useNewPasswordForm } from '../../hooks/find-password-steps/use-new-pass
 
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
-export function PasswordStep({
+export function NewPasswordStep({
   context,
   onNext,
   onUndo,
@@ -38,7 +38,7 @@ export function PasswordStep({
           <Label text={t('register.inputs.password.label')}>
             <PasswordInput
               placeholder={t('register.inputs.password.placeholder')}
-              error={errors.password?.message}
+              error={errors.password?.message || errors.root != null}
               disabled={isSubmitting}
               {...register('password')}
             />
@@ -46,7 +46,10 @@ export function PasswordStep({
           <Label text={t('register.inputs.password_confirm.label')}>
             <PasswordInput
               placeholder={t('register.inputs.password_confirm.placeholder')}
-              error={errors.passwordConfirm?.message}
+              error={
+                errors.passwordConfirm?.message ||
+                (errors.root?.message ?? false)
+              }
               disabled={isSubmitting}
               {...register('passwordConfirm')}
             />

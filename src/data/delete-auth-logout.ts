@@ -9,9 +9,8 @@ enum AuthLogoutStatus {
 
 export const deleteAuthLogout = async () => {
   try {
-    const { data } = await api.DELETE('/auth/logout');
-
-    return { data };
+    await api.DELETE('/auth/logout');
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
@@ -20,7 +19,10 @@ export const deleteAuthLogout = async () => {
       >;
 
       return {
-        status: AuthLogoutStatus[status] as keyof typeof AuthLogoutStatus,
+        status:
+          status in AuthLogoutStatus
+            ? (AuthLogoutStatus[status] as keyof typeof AuthLogoutStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

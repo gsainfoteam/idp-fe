@@ -11,11 +11,11 @@ export const postVerifyEmail = async (
   requestBody: paths['/verify/email']['post']['requestBody']['content']['application/json'],
 ) => {
   try {
-    const { data } = await api.POST('/verify/email', {
+    await api.POST('/verify/email', {
       body: requestBody,
     });
 
-    return { data };
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
@@ -24,7 +24,10 @@ export const postVerifyEmail = async (
       >;
 
       return {
-        status: VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus,
+        status:
+          status in VerifyEmailStatus
+            ? (VerifyEmailStatus[status] as keyof typeof VerifyEmailStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

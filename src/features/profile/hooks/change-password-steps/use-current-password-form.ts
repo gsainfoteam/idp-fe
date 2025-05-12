@@ -47,7 +47,6 @@ export const useCurrentPasswordForm = ({
     if (!data || status) {
       switch (status) {
         case 'LOGIN_FAILURE':
-          console.log('LOGIN_FAILURE'); // FIXME: debug
           form.setError('password', {
             message: t('change_password.errors.password_invalid'),
           });

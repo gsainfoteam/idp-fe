@@ -47,13 +47,13 @@ export const useNewPasswordForm = ({
   if (!token) throw new Error('Token not found');
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status } = await patchUserPassword({
+    const { status } = await patchUserPassword({
       email: context.email,
       verificationJwtToken: token,
       password: formData.password,
     });
 
-    if (!data || status) {
+    if (status) {
       switch (status) {
         case 'INVALID_TOKEN':
           form.setError('root', {

@@ -18,15 +18,9 @@ export const useAuth = () => {
   );
 
   const user = useMemo(() => {
-    if (!token) {
-      console.log('no token'); // FIXME: debug
-      return null;
-    }
+    if (!token) return null;
     if (isLoading) return undefined;
-    if (error) {
-      console.log('no error'); // FIXME: debug
-      return null;
-    }
+    if (error) return null;
     return data;
   }, [token, isLoading, error, data]);
 
@@ -52,7 +46,6 @@ export const useAuth = () => {
       return;
     }
 
-    console.log('sign out'); // FIXME: debug
     saveToken(null);
   }, [saveToken, t]);
 

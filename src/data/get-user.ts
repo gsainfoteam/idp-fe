@@ -21,7 +21,10 @@ export const getUser = async () => {
       >;
 
       return {
-        status: UserStatus[status] as keyof typeof UserStatus,
+        status:
+          status in UserStatus
+            ? (UserStatus[status] as keyof typeof UserStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

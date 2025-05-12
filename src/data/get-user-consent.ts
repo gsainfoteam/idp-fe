@@ -21,7 +21,10 @@ export const getUserConsent = async () => {
       >;
 
       return {
-        status: UserConsentStatus[status] as keyof typeof UserConsentStatus,
+        status:
+          status in UserConsentStatus
+            ? (UserConsentStatus[status] as keyof typeof UserConsentStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

@@ -22,7 +22,10 @@ export const postClient = async (
       >;
 
       return {
-        status: ClientStatus[status] as keyof typeof ClientStatus,
+        status:
+          status in ClientStatus
+            ? (ClientStatus[status] as keyof typeof ClientStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

@@ -11,11 +11,11 @@ export const postOauthConsent = async (
   requestBody: paths['/oauth/consent']['post']['requestBody']['content']['application/json'],
 ) => {
   try {
-    const { data } = await api.POST('/oauth/consent', {
+    await api.POST('/oauth/consent', {
       body: requestBody,
     });
 
-    return { data };
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
@@ -24,7 +24,10 @@ export const postOauthConsent = async (
       >;
 
       return {
-        status: OauthConsentStatus[status] as keyof typeof OauthConsentStatus,
+        status:
+          status in OauthConsentStatus
+            ? (OauthConsentStatus[status] as keyof typeof OauthConsentStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

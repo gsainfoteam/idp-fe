@@ -1,7 +1,7 @@
-import { NewPasswordStep } from './change-password-steps/new-password-step';
 import { CodeStep } from './find-password-steps/code-step';
 import { CompleteStep } from './find-password-steps/complete-step';
 import { EmailStep } from './find-password-steps/email-step';
+import { NewPasswordStep } from './find-password-steps/new-password-step';
 
 import { patchUserPassword } from '@/data/patch-user-password';
 import {
@@ -23,7 +23,7 @@ export type FindPasswordSteps = {
 
 export function FindPasswordFrame() {
   const funnel = useFunnel<FindPasswordSteps>({
-    id: 'change_password',
+    id: 'find_password',
     initial: {
       context: {},
       step: 'email',
@@ -49,6 +49,7 @@ export function FindPasswordFrame() {
         <NewPasswordStep
           context={context}
           onNext={(data) => history.replace('complete', data)}
+          onUndo={() => history.push('undoOverlay')}
         />
       )}
       complete={() => <CompleteStep />}

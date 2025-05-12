@@ -12,11 +12,10 @@ export const patchUserPassword = async (
   requestBody: paths['/user/password']['patch']['requestBody']['content']['application/json'],
 ) => {
   try {
-    const { data } = await api.PATCH('/user/password', {
+    await api.PATCH('/user/password', {
       body: requestBody,
     });
-
-    return { data };
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
@@ -25,7 +24,10 @@ export const patchUserPassword = async (
       >;
 
       return {
-        status: ClientStatus[status] as keyof typeof ClientStatus,
+        status:
+          status in ClientStatus
+            ? (ClientStatus[status] as keyof typeof ClientStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

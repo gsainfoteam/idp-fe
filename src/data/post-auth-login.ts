@@ -27,7 +27,10 @@ export const postAuthLogin = async (
       >;
 
       return {
-        status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+        status:
+          status in AuthLoginStatus
+            ? (AuthLoginStatus[status] as keyof typeof AuthLoginStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

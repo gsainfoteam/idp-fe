@@ -23,7 +23,10 @@ export const postAuthRefresh = async () => {
       >;
 
       return {
-        status: AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus,
+        status:
+          status in AuthRefreshStatus
+            ? (AuthRefreshStatus[status] as keyof typeof AuthRefreshStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 
