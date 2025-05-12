@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { WithdrawFrame } from '@/features/profile';
+import { WithdrawFrame } from '@/features/withdraw';
 
 const WithdrawPage = () => {
   return <WithdrawFrame />;
