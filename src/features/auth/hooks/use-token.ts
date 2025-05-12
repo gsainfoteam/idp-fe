@@ -12,7 +12,11 @@ export const useToken = create<TokenState>()(
   persist(
     (set) => ({
       token: null,
-      saveToken: (token) => set((state) => ({ ...state, token })),
+      saveToken: (token) =>
+        set((state) => {
+          console.log('saveToken', token); // FIXME: debug
+          return { ...state, token };
+        }),
     }),
     { name: TOKEN_STORAGE_NAME },
   ),

@@ -3,31 +3,29 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-enum AuthLoginStatus {
-  LOGIN_FAILURE = 401,
+enum ClientStatus {
+  INVALID_TOKEN = 403,
   SERVER_ERROR = 500,
 }
 
-export const postAuthLogin = async (
-  requestBody: paths['/auth/login']['post']['requestBody']['content']['application/json'],
+export const patchUserPassword = async (
+  requestBody: paths['/user/password']['patch']['requestBody']['content']['application/json'],
 ) => {
   try {
-    const { data } = await api.POST('/auth/login', {
+    const { data } = await api.PATCH('/user/password', {
       body: requestBody,
-      retry: true,
-      keepToken: true,
     });
 
     return { data };
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/auth/login']['post']['responses'],
+        keyof paths['/user/password']['patch']['responses'],
         ErrorStatus
       >;
 
       return {
-        status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+        status: ClientStatus[status] as keyof typeof ClientStatus,
       };
     }
 

@@ -100,7 +100,9 @@
     },
     "buttons": {
       "login": "로그인",
-      "register": "회원가입"
+      "register": "회원가입",
+      "find_password": "비밀번호 찾기",
+      "or": "혹은"
     }
   },
   "authorize": {
@@ -196,6 +198,100 @@
         "title": "URLs",
         "placeholder": "redirect_uri를 입력하세요"
       }
+    }
+  },
+  "change_password": {
+    "title": "비밀번호 변경",
+    "steps": {
+      "current_password": {
+        "title": "현재 비밀번호를 입력하세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호"
+          }
+        },
+        "button": "다음으로"
+      },
+      "new_password": {
+        "title": "새 비밀번호를 입력하세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호"
+          },
+          "password_confirm": {
+            "label": "비밀번호 확인",
+            "placeholder": "비밀번호 확인"
+          }
+        },
+        "button": "비밀번호 바꾸기"
+      },
+      "complete": {
+        "title": "비밀번호가 변경되었습니다",
+        "button": "로그인하기"
+      }
+    },
+    "errors": {
+      "password_format": "비밀번호는 12자리 이상이어야 합니다",
+      "password_invalid": "비밀번호가 잘못되었습니다",
+      "password_confirm": "비밀번호가 일치하지 않습니다",
+      "token_invalid": "토큰이 잘못되었습니다",
+      "user_not_found": "사용자를 찾을 수 없습니다",
+      "token_not_found": "토큰을 찾을 수 없습니다"
+    }
+  },
+  "find_password": {
+    "title": "비밀번호 찾기",
+    "steps": {
+      "email": {
+        "title": "이메일을 입력해주세요",
+        "description": "비밀번호를 잊으셨나요?",
+        "inputs": {
+          "email": {
+            "label": "GIST 이메일",
+            "placeholder": "m@gm.gist.ac.kr"
+          }
+        },
+        "button": "인증번호 보내기"
+      },
+      "code": {
+        "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000"
+          }
+        },
+        "resend": "인증번호 재요청"
+      },
+      "new_password": {
+        "title": "새 비밀번호를 입력해주세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호"
+          },
+          "password_confirm": {
+            "label": "비밀번호 확인",
+            "placeholder": "비밀번호 확인"
+          }
+        },
+        "button": "비밀번호 바꾸기"
+      },
+      "complete": {
+        "title": "비밀번호가 변경되었습니다",
+        "button": "로그인하기"
+      }
+    },
+    "errors": {
+      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+      "code_expired": "인증번호가 만료되었습니다",
+      "code_max_try": "인증번호를 다시 요청해주세요",
+      "password_format": "비밀번호는 12자리 이상이어야 합니다",
+      "password_confirm": "비밀번호가 일치하지 않습니다",
+      "token_invalid": "토큰이 잘못되었습니다"
     }
   },
   "toast": {

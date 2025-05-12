@@ -76,7 +76,7 @@ export function ProfileFrame() {
               {t('profile.edit.title')}
             </MenuButton>
           </Link>
-          <Link to=".">
+          <Link to="/change-password" search={(prev) => ({ ...prev })}>
             <MenuButton
               icon={
                 <LockIcon

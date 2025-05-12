@@ -41,7 +41,7 @@ export function FunnelLayout({
           {/* Title Bar */}
           <div
             className={cn(
-              'z-10 w-full bg-white px-5 pt-6 pb-4',
+              'z-10 w-full bg-white px-5 py-4',
               scrollAmount > 0 && 'shadow-[0_8px_8px_0] shadow-white',
             )}
           >
@@ -66,7 +66,7 @@ export function FunnelLayout({
           >
             <LoadingOverlay show={loading} className="flex flex-1 flex-col">
               {/* Step Title Box */}
-              <div className="z-0 w-full bg-white px-5 pt-2 pb-6">
+              <div className="z-0 w-full bg-white px-5 py-4">
                 <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
                   {stepTitle}
                 </div>
@@ -81,12 +81,14 @@ export function FunnelLayout({
               </div>
 
               {/* Content Box */}
-              <div className="z-0 w-full flex-1 bg-white px-5">{children}</div>
+              <div className="z-0 w-full flex-1 bg-white px-5 py-2">
+                {children}
+              </div>
             </LoadingOverlay>
           </div>
 
           {/* CTA Button Box */}
-          <div className="z-10 w-full bg-white px-5 pt-4 pb-6 shadow-[0_-8px_8px_0] shadow-white">
+          <div className="z-10 w-full bg-white px-5 py-4 shadow-[0_-8px_8px_0] shadow-white">
             {button && <div className="mt-auto w-full">{button}</div>}
           </div>
         </div>

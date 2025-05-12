@@ -6,6 +6,6 @@ const FunnelTestPage = () => {
   return <FunnelTestFrame />;
 };
 
-export const Route = createFileRoute('/funnel-test')({
+export const Route = createFileRoute('/test/funnel-test')({
   component: FunnelTestPage,
 });

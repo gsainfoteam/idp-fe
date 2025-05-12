@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { RegisterSteps } from '../../frames/register-frame';
-import { CODE_MAX_COUNT } from '../../frames/steps/code-step';
+import { CODE_MAX_COUNT } from '../../frames/register-steps/code-step';
 
 import { postVerify } from '@/data/post-verify';
 import { DifferenceNonNullable } from '@/features/core';

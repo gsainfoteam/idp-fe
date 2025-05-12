@@ -7,6 +7,7 @@ import { useToken } from '@/features/auth';
 
 interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
+  keepToken?: boolean;
 }
 
 const middleware: Middleware = {
@@ -23,8 +24,12 @@ const middleware: Middleware = {
     const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
       if (auxiliaryRequest.retry) {
-        useToken.getState().saveToken(null);
-        return Promise.resolve(response);
+        if (!auxiliaryRequest.keepToken) {
+          useToken.getState().saveToken(null);
+          return Promise.resolve(response);
+        } else {
+          return Promise.reject(response);
+        }
       }
       const refreshRes = await postAuthRefresh();
 
@@ -33,7 +38,9 @@ const middleware: Middleware = {
         auxiliaryRequest.retry = true;
         return fetch(auxiliaryRequest);
       } else {
-        useToken.getState().saveToken(null);
+        if (!auxiliaryRequest.keepToken) {
+          useToken.getState().saveToken(null);
+        }
       }
     }
 
@@ -46,6 +53,8 @@ const middleware: Middleware = {
   async onError({ error, request }) {
     if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
+    } else if (request.url.includes('/auth/login')) {
+      return Promise.reject(`Error in login: ${error}`);
     } else {
       return Promise.reject(`Error in request: ${error}`);
     }

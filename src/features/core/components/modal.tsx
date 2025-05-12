@@ -30,7 +30,7 @@ export function Modal({
     <Backdrop open={open} onClick={onClose}>
       <div
         className={cn(
-          'flex w-[400px] flex-col rounded-[20px] bg-white p-6',
+          'flex w-[400px] flex-col rounded-[20px] bg-white p-5 md:p-7',
           className,
         )}
       >

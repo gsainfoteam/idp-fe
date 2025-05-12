@@ -58,7 +58,6 @@ function Inner({
                 className="w-full"
                 type="button"
                 onClick={() => {
-                  // TODO: 에러 메시지 담아서 redirect
                   window.close();
                 }}
               >

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useCodeForm } from '../../hooks/steps/use-code-form';
-import { useResendCode } from '../../hooks/use-resend-code';
+import { useCodeForm } from '../../hooks/find-password-steps/use-code-form';
 
+import { useResendCode } from '@/features/auth';
 import {
   Button,
   FunnelLayout,
@@ -31,7 +31,7 @@ export function CodeStep({
   } = useCodeForm({ context, onNext, count });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { onResetTimer, isLoading: isResending } = useResendCode({
-    context,
+    context: { ...context, emailAgree: true },
     resetTimer: () => {
       setRemainTime(CODE_EXPIRED_TIME);
       setCount(0);
@@ -42,14 +42,14 @@ export function CodeStep({
   useEffect(() => {
     if (remainTime <= 0) {
       setError('code', {
-        message: t('register.errors.code_expired'),
+        message: t('find_password.errors.code_expired'),
         type: 'value',
       });
     }
 
     if (count >= CODE_MAX_COUNT) {
       setError('code', {
-        message: t('register.errors.code_max_try'),
+        message: t('find_password.errors.code_max_try'),
         type: 'value',
       });
     }
@@ -71,8 +71,8 @@ export function CodeStep({
       <FunnelLayout
         onUndoClick={onUndo}
         loading={isSubmitting}
-        title={t('register.title')}
-        stepTitle={t('register.steps.code.title')}
+        title={t('find_password.title')}
+        stepTitle={t('find_password.steps.code.title')}
         button={
           <Button
             variant="primary"
@@ -82,15 +82,17 @@ export function CodeStep({
               !(isValid && isDirty && remainTime > 0 && count < CODE_MAX_COUNT)
             }
           >
-            {t('register.steps.code.button')}
+            {t('find_password.steps.code.button')}
           </Button>
         }
       >
         <div className="w-full">
-          <Label text={t('register.inputs.code.label')}>
+          <Label text={t('find_password.steps.code.inputs.code.label')}>
             <Input
               type="text"
-              placeholder={t('register.inputs.code.placeholder')}
+              placeholder={t(
+                'find_password.steps.code.inputs.code.placeholder',
+              )}
               error={errors.code?.message}
               disabled={isSubmitting}
               suffixAdornment={
@@ -108,7 +110,7 @@ export function CodeStep({
               loading={isResending}
               type="button"
             >
-              {t('register.steps.code.resend')}
+              {t('find_password.steps.code.resend')}
             </Button>
           </div>
         </div>

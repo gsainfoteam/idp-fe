@@ -1,22 +1,26 @@
-import { CodeStep } from './steps/code-step';
-import { CompleteStep } from './steps/complete-step';
-import { EmailOverlayStep } from './steps/email-overlay-step';
-import { EmailStep } from './steps/email-step';
-import { InfoStep } from './steps/info-step';
-import { PasswordStep } from './steps/password-step';
-import { UndoWarningStep } from './steps/undo-warning-step';
+import { CodeStep } from './register-steps/code-step';
+import { CompleteStep } from './register-steps/complete-step';
+import { EmailOverlayStep } from './register-steps/email-overlay-step';
+import { EmailStep } from './register-steps/email-step';
+import { InfoStep } from './register-steps/info-step';
+import { PasswordStep } from './register-steps/password-step';
 
 import { postUser } from '@/data/post-user';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
+import {
+  Pretty,
+  RequireKeys,
+  useFunnel,
+  UndoWarningStep,
+} from '@/features/core';
 
-type RegisterContext = Pretty<
+type StepContext = Pretty<
   Partial<Parameters<typeof postUser>[0]> & {
     emailAgree?: boolean;
   }
 >;
 
 export type RegisterSteps = {
-  email: RegisterContext;
+  email: StepContext;
   emailOverlay: RequireKeys<RegisterSteps['email'], 'email'>;
   code: RequireKeys<RegisterSteps['emailOverlay'], 'emailAgree'>;
   password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
@@ -25,7 +29,7 @@ export type RegisterSteps = {
     RegisterSteps['info'],
     'name' | 'studentId' | 'phoneNumber'
   >;
-  undoOverlay: RegisterContext;
+  undoOverlay: StepContext;
 };
 
 export function RegisterFrame() {
@@ -81,9 +85,7 @@ export function RegisterFrame() {
           onUndo={() => history.push('undoOverlay', {})}
         />
       )}
-      complete={({ history, context }) => (
-        <CompleteStep context={context} onUndo={() => history.go(-2)} />
-      )}
+      complete={({ context }) => <CompleteStep context={context} />}
     />
   );
 }
