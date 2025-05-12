@@ -51,7 +51,10 @@ export function ConfirmStep({
         <div className="flex flex-col gap-3">
           {/* TODO: add loading and error or empty status */}
           {consents?.map((consent) => (
-            <div className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3">
+            <div
+              className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3"
+              key={consent.clientUuid}
+            >
               <Avatar
                 size={10}
                 name={consent.client.name}
