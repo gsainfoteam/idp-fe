@@ -104,8 +104,8 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
           );
           if (
             !currentSearchParams.has(stepName) ||
-            !(id in newLocationState.funnelContext) ||
-            !(id in newLocationState.funnelHistories)
+            !(id in (newLocationState.funnelContext ?? {})) ||
+            !(id in (newLocationState.funnelHistories ?? {}))
           ) {
             return;
           }
