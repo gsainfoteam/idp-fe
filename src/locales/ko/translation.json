@@ -198,6 +198,25 @@
       }
     }
   },
+  "withdraw": {
+    "title": "계정 탈퇴",
+    "password": {
+      "title": "현재 비밀번호를 입력해주세요",
+      "label": "비밀번호",
+      "placeholder": "현재 비밀번호",
+      "action": "계속하기"
+    },
+    "confirm": {
+      "title": "정말로 탈퇴하시겠어요?",
+      "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다",
+      "cancel": "취소",
+      "action": "탈퇴하기"
+    },
+    "done": {
+      "title": "계정 탈퇴가 완료되었습니다",
+      "action": "로그인 화면으로"
+    }
+  },
   "toast": {
     "server_error": "서버 오류가 발생했어요",
     "unknown_error": "알 수 없는 오류가 발생했어요",
