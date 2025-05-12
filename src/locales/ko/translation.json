@@ -197,7 +197,30 @@
       "urls": {
         "title": "URLs",
         "placeholder": "redirect_uri를 입력하세요"
+      },
+      "success": "연동이 완료되었어요"
+    },
+    "openid": {
+      "enable": "id_token 활성화",
+      "title": "OpenID"
+    },
+    "scopes": {
+      "choices": {
+        "no": "없음",
+        "optional": "선택",
+        "required": "필수"
+      },
+      "title": "스코프 (Scopes)",
+      "type": {
+        "email": "GIST 메일",
+        "phone_number": "전화번호",
+        "profile": "프로필",
+        "student_id": "학번"
       }
+    },
+    "urls": {
+      "placeholder": "redirect_uri를 입력하세요",
+      "title": "URLs"
     }
   },
   "change_password": {

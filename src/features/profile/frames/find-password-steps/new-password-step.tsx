@@ -21,8 +21,8 @@ export function NewPasswordStep({
     <form onSubmit={onSubmit}>
       <FunnelLayout
         onUndoClick={onUndo}
-        title={t('register.title')}
-        stepTitle={t('register.steps.password.title')}
+        title={t('find_password.title')}
+        stepTitle={t('find_password.steps.new_password.title')}
         button={
           <Button
             variant="primary"
@@ -30,22 +30,32 @@ export function NewPasswordStep({
             loading={isSubmitting}
             disabled={!(isValid && isDirty)}
           >
-            {t('register.steps.password.button')}
+            {t('find_password.steps.new_password.button')}
           </Button>
         }
       >
         <div className="flex flex-col gap-5">
-          <Label text={t('register.inputs.password.label')}>
+          <Label
+            text={t('find_password.steps.new_password.inputs.password.label')}
+          >
             <PasswordInput
-              placeholder={t('register.inputs.password.placeholder')}
+              placeholder={t(
+                'find_password.steps.new_password.inputs.password.placeholder',
+              )}
               error={errors.password?.message || errors.root != null}
               disabled={isSubmitting}
               {...register('password')}
             />
           </Label>
-          <Label text={t('register.inputs.password_confirm.label')}>
+          <Label
+            text={t(
+              'find_password.steps.new_password.inputs.password_confirm.label',
+            )}
+          >
             <PasswordInput
-              placeholder={t('register.inputs.password_confirm.placeholder')}
+              placeholder={t(
+                'find_password.steps.new_password.inputs.password_confirm.placeholder',
+              )}
               error={
                 errors.passwordConfirm?.message ||
                 (errors.root?.message ?? false)
