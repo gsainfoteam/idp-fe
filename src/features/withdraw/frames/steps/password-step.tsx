@@ -17,8 +17,8 @@ export function PasswordStep({
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
-        stepTitle={t('withdraw.title')}
-        title={t('withdraw.password.title')}
+        title={t('withdraw.title')}
+        stepTitle={t('withdraw.password.title')}
         loading={formState.isSubmitting}
         button={
           <Button

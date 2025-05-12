@@ -211,6 +211,7 @@
     "confirm": {
       "title": "Are you sure you want to withdraw?",
       "description": "Withdrawing will restrict access to the following services,\nand user information will not be recoverable",
+      "description_without_services": "User information will not be recoverable after withdrawing",
       "cancel": "Cancel",
       "action": "Withdraw"
     },

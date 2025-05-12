@@ -5,24 +5,20 @@ import { PasswordStep } from './steps/password-step';
 import { useAuth } from '@/features/auth';
 import { useFunnel } from '@/features/core';
 
+type User = {
+  name: string;
+  email: string;
+  studentId: string;
+};
+
 export function WithdrawFrame() {
   const { signOut, user } = useAuth();
   /* assert user is not null */
   if (!user) throw new Error('User not found');
   const funnel = useFunnel<{
-    password: {
-      password?: string;
-      name: string;
-      email: string;
-      studentId: string;
-    };
-    confirm: {
-      password: string;
-      name: string;
-      email: string;
-      studentId: string;
-    };
-    done: { password: string; name: string; email: string; studentId: string };
+    password: { password?: string } & User;
+    confirm: { password: string } & User;
+    done: { password: string } & User;
   }>({
     id: 'withdraw',
     initial: { context: user, step: 'password' },
@@ -48,9 +44,7 @@ export function WithdrawFrame() {
           }
         />
       )}
-      done={({ context }) => (
-        <DoneStep onNext={() => signOut()} context={context} />
-      )}
+      done={() => <DoneStep onNext={() => signOut()} />}
     />
   );
 }

@@ -212,6 +212,7 @@
     "confirm": {
       "title": "정말로 탈퇴하시겠어요?",
       "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다",
+      "description_without_services": "탈퇴하면 사용자의 정보는 복구되지 않습니다",
       "cancel": "취소",
       "action": "탈퇴하기"
     },

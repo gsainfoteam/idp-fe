@@ -1,14 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { Button, FunnelLayout } from '@/features/core';
 
-export function DoneStep({
-  onNext,
-  context,
-}: {
-  onNext: () => void;
-  context: { name: string; email: string; studentId: string };
-}) {
+export function DoneStep({ onNext }: { onNext: () => void }) {
   const { t } = useTranslation();
 
   return (
@@ -22,21 +16,7 @@ export function DoneStep({
         </Button>
       }
     >
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <Avatar
-          size={32}
-          name={context.name}
-          seed={uniqueKey(context.studentId.toString())}
-        />
-        <div className="mt-3 flex flex-col items-center">
-          <div className="text-title-1 text-center text-neutral-950">
-            {context.name}
-          </div>
-          <div className="text-body-1 text-center text-neutral-400">
-            {context.email}
-          </div>
-        </div>
-      </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center"></div>
     </FunnelLayout>
   );
 }
