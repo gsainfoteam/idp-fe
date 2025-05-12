@@ -11,6 +11,7 @@ export const postAuthRefresh = async () => {
   try {
     const { data } = await api.POST('/auth/refresh', {
       retry: true,
+      keepToken: true,
     });
 
     return { data };
