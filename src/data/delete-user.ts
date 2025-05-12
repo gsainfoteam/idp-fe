@@ -10,11 +10,8 @@ enum DeleteUserStatus {
 
 export const deleteUser = async ({ password }: { password: string }) => {
   try {
-    const { data } = await api.DELETE('/user', {
-      body: { password },
-    });
-
-    return { data };
+    await api.DELETE('/user', { body: { password } });
+    return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<

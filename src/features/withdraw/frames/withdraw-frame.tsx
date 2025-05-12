@@ -1,34 +1,53 @@
-import { useNavigate } from '@tanstack/react-router';
-
 import { ConfirmStep } from './steps/confirm-step';
 import { DoneStep } from './steps/done-step';
 import { PasswordStep } from './steps/password-step';
 
+import { useAuth } from '@/features/auth';
 import { useFunnel } from '@/features/core';
 
 export function WithdrawFrame() {
+  const { signOut, user } = useAuth();
   const funnel = useFunnel<{
-    password: { password?: string };
-    confirm: { password: string };
-    done: { password: string };
+    password: {
+      password?: string;
+      name: string;
+      email: string;
+      studentId: string;
+    };
+    confirm: {
+      password: string;
+      name: string;
+      email: string;
+      studentId: string;
+    };
+    done: { password: string; name: string; email: string; studentId: string };
   }>({
     id: 'withdraw',
-    initial: { context: {}, step: 'password' },
+    initial: { context: user!, step: 'password' },
   });
-  const navigate = useNavigate();
 
   return (
     <funnel.Render
       password={({ history }) => (
         <PasswordStep
-          onNext={(password) => history.push('confirm', { password })}
+          onNext={(password) =>
+            history.push('confirm', (prev) => ({ ...prev, password }))
+          }
         />
       )}
-      confirm={({ history }) => (
-        <ConfirmStep onNext={() => history.push('done')} />
+      confirm={({ history, context }) => (
+        <ConfirmStep
+          context={context}
+          onNext={() =>
+            history.push('done', (prev) => ({
+              ...prev,
+              password: context.password,
+            }))
+          }
+        />
       )}
-      done={({ history, context }) => (
-        <DoneStep onNext={() => navigate({ to: '/auth/login' })} />
+      done={({ context }) => (
+        <DoneStep onNext={() => signOut()} context={context} />
       )}
     />
   );

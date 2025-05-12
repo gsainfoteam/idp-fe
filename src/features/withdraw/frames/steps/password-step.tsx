@@ -19,6 +19,7 @@ export function PasswordStep({
       <FunnelLayout
         stepTitle={t('withdraw.password.title')}
         title={t('withdraw.password.title')}
+        loading={formState.isSubmitting}
         button={
           <Button
             variant="primary"
