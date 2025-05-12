@@ -14,6 +14,7 @@ export const postAuthLogin = async (
   try {
     const { data } = await api.POST('/auth/login', {
       body: requestBody,
+      keepToken: true,
     });
 
     return { data };

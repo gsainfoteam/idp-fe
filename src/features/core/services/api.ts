@@ -7,6 +7,7 @@ import { useToken } from '@/features/auth';
 
 interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
+  keepToken?: boolean;
 }
 
 const middleware: Middleware = {
@@ -23,17 +24,21 @@ const middleware: Middleware = {
     const auxiliaryRequest = request as AuxiliaryRequestInit;
     if (response?.status === 401) {
       if (auxiliaryRequest.retry) {
-        useToken.getState().saveToken(null);
-        return Promise.resolve(response);
-      }
-      const refreshRes = await postAuthRefresh();
-
-      if (refreshRes && refreshRes.data) {
-        useToken.getState().saveToken(refreshRes.data.accessToken);
-        auxiliaryRequest.retry = true;
-        return fetch(auxiliaryRequest);
+        if (!auxiliaryRequest.keepToken) {
+          useToken.getState().saveToken(null);
+        }
       } else {
-        useToken.getState().saveToken(null);
+        const refreshRes = await postAuthRefresh();
+
+        if (refreshRes && refreshRes.data) {
+          useToken.getState().saveToken(refreshRes.data.accessToken);
+          auxiliaryRequest.retry = true;
+          return fetch(auxiliaryRequest);
+        } else {
+          if (!auxiliaryRequest.keepToken) {
+            useToken.getState().saveToken(null);
+          }
+        }
       }
     }
 

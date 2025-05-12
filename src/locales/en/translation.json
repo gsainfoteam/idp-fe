@@ -197,6 +197,29 @@
       "placeholder": "Enter redirect_uri"
     }
   },
+  "withdraw": {
+    "title": "Withdraw",
+    "password": {
+      "title": "Please enter your current password",
+      "label": "Password",
+      "placeholder": "Current Password",
+      "action": "Continue",
+      "errors": {
+        "unauthorized": "The password is incorrect"
+      }
+    },
+    "confirm": {
+      "title": "Are you sure you want to withdraw?",
+      "description": "Withdrawing will restrict access to the following services,\nand user information will not be recoverable",
+      "description_without_services": "User information will not be recoverable after withdrawing",
+      "cancel": "Cancel",
+      "action": "Withdraw"
+    },
+    "done": {
+      "title": "Account withdrawal has been completed",
+      "action": "Log In"
+    }
+  },
   "toast": {
     "server_error": "A server error has occurred",
     "unknown_error": "An unexpected error has occurred",
