@@ -1,4 +1,3 @@
-import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import thumbsUpImg from '@/assets/icons/color/thumbs-up.png';
@@ -17,18 +16,10 @@ export function CompleteStep() {
       stepTitle={t('change_password.steps.complete.title')}
       hideUndo
       button={
-        <Link
-          to="/auth/login"
-          search={(prev) =>
-            Object.fromEntries(
-              Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
-            )
-          }
-        >
-          <Button variant="primary" className="w-full" onClick={signOut}>
-            {t('change_password.steps.complete.button')}
-          </Button>
-        </Link>
+        // signOut이 되면 자동으로 /auth/login으로 이동하도록 라우팅 되어있음
+        <Button variant="primary" className="w-full" onClick={signOut}>
+          {t('change_password.steps.complete.button')}
+        </Button>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">

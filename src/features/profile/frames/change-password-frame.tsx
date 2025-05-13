@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -33,14 +34,12 @@ export function ChangePasswordFrame() {
     },
   });
 
-  if (!user) {
-    toast.error(t('change_password.errors.user_not_found'));
-    return null;
-  }
-  if (!token) {
-    toast.error(t('change_password.errors.token_not_found'));
-    return null;
-  }
+  useEffect(() => {
+    if (!user) toast.error(t('change_password.errors.user_not_found'));
+    if (!token) toast.error(t('change_password.errors.token_not_found'));
+  }, [user, token, t]);
+
+  if (!user || !token) return null;
 
   return (
     <funnel.Render

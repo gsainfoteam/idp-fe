@@ -16,7 +16,13 @@ const AuthRequiredLayout = () => {
     return (
       <Navigate
         to="/auth/login"
-        search={{ redirect: router.history.location.href }}
+        search={(prev) => ({
+          // funnel step 중간에 log out 되었을 경우 step 삭제
+          ...Object.fromEntries(
+            Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
+          ),
+          redirect: router.history.location.href,
+        })}
         replace
       />
     );
