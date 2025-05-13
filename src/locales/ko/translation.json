@@ -100,7 +100,9 @@
     },
     "buttons": {
       "login": "로그인",
-      "register": "회원가입"
+      "register": "회원가입",
+      "find_password": "비밀번호 찾기",
+      "or": "혹은"
     }
   },
   "authorize": {
@@ -195,7 +197,125 @@
       "urls": {
         "title": "URLs",
         "placeholder": "redirect_uri를 입력하세요"
+      },
+      "success": "연동이 완료되었어요"
+    },
+    "openid": {
+      "enable": "id_token 활성화",
+      "title": "OpenID"
+    },
+    "scopes": {
+      "choices": {
+        "no": "없음",
+        "optional": "선택",
+        "required": "필수"
+      },
+      "title": "스코프 (Scopes)",
+      "type": {
+        "email": "GIST 메일",
+        "phone_number": "전화번호",
+        "profile": "프로필",
+        "student_id": "학번"
       }
+    },
+    "urls": {
+      "placeholder": "redirect_uri를 입력하세요",
+      "title": "URLs"
+    }
+  },
+  "change_password": {
+    "title": "비밀번호 변경",
+    "steps": {
+      "current_password": {
+        "title": "현재 비밀번호를 입력하세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호"
+          }
+        },
+        "button": "다음으로"
+      },
+      "new_password": {
+        "title": "새 비밀번호를 입력하세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호"
+          },
+          "password_confirm": {
+            "label": "비밀번호 확인",
+            "placeholder": "비밀번호 확인"
+          }
+        },
+        "button": "비밀번호 바꾸기"
+      },
+      "complete": {
+        "title": "비밀번호가 변경되었습니다",
+        "button": "로그인하기"
+      }
+    },
+    "errors": {
+      "password_format": "비밀번호는 12자리 이상이어야 합니다",
+      "password_invalid": "비밀번호가 잘못되었습니다",
+      "password_confirm": "비밀번호가 일치하지 않습니다",
+      "token_invalid": "토큰이 잘못되었습니다",
+      "user_not_found": "사용자를 찾을 수 없습니다",
+      "token_not_found": "토큰을 찾을 수 없습니다"
+    }
+  },
+  "issue_password": {
+    "title": "비밀번호 찾기",
+    "steps": {
+      "email": {
+        "title": "이메일을 입력해주세요",
+        "description": "임시 비밀번호를 발급해드려요",
+        "inputs": {
+          "email": {
+            "label": "GIST 이메일",
+            "placeholder": "m@gm.gist.ac.kr"
+          }
+        },
+        "button": "임시 비밀번호 발급하기"
+      },
+      "complete": {
+        "title": "임시 비밀번호가\n이메일로 전송되었습니다",
+        "button": "로그인하기"
+      },
+      "code": {
+        "button": "",
+        "inputs": {
+          "code": {
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "resend": "",
+        "title": ""
+      },
+      "new_password": {
+        "button": "",
+        "inputs": {
+          "password": {
+            "label": "",
+            "placeholder": ""
+          },
+          "password_confirm": {
+            "label": "",
+            "placeholder": ""
+          }
+        },
+        "title": ""
+      }
+    },
+    "errors": {
+      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+      "code_expired": "인증번호가 만료되었습니다",
+      "code_max_try": "인증번호를 다시 요청해주세요",
+      "password_format": "비밀번호는 12자리 이상이어야 합니다",
+      "password_confirm": "비밀번호가 일치하지 않습니다",
+      "token_invalid": "토큰이 잘못되었습니다",
+      "invalid_email": "해당 이메일의 유저가 존재하지 않습니다"
     }
   },
   "withdraw": {
@@ -224,7 +344,8 @@
   "toast": {
     "server_error": "서버 오류가 발생했어요",
     "unknown_error": "알 수 없는 오류가 발생했어요",
-    "fetch_error": "데이터를 불러오는 데 실패했어요"
+    "fetch_error": "데이터를 불러오는 데 실패했어요",
+    "invalid_body": "잘못된 API Body가 전송됐습니다"
   },
   "language": "ko"
 }

@@ -4,16 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { Button, Modal } from '@/features/core';
 
 export function UndoWarningStep({
-  initialOpen = true,
   onNext,
   close,
 }: {
-  initialOpen?: boolean;
   onNext: () => void;
   close: () => void;
 }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(initialOpen);
+  const [open, setOpen] = useState(true);
 
   return (
     <Modal open={open} onClose={() => setOpen(false)} className="mx-10 w-auto">

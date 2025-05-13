@@ -3,30 +3,32 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-enum OauthConsentStatus {
+enum ClientStatus {
+  INVALID_BODY = 400,
+  INVALID_TOKEN = 401,
+  INVALID_PASSWORD = 403,
   SERVER_ERROR = 500,
 }
 
-export const postOauthConsent = async (
-  requestBody: paths['/oauth/consent']['post']['requestBody']['content']['application/json'],
+export const patchUserPassword = async (
+  requestBody: paths['/user/password']['patch']['requestBody']['content']['application/json'],
 ) => {
   try {
-    await api.POST('/oauth/consent', {
+    await api.PATCH('/user/password', {
       body: requestBody,
     });
-
     return {};
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/oauth/consent']['post']['responses'],
+        keyof paths['/user/password']['patch']['responses'],
         ErrorStatus
       >;
 
       return {
         status:
-          status in OauthConsentStatus
-            ? (OauthConsentStatus[status] as keyof typeof OauthConsentStatus)
+          status in ClientStatus
+            ? (ClientStatus[status] as keyof typeof ClientStatus)
             : ('UNKNOWN_ERROR' as const),
       };
     }

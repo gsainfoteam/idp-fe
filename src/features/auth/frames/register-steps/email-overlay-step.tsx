@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useEmailOverlayForm } from '../../hooks/steps/use-email-overlay-form';
+import { useEmailOverlayForm } from '../../hooks/register-steps/use-email-overlay-form';
 
 import { Button, Modal } from '@/features/core';
 import { BottomSheet } from '@/features/core';

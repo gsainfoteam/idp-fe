@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useCodeForm } from '../../hooks/steps/use-code-form';
+import { useCodeForm } from '../../hooks/register-steps/use-code-form';
 import { useResendCode } from '../../hooks/use-resend-code';
 
 import {

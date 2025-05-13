@@ -51,6 +51,8 @@ const middleware: Middleware = {
   async onError({ error, request }) {
     if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
+    } else if (request.url.includes('/auth/login')) {
+      return Promise.reject(`Error in login: ${error}`);
     } else {
       return Promise.reject(`Error in request: ${error}`);
     }

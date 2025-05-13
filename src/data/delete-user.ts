@@ -20,7 +20,10 @@ export const deleteUser = async ({ password }: { password: string }) => {
       >;
 
       return {
-        status: DeleteUserStatus[status] as keyof typeof DeleteUserStatus,
+        status:
+          status in DeleteUserStatus
+            ? (DeleteUserStatus[status] as keyof typeof DeleteUserStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

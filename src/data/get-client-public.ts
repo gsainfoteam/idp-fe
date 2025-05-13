@@ -24,7 +24,10 @@ export const getClientPublic = async (clientId: string) => {
       >;
 
       return {
-        status: ClientPublicStatus[status] as keyof typeof ClientPublicStatus,
+        status:
+          status in ClientPublicStatus
+            ? (ClientPublicStatus[status] as keyof typeof ClientPublicStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

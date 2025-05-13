@@ -25,7 +25,10 @@ export const postVerify = async (
       >;
 
       return {
-        status: VerifyStatus[status] as keyof typeof VerifyStatus,
+        status:
+          status in VerifyStatus
+            ? (VerifyStatus[status] as keyof typeof VerifyStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

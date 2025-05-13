@@ -38,20 +38,30 @@ export function LoginFrame() {
               >
                 {t(`login.buttons.login`)}
               </Button>
-              <div className="h-2" />
-              <Link
-                from="/auth/login"
-                to="/auth/register"
-                search={(prev) => ({ ...prev })}
-              >
-                <Button
-                  variant="text"
-                  className="text-body-1 py-0 text-neutral-800"
-                  type="button"
-                >
-                  {t('login.buttons.register')}
-                </Button>
-              </Link>
+              <div className="h-3" />
+              <div className="flex items-center justify-center gap-1">
+                <Link to="/auth/register" search={(prev) => ({ ...prev })}>
+                  <Button
+                    variant="text"
+                    className="text-body-2 p-0 text-neutral-800"
+                    type="button"
+                  >
+                    {t('login.buttons.register')}
+                  </Button>
+                </Link>
+                <div className="text-body-2 text-neutral-400">
+                  {t('login.buttons.or')}
+                </div>
+                <Link to="/issue-password" search={(prev) => ({ ...prev })}>
+                  <Button
+                    variant="text"
+                    className="text-body-2 p-0 text-neutral-800"
+                    type="button"
+                  >
+                    {t('login.buttons.find_password')}
+                  </Button>
+                </Link>
+              </div>
             </div>
           </form>
         </FormProvider>

@@ -7,10 +7,8 @@ import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function CompleteStep({
   context,
-  onUndo,
 }: {
   context: RegisterSteps['complete'];
-  onUndo: () => void;
 }) {
   const { t } = useTranslation();
 
@@ -18,7 +16,7 @@ export function CompleteStep({
     <FunnelLayout
       title={t('register.title')}
       stepTitle={t('register.steps.complete.title')}
-      onUndoClick={onUndo}
+      hideUndo
       button={
         <Link
           to="/auth/login"

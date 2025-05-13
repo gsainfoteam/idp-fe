@@ -5,56 +5,51 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { RegisterSteps } from '../../frames/register-frame';
-import { CODE_MAX_COUNT } from '../../frames/steps/code-step';
+import { ChangePasswordSteps } from '../../frames/change-password-frame';
 
-import { postVerify } from '@/data/post-verify';
+import { postAuthLogin } from '@/data/post-auth-login';
+import { useAuth, useToken } from '@/features/auth';
 import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    code: z.string().regex(/^\d{6}$/, t('register.inputs.code.invalid_format')),
+    password: z.string().min(12, t('change_password.errors.password_format')),
   });
 
-export const useCodeForm = ({
-  context,
+export const useCurrentPasswordForm = ({
   onNext,
-  count,
 }: {
-  context: RegisterSteps['code'];
+  context: ChangePasswordSteps['currentPassword'];
   onNext: (
     data: DifferenceNonNullable<
-      RegisterSteps['password'],
-      RegisterSteps['code']
+      ChangePasswordSteps['newPassword'],
+      ChangePasswordSteps['currentPassword']
     >,
   ) => void;
-  count: number;
 }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const { saveToken } = useToken();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
     mode: 'onBlur',
   });
 
+  // impossible case, just type guard
+  if (!user) throw new Error('User not found');
+
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status } = await postVerify({
-      subject: context.email,
-      code: formData.code,
-      hint: 'email',
+    const { data, status } = await postAuthLogin({
+      email: user.email,
+      password: formData.password,
     });
 
     if (!data || status) {
       switch (status) {
-        case 'INVALID_CERTIFICATE':
-          if (count < CODE_MAX_COUNT) {
-            form.setError('code', {
-              message: t('register.errors.code_invalid', {
-                count: count + 1,
-                max: CODE_MAX_COUNT,
-              }),
-              type: 'value',
-            });
-          }
+        case 'LOGIN_FAILURE':
+          form.setError('password', {
+            message: t('change_password.errors.password_invalid'),
+          });
           break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
@@ -67,7 +62,8 @@ export const useCodeForm = ({
       return;
     }
 
-    onNext(data);
+    saveToken(data.accessToken);
+    onNext({ oldPassword: formData.password });
   });
 
   return { form, onSubmit };

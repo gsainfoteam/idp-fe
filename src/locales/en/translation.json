@@ -100,7 +100,9 @@
     },
     "buttons": {
       "login": "Log In",
-      "register": "Register"
+      "register": "Register",
+      "find_password": "Find Password",
+      "or": "or"
     }
   },
   "authorize": {
@@ -170,8 +172,32 @@
         "regenerate_secret": {
           "action": "Regenerate",
           "title": "Are you sure you want to regenerate?",
-          "cancel": "Cancel"
+          "cancel": "Cancel",
+          "description": "Changes are applied immediately,\nThe service in operation may be stopped"
         }
+      },
+      "openid": {
+        "enable": "ID_TOKEN activation",
+        "title": "Openid"
+      },
+      "scopes": {
+        "choices": {
+          "no": "doesn't exist",
+          "optional": "select",
+          "required": "essential"
+        },
+        "title": "Scopes",
+        "type": {
+          "email": "GIST Mail",
+          "phone_number": "phone number",
+          "profile": "profile",
+          "student_id": "Student number"
+        }
+      },
+      "updated": "Changes are stored",
+      "urls": {
+        "placeholder": "Enter redirect_uri",
+        "title": "URLS"
       }
     },
     "openid": {
@@ -195,6 +221,101 @@
     "urls": {
       "title": "URLs",
       "placeholder": "Enter redirect_uri"
+    }
+  },
+  "change_password": {
+    "title": "Change Password",
+    "steps": {
+      "current_password": {
+        "title": "Enter your current password",
+        "inputs": {
+          "password": {
+            "label": "Password",
+            "placeholder": "Password"
+          }
+        },
+        "button": "Next"
+      },
+      "new_password": {
+        "title": "Enter your new password",
+        "inputs": {
+          "password": {
+            "label": "Password",
+            "placeholder": "Password"
+          },
+          "password_confirm": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm Password"
+          }
+        },
+        "button": "Change Password"
+      },
+      "complete": {
+        "title": "Your password has been changed",
+        "button": "Log In"
+      }
+    },
+    "errors": {
+      "password_format": "Password must be at least 12 characters long",
+      "password_invalid": "Password is incorrect",
+      "password_confirm": "Passwords do not match",
+      "token_invalid": "The token is invalid",
+      "user_not_found": "User not found",
+      "token_not_found": "Token not found"
+    }
+  },
+  "issue_password": {
+    "title": "Find Password",
+    "steps": {
+      "email": {
+        "button": "Send Verification Code",
+        "description": "Did you forget your password?",
+        "inputs": {
+          "email": {
+            "label": "GIST Email",
+            "placeholder": "m@gm.gist.ac.kr"
+          }
+        },
+        "title": "Please enter your email"
+      },
+      "code": {
+        "button": "Verify",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000"
+          }
+        },
+        "resend": "Resend Code",
+        "title": "Enter the 6-digit code\nsent to your email"
+      },
+      "new_password": {
+        "button": "Change Password",
+        "inputs": {
+          "password": {
+            "label": "Password",
+            "placeholder": "Password"
+          },
+          "password_confirm": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm Password"
+          }
+        },
+        "title": "Enter your new password"
+      },
+      "complete": {
+        "button": "Log In",
+        "title": "Your password has been changed"
+      }
+    },
+    "errors": {
+      "code_invalid": "The verification code is incorrect ({{count}}/{{max}})",
+      "code_expired": "The verification code has expired",
+      "code_max_try": "Please request the verification code again",
+      "password_confirm": "Passwords do not match",
+      "password_format": "Password must be at least 12 characters long",
+      "token_invalid": "The token is invalid",
+      "invalid_email": "No user found for this email"
     }
   },
   "withdraw": {
@@ -223,7 +344,8 @@
   "toast": {
     "server_error": "A server error has occurred",
     "unknown_error": "An unexpected error has occurred",
-    "fetch_error": "Failed to load data"
+    "fetch_error": "Failed to load data",
+    "invalid_body": "Invalid API Body"
   },
   "language": "en"
 }

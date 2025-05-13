@@ -14,6 +14,7 @@ export const postAuthLogin = async (
   try {
     const { data } = await api.POST('/auth/login', {
       body: requestBody,
+      retry: true,
       keepToken: true,
     });
 
@@ -26,7 +27,10 @@ export const postAuthLogin = async (
       >;
 
       return {
-        status: AuthLoginStatus[status] as keyof typeof AuthLoginStatus,
+        status:
+          status in AuthLoginStatus
+            ? (AuthLoginStatus[status] as keyof typeof AuthLoginStatus)
+            : ('UNKNOWN_ERROR' as const),
       };
     }
 

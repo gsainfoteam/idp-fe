@@ -1,7 +1,7 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useInfoForm } from '../../hooks/steps/use-info-form';
+import { useInfoForm } from '../../hooks/register-steps/use-info-form';
 
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
