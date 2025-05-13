@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BottomSheet } from './bottom-sheet';
 import { Button } from './button';
@@ -20,6 +20,10 @@ type Story = StoryObj<typeof meta>;
 
 const BottomSheetWithState = ({ open: initialOpen }: { open: boolean }) => {
   const [open, setOpen] = useState(initialOpen);
+
+  useEffect(() => {
+    setOpen(initialOpen);
+  }, [initialOpen]);
 
   return (
     <BottomSheet open={open} onClose={() => setOpen(false)}>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from './button';
 import { Modal } from './modal';
@@ -20,6 +20,10 @@ type Story = StoryObj<typeof meta>;
 
 const ModalWithState = ({ open: initialOpen }: { open: boolean }) => {
   const [open, setOpen] = useState(initialOpen);
+
+  useEffect(() => {
+    setOpen(initialOpen);
+  }, [initialOpen]);
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
