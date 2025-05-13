@@ -11,11 +11,20 @@ import { DifferenceNonNullable } from '@/features/core';
 const createSchema = (t: TFunction) =>
   z
     .object({
-      password: z.string().min(12, t('register.errors.password')),
-      passwordConfirm: z.string(),
+      password: z
+        .string()
+        .min(12, t('register.steps.password.inputs.password.errors.format')),
+      passwordConfirm: z
+        .string()
+        .min(
+          12,
+          t('register.steps.password.inputs.password_confirm.errors.format'),
+        ),
     })
     .refine((data) => data.password === data.passwordConfirm, {
-      message: t('register.errors.password_confirm'),
+      message: t(
+        'register.steps.password.inputs.password_confirm.errors.invalid',
+      ),
       path: ['passwordConfirm'],
     });
 

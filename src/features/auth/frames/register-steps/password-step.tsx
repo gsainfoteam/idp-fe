@@ -35,17 +35,23 @@ export function PasswordStep({
         }
       >
         <div className="flex flex-col gap-5">
-          <Label text={t('register.inputs.password.label')}>
+          <Label text={t('register.steps.password.inputs.password.label')}>
             <PasswordInput
-              placeholder={t('register.inputs.password.placeholder')}
+              placeholder={t(
+                'register.steps.password.inputs.password.placeholder',
+              )}
               error={errors.password?.message}
               disabled={isSubmitting}
               {...register('password')}
             />
           </Label>
-          <Label text={t('register.inputs.password_confirm.label')}>
+          <Label
+            text={t('register.steps.password.inputs.password_confirm.label')}
+          >
             <PasswordInput
-              placeholder={t('register.inputs.password_confirm.placeholder')}
+              placeholder={t(
+                'register.steps.password.inputs.password_confirm.placeholder',
+              )}
               error={errors.passwordConfirm?.message}
               disabled={isSubmitting}
               {...register('passwordConfirm')}

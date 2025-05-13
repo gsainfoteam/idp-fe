@@ -3,6 +3,12 @@
     "errors": {
       "copy_failed": "Copy failed",
       "forbidden": "Forbidden"
+    },
+    "undo_overlay": {
+      "title": "Continuing will result in data loss",
+      "content": "Continue?",
+      "button": "Continue",
+      "sub_button": "Cancel"
     }
   },
   "register": {
@@ -10,92 +16,122 @@
     "steps": {
       "email": {
         "title": "Please enter your email",
-        "button": "Send Verification Code"
+        "button": "Send Verification Code",
+        "inputs": {
+          "email": {
+            "label": "GIST Email",
+            "placeholder": "m@gm.gist.ac.kr",
+            "errors": {
+              "format": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)"
+            }
+          }
+        }
       },
-      "emailOverlay": {
+      "email_overlay": {
         "title": "Please agree to the terms of\nuse to use GIST email login",
+        "contents": {
+          "terms": "GIST Email Login Terms of Service",
+          "privacy": "GIST Email Login Privacy Policy"
+        },
         "button": "Agree",
         "sub_button": "Close"
       },
       "code": {
         "title": "Enter the 6-digit code\nsent to your email",
         "button": "Verify",
-        "resend": "Resend Code"
+        "resend": "Resend Code",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000",
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            }
+          }
+        }
       },
       "password": {
         "title": "Please enter your password",
-        "button": "Next"
+        "button": "Next",
+        "inputs": {
+          "password": {
+            "label": "Password",
+            "placeholder": "Password",
+            "errors": {
+              "format": "Password must be at least 12 characters long"
+            }
+          },
+          "password_confirm": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm Password",
+            "errors": {
+              "format": "Password must be at least 12 characters long",
+              "invalid": "Passwords do not match"
+            }
+          }
+        }
       },
       "info": {
         "title": "Please enter your basic information",
-        "button": "Register"
+        "button": "Register",
+        "inputs": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Kim Jin-i",
+            "errors": {
+              "format": "Please enter your name"
+            }
+          },
+          "student_id": {
+            "label": "Student ID",
+            "placeholder": "{{format}}",
+            "errors": {
+              "format": "Please enter in the {{format}} format"
+            }
+          },
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          }
+        },
+        "errors": {
+          "invalid_token": "The token is invalid"
+        }
       },
       "complete": {
         "title": "Registration is complete",
         "button": "Log In"
       }
     },
-    "inputs": {
-      "email": {
-        "label": "GIST Email",
-        "placeholder": "m@gm.gist.ac.kr"
-      },
-      "code": {
-        "label": "Verification Code",
-        "placeholder": "000000",
-        "invalid_format": "Please enter a 6-digit number"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Password"
-      },
-      "password_confirm": {
-        "label": "Confirm Password",
-        "placeholder": "Confirm Password"
-      },
-      "name": {
-        "label": "Name",
-        "placeholder": "Kim Jin-i"
-      },
-      "student_id": {
-        "label": "Student ID",
-        "placeholder": "{{format}}"
-      },
-      "phone_number": {
-        "label": "Phone Number",
-        "placeholder": "010-0000-0000"
-      }
-    },
     "errors": {
-      "email_already_exists": "This email is already registered",
-      "email": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
       "invalid_token": "The token is invalid",
-      "code_invalid": "The verification code is incorrect ({{count}}/{{max}})",
-      "code_max_try": "Please request the verification code again",
-      "code_expired": "The verification code has expired",
-      "password": "Password must be at least 12 characters long",
-      "password_confirm": "Passwords do not match",
-      "name": "Please enter your name",
-      "student_id": "Please enter in the {{format}} format.",
-      "phone_number": "Please enter a valid phone number"
-    },
-    "warnings": {
-      "undo": {
-        "title": "Continuing will result in data loss",
-        "content": "Continue?",
-        "button": "Continue",
-        "cancel": "Cancel"
-      }
+      "email_already_exists": "This email is already registered"
     }
   },
   "login": {
-    "placeholders": {
-      "email": "m@gm.gist.ac.kr",
-      "password": "Password"
+    "inputs": {
+      "email": {
+        "label": "GIST Email",
+        "placeholder": "m@gm.gist.ac.kr",
+        "errors": {
+          "format": "Please enter your email"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Password",
+        "errors": {
+          "format": "Please enter your password"
+        }
+      }
     },
     "errors": {
-      "email": "Please enter your email",
-      "password": "Please enter your password",
       "unauthorized": "Please check your email or password"
     },
     "buttons": {
@@ -106,8 +142,7 @@
     }
   },
   "authorize": {
-    "title": "Authorization",
-    "step_title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
+    "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
     "description": "By continuing, the following information will be shared with '{{client}}'",
     "labels": {
       "required": "Required",
@@ -131,15 +166,13 @@
   },
   "profile": {
     "title": "Profile",
-    "edit": {
-      "title": "Edit Profile"
-    },
-    "password": {
-      "title": "Change Password"
-    },
-    "developer": "Developer Center",
-    "logout": "Log Out",
-    "withdrawal": "Delete Account"
+    "menu": {
+      "edit": "Edit Profile",
+      "password": "Change Password",
+      "developer": "Developer Center",
+      "logout": "Log Out",
+      "withdrawal": "Delete Account"
+    }
   },
   "services": {
     "list": {
@@ -162,7 +195,7 @@
     },
     "detail": {
       "title": "Service Detail",
-      "success": "Changes have been saved",
+      "updated": "Changes have been saved",
       "info": {
         "title": "Service Information",
         "id": "Service ID (client id)",
@@ -177,50 +210,50 @@
         }
       },
       "openid": {
-        "enable": "ID_TOKEN activation",
-        "title": "Openid"
+        "title": "OpenID",
+        "enable": "Enable id_token"
       },
       "scopes": {
-        "choices": {
-          "no": "doesn't exist",
-          "optional": "select",
-          "required": "essential"
-        },
-        "title": "Scopes",
+        "title": "Scopes (Scopes)",
         "type": {
-          "email": "GIST Mail",
-          "phone_number": "phone number",
-          "profile": "profile",
-          "student_id": "Student number"
+          "profile": "Profile",
+          "student_id": "Student ID",
+          "phone_number": "Phone Number",
+          "email": "GIST Email"
+        },
+        "choices": {
+          "no": "None",
+          "optional": "Optional",
+          "required": "Required"
         }
       },
-      "updated": "Changes are stored",
       "urls": {
-        "placeholder": "Enter redirect_uri",
-        "title": "URLS"
-      }
+        "title": "URLs",
+        "placeholder": "Enter redirect_uri"
+      },
+      "success": "Connection has been completed"
     },
     "openid": {
-      "title": "OpenID",
-      "enable": "Enable id_token"
+      "enable": "Enable id_token",
+      "title": "OpenID"
     },
     "scopes": {
-      "title": "Scopes (Scopes)",
-      "type": {
-        "profile": "Profile",
-        "student_id": "Student ID",
-        "phone_number": "Phone Number",
-        "email": "GIST Email"
-      },
       "choices": {
         "no": "None",
         "optional": "Optional",
         "required": "Required"
+      },
+      "title": "Scopes (Scopes)",
+      "type": {
+        "email": "GIST Email",
+        "phone_number": "Phone Number",
+        "profile": "Profile",
+        "student_id": "Student ID"
       }
     },
     "urls": {
-      "title": "URLs",
-      "placeholder": "Enter redirect_uri"
+      "placeholder": "Enter redirect_uri",
+      "title": "URLs"
     }
   },
   "change_password": {
@@ -231,7 +264,11 @@
         "inputs": {
           "password": {
             "label": "Password",
-            "placeholder": "Password"
+            "placeholder": "Password",
+            "errors": {
+              "format": "Please enter your password",
+              "invalid": "Password is incorrect"
+            }
           }
         },
         "button": "Next"
@@ -241,11 +278,18 @@
         "inputs": {
           "password": {
             "label": "Password",
-            "placeholder": "Password"
+            "placeholder": "Password",
+            "errors": {
+              "format": "Password must be at least 12 characters long"
+            }
           },
           "password_confirm": {
             "label": "Confirm Password",
-            "placeholder": "Confirm Password"
+            "placeholder": "Confirm Password",
+            "errors": {
+              "format": "Password must be at least 12 characters long",
+              "invalid": "Passwords do not match"
+            }
           }
         },
         "button": "Change Password"
@@ -254,98 +298,69 @@
         "title": "Your password has been changed",
         "button": "Log In"
       }
-    },
-    "errors": {
-      "password_format": "Password must be at least 12 characters long",
-      "password_invalid": "Password is incorrect",
-      "password_confirm": "Passwords do not match",
-      "token_invalid": "The token is invalid",
-      "user_not_found": "User not found",
-      "token_not_found": "Token not found"
     }
   },
   "issue_password": {
     "title": "Find Password",
     "steps": {
       "email": {
-        "button": "Send Verification Code",
-        "description": "Did you forget your password?",
+        "title": "Please enter your email",
+        "description": "We will issue a temporary password",
         "inputs": {
           "email": {
             "label": "GIST Email",
-            "placeholder": "m@gm.gist.ac.kr"
+            "placeholder": "m@gm.gist.ac.kr",
+            "errors": {
+              "format": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
+              "invalid": "No user found for this email"
+            }
           }
         },
-        "title": "Please enter your email"
-      },
-      "code": {
-        "button": "Verify",
-        "inputs": {
-          "code": {
-            "label": "Verification Code",
-            "placeholder": "000000"
-          }
-        },
-        "resend": "Resend Code",
-        "title": "Enter the 6-digit code\nsent to your email"
-      },
-      "new_password": {
-        "button": "Change Password",
-        "inputs": {
-          "password": {
-            "label": "Password",
-            "placeholder": "Password"
-          },
-          "password_confirm": {
-            "label": "Confirm Password",
-            "placeholder": "Confirm Password"
-          }
-        },
-        "title": "Enter your new password"
+        "button": "Issue Temporary Password"
       },
       "complete": {
-        "button": "Log In",
-        "title": "Your password has been changed"
+        "title": "Temporary password has been\nsent to your email",
+        "button": "Log In"
       }
-    },
-    "errors": {
-      "code_invalid": "The verification code is incorrect ({{count}}/{{max}})",
-      "code_expired": "The verification code has expired",
-      "code_max_try": "Please request the verification code again",
-      "password_confirm": "Passwords do not match",
-      "password_format": "Password must be at least 12 characters long",
-      "token_invalid": "The token is invalid",
-      "invalid_email": "No user found for this email"
     }
   },
   "withdraw": {
-    "title": "Withdraw",
-    "password": {
-      "title": "Please enter your current password",
-      "label": "Password",
-      "placeholder": "Current Password",
-      "action": "Continue",
-      "errors": {
-        "unauthorized": "The password is incorrect"
+    "title": "Delete Account",
+    "steps": {
+      "password": {
+        "title": "Please enter your current password",
+        "inputs": {
+          "password": {
+            "label": "Password",
+            "placeholder": "Current Password",
+            "errors": {
+              "format": "Please enter your password",
+              "unauthorized": "Password is incorrect"
+            }
+          }
+        },
+        "button": "Continue"
+      },
+      "confirm": {
+        "title": "Are you sure you want to delete your account?",
+        "description": "Deleting your account will restrict access to the following services,\nand user information will not be recoverable",
+        "description_without_services": "User information will not be recoverable after deletion",
+        "button": "Delete Account",
+        "sub_button": "Cancel"
+      },
+      "done": {
+        "title": "Account deletion has been completed",
+        "button": "Go to Login"
       }
-    },
-    "confirm": {
-      "title": "Are you sure you want to withdraw?",
-      "description": "Withdrawing will restrict access to the following services,\nand user information will not be recoverable",
-      "description_without_services": "User information will not be recoverable after withdrawing",
-      "cancel": "Cancel",
-      "action": "Withdraw"
-    },
-    "done": {
-      "title": "Account withdrawal has been completed",
-      "action": "Log In"
     }
   },
   "toast": {
     "server_error": "A server error has occurred",
     "unknown_error": "An unexpected error has occurred",
     "fetch_error": "Failed to load data",
-    "invalid_body": "Invalid API Body"
+    "invalid_body": "Invalid API Body",
+    "invalid_token": "The token is invalid",
+    "invalid_user": "User not found"
   },
   "language": "en"
 }

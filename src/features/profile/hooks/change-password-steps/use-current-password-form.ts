@@ -13,7 +13,14 @@ import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    password: z.string().min(12, t('change_password.errors.password_format')),
+    password: z
+      .string()
+      .min(
+        12,
+        t(
+          'change_password.steps.current_password.inputs.password.errors.format',
+        ),
+      ),
   });
 
 export const useCurrentPasswordForm = ({
@@ -48,7 +55,9 @@ export const useCurrentPasswordForm = ({
       switch (status) {
         case 'LOGIN_FAILURE':
           form.setError('password', {
-            message: t('change_password.errors.password_invalid'),
+            message: t(
+              'change_password.steps.current_password.inputs.password.errors.invalid',
+            ),
           });
           break;
         case 'SERVER_ERROR':

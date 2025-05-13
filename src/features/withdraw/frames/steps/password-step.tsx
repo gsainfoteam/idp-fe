@@ -18,7 +18,7 @@ export function PasswordStep({
     <form onSubmit={onSubmit}>
       <FunnelLayout
         title={t('withdraw.title')}
-        stepTitle={t('withdraw.password.title')}
+        stepTitle={t('withdraw.steps.password.title')}
         loading={formState.isSubmitting}
         button={
           <Button
@@ -27,15 +27,17 @@ export function PasswordStep({
             disabled={!formState.isValid}
             loading={formState.isSubmitting}
           >
-            {t('withdraw.password.action')}
+            {t('withdraw.steps.password.button')}
           </Button>
         }
       >
-        <Label text={t('withdraw.password.label')}>
+        <Label text={t('withdraw.steps.password.inputs.password.label')}>
           <Input
             {...register('password')}
             type="password"
-            placeholder={t('withdraw.password.placeholder')}
+            placeholder={t(
+              'withdraw.steps.password.inputs.password.placeholder',
+            )}
             error={
               formState.errors.password?.message ??
               formState.errors.root?.message

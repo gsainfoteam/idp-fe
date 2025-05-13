@@ -35,8 +35,8 @@ export function ChangePasswordFrame() {
   });
 
   useEffect(() => {
-    if (!user) toast.error(t('change_password.errors.user_not_found'));
-    if (!token) toast.error(t('change_password.errors.token_not_found'));
+    if (!user) toast.error(t('toast.invalid_user'));
+    if (!token) toast.error(t('toast.invalid_token'));
   }, [user, token, t]);
 
   if (!user || !token) return null;
