@@ -52,7 +52,6 @@ export const Default: Story = {
   args: {
     open: true,
     onClose: () => {},
-    children: 'Modal Content',
   },
   render: ({ open }) => {
     return <ModalWithState open={open} />;
