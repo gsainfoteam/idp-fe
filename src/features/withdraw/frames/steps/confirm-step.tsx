@@ -22,12 +22,12 @@ export function ConfirmStep({
     <form onSubmit={onSubmit}>
       <FunnelLayout
         title={t('withdraw.title')}
-        stepTitle={t('withdraw.confirm.title')}
+        stepTitle={t('withdraw.steps.confirm.title')}
         description={
           consents
             ? consents.length
-              ? t('withdraw.confirm.description')
-              : t('withdraw.confirm.description_without_services')
+              ? t('withdraw.steps.confirm.description')
+              : t('withdraw.steps.confirm.description_without_services')
             : undefined
         }
         loading={isLoading}
@@ -40,7 +40,7 @@ export function ConfirmStep({
                 type="button"
                 loading={isLoading}
               >
-                {t('withdraw.confirm.cancel')}
+                {t('withdraw.steps.confirm.sub_button')}
               </Button>
             </Link>
             <Button
@@ -49,7 +49,7 @@ export function ConfirmStep({
               disabled={!consents}
               loading={isLoading}
             >
-              {t('withdraw.confirm.action')}
+              {t('withdraw.steps.confirm.button')}
             </Button>
           </div>
         }

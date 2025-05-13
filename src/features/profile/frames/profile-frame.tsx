@@ -73,7 +73,7 @@ export function ProfileFrame() {
                 />
               }
             >
-              {t('profile.edit.title')}
+              {t('profile.menu.edit')}
             </MenuButton>
           </Link>
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
@@ -85,7 +85,7 @@ export function ProfileFrame() {
                 />
               }
             >
-              {t('profile.password.title')}
+              {t('profile.menu.password')}
             </MenuButton>
           </Link>
           <Link to="/clients">
@@ -97,7 +97,7 @@ export function ProfileFrame() {
                 />
               }
             >
-              {t('profile.developer')}
+              {t('profile.menu.developer')}
             </MenuButton>
           </Link>
           <MenuButton
@@ -109,7 +109,7 @@ export function ProfileFrame() {
             }
             onClick={signOut}
           >
-            {t('profile.logout')}
+            {t('profile.menu.logout')}
           </MenuButton>
           <Link to="/withdraw">
             <MenuButton
@@ -121,7 +121,7 @@ export function ProfileFrame() {
                 />
               }
             >
-              {t('profile.withdrawal')}
+              {t('profile.menu.withdrawal')}
             </MenuButton>
           </Link>
         </div>

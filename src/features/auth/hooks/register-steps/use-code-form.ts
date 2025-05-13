@@ -13,7 +13,9 @@ import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    code: z.string().regex(/^\d{6}$/, t('register.inputs.code.invalid_format')),
+    code: z
+      .string()
+      .regex(/^\d{6}$/, t('register.steps.code.inputs.code.errors.format')),
   });
 
 export const useCodeForm = ({
@@ -48,7 +50,7 @@ export const useCodeForm = ({
         case 'INVALID_CERTIFICATE':
           if (count < CODE_MAX_COUNT) {
             form.setError('code', {
-              message: t('register.errors.code_invalid', {
+              message: t('register.steps.code.inputs.code.errors.invalid', {
                 count: count + 1,
                 max: CODE_MAX_COUNT,
               }),

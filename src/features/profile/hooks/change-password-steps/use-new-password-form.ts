@@ -13,14 +13,26 @@ import { DifferenceNonNullable } from '@/features/core';
 const createSchema = (t: TFunction) =>
   z
     .object({
-      password: z.string().min(12, t('change_password.errors.password_format')),
+      password: z
+        .string()
+        .min(
+          12,
+          t('change_password.steps.new_password.inputs.password.errors.format'),
+        ),
       passwordConfirm: z
         .string()
-        .min(12, t('change_password.errors.password_format')),
+        .min(
+          12,
+          t(
+            'change_password.steps.new_password.inputs.password_confirm.errors.format',
+          ),
+        ),
     })
     .refine((data) => data.password === data.passwordConfirm, {
       path: ['passwordConfirm'],
-      message: t('change_password.errors.password_confirm'),
+      message: t(
+        'change_password.steps.new_password.inputs.password_confirm.errors.invalid',
+      ),
     });
 
 export const useNewPasswordForm = ({
@@ -52,17 +64,9 @@ export const useNewPasswordForm = ({
         case 'INVALID_BODY':
           toast.error(t('toast.invalid_body'));
           break;
-        case 'INVALID_TOKEN':
-          form.setError('root', {
-            message: t('change_password.errors.token_invalid'),
-            type: 'value',
-          });
-          break;
         case 'INVALID_PASSWORD':
-          form.setError('password', {
-            message: t('change_password.errors.password_invalid'),
-            type: 'value',
-          });
+        case 'INVALID_TOKEN':
+          toast.error(t('toast.invalid_token'));
           break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));

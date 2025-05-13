@@ -14,7 +14,7 @@ export function ClientListFrame() {
   return (
     <FunnelLayout
       stepTitle={t('services.list.title')}
-      title={t('profile.developer')}
+      title={t('profile.menu.developer')}
       description={t('services.list.description')}
       button={
         <Link to="/clients/new">

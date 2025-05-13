@@ -36,30 +36,35 @@ export function InfoStep({
         }
       >
         <div className="flex flex-col gap-5">
-          <Label text={t('register.inputs.name.label')}>
+          <Label text={t('register.steps.info.inputs.name.label')}>
             <Input
               type="text"
-              placeholder={t('register.inputs.name.placeholder')}
+              placeholder={t('register.steps.info.inputs.name.placeholder')}
               error={errors.name?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('name')}
             />
           </Label>
-          <Label text={t('register.inputs.student_id.label')}>
+          <Label text={t('register.steps.info.inputs.student_id.label')}>
             <Input
               type="text"
-              placeholder={t('register.inputs.student_id.placeholder', {
-                format: `${new Date().getFullYear()}0000`,
-              })}
+              placeholder={t(
+                'register.steps.info.inputs.student_id.placeholder',
+                {
+                  format: `${new Date().getFullYear()}0000`,
+                },
+              )}
               error={errors.studentId?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('studentId')}
             />
           </Label>
-          <Label text={t('register.inputs.phone_number.label')}>
+          <Label text={t('register.steps.info.inputs.phone_number.label')}>
             <Input
               type="tel"
-              placeholder={t('register.inputs.phone_number.placeholder')}
+              placeholder={t(
+                'register.steps.info.inputs.phone_number.placeholder',
+              )}
               error={errors.phoneNumber?.message || errors.root?.message}
               disabled={isSubmitting}
               {...register('phoneNumber')}

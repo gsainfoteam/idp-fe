@@ -14,7 +14,10 @@ const createSchema = (t: TFunction) =>
   z.object({
     email: z
       .string()
-      .regex(/^\S+@(?:gm\.)?gist\.ac\.kr$/, t('register.errors.email')),
+      .regex(
+        /^\S+@(?:gm\.)?gist\.ac\.kr$/,
+        t('issue_password.steps.email.inputs.email.errors.format'),
+      ),
   });
 
 export const useEmailForm = ({
@@ -44,7 +47,9 @@ export const useEmailForm = ({
           break;
         case 'INVALID_EMAIL':
           form.setError('email', {
-            message: t('issue_password.errors.invalid_email'),
+            message: t(
+              'issue_password.steps.email.inputs.email.errors.invalid',
+            ),
             type: 'value',
           });
           break;

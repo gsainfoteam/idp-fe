@@ -16,10 +16,10 @@ export function UndoWarningStep({
   return (
     <Modal open={open} onClose={() => setOpen(false)} className="mx-10 w-auto">
       <div className="text-title-2 w-full text-pretty whitespace-pre-wrap text-neutral-950">
-        {t('register.warnings.undo.title')}
+        {t('common.undo_overlay.title')}
       </div>
       <div className="text-body-2 mt-2 w-full text-neutral-400">
-        {t('register.warnings.undo.content')}
+        {t('common.undo_overlay.content')}
       </div>
       <div className="mt-6 flex w-full justify-end gap-3">
         <Button
@@ -30,7 +30,7 @@ export function UndoWarningStep({
           }}
           className="w-full"
         >
-          {t('register.warnings.undo.cancel')}
+          {t('common.undo_overlay.sub_button')}
         </Button>
         <Button
           variant="primary"
@@ -40,7 +40,7 @@ export function UndoWarningStep({
           }}
           className="w-full"
         >
-          {t('register.warnings.undo.button')}
+          {t('common.undo_overlay.button')}
         </Button>
       </div>
     </Modal>

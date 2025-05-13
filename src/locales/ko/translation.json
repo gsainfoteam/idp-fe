@@ -3,6 +3,12 @@
     "errors": {
       "copy_failed": "복사에 실패했어요",
       "forbidden": "권한이 없어요"
+    },
+    "undo_overlay": {
+      "title": "계속 진행하면 데이터가 소실됩니다",
+      "content": "계속 진행하시겠습니까?",
+      "button": "계속하기",
+      "sub_button": "그만두기"
     }
   },
   "register": {
@@ -10,92 +16,122 @@
     "steps": {
       "email": {
         "title": "이메일을 입력해주세요",
-        "button": "인증번호 보내기"
+        "button": "인증번호 보내기",
+        "inputs": {
+          "email": {
+            "label": "GIST 이메일",
+            "placeholder": "m@gm.gist.ac.kr",
+            "errors": {
+              "format": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요"
+            }
+          }
+        }
       },
-      "emailOverlay": {
+      "email_overlay": {
         "title": "GIST 메일로 로그인을 사용하려면\n약관에 동의해주세요",
+        "contents": {
+          "terms": "GIST 메일로 로그인 이용약관",
+          "privacy": "GIST 메일로 로그인 개인정보처리방침"
+        },
         "button": "동의하기",
         "sub_button": "닫기"
       },
       "code": {
         "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
         "button": "인증하기",
-        "resend": "인증번호 재요청"
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
       },
       "password": {
         "title": "비밀번호를 입력해주세요",
-        "button": "다음으로"
+        "button": "다음으로",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "비밀번호",
+            "errors": {
+              "format": "12자리 이상의 비밀번호를 입력해주세요"
+            }
+          },
+          "password_confirm": {
+            "label": "비밀번호 확인",
+            "placeholder": "비밀번호 확인",
+            "errors": {
+              "format": "12자리 이상의 비밀번호를 입력해주세요",
+              "invalid": "비밀번호가 일치하지 않습니다"
+            }
+          }
+        }
       },
       "info": {
         "title": "기본정보를 입력해주세요",
-        "button": "회원가입"
+        "button": "회원가입",
+        "inputs": {
+          "name": {
+            "label": "이름",
+            "placeholder": "김지니",
+            "errors": {
+              "format": "이름을 입력해주세요"
+            }
+          },
+          "student_id": {
+            "label": "학번",
+            "placeholder": "{{format}}",
+            "errors": {
+              "format": "{{format}}형태로 입력해주세요"
+            }
+          },
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        },
+        "errors": {
+          "invalid_token": "토큰이 잘못되었습니다"
+        }
       },
       "complete": {
         "title": "회원가입이 완료되었습니다",
         "button": "로그인하기"
       }
     },
-    "inputs": {
-      "email": {
-        "label": "GIST 이메일",
-        "placeholder": "m@gm.gist.ac.kr"
-      },
-      "code": {
-        "label": "인증번호",
-        "placeholder": "000000",
-        "invalid_format": "6자리 숫자를 입력해주세요"
-      },
-      "password": {
-        "label": "비밀번호",
-        "placeholder": "비밀번호"
-      },
-      "password_confirm": {
-        "label": "비밀번호 확인",
-        "placeholder": "비밀번호 확인"
-      },
-      "name": {
-        "label": "이름",
-        "placeholder": "김지니"
-      },
-      "student_id": {
-        "label": "학번",
-        "placeholder": "{{format}}"
-      },
-      "phone_number": {
-        "label": "전화번호",
-        "placeholder": "010-0000-0000"
-      }
-    },
     "errors": {
-      "email_already_exists": "해당 이메일은 이미 가입되어 있습니다",
-      "email": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
       "invalid_token": "토큰이 잘못 되었습니다",
-      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
-      "code_max_try": "인증번호를 다시 요청해주세요",
-      "code_expired": "인증번호가 만료되었습니다",
-      "password": "비밀번호는 12자리 이상이어야 합니다",
-      "password_confirm": "비밀번호가 일치하지 않습니다",
-      "name": "이름을 입력해주세요",
-      "student_id": "{{format}}형태로 입력해주세요.",
-      "phone_number": "올바른 전화번호를 입력해주세요"
-    },
-    "warnings": {
-      "undo": {
-        "title": "계속 진행하면 데이터가 소실됩니다",
-        "content": "계속 진행하시겠습니까?",
-        "button": "계속하기",
-        "cancel": "그만두기"
-      }
+      "email_already_exists": "해당 이메일은 이미 가입되어 있습니다"
     }
   },
   "login": {
-    "placeholders": {
-      "email": "m@gm.gist.ac.kr",
-      "password": "비밀번호"
+    "inputs": {
+      "email": {
+        "label": "GIST 이메일",
+        "placeholder": "m@gm.gist.ac.kr",
+        "errors": {
+          "format": "이메일을 입력해주세요"
+        }
+      },
+      "password": {
+        "label": "비밀번호",
+        "placeholder": "비밀번호",
+        "errors": {
+          "format": "비밀번호를 입력해주세요"
+        }
+      }
     },
     "errors": {
-      "email": "이메일을 입력해주세요",
-      "password": "비밀번호를 입력해주세요",
       "unauthorized": "이메일 또는 비밀번호를 확인해주세요"
     },
     "buttons": {
@@ -106,8 +142,7 @@
     }
   },
   "authorize": {
-    "title": "서비스 인가",
-    "step_title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
+    "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
     "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다",
     "labels": {
       "required": "필수",
@@ -131,15 +166,13 @@
   },
   "profile": {
     "title": "프로필",
-    "edit": {
-      "title": "프로필 수정"
-    },
-    "password": {
-      "title": "비밀번호 변경"
-    },
-    "developer": "개발자 센터",
-    "logout": "로그아웃",
-    "withdrawal": "계정 탈퇴"
+    "menu": {
+      "edit": "프로필 수정",
+      "password": "비밀번호 변경",
+      "developer": "개발자 센터",
+      "logout": "로그아웃",
+      "withdrawal": "계정 탈퇴"
+    }
   },
   "services": {
     "list": {
@@ -231,7 +264,11 @@
         "inputs": {
           "password": {
             "label": "비밀번호",
-            "placeholder": "비밀번호"
+            "placeholder": "비밀번호",
+            "errors": {
+              "format": "비밀번호를 입력해주세요",
+              "invalid": "비밀번호가 일치하지 않습니다"
+            }
           }
         },
         "button": "다음으로"
@@ -241,11 +278,18 @@
         "inputs": {
           "password": {
             "label": "비밀번호",
-            "placeholder": "비밀번호"
+            "placeholder": "비밀번호",
+            "errors": {
+              "format": "비밀번호는 12자리 이상이어야 합니다"
+            }
           },
           "password_confirm": {
             "label": "비밀번호 확인",
-            "placeholder": "비밀번호 확인"
+            "placeholder": "비밀번호 확인",
+            "errors": {
+              "format": "비밀번호는 12자리 이상이어야 합니다",
+              "invalid": "비밀번호가 일치하지 않습니다"
+            }
           }
         },
         "button": "비밀번호 바꾸기"
@@ -254,14 +298,6 @@
         "title": "비밀번호가 변경되었습니다",
         "button": "로그인하기"
       }
-    },
-    "errors": {
-      "password_format": "비밀번호는 12자리 이상이어야 합니다",
-      "password_invalid": "비밀번호가 잘못되었습니다",
-      "password_confirm": "비밀번호가 일치하지 않습니다",
-      "token_invalid": "토큰이 잘못되었습니다",
-      "user_not_found": "사용자를 찾을 수 없습니다",
-      "token_not_found": "토큰을 찾을 수 없습니다"
     }
   },
   "issue_password": {
@@ -273,7 +309,11 @@
         "inputs": {
           "email": {
             "label": "GIST 이메일",
-            "placeholder": "m@gm.gist.ac.kr"
+            "placeholder": "m@gm.gist.ac.kr",
+            "errors": {
+              "format": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
+              "invalid": "해당 이메일의 유저가 존재하지 않습니다"
+            }
           }
         },
         "button": "임시 비밀번호 발급하기"
@@ -281,71 +321,46 @@
       "complete": {
         "title": "임시 비밀번호가\n이메일로 전송되었습니다",
         "button": "로그인하기"
-      },
-      "code": {
-        "button": "",
-        "inputs": {
-          "code": {
-            "label": "",
-            "placeholder": ""
-          }
-        },
-        "resend": "",
-        "title": ""
-      },
-      "new_password": {
-        "button": "",
-        "inputs": {
-          "password": {
-            "label": "",
-            "placeholder": ""
-          },
-          "password_confirm": {
-            "label": "",
-            "placeholder": ""
-          }
-        },
-        "title": ""
       }
-    },
-    "errors": {
-      "code_invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
-      "code_expired": "인증번호가 만료되었습니다",
-      "code_max_try": "인증번호를 다시 요청해주세요",
-      "password_format": "비밀번호는 12자리 이상이어야 합니다",
-      "password_confirm": "비밀번호가 일치하지 않습니다",
-      "token_invalid": "토큰이 잘못되었습니다",
-      "invalid_email": "해당 이메일의 유저가 존재하지 않습니다"
     }
   },
   "withdraw": {
     "title": "계정 탈퇴",
-    "password": {
-      "title": "현재 비밀번호를 입력해주세요",
-      "label": "비밀번호",
-      "placeholder": "현재 비밀번호",
-      "action": "계속하기",
-      "errors": {
-        "unauthorized": "비밀번호가 일치하지 않아요"
+    "steps": {
+      "password": {
+        "title": "현재 비밀번호를 입력해주세요",
+        "inputs": {
+          "password": {
+            "label": "비밀번호",
+            "placeholder": "현재 비밀번호",
+            "errors": {
+              "format": "비밀번호를 입력해주세요",
+              "unauthorized": "비밀번호가 일치하지 않아요"
+            }
+          }
+        },
+        "button": "계속하기"
+      },
+      "confirm": {
+        "title": "정말로 탈퇴하시겠어요?",
+        "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다",
+        "description_without_services": "탈퇴하면 사용자의 정보는 복구되지 않습니다",
+        "button": "탈퇴하기",
+        "sub_button": "취소"
+      },
+      "done": {
+        "title": "계정 탈퇴가 완료되었습니다",
+        "button": "로그인 화면으로"
       }
-    },
-    "confirm": {
-      "title": "정말로 탈퇴하시겠어요?",
-      "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다",
-      "description_without_services": "탈퇴하면 사용자의 정보는 복구되지 않습니다",
-      "cancel": "취소",
-      "action": "탈퇴하기"
-    },
-    "done": {
-      "title": "계정 탈퇴가 완료되었습니다",
-      "action": "로그인 화면으로"
     }
   },
   "toast": {
     "server_error": "서버 오류가 발생했어요",
     "unknown_error": "알 수 없는 오류가 발생했어요",
     "fetch_error": "데이터를 불러오는 데 실패했어요",
-    "invalid_body": "잘못된 API Body가 전송됐습니다"
+    "invalid_body": "잘못된 API Body가 전송됐습니다",
+    "invalid_token": "토큰이 잘못되었습니다",
+    "invalid_user": "사용자를 찾을 수 없습니다"
   },
   "language": "ko"
 }

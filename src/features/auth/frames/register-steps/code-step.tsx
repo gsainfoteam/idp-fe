@@ -42,14 +42,14 @@ export function CodeStep({
   useEffect(() => {
     if (remainTime <= 0) {
       setError('code', {
-        message: t('register.errors.code_expired'),
+        message: t('register.steps.code.inputs.code.errors.expired'),
         type: 'value',
       });
     }
 
     if (count >= CODE_MAX_COUNT) {
       setError('code', {
-        message: t('register.errors.code_max_try'),
+        message: t('register.steps.code.inputs.code.errors.max_try'),
         type: 'value',
       });
     }
@@ -87,10 +87,10 @@ export function CodeStep({
         }
       >
         <div className="w-full">
-          <Label text={t('register.inputs.code.label')}>
+          <Label text={t('register.steps.code.inputs.code.label')}>
             <Input
               type="text"
-              placeholder={t('register.inputs.code.placeholder')}
+              placeholder={t('register.steps.code.inputs.code.placeholder')}
               error={errors.code?.message}
               disabled={isSubmitting}
               suffixAdornment={

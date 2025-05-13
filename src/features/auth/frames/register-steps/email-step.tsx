@@ -30,10 +30,10 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
           </Button>
         }
       >
-        <Label text={t('register.inputs.email.label')}>
+        <Label text={t('register.steps.email.inputs.email.label')}>
           <Input
             type="email"
-            placeholder={t('register.inputs.email.placeholder')}
+            placeholder={t('register.steps.email.inputs.email.placeholder')}
             error={errors.email?.message}
             disabled={isSubmitting}
             {...register('email')}

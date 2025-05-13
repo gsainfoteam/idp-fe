@@ -22,7 +22,7 @@ export function LoginForm() {
         error={formState.errors.email?.message || formState.errors.root != null}
         disabled={formState.isSubmitting}
         type="email"
-        placeholder={t('login.placeholders.email')}
+        placeholder={t('login.inputs.email.placeholder')}
         {...register('email', { onChange })}
       />
       <div className="h-4" />
@@ -32,7 +32,7 @@ export function LoginForm() {
           (formState.errors.root?.message ?? false)
         }
         disabled={formState.isSubmitting}
-        placeholder={t('login.placeholders.password')}
+        placeholder={t('login.inputs.password.placeholder')}
         {...register('password', { onChange })}
       />
     </div>

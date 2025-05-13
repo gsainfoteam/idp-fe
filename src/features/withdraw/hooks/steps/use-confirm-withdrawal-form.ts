@@ -31,10 +31,12 @@ export function useConfirmWithdrawalForm({
 
   const onSubmit = handleSubmit(async (formData) => {
     const { status } = await deleteUser({ password: formData.password });
+
     if (status) {
       toast.error(t('toast.unknown_error'));
       return;
     }
+
     onNext();
   });
 

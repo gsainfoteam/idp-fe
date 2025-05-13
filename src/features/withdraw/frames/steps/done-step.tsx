@@ -10,10 +10,10 @@ export function DoneStep({ onNext }: { onNext: () => void }) {
     <FunnelLayout
       hideUndo
       title={t('withdraw.title')}
-      stepTitle={t('withdraw.done.title')}
+      stepTitle={t('withdraw.steps.done.title')}
       button={
         <Button variant="primary" className="w-full" onClick={onNext}>
-          {t('withdraw.done.action')}
+          {t('withdraw.steps.done.button')}
         </Button>
       }
     >

@@ -12,8 +12,8 @@ import { postAuthLogin } from '@/data/post-auth-login';
 import { useRecentLogin } from '@/features/oauth';
 const createSchema = (t: TFunction) =>
   z.object({
-    email: z.string().email(t('login.errors.email')),
-    password: z.string().min(1, t('login.errors.password')),
+    email: z.string().email(t('login.inputs.email.errors.format')),
+    password: z.string().min(1, t('login.inputs.password.errors.format')),
   });
 
 export type LoginFormSchema = z.infer<ReturnType<typeof createSchema>>;

@@ -13,10 +13,10 @@ import { DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    name: z.string().min(1, t('register.errors.name')),
+    name: z.string().min(1, t('register.steps.info.inputs.name.errors.format')),
     studentId: z.string().regex(
       /^\d{5}$|^\d{8}$/,
-      t('register.errors.student_id', {
+      t('register.steps.info.inputs.student_id.errors.format', {
         format: `${new Date().getFullYear()}0000`,
       }),
     ),
@@ -24,7 +24,7 @@ const createSchema = (t: TFunction) =>
       .string()
       .refine(
         (value) => isValidPhoneNumber(value, 'KR'),
-        t('register.errors.phone_number'),
+        t('register.steps.info.inputs.phone_number.errors.format'),
       ),
   });
 

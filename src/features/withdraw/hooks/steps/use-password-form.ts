@@ -10,7 +10,9 @@ import { useAuth } from '@/features/auth';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    password: z.string().min(1, t('login.errors.password')),
+    password: z
+      .string()
+      .min(1, t('withdraw.steps.password.inputs.password.errors.format')),
   });
 
 export function usePasswordForm({
@@ -40,7 +42,9 @@ export function usePasswordForm({
         case 'LOGIN_FAILURE':
           resetField('password', { keepError: true });
           setError('root', {
-            message: t('withdraw.password.errors.unauthorized'),
+            message: t(
+              'withdraw.steps.password.inputs.password.errors.unauthorized',
+            ),
           });
           break;
         case 'SERVER_ERROR':
