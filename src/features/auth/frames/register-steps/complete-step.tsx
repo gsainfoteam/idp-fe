@@ -18,7 +18,14 @@ export function CompleteStep({
       stepTitle={t('register.steps.complete.title')}
       hideUndo
       button={
-        <Link to="/auth/login" search={(prev) => ({ ...prev })}>
+        <Link
+          to="/auth/login"
+          search={(prev) =>
+            Object.fromEntries(
+              Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
+            )
+          }
+        >
           <Button variant="primary" className="w-full">
             {t('register.steps.complete.button')}
           </Button>
