@@ -52,7 +52,7 @@ export default tseslint.config(
     },
   },
   {
-    extends: [prettierPlugin],
+    extends: [prettierPlugin, 'plugin:storybook/recommended'],
     files: ['src/**/*.{ts,tsx}'],
     ignores: ['src/gql/*.ts'],
   },
