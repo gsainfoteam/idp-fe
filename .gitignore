@@ -28,3 +28,4 @@ src/routeTree.gen.ts
 src/@types/api-schema.d.ts
 
 *storybook.log
+storybook-static
