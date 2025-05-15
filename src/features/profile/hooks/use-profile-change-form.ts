@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+import imageCompression from 'browser-image-compression';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -82,18 +83,38 @@ export const useProfileChangeForm = (
       return;
     }
 
-    const uploadResponse = await fetch(data.presignedUrl, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'image/webp' },
-      body: imageFile,
-    });
-
-    if (!uploadResponse.ok) {
-      toast.error(t('profile_change.errors.failed_to_upload'));
+    let compressedFile: File;
+    try {
+      compressedFile = await imageCompression(imageFile, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 512,
+        useWebWorker: true,
+        fileType: 'image/webp',
+      });
+    } catch (error) {
+      toast.error(t('profile_change.errors.failed_to_compress'));
       return;
     }
 
-    await refetch();
+    try {
+      const uploadResponse = await fetch(data.presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'image/webp' },
+        body: compressedFile,
+      });
+
+      if (!uploadResponse.ok) {
+        toast.error(t('profile_change.errors.failed_to_upload'));
+        console.log('Upload response:', uploadResponse); // DEBUG
+        return;
+      }
+
+      await refetch();
+    } catch (error) {
+      toast.error(t('profile_change.errors.failed_to_upload'));
+      console.log('Upload response:', error); // DEBUG
+      return;
+    }
   };
 
   const onSubmit = form.handleSubmit(async () => {

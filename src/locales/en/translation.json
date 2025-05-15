@@ -368,7 +368,8 @@
     "button": "Apply",
     "sub_button": "Delete",
     "errors": {
-      "failed_to_upload": "Failed to upload image"
+      "failed_to_upload": "Failed to upload image",
+      "failed_to_compress": "Failed to compress image"
     }
   }
 }

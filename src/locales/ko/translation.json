@@ -368,7 +368,8 @@
     "sub_button": "지우기",
     "button": "적용하기",
     "errors": {
-      "failed_to_upload": "이미지 업로드에 실패했어요"
+      "failed_to_upload": "이미지 업로드에 실패했어요",
+      "failed_to_compress": "이미지 압축에 실패했습니다"
     }
   }
 }
