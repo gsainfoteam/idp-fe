@@ -362,5 +362,13 @@
     "invalid_token": "토큰이 잘못되었습니다",
     "invalid_user": "사용자를 찾을 수 없습니다"
   },
-  "language": "ko"
+  "language": "ko",
+  "profile_change": {
+    "title": "프로필 선택",
+    "sub_button": "지우기",
+    "button": "적용하기",
+    "errors": {
+      "failed_to_upload": "이미지 업로드에 실패했어요"
+    }
+  }
 }

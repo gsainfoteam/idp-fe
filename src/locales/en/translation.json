@@ -362,5 +362,13 @@
     "invalid_token": "The token is invalid",
     "invalid_user": "User not found"
   },
-  "language": "en"
+  "language": "en",
+  "profile_change": {
+    "title": "Select Profile",
+    "button": "Apply",
+    "sub_button": "Delete",
+    "errors": {
+      "failed_to_upload": "Failed to upload image"
+    }
+  }
 }
