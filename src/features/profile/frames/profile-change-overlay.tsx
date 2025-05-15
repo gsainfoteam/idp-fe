@@ -22,14 +22,6 @@ export function ProfileChangeOverlay({
     onSubmit,
     handleImageChange,
   } = useProfileChangeForm(previewFile, setPreviewImage);
-
-  useEffect(() => {
-    if (!user) toast.error(t('toast.invalid_user'));
-    else setPreviewImage(user.picture ?? null);
-  }, [user]);
-
-  if (!user) return null;
-
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEditClick = () => {
@@ -37,9 +29,16 @@ export function ProfileChangeOverlay({
   };
 
   const handleClose = () => {
-    setPreviewImage(user.picture ?? null);
+    setPreviewImage(user?.picture ?? null);
     close();
   };
+
+  useEffect(() => {
+    if (!user) toast.error(t('toast.invalid_user'));
+    else setPreviewImage(user.picture ?? null);
+  }, [user]);
+
+  if (!user) return null;
 
   return (
     <BottomSheet open={open} onClose={handleClose}>
