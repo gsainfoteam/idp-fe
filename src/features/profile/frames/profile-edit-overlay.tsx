@@ -3,11 +3,11 @@ import { Avatar, BottomSheet, Button, uniqueKey } from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useProfileChangeForm } from '../hooks/use-profile-change-form';
+import { useProfileEditForm } from '../hooks/use-profile-edit-form';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 
-export function ProfileChangeOverlay({
+export function ProfileEditOverlay({
   open,
   close,
 }: {
@@ -21,7 +21,7 @@ export function ProfileChangeOverlay({
     form: { formState },
     onSubmit,
     handleImageChange,
-  } = useProfileChangeForm(previewFile, setPreviewImage);
+  } = useProfileEditForm(previewFile, setPreviewImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEditClick = () => {
@@ -39,6 +39,8 @@ export function ProfileChangeOverlay({
   }, [user]);
 
   if (!user) return null;
+
+  // TODO: md 버전에서는 modal로
 
   return (
     <BottomSheet open={open} onClose={handleClose}>

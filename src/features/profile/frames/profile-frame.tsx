@@ -9,7 +9,7 @@ import UserIcon from '@/assets/icons/duo/user.svg?react';
 import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
 import { useAuth } from '@/features/auth';
 import { Button, FunnelLayout, Avatar, uniqueKey } from '@/features/core';
-import { ProfileChangeOverlay } from './profile-change-overlay';
+import { ProfileEditOverlay } from './profile-edit-overlay';
 
 interface MenuButtonProps {
   icon: ReactNode;
@@ -129,7 +129,7 @@ export function ProfileFrame() {
           </div>
         </div>
       </FunnelLayout>
-      <ProfileChangeOverlay open={open} close={() => setOpen(false)} />
+      <ProfileEditOverlay open={open} close={() => setOpen(false)} />
     </>
   );
 }

@@ -13,7 +13,7 @@ const schema = z.object({
   image: z.instanceof(File).optional(),
 });
 
-export const useProfileChangeForm = (
+export const useProfileEditForm = (
   previewFile: string | null,
   setPreviewImage: Dispatch<SetStateAction<string | null>>,
 ) => {
