@@ -65,7 +65,20 @@ export const useProfileChangeForm = (
     const imageFile = form.getValues('image');
     if (!imageFile) return;
 
-    const { data, status } = await patchUserPicture(imageFile.size);
+    let compressedFile: File;
+    try {
+      compressedFile = await imageCompression(imageFile, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 512,
+        useWebWorker: true,
+        fileType: 'image/webp',
+      });
+    } catch (error) {
+      toast.error(t('profile_change.errors.failed_to_compress'));
+      return;
+    }
+
+    const { data, status } = await patchUserPicture(compressedFile.size);
 
     if (!data || status) {
       switch (status) {
@@ -80,19 +93,6 @@ export const useProfileChangeForm = (
           break;
       }
 
-      return;
-    }
-
-    let compressedFile: File;
-    try {
-      compressedFile = await imageCompression(imageFile, {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 512,
-        useWebWorker: true,
-        fileType: 'image/webp',
-      });
-    } catch (error) {
-      toast.error(t('profile_change.errors.failed_to_compress'));
       return;
     }
 
