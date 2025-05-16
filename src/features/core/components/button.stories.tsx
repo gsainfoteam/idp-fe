@@ -26,10 +26,10 @@ export const Secondary: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const Default: Story = {
   args: {
-    variant: 'primary',
-    disabled: true,
+    variant: 'default',
+    disabled: false,
     children: 'Button',
   },
 };

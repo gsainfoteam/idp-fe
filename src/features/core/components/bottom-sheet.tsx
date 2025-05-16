@@ -1,4 +1,5 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
+import { motion } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
@@ -15,20 +16,18 @@ export function BottomSheet({
   children,
   className,
 }: PropsWithChildren<BottomSheetProps>) {
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && open) {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscKey);
-    return () => window.removeEventListener('keydown', handleEscKey);
-  }, [open, onClose]);
-
   return (
-    <Backdrop open={open} onClick={onClose}>
-      <div
+    <Backdrop open={open} onClose={onClose}>
+      <motion.div
+        initial={{ y: '150%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '150%' }}
+        transition={{
+          type: 'spring',
+          duration: 0.5,
+          damping: 20,
+          stiffness: 175,
+        }}
         className={cn(
           'absolute right-0 bottom-0 left-0 mx-3 mb-3 flex flex-col rounded-[20px] bg-white px-5 pt-9 pb-5',
           className,
@@ -36,7 +35,7 @@ export function BottomSheet({
       >
         <div className="absolute top-2 left-1/2 h-1.5 w-12.5 -translate-x-1/2 rounded-full bg-neutral-200" />
         {children}
-      </div>
+      </motion.div>
     </Backdrop>
   );
 }
