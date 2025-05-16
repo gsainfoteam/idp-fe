@@ -59,7 +59,7 @@ const BottomSheetWithState = ({ open: initialOpen }: { open: boolean }) => {
 
 export const Default: Story = {
   args: {
-    open: true,
+    open: false,
     onClose: () => {},
   },
   render: ({ open }) => {
