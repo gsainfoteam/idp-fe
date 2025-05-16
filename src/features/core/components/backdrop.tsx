@@ -1,29 +1,40 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
-interface BackdropProps extends React.HTMLAttributes<HTMLDivElement> {
+interface BackdropProps {
   open: boolean;
+  className?: string;
 }
 
 export function Backdrop({
   open,
-  children,
   className,
+  children,
   ...props
 }: PropsWithChildren<BackdropProps>) {
-  if (!open) return null;
-
   return (
-    <div
-      className={cn('bg-dimmed-50 fixed inset-0 z-50 h-full w-full', className)}
-      {...props}
-    >
-      <div className="relative flex h-full w-full items-center justify-center">
-        <div className="h-fit w-fit" onClick={(e) => e.stopPropagation()}>
-          {children}
-        </div>
-      </div>
-    </div>
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className={cn(
+            'bg-dimmed-50 fixed inset-0 z-50 h-full w-full',
+            className,
+          )}
+          {...props}
+        >
+          <div className="relative flex h-full w-full items-center justify-center">
+            <div className="h-fit w-fit" onClick={(e) => e.stopPropagation()}>
+              {children}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
