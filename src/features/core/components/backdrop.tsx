@@ -1,11 +1,10 @@
 import { PropsWithChildren } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, HTMLMotionProps } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
-interface BackdropProps {
+interface BackdropProps extends Omit<HTMLMotionProps<'div'>, 'ref'> {
   open: boolean;
-  className?: string;
 }
 
 export function Backdrop({
