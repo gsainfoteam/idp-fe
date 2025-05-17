@@ -4,6 +4,8 @@ import i18n from '../../../locales/i18n';
 
 import { Button } from './button';
 
+// TODO: 이건 필요 없고 dark mode switcher로 개량, 토글 버튼으로 만들 것임
+
 export function LanguageSwitcher() {
   const [showDropdown, setShowDropdown] = useState(false);
 
