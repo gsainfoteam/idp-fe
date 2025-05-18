@@ -7,7 +7,7 @@ import DarkIcon from '@/assets/icons/line/dark-mode.svg?react';
 import { cn } from '../utils/cn';
 
 export function ThemeSwitcher({ className }: { className?: string }) {
-  const { theme, setTheme, isDark } = useTheme();
+  const { theme, systemTheme, setTheme } = useTheme();
 
   const handleClick = () => {
     const themes: Theme[] = ['system', 'light', 'dark'];
@@ -16,22 +16,28 @@ export function ThemeSwitcher({ className }: { className?: string }) {
     setTheme(themes[nextIndex]!);
   };
 
+  const color =
+    (theme === 'system' ? systemTheme : theme) === 'dark'
+      ? 'text-[#ffffff]'
+      : 'text-[#000000]';
+
   return (
-    <div
+    <button
+      type="button"
       className={cn('h-fit w-fit cursor-pointer', className)}
       onClick={handleClick}
     >
       {theme === 'system' ? (
-        isDark() ? (
-          <AutoDarkIcon width={30} height={30} className="text-[#ffffff]" />
+        systemTheme === 'dark' ? (
+          <AutoDarkIcon width={30} height={30} className={color} />
         ) : (
-          <AutoLightIcon width={30} height={30} className="text-[#000000]" />
+          <AutoLightIcon width={30} height={30} className={color} />
         )
       ) : theme === 'light' ? (
-        <DarkIcon width={30} height={30} className="text-[#000000]" />
+        <DarkIcon width={30} height={30} className={color} />
       ) : (
-        <LightIcon width={30} height={30} className="text-[#ffffff]" />
+        <LightIcon width={30} height={30} className={color} />
       )}
-    </div>
+    </button>
   );
 }
