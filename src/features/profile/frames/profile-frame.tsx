@@ -8,7 +8,13 @@ import LogoutIcon from '@/assets/icons/duo/logout.svg?react';
 import UserIcon from '@/assets/icons/duo/user.svg?react';
 import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
 import { useAuth } from '@/features/auth';
-import { Button, FunnelLayout, Avatar, uniqueKey } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Avatar,
+  uniqueKey,
+  ThemeSwitcher,
+} from '@/features/core';
 
 interface MenuButtonProps {
   icon: ReactNode;
@@ -49,7 +55,14 @@ export function ProfileFrame() {
   if (!user) return null;
 
   return (
-    <FunnelLayout stepTitle={t('profile.title')}>
+    <FunnelLayout
+      stepTitle={
+        <div className="flex items-center justify-between">
+          {t('profile.title')}
+          <ThemeSwitcher />
+        </div>
+      }
+    >
       <div className="flex flex-col gap-6">
         <div className="flex h-fit w-full items-center gap-3 px-3">
           <Avatar

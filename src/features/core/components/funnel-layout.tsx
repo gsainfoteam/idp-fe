@@ -8,7 +8,7 @@ import { LoadingOverlay } from './loading-overlay';
 
 interface FunnelLayoutProps {
   title?: string;
-  stepTitle: string;
+  stepTitle: React.ReactNode;
   description?: string;
   button?: React.ReactNode;
   hideUndo?: boolean;
@@ -67,7 +67,7 @@ export function FunnelLayout({
             <LoadingOverlay show={loading} className="flex flex-1 flex-col">
               {/* Step Title Box */}
               <div className="z-0 w-full bg-white px-5 py-4">
-                <div className="text-title-1 text-pretty whitespace-pre-wrap text-neutral-950">
+                <div className="text-title-1 w-full text-pretty whitespace-pre-wrap text-neutral-950">
                   {stepTitle}
                 </div>
                 {description && (
