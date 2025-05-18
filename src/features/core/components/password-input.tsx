@@ -15,11 +15,7 @@ export function PasswordInput({
       type={show ? 'text' : 'password'}
       suffixAdornment={
         <div onClick={() => setShow((b) => !b)}>
-          {show ? (
-            <EyeCloseIcon style={{ color: 'var(--color-neutral-800)' }} />
-          ) : (
-            <EyeOpenIcon style={{ color: 'var(--color-neutral-800)' }} />
-          )}
+          {show ? <EyeCloseIcon /> : <EyeOpenIcon />}
         </div>
       }
       {...props}
