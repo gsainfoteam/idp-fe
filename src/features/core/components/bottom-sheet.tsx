@@ -17,9 +17,7 @@ export function BottomSheet({
 }: PropsWithChildren<BottomSheetProps>) {
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && open) {
-        onClose();
-      }
+      if (event.key === 'Escape' && open) onClose();
     };
 
     window.addEventListener('keydown', handleEscKey);
