@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion';
 
 import { cn } from '../utils/cn';
@@ -16,6 +16,9 @@ export function Backdrop({
   children,
   ...props
 }: PropsWithChildren<BackdropProps>) {
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const pointerDownRef = useRef<EventTarget | null>(null);
+
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && open) {
@@ -42,13 +45,26 @@ export function Backdrop({
             'bg-dimmed-50 fixed inset-0 z-50 h-full w-full',
             className,
           )}
-          onClick={(e) => {
-            onClick?.(e);
-            onClose();
+          onPointerDown={(e) => {
+            pointerDownRef.current = e.target;
+          }}
+          onPointerUp={(e) => {
+            const pointerDown = pointerDownRef.current;
+            const pointerUp = e.target;
+            const backdrop = backdropRef.current;
+            pointerDownRef.current = null;
+
+            if (pointerDown === backdrop && pointerUp === backdrop) {
+              onClick?.(e);
+              onClose();
+            }
           }}
           {...props}
         >
-          <div className="relative flex h-full w-full items-center justify-center">
+          <div
+            ref={backdropRef}
+            className="relative flex h-full w-full items-center justify-center"
+          >
             <div className="h-fit w-fit" onClick={(e) => e.stopPropagation()}>
               <AnimatePresence propagate>{children}</AnimatePresence>
             </div>
