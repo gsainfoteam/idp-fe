@@ -62,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <div className="relative w-full">
             <div
               ref={prefixRef}
-              className="absolute ml-4 flex h-full cursor-pointer items-center justify-center"
+              className="absolute ml-4 flex h-full cursor-pointer items-center justify-center [&>*]:text-neutral-400"
             >
               {prefixAdornment}
             </div>
@@ -87,7 +87,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             />
             <div
               ref={suffixRef}
-              className="absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center"
+              className="absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center [&>*]:text-neutral-400"
             >
               {suffixAdornment}
             </div>

@@ -70,6 +70,49 @@
   --text-label-2--line-height: 120%;
 }
 
+@layer theme {
+  .dark {
+    --color-white: #1a1a1a;
+    --color-black: #ffffff;
+    --color-dimmed-20: rgba(255, 255, 255, 0.2);
+    --color-dimmed-50: rgba(255, 255, 255, 0.5);
+    --color-dimmed-80: rgba(255, 255, 255, 0.8);
+    --color-red-50: #2d0a0c;
+    --color-red-100: #3d0f12;
+    --color-red-200: #4d1417;
+    --color-red-300: #5d191c;
+    --color-red-400: #ff5964;
+    --color-red-500: #ff2534;
+    --color-red-600: #ed0212;
+    --color-red-700: #d5000f;
+    --color-red-800: #b00410;
+    --color-red-900: #910b14;
+    --color-red-950: #500005;
+    --color-primary-50: #2d1a0c;
+    --color-primary-100: #3d2412;
+    --color-primary-200: #4d2e17;
+    --color-primary-300: #ffb06d;
+    --color-primary-400: #ff8232;
+    --color-primary-500: #ff5f0a;
+    --color-primary-600: #ff4500;
+    --color-primary-700: #cc2f02;
+    --color-primary-800: #a1250b;
+    --color-primary-900: #82220c;
+    --color-primary-950: #460d04;
+    --color-neutral-50: #1a1a1a;
+    --color-neutral-100: #2d2d2d;
+    --color-neutral-200: #3d3d3d;
+    --color-neutral-300: #4d4d4d;
+    --color-neutral-400: #5d5d5d;
+    --color-neutral-500: #6d6d6d;
+    --color-neutral-600: #7d7d7d;
+    --color-neutral-700: #8d8d8d;
+    --color-neutral-800: #9d9d9d;
+    --color-neutral-900: #adadad;
+    --color-neutral-950: #f6f6f6;
+  }
+}
+
 @keyframes ping1 {
   0% {
     transform: scale(1);

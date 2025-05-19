@@ -36,6 +36,7 @@ export function ClientListFrame() {
                 <Avatar
                   size={10}
                   name={client.name}
+                  img={client.picture ?? undefined}
                   seed={uniqueKey(client.clientId)}
                   className="text-title-1 rounded-lg"
                 />

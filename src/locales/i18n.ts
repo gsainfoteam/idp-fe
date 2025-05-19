@@ -13,9 +13,11 @@ const resources = {
   },
 };
 
+const initialLang = navigator.language.split('-')[0] === 'ko' ? 'ko' : 'en';
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'ko',
+  lng: initialLang,
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
