@@ -369,7 +369,9 @@
     "button": "적용하기",
     "errors": {
       "failed_to_upload": "이미지 업로드에 실패했어요",
-      "failed_to_compress": "이미지 압축에 실패했습니다"
+      "failed_to_compress": "이미지 압축에 실패했습니다",
+      "image_too_large": "이미지 크기가 {{max_size_mb}}MB를 초과했습니다",
+      "invalid_image_type": "잘못된 파일 형식입니다"
     }
   }
 }

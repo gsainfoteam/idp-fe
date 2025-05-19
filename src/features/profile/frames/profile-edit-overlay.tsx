@@ -87,8 +87,7 @@ export function ProfileEditOverlay({
         <Button
           variant="primary"
           onClick={async () => {
-            await onSubmit();
-            handleClose();
+            if (await onSubmit()) handleClose();
           }}
           disabled={previewFile === user.picture}
           loading={formState.isSubmitting}
