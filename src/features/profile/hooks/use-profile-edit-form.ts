@@ -8,21 +8,12 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import imageCompression from 'browser-image-compression';
-import { TFunction } from 'i18next';
 
 const MAX_IMAGE_KB = 1024;
 
-const createSchema = (t: TFunction) =>
-  z.object({
-    image: z
-      .instanceof(File)
-      .refine((file) => file.size <= MAX_IMAGE_KB * 1000, {
-        message: t('profile_change.errors.image_too_large', {
-          max_size_mb: MAX_IMAGE_KB / 1024,
-        }),
-      })
-      .optional(),
-  });
+const schema = z.object({
+  image: z.instanceof(File).optional(),
+});
 
 export const useProfileEditForm = (
   previewFile: string | null,
@@ -31,18 +22,27 @@ export const useProfileEditForm = (
   const { refetch } = useAuth();
   const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(createSchema(t)),
+    resolver: zodResolver(schema),
   });
 
   const { formState, getValues, setValue } = form;
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) return false;
 
     if (!file.type.startsWith('image/')) {
       toast.error(t('profile_change.errors.invalid_image_type'));
-      return;
+      return false;
+    }
+
+    if (file.size > MAX_IMAGE_KB * 1000) {
+      toast.error(
+        t('profile_change.errors.image_too_large', {
+          max_size_mb: MAX_IMAGE_KB / 1024,
+        }),
+      );
+      return false;
     }
 
     const reader = new FileReader();
@@ -53,6 +53,8 @@ export const useProfileEditForm = (
         setValue('image', file, { shouldDirty: true });
       }
     };
+
+    return true;
   };
 
   const deleteImage = async () => {

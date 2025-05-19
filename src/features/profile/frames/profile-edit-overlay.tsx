@@ -64,7 +64,9 @@ export function ProfileEditOverlay({
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={(e) => {
+                if (!handleImageChange(e)) close();
+              }}
               className="absolute h-0 w-0 appearance-none opacity-0"
             />
             <EditIcon
