@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { LanguageSwitcher } from './language-switcher';
+import { ThemeSwitcher } from './theme-switcher';
 
 const meta = {
-  component: LanguageSwitcher,
-} satisfies Meta<typeof LanguageSwitcher>;
+  component: ThemeSwitcher,
+} satisfies Meta<typeof ThemeSwitcher>;
 
 export default meta;
 
