@@ -20,7 +20,7 @@ export function PasswordStep({
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
-        onUndoClick={onUndo}
+        onUndo={onUndo}
         title={t('register.title')}
         stepTitle={t('register.steps.password.title')}
         button={

@@ -5,9 +5,14 @@ import { useNewPasswordForm } from '../../hooks/change-password-steps/use-new-pa
 
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
-export function NewPasswordStep(
-  props: Parameters<typeof useNewPasswordForm>[0],
-) {
+export function NewPasswordStep({
+  step,
+  onUndo,
+  ...props
+}: Parameters<typeof useNewPasswordForm>[0] & {
+  step: string;
+  onUndo: () => void;
+}) {
   const {
     form: { register, control },
     onSubmit,
@@ -18,6 +23,8 @@ export function NewPasswordStep(
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
+        key={step}
+        onUndo={onUndo}
         loading={isSubmitting}
         title={t('change_password.title')}
         stepTitle={t('change_password.steps.new_password.title')}

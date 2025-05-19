@@ -5,27 +5,30 @@ import { cn } from '../utils/cn';
 
 import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
+import { motion, usePresenceData } from 'framer-motion';
 
-interface FunnelLayoutProps {
+interface FunnelLayoutProps extends React.Attributes {
   title?: string;
   stepTitle: React.ReactNode;
   description?: string;
   button?: React.ReactNode;
   hideUndo?: boolean;
   loading?: boolean;
-  onUndoClick?: (history: RouterHistory) => void;
+  onUndo?: (history: RouterHistory) => void;
 }
 
 export function FunnelLayout({
+  key,
   title,
   stepTitle,
   description,
   button,
   hideUndo = false,
   loading = false,
-  onUndoClick,
+  onUndo,
   children,
 }: PropsWithChildren<FunnelLayoutProps>) {
+  const direction = usePresenceData() ?? 1;
   const [scrollAmount, setScrollAmount] = useState(0);
   const scrollRef = useCallback((div: HTMLDivElement) => {
     const handler = () => setScrollAmount(div.scrollTop);
@@ -35,7 +38,15 @@ export function FunnelLayout({
   }, []);
 
   return (
-    <div className="flex h-dvh items-center justify-center">
+    <motion.div
+      layout
+      key={key}
+      initial={{ x: direction > 0 ? 100 : -100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: direction < 0 ? 100 : -100, opacity: 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className="flex h-dvh items-center justify-center"
+    >
       <div className="relative h-dvh w-full md:aspect-[420/800] md:w-auto">
         <div className="flex h-full w-full flex-col bg-white">
           {/* Title Bar */}
@@ -50,7 +61,7 @@ export function FunnelLayout({
                 <div className="absolute left-0">
                   <BackButton
                     style={{ color: 'var(--color-neutral-600)' }}
-                    onUndoClick={onUndoClick}
+                    onUndo={onUndo}
                   />
                 </div>
               )}
@@ -93,6 +104,6 @@ export function FunnelLayout({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
