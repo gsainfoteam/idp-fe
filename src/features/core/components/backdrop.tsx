@@ -20,10 +20,10 @@ export function Backdrop({
   const pointerDownRef = useRef<EventTarget | null>(null);
 
   useEffect(() => {
+    if (!open) return;
+
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && open) {
-        onClose();
-      }
+      if (event.key === 'Escape' && open) onClose();
     };
 
     window.addEventListener('keydown', handleEscKey);
