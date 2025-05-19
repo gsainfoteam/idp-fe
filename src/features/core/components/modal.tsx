@@ -29,7 +29,7 @@ export function Modal({
           stiffness: 250,
         }}
         className={cn(
-          'relative flex w-[400px] flex-col rounded-[20px] bg-white p-5 md:p-6',
+          'relative flex w-[400px] flex-col rounded-[20px] bg-white p-6 md:p-7',
           className,
         )}
       >
