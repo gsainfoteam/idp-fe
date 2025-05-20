@@ -32,7 +32,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
         ...client.scopes.map((v) => [v, 'required']),
         ...client.optionalScopes.map((v) => [v, 'optional']),
       ]),
-      urls: [...client.urls],
+      urls: client.urls,
     },
   });
 
