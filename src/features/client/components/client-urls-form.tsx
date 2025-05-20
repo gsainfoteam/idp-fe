@@ -60,7 +60,7 @@ export function ClientUrlsForm({
                       <TrashBinIcon
                         width={30}
                         height={30}
-                        className="h-full text-neutral-200"
+                        className="h-full text-neutral-200 active:text-neutral-300"
                       />
                     }
                     onClick={() => {
