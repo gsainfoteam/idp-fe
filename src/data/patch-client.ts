@@ -4,6 +4,7 @@ import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
 enum ClientStatus {
+  UNAUTHORIZED = 401,
   FORBIDDEN = 403,
   SERVER_ERROR = 500,
 }
