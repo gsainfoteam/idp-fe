@@ -229,7 +229,10 @@
       },
       "urls": {
         "title": "URLs",
-        "placeholder": "redirect_uri를 입력하세요"
+        "placeholder": "리다이렉트 URI를 입력하세요",
+        "errors": {
+          "format": "URL을 입력해주세요"
+        }
       },
       "success": "연동이 완료되었어요"
     },

@@ -229,7 +229,10 @@
       },
       "urls": {
         "title": "URLs",
-        "placeholder": "Enter redirect_uri"
+        "placeholder": "Enter Redirect URI",
+        "errors": {
+          "format": "Please enter the URL"
+        }
       },
       "success": "Connection has been completed"
     },

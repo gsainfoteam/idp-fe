@@ -13,12 +13,22 @@ import { useClientInfoForm } from '../hooks/use-client-info-form';
 
 import { FunnelLayout } from '@/features/core';
 
-const Inner = ({ client }: { client: Client }) => {
+const Inner = ({
+  client,
+  refetch,
+}: {
+  client: Client;
+  refetch: () => void;
+}) => {
   const { t } = useTranslation();
   const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
-  const { form: scopesForm } = useClientDetailsForm(client, () => {
-    toast.success(t('services.detail.updated'));
-  });
+  const { form: scopesForm, setUpdateRequired } = useClientDetailsForm(
+    client,
+    () => {
+      refetch();
+      toast.success(t('services.detail.updated'));
+    },
+  );
 
   return (
     <FunnelLayout
@@ -37,7 +47,7 @@ const Inner = ({ client }: { client: Client }) => {
           <div className="-mx-5 h-2 bg-neutral-50" />
           <ClientScopesForm />
           <div className="-mx-5 h-2 bg-neutral-50" />
-          <ClientUrlsForm />
+          <ClientUrlsForm setUpdateRequired={setUpdateRequired} />
         </FormProvider>
       </div>
     </FunnelLayout>
@@ -46,10 +56,10 @@ const Inner = ({ client }: { client: Client }) => {
 
 export function ClientDetailFrame() {
   const { id } = useParams({ from: '/_auth-required/clients/$id' });
-  const { client } = useClient(id);
+  const { client, refetch } = useClient(id);
 
   // TODO: Loading, Error 상태에 대한 UI를 추가해야 함 -> 모달 컴포넌트로 Error 메시지 띄우기, Loading Spinner 띄우기
   if (!client) return null;
 
-  return <Inner client={client} />;
+  return <Inner client={client} refetch={refetch} />;
 }
