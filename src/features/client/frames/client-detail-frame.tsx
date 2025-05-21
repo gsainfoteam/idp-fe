@@ -22,13 +22,10 @@ const Inner = ({
 }) => {
   const { t } = useTranslation();
   const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
-  const { form: scopesForm, setUpdateRequired } = useClientDetailsForm(
-    client,
-    () => {
-      refetch();
-      toast.success(t('services.detail.updated'));
-    },
-  );
+  const { form: scopesForm } = useClientDetailsForm(client, () => {
+    toast.success(t('services.detail.updated'));
+    refetch();
+  });
 
   return (
     <FunnelLayout
@@ -47,7 +44,7 @@ const Inner = ({
           <div className="-mx-5 h-2 bg-neutral-50" />
           <ClientScopesForm />
           <div className="-mx-5 h-2 bg-neutral-50" />
-          <ClientUrlsForm setUpdateRequired={setUpdateRequired} />
+          <ClientUrlsForm />
         </FormProvider>
       </div>
     </FunnelLayout>

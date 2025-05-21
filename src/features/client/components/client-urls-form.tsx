@@ -7,17 +7,15 @@ import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 
 import { Button, Input } from '@/features/core';
-import { Dispatch, SetStateAction } from 'react';
+import { useClientUrlForm } from '../hooks/use-client-url-form';
 
-export function ClientUrlsForm({
-  setUpdateRequired,
-}: {
-  setUpdateRequired: Dispatch<SetStateAction<boolean>>;
-}) {
+export function ClientUrlsForm() {
   const { t } = useTranslation();
-  const { watch, setValue, register, control, formState } =
-    useFormContext<ClientDetailsFormSchema>();
+  const { watch, setValue } = useFormContext<ClientDetailsFormSchema>();
+  const { form: urlForm, reset } = useClientUrlForm();
+
   const urls = watch('urls');
+  const newUrl = urlForm.watch('newUrl');
 
   return (
     <div className="flex flex-col gap-4">
@@ -28,18 +26,23 @@ export function ClientUrlsForm({
             className="flex-1"
             type="url"
             placeholder={t('services.detail.urls.placeholder')}
-            error={formState.errors.newUrl?.message}
-            {...register('newUrl')}
+            error={urlForm.formState.errors.newUrl?.message}
+            {...urlForm.register('newUrl')}
           />
           <Controller
-            control={control}
+            control={urlForm.control}
             name="newUrl"
             render={({ fieldState }) => (
               <Button
                 variant="primary"
                 className="h-fit px-3"
                 disabled={fieldState.invalid || !fieldState.isDirty}
-                onClick={() => setUpdateRequired(true)}
+                onClick={() => {
+                  setValue('urls', [newUrl, ...(urls ?? [])], {
+                    shouldDirty: true,
+                  });
+                  reset();
+                }}
                 prefixIcon={
                   <PlusIcon width={28} height={28} className="text-white" />
                 }
@@ -63,13 +66,13 @@ export function ClientUrlsForm({
                         className="h-full text-neutral-200 active:text-neutral-300"
                       />
                     }
-                    onClick={() => {
+                    onClick={() =>
                       setValue(
                         'urls',
                         urls.filter((_, i) => i !== index),
-                      );
-                      setUpdateRequired(true);
-                    }}
+                        { shouldDirty: true },
+                      )
+                    }
                   />
                 </div>
                 {index !== urls.length - 1 && (
