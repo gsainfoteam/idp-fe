@@ -4,7 +4,13 @@ import thumbsUpImg from '@/assets/icons/color/thumbs-up.png';
 import { useAuth } from '@/features/auth';
 import { Button, FunnelLayout } from '@/features/core';
 
-export function CompleteStep() {
+export function CompleteStep({
+  step,
+  onUndo,
+}: {
+  step: string;
+  onUndo: () => void;
+}) {
   const { t } = useTranslation();
   const { user, signOut } = useAuth();
 
@@ -12,6 +18,8 @@ export function CompleteStep() {
 
   return (
     <FunnelLayout
+      key={step}
+      onUndo={onUndo}
       title={t('change_password.title')}
       stepTitle={t('change_password.steps.complete.title')}
       hideUndo

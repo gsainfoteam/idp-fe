@@ -43,19 +43,25 @@ export function ChangePasswordFrame() {
 
   return (
     <funnel.Render
-      currentPassword={({ history, context }) => (
+      currentPassword={({ history, context, step }) => (
         <CurrentPasswordStep
+          step={step}
           context={context}
           onNext={(data) => history.push('newPassword', data)}
+          onUndo={() => history.back()}
         />
       )}
-      newPassword={({ history, context }) => (
+      newPassword={({ history, context, step }) => (
         <NewPasswordStep
+          step={step}
           context={context}
           onNext={(data) => history.push('complete', data)}
+          onUndo={() => history.back()}
         />
       )}
-      complete={() => <CompleteStep />}
+      complete={({ history, step }) => (
+        <CompleteStep step={step} onUndo={() => history.back()} />
+      )}
     />
   );
 }

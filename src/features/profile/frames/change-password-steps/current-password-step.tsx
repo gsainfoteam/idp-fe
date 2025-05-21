@@ -5,9 +5,14 @@ import { useCurrentPasswordForm } from '../../hooks/change-password-steps/use-cu
 
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
-export function CurrentPasswordStep(
-  props: Parameters<typeof useCurrentPasswordForm>[0],
-) {
+export function CurrentPasswordStep({
+  step,
+  onUndo,
+  ...props
+}: Parameters<typeof useCurrentPasswordForm>[0] & {
+  step: string;
+  onUndo: () => void;
+}) {
   const {
     form: { register, control },
     onSubmit,
@@ -18,6 +23,8 @@ export function CurrentPasswordStep(
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
+        key={step}
+        onUndo={onUndo}
         loading={isSubmitting}
         title={t('change_password.title')}
         stepTitle={t('change_password.steps.current_password.title')}

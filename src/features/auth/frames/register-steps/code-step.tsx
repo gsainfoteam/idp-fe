@@ -69,7 +69,7 @@ export function CodeStep({
       }}
     >
       <FunnelLayout
-        onUndoClick={onUndo}
+        onUndo={onUndo}
         loading={isSubmitting}
         title={t('register.title')}
         stepTitle={t('register.steps.code.title')}

@@ -20,7 +20,7 @@ export function InfoStep({
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
-        onUndoClick={onUndo}
+        onUndo={onUndo}
         loading={isSubmitting}
         title={t('register.title')}
         stepTitle={t('register.steps.info.title')}

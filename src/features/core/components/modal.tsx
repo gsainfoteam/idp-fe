@@ -1,4 +1,5 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
+import { motion } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
@@ -15,27 +16,25 @@ export function Modal({
   children,
   className,
 }: PropsWithChildren<ModalProps>) {
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && open) {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscKey);
-    return () => window.removeEventListener('keydown', handleEscKey);
-  }, [open, onClose]);
-
   return (
-    <Backdrop open={open} onClick={onClose}>
-      <div
+    <Backdrop open={open} onClose={onClose}>
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{
+          type: 'spring',
+          duration: 0.3,
+          damping: 20,
+          stiffness: 250,
+        }}
         className={cn(
-          'flex w-[400px] flex-col rounded-[20px] bg-white p-5 md:p-6',
+          'relative flex w-[400px] flex-col rounded-[20px] bg-white p-6 md:p-7',
           className,
         )}
       >
         {children}
-      </div>
+      </motion.div>
     </Backdrop>
   );
 }
