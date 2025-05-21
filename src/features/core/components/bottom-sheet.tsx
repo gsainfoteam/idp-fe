@@ -19,6 +19,15 @@ export function BottomSheet({
   const controls = useAnimationControls();
 
   useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && open) onClose();
+    };
+
+    window.addEventListener('keydown', handleEscKey);
+    return () => window.removeEventListener('keydown', handleEscKey);
+  }, [open, onClose]);
+
+  useEffect(() => {
     if (open) controls.start({ y: 0 });
   }, [open, controls]);
 

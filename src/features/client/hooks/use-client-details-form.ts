@@ -8,6 +8,7 @@ import { Client } from './use-client';
 
 import { patchClient } from '@/data/patch-client';
 import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
   idTokenAllowed: z.boolean(),
@@ -18,6 +19,7 @@ const schema = z.object({
 export type ClientDetailsFormSchema = z.infer<typeof schema>;
 
 export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
+  const { t } = useTranslation();
   const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -26,12 +28,11 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
         ...client.scopes.map((v) => [v, 'required']),
         ...client.optionalScopes.map((v) => [v, 'optional']),
       ]),
-      urls: [...client.urls, ''],
+      urls: client.urls,
     },
   });
 
   const [updateRequired, setUpdateRequired] = useState(false);
-  const { t } = useTranslation();
   const values = useWatch({ control: form.control });
   const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
 
@@ -46,7 +47,12 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
 
   useEffect(() => {
     if (!updateRequired) return;
+
     const timer = setTimeout(async () => {
+      const urls = (values.urls ?? [])
+        .filter((v) => v != null)
+        .filter((v) => v !== '');
+
       const { data, status } = await patchClient(client.clientId, {
         scopes: Object.entries(values.scopes ?? {})
           .filter(([, value]) => value === 'required')
@@ -55,25 +61,38 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
           .filter(([, value]) => value === 'optional')
           .map(([key]) => key),
         idTokenAllowed: values.idTokenAllowed,
-        urls: values.urls?.filter((url) => url !== ''),
+        urls,
       });
+
       if (!data || status) {
         switch (status) {
+          case 'UNAUTHORIZED':
+            toast.error(t('toast.invalid_user'));
+            break;
           case 'FORBIDDEN':
-            form.setError('root', { message: t('common.errors.forbidden') });
+            toast.error(t('common.errors.forbidden'));
+            break;
+          case 'SERVER_ERROR':
+            toast.error(t('toast.server_error'));
+            break;
+          case 'UNKNOWN_ERROR':
+            toast.error(t('toast.unknown_error'));
             break;
         }
+
         return;
       }
+
       setUpdateRequired(false);
       onUpdated();
+
       form.reset({
         idTokenAllowed: data.idTokenAllowed,
         scopes: Object.fromEntries([
           ...data.scopes.map((v) => [v, 'required']),
           ...data.optionalScopes.map((v) => [v, 'optional']),
         ]),
-        urls: [...data.urls, ''],
+        urls: data.urls,
       });
     }, 1000);
 
@@ -86,5 +105,5 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
     }
   }, [hasDirty]);
 
-  return { form };
+  return { form, setUpdateRequired };
 };

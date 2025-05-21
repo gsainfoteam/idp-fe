@@ -229,7 +229,10 @@
       },
       "urls": {
         "title": "URLs",
-        "placeholder": "redirect_uri를 입력하세요"
+        "placeholder": "리다이렉트 URI를 입력하세요",
+        "errors": {
+          "format": "URL을 입력해주세요"
+        }
       },
       "success": "연동이 완료되었어요"
     },
@@ -362,5 +365,16 @@
     "invalid_token": "토큰이 잘못되었습니다",
     "invalid_user": "사용자를 찾을 수 없습니다"
   },
-  "language": "ko"
+  "language": "ko",
+  "profile_change": {
+    "title": "프로필 선택",
+    "sub_button": "지우기",
+    "button": "적용하기",
+    "errors": {
+      "failed_to_upload": "이미지 업로드에 실패했어요",
+      "failed_to_compress": "이미지 압축에 실패했습니다",
+      "image_too_large": "이미지 크기가 {{max_size_mb}}MB를 초과했습니다",
+      "invalid_image_type": "잘못된 파일 형식입니다"
+    }
+  }
 }

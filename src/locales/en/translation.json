@@ -229,7 +229,10 @@
       },
       "urls": {
         "title": "URLs",
-        "placeholder": "Enter redirect_uri"
+        "placeholder": "Enter Redirect URI",
+        "errors": {
+          "format": "Please enter the URL"
+        }
       },
       "success": "Connection has been completed"
     },
@@ -362,5 +365,16 @@
     "invalid_token": "The token is invalid",
     "invalid_user": "User not found"
   },
-  "language": "en"
+  "language": "en",
+  "profile_change": {
+    "title": "Select Profile",
+    "button": "Apply",
+    "sub_button": "Delete",
+    "errors": {
+      "failed_to_upload": "Failed to upload image",
+      "failed_to_compress": "Failed to compress image",
+      "image_too_large": "Image size exceeds {{max_size_mb}}MB",
+      "invalid_image_type": "Invalid image type"
+    }
+  }
 }
