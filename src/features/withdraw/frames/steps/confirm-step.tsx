@@ -67,7 +67,7 @@ export function ConfirmStep({
                     size={10}
                     name={consent.client.name}
                     seed={uniqueKey(consent.client.uuid)}
-                    className="text-title-1 rounded-lg"
+                    className="rounded-lg"
                   />
                   <div className="flex-1">
                     <div className="text-title-3 text-neutral-900">
