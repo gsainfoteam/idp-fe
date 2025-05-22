@@ -12,6 +12,7 @@ import { useClientDetailsForm } from '../hooks/use-client-details-form';
 import { useClientInfoForm } from '../hooks/use-client-info-form';
 
 import { FunnelLayout } from '@/features/core';
+import { ClientPictureForm } from '../components/client-picture-form';
 
 const Inner = ({
   client,
@@ -21,11 +22,13 @@ const Inner = ({
   refetch: () => void;
 }) => {
   const { t } = useTranslation();
-  const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
-  const { form: scopesForm } = useClientDetailsForm(client, () => {
+  const onUpdated = () => {
     toast.success(t('services.detail.updated'));
     refetch();
-  });
+  };
+
+  const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
+  const { form: scopesForm } = useClientDetailsForm(client, onUpdated);
 
   return (
     <FunnelLayout
@@ -33,6 +36,8 @@ const Inner = ({
       stepTitle={`'${client.name}'`}
     >
       <div className="mb-4 flex flex-col gap-5">
+        <ClientPictureForm client={client} onUpdated={onUpdated} />
+        <div className="-mx-5 h-2 bg-neutral-50" />
         <FormProvider {...infoForm}>
           <form onSubmit={onInfoSubmit}>
             <ClientInfoForm />
