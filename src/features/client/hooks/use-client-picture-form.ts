@@ -90,8 +90,6 @@ export const useClientPictureForm = (
 
   const uploadImage = async () => {
     const imageFile = watch('image');
-
-    console.log('uploadImage', imageFile); // DEBUG
     if (!imageFile) return false;
 
     const error = formState.errors.image;
@@ -118,8 +116,6 @@ export const useClientPictureForm = (
       compressedFile.size,
     );
 
-    console.log(data, status); // DEBUG
-
     if (!data || status) {
       switch (status) {
         case 'INVALID_TOKEN':
@@ -138,8 +134,6 @@ export const useClientPictureForm = (
 
       return false;
     }
-
-    console.log(data); // DEBUG
 
     try {
       const uploadResponse = await fetch(data.presignedUrl, {
