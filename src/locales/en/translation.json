@@ -196,6 +196,15 @@
     "detail": {
       "title": "Service Detail",
       "updated": "Changes have been saved",
+      "picture": {
+        "title": "Service Logo",
+        "errors": {
+          "failed_to_compress": "Failed to compress image",
+          "failed_to_upload": "Failed to upload image",
+          "image_too_large": "Image size exceeds {{max_size_mb}}MB",
+          "invalid_image_type": "Invalid image type"
+        }
+      },
       "info": {
         "title": "Service Information",
         "id": "Service ID (client id)",
@@ -255,7 +264,7 @@
       }
     },
     "urls": {
-      "placeholder": "Enter redirect_uri",
+      "placeholder": "Enter Redirect URI",
       "title": "URLs"
     }
   },
