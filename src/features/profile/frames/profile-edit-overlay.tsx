@@ -15,13 +15,14 @@ export function ProfileEditOverlay({
   close: () => void;
 }) {
   const [previewFile, setPreviewImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const { user } = useAuth();
   const { t } = useTranslation();
-  const {
-    form: { formState },
-    onSubmit,
-    handleImageChange,
-  } = useProfileEditForm(previewFile, setPreviewImage);
+  const { onSubmit, handleImageChange } = useProfileEditForm(
+    previewFile,
+    setPreviewImage,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEditClick = () => {
@@ -57,7 +58,6 @@ export function ProfileEditOverlay({
             img={previewFile ?? undefined}
             seed={uniqueKey(user.studentId)}
             size={30}
-            className="text-title-1"
           />
           <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
             <input
@@ -89,10 +89,12 @@ export function ProfileEditOverlay({
         <Button
           variant="primary"
           onClick={async () => {
+            setLoading(true);
             if (await onSubmit()) handleClose();
+            setLoading(false);
           }}
           disabled={previewFile === user.picture}
-          loading={formState.isSubmitting}
+          loading={loading}
           className="w-full"
         >
           {t('profile_change.button')}
