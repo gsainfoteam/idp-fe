@@ -68,6 +68,18 @@
   --text-label-2: 12px;
   --text-label-2--font-weight: 400;
   --text-label-2--line-height: 120%;
+
+  /* Semantic Colors */
+  /* Avatar Colors */
+  --color-avatar-gray: #bdbdbd;
+  --color-avatar-red: #ef9a9a;
+  --color-avatar-blue: #90caf9;
+  --color-avatar-green: #a5d6a7;
+  --color-avatar-purple: #b39dda;
+  --color-avatar-orange: #ffcc80;
+
+  /* Button Colors */
+  
 }
 
 @layer theme {
