@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { deleteUser } from '@/data/delete-user';
-import { $api } from '@/features/core';
+import { useClientList } from '../use-client-list';
 
 const schema = z.object({
   password: z.string().min(1),
@@ -19,11 +19,7 @@ export function useConfirmWithdrawalForm({
   context: { password: string };
 }) {
   const { t } = useTranslation();
-  const {
-    data: consents,
-    isLoading,
-    error,
-  } = $api.useQuery('get', '/user/consent');
+  const { clients, isLoading, error } = useClientList();
   const { formState, handleSubmit } = useForm({
     resolver: zodResolver(schema),
     defaultValues: { password: context.password },
@@ -41,7 +37,7 @@ export function useConfirmWithdrawalForm({
   });
 
   return {
-    consents: consents?.list,
+    clients,
     isLoading: isLoading || formState.isSubmitting,
     error: error || formState.errors,
     onSubmit,
