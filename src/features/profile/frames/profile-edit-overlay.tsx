@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useProfileEditForm } from '../hooks/use-profile-edit-form';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
-import { useLoading } from '@toss/use-loading';
+import { useLoading } from '@/features/core';
 
 export function ProfileEditOverlay({
   open,

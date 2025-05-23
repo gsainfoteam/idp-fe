@@ -5,7 +5,7 @@ import { useClientPictureForm } from '../hooks/use-client-picture-form';
 import { Avatar, Button, UndoWarningOverlay, uniqueKey } from '@/features/core';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
-import { useLoading } from '@toss/use-loading';
+import { useLoading } from '@/features/core';
 
 export function ClientPictureForm({
   client,
