@@ -37,10 +37,11 @@ export function Avatar({
   size = 16,
   seed = 0,
   className,
+  ...props
 }: AvatarProps) {
   if (img) {
     return (
-      <div className="h-fit w-fit">
+      <div className="h-fit w-fit" {...props}>
         <img
           src={img}
           alt={img}
@@ -67,6 +68,7 @@ export function Avatar({
           fontSize: size * 2,
           background,
         }}
+        {...props}
       >
         {name.charAt(0)}
       </div>
