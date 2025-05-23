@@ -36,7 +36,7 @@ export const useProfileEditForm = (
       return false;
     }
 
-    if (file.size > MAX_IMAGE_KB * 1000) {
+    if (file.size > MAX_IMAGE_KB * 1024) {
       toast.error(
         t('profile_change.errors.image_too_large', {
           max_size_mb: MAX_IMAGE_KB / 1024,

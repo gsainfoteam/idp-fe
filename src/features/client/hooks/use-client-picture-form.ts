@@ -34,7 +34,7 @@ export const useClientPictureForm = (
       return false;
     }
 
-    if (file.size > MAX_IMAGE_KB * 1000) {
+    if (file.size > MAX_IMAGE_KB * 1024) {
       toast.error(
         t('services.detail.picture.errors.image_too_large', {
           max_size_mb: MAX_IMAGE_KB / 1024,
