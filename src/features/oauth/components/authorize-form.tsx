@@ -13,13 +13,14 @@ export function AuthorizeForm({
 }: {
   client: components['schemas']['ClientPublicResDto'];
 }) {
-  const { control, setValue } = useFormContext<ConsentFormSchema>();
+  const { control, setValue, setError, clearErrors } =
+    useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
   const { clientScopes } = useLoaderData({
     from: '/_auth-required/authorize',
   });
 
-  const scopes = useMemo(
+  const requiredScopes = useMemo(
     () => clientScopes.filter((v) => client.scopes.includes(v)),
     [clientScopes, client.scopes],
   );
@@ -28,16 +29,29 @@ export function AuthorizeForm({
     [clientScopes, client.optionalScopes],
   );
 
+  const requiredScopeValues = useWatch({
+    name: requiredScopes.map((scope) => `scopes.${scope}` as const),
+  });
+
   const optionalScopeValues = useWatch({
     name: optionalScopes.map((scope) => `scopes.${scope}` as const),
   });
 
   const allAgree = useMemo(
-    () => optionalScopeValues.every(Boolean) ?? false,
-    [optionalScopeValues],
+    () =>
+      (requiredScopeValues.every(Boolean) &&
+        optionalScopeValues.every(Boolean)) ||
+      false,
+    [requiredScopeValues, optionalScopeValues],
   );
 
   const toggleAll = (checked: boolean) => {
+    requiredScopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, checked, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    });
     optionalScopes.forEach((scope) => {
       setValue(`scopes.${scope}`, checked, {
         shouldValidate: true,
@@ -47,13 +61,24 @@ export function AuthorizeForm({
   };
 
   useEffect(() => {
-    scopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, true);
+    if (requiredScopeValues.some((v) => !v)) {
+      setError('root', {
+        message: t('authorize.errors.required_scopes'),
+        type: 'required',
+      });
+    } else {
+      clearErrors('root');
+    }
+  }, [requiredScopeValues, setError, t]);
+
+  useEffect(() => {
+    requiredScopes.forEach((scope) => {
+      setValue(`scopes.${scope}`, false);
     });
     optionalScopes.forEach((scope) => {
       setValue(`scopes.${scope}`, false);
     });
-  }, [scopes, optionalScopes, setValue]);
+  }, [requiredScopes, optionalScopes, setValue]);
 
   return (
     <div className="flex flex-col">
@@ -66,15 +91,14 @@ export function AuthorizeForm({
           {t('authorize.labels.required')}
         </div>
         <div className="flex flex-col gap-1 pl-1">
-          {scopes.map((scope) => (
+          {requiredScopes.map((scope) => (
             <Controller
               key={scope}
               name={`scopes.${scope}`}
               control={control}
               render={({ field }) => (
                 <Checkbox
-                  checked={field.value ?? true}
-                  disabled
+                  checked={field.value ?? false}
                   onChange={field.onChange}
                 >
                   {t(`authorize.checkboxes.${scope}`)}
