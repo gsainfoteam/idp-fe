@@ -5,6 +5,7 @@ import { useClientPictureForm } from '../hooks/use-client-picture-form';
 import { Avatar, Button, uniqueKey } from '@/features/core';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
+import { useLoading } from '@toss/use-loading';
 
 export function ClientPictureForm({
   client,
@@ -15,7 +16,8 @@ export function ClientPictureForm({
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [loadings, setLoadings] = useState<[boolean, boolean]>([false, false]);
+  const [uploadLoading, startUploadLoading] = useLoading();
+  const [deleteLoading, startDeleteLoading] = useLoading();
   const { t } = useTranslation();
   const { changeImage, deleteImage, uploadImage } = useClientPictureForm(
     client,
@@ -49,17 +51,15 @@ export function ClientPictureForm({
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              onChange={async (e) => {
-                setLoadings(([_, b]) => [true, b]);
-                if (await changeImage(e)) await uploadImage();
-                setLoadings(([_, b]) => [false, b]);
-              }}
+              onChange={(e) =>
+                startUploadLoading(changeImage(e).then(uploadImage))
+              }
               className="absolute h-0 w-0 appearance-none opacity-0"
             />
             <Button
               variant="primary"
               className="p-2.5"
-              loading={loadings[0]}
+              loading={uploadLoading}
               prefixIcon={<EditIcon />}
               onClick={() => fileInputRef.current?.click()}
             />
@@ -67,13 +67,9 @@ export function ClientPictureForm({
           <Button
             variant="secondary"
             className="p-2.5"
-            loading={loadings[1]}
+            loading={deleteLoading}
             prefixIcon={<TrashBinIcon />}
-            onClick={async () => {
-              setLoadings(([a, _]) => [a, true]);
-              await deleteImage();
-              setLoadings(([a, _]) => [a, false]);
-            }}
+            onClick={() => startDeleteLoading(deleteImage())}
           />
         </div>
       </div>

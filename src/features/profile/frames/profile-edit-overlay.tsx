@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useProfileEditForm } from '../hooks/use-profile-edit-form';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
+import { useLoading } from '@toss/use-loading';
 
 export function ProfileEditOverlay({
   open,
@@ -15,7 +16,7 @@ export function ProfileEditOverlay({
   close: () => void;
 }) {
   const [previewFile, setPreviewImage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, startLoading] = useLoading();
 
   const { user } = useAuth();
   const { t } = useTranslation();
@@ -88,11 +89,7 @@ export function ProfileEditOverlay({
         </Button>
         <Button
           variant="primary"
-          onClick={async () => {
-            setLoading(true);
-            if (await onSubmit()) handleClose();
-            setLoading(false);
-          }}
+          onClick={() => startLoading(onSubmit().then(handleClose))}
           disabled={previewFile === user.picture}
           loading={loading}
           className="w-full"
