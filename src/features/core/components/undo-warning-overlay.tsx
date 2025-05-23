@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Modal } from '@/features/core';
 
-export function UndoWarningStep({
+export function UndoWarningOverlay({
   onNext,
   close,
 }: {
