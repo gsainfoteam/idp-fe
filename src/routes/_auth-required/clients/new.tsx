@@ -4,16 +4,7 @@ import { ClientAddFrame } from '@/features/client';
 
 const ClientAddPage = () => {
   const navigate = Route.useNavigate();
-  return (
-    <ClientAddFrame
-      onSuccess={(client) =>
-        navigate({
-          to: '/clients/$id',
-          params: { id: client.clientId },
-        })
-      }
-    />
-  );
+  return <ClientAddFrame onSuccess={() => navigate({ to: '/clients' })} />;
 };
 
 export const Route = createFileRoute('/_auth-required/clients/new')({
