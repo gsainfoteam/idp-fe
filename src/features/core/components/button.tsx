@@ -17,12 +17,12 @@ const buttonStyle = cva(
     variants: {
       variant: {
         default:
-          'rounded-lg bg-neutral-50 px-5 py-3 text-black [box-shadow:inset_0_0_0_1px_var(--color-neutral-200)] active:bg-neutral-100 disabled:bg-neutral-200 disabled:text-neutral-500 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-300)]',
+          'rounded-lg bg-neutral-50 px-5 py-3 text-black [box-shadow:inset_0_0_0_1px_var(--color-neutral-200)] active:bg-neutral-100 disabled:bg-neutral-200 disabled:text-neutral-300 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-300)]',
         primary:
-          'bg-primary-600 active:bg-primary-700 rounded-lg px-5 py-3 text-white disabled:bg-neutral-600',
+          'bg-primary-600 active:bg-primary-700 rounded-lg px-5 py-3 text-white disabled:bg-neutral-200',
         secondary:
-          'text-primary-600 active:bg-primary-50 rounded-lg bg-white px-5 py-3 [box-shadow:inset_0_0_0_1px_var(--color-primary-600)] disabled:bg-neutral-100 disabled:text-neutral-600 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-600)]',
-        text: 'text-primary-600 active:text-primary-700 px-5 py-3 disabled:text-neutral-600',
+          'text-primary-600 active:bg-primary-50 rounded-lg bg-white px-5 py-3 [box-shadow:inset_0_0_0_1px_var(--color-primary-600)] disabled:bg-neutral-50 disabled:text-neutral-200 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-200)]',
+        text: 'text-primary-600 active:text-primary-700 px-5 py-3 disabled:text-neutral-200',
         link: 'text-body-1 text-neutral-400 underline active:text-neutral-600 disabled:cursor-default disabled:text-neutral-200',
       },
       loading: {

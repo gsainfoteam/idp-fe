@@ -157,7 +157,8 @@
     },
     "errors": {
       "client_id": "Client ID is required",
-      "invalid_request": "Invalid request.\nAn update may be needed.\nSee <0>document</0> for developers."
+      "invalid_request": "Invalid request.\nAn update may be needed.\nSee <0>document</0> for developers.",
+      "required_scopes": "Please agree to all required permissions"
     },
     "buttons": {
       "cancel": "Cancel",

@@ -72,6 +72,8 @@ export function ProfileFrame() {
               name={user.name}
               img={user.picture ?? undefined}
               seed={uniqueKey(user.studentId)}
+              className="cursor-pointer"
+              onClick={() => setOpen(true)}
             />
             <div className="flex flex-col">
               <div className="text-title-3">{user.name}</div>
