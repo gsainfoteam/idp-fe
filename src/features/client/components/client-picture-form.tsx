@@ -71,6 +71,7 @@ export function ClientPictureForm({
               className="p-2.5"
               loading={deleteLoading}
               prefixIcon={<TrashBinIcon />}
+              disabled={!previewImage}
               onClick={() => setOpen(true)}
             />
           </div>

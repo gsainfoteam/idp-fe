@@ -7,6 +7,8 @@ import toast from 'react-hot-toast';
 import { patchClientPicture } from '@/data/patch-client-picture';
 import { Client } from './use-client';
 import imageCompression from 'browser-image-compression';
+import { deleteClientPicture } from '@/data/delete-client-picture';
+
 const MAX_IMAGE_KB = 1024;
 
 const schema = z.object({
@@ -62,24 +64,26 @@ export const useClientPictureForm = (
   };
 
   const deleteImage = async () => {
-    // FIXME: 백엔드에서 deleteClientPicture 함수 추가 후 수정
-    // const { status } = await deleteUserPicture();
+    const { status } = await deleteClientPicture(client.clientId);
 
-    // if (status) {
-    //   switch (status) {
-    //     case 'INVALID_TOKEN':
-    //       toast.error(t('toast.invalid_token'));
-    //       break;
-    //     case 'SERVER_ERROR':
-    //       toast.error(t('toast.server_error'));
-    //       break;
-    //     case 'UNKNOWN_ERROR':
-    //       toast.error(t('toast.unknown_error'));
-    //       break;
-    //   }
+    if (status) {
+      switch (status) {
+        case 'INVALID_TOKEN':
+          toast.error(t('toast.invalid_token'));
+          break;
+        case 'FORBIDDEN':
+          toast.error(t('toast.invalid_user'));
+          break;
+        case 'SERVER_ERROR':
+          toast.error(t('toast.server_error'));
+          break;
+        case 'UNKNOWN_ERROR':
+          toast.error(t('toast.unknown_error'));
+          break;
+      }
 
-    //   return false;
-    // }
+      return false;
+    }
 
     setPreviewImage(null);
     setValue('image', undefined, { shouldDirty: true });
