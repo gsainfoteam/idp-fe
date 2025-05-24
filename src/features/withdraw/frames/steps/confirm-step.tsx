@@ -23,6 +23,8 @@ export function ConfirmStep({
   // impossible to happen
   if (!user) throw new Error('User not found');
 
+  if (!clients) return null;
+
   return (
     <form onSubmit={onSubmit}>
       <FunnelLayout
@@ -50,7 +52,7 @@ export function ConfirmStep({
             </Link>
             <Button
               variant="primary"
-              className="w-full"
+              className="w-full bg-red-600"
               disabled={!clients}
               loading={isLoading}
             >
@@ -61,46 +63,64 @@ export function ConfirmStep({
       >
         <div className="flex flex-col gap-3">
           {/* TODO: add loading and error */}
-          {clients ? (
-            clients.length ? (
-              clients.map((client) => (
-                <div
-                  className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3"
-                  key={client.clientId}
-                >
-                  <Avatar
-                    size={10}
-                    img={client.picture ?? undefined}
-                    name={client.name}
-                    seed={uniqueKey(client.clientId)}
-                    className="text-title-1 rounded-lg"
-                  />
-                  <div className="flex-1">
-                    <div className="text-title-3 text-neutral-900">
-                      {client.name}
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
+          {clients.length ? (
+            <div className="flex flex-col gap-6">
+              <div className="flex h-fit w-full items-center gap-3 px-3">
                 <Avatar
-                  size={32}
+                  name={user.name}
                   img={user.picture ?? undefined}
-                  name={context.name}
-                  seed={uniqueKey(context.studentId.toString())}
+                  seed={uniqueKey(user.studentId)}
                 />
-                <div className="mt-3 flex flex-col items-center">
-                  <div className="text-title-1 text-center text-neutral-950">
-                    {context.name}
-                  </div>
-                  <div className="text-body-1 text-center text-neutral-400">
-                    {context.email}
+                <div className="flex flex-col">
+                  <div className="text-title-3">{user.name}</div>
+                  <div className="text-body-2 text-neutral-400">
+                    {user.email}
                   </div>
                 </div>
               </div>
-            )
-          ) : null}
+              <div className="flex flex-col rounded-lg border border-neutral-100">
+                {clients.map((client) => (
+                  <div
+                    className="flex items-center gap-3 p-3"
+                    key={client.clientId}
+                  >
+                    <Avatar
+                      size={10}
+                      img={client.picture ?? undefined}
+                      name={client.name}
+                      seed={uniqueKey(client.clientId)}
+                      className="rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <div className="text-title-3 text-neutral-900">
+                        {client.name}
+                      </div>
+                      <div className="text-label-2 text-neutral-400">
+                        ID: {client.clientId}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <Avatar
+                size={32}
+                img={user.picture ?? undefined}
+                name={context.name}
+                seed={uniqueKey(context.studentId.toString())}
+              />
+              <div className="mt-3 flex flex-col items-center">
+                <div className="text-title-1 text-center text-neutral-950">
+                  {context.name}
+                </div>
+                <div className="text-body-1 text-center text-neutral-400">
+                  {context.email}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </FunnelLayout>
     </form>
