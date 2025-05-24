@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useIsMountedRef } from './use-is-mounted-ref';
+import { useIsMounted } from './use-is-mounted';
 
 export function useLoading(): [
   boolean,
   <T>(promise: Promise<T>) => Promise<T>,
 ] {
   const [loading, setLoading] = useState(false);
-  const ref = useIsMountedRef();
+  const { getIsMounted } = useIsMounted();
 
   const startLoading = useCallback(
     async <T>(promise: Promise<T>) => {
@@ -14,12 +14,12 @@ export function useLoading(): [
         setLoading(true);
         return await promise;
       } finally {
-        if (ref.isMounted) {
+        if (getIsMounted()) {
           setLoading(false);
         }
       }
     },
-    [ref.isMounted],
+    [getIsMounted],
   );
 
   return useMemo(() => [loading, startLoading], [loading, startLoading]);
