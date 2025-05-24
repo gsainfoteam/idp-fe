@@ -19,7 +19,7 @@ export function ClientPictureForm({
   const [uploadLoading, startUploadLoading] = useLoading();
   const [deleteLoading, startDeleteLoading] = useLoading();
   const { t } = useTranslation();
-  const { changeImage, deleteImage, uploadImage } = useClientPictureForm(
+  const { changeImage, deleteImage } = useClientPictureForm(
     client,
     setPreviewImage,
     onUpdated,
@@ -53,9 +53,7 @@ export function ClientPictureForm({
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                onChange={(e) =>
-                  startUploadLoading(changeImage(e).then(uploadImage))
-                }
+                onChange={(e) => startUploadLoading(changeImage(e))}
                 className="absolute h-0 w-0 appearance-none opacity-0"
               />
               <Button
@@ -79,9 +77,9 @@ export function ClientPictureForm({
       </div>
       {open && (
         <UndoWarningOverlay
-          onNext={async () => {
-            if (await startDeleteLoading(deleteImage())) setOpen(false);
-          }}
+          onNext={() =>
+            startDeleteLoading(deleteImage()).then(() => setOpen(false))
+          }
           close={() => setOpen(false)}
         />
       )}

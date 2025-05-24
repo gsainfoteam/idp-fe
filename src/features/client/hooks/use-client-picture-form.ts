@@ -27,39 +27,34 @@ export const useClientPictureForm = (
 
   const { formState, watch, setValue } = form;
 
-  const changeImage = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return false;
+    if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      toast.error(t('services.detail.picture.errors.invalid_image_type'));
-      return false;
+      throw t('services.detail.picture.errors.invalid_image_type');
     }
 
     if (file.size > MAX_IMAGE_KB * 1024) {
-      toast.error(
-        t('services.detail.picture.errors.image_too_large', {
-          max_size_mb: MAX_IMAGE_KB / 1024,
-        }),
-      );
-      return false;
+      throw t('services.detail.picture.errors.image_too_large', {
+        max_size_mb: MAX_IMAGE_KB / 1024,
+      });
     }
 
-    return new Promise<boolean>((resolve) => {
+    return new Promise<void>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         if (typeof e.target?.result === 'string') {
           setPreviewImage(e.target?.result);
           setValue('image', file, { shouldDirty: true });
-          resolve(true);
+          resolve();
         } else {
-          resolve(false);
+          reject(t('services.detail.picture.errors.failed_to_read'));
         }
       };
-      reader.onerror = () => {
-        resolve(false);
-      };
+      reader.onerror = () =>
+        reject(t('services.detail.picture.errors.failed_to_read'));
     });
   };
 
@@ -69,37 +64,28 @@ export const useClientPictureForm = (
     if (status) {
       switch (status) {
         case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          break;
+          throw t('toast.invalid_token');
         case 'FORBIDDEN':
-          toast.error(t('toast.invalid_user'));
-          break;
+          throw t('toast.invalid_user');
         case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
+          throw t('toast.server_error');
         case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+          throw t('toast.unknown_error');
       }
-
-      return false;
     }
 
     setPreviewImage(null);
     setValue('image', undefined, { shouldDirty: true });
     onUpdated();
-
-    return true;
   };
 
   const uploadImage = async () => {
     const imageFile = watch('image');
-    if (!imageFile) return false;
+    if (!imageFile) return;
 
     const error = formState.errors.image;
     if (error?.message != null) {
-      toast.error(error.message);
-      return false;
+      throw error.message;
     }
 
     let compressedFile: File;
@@ -111,8 +97,7 @@ export const useClientPictureForm = (
         fileType: 'image/webp',
       });
     } catch (error) {
-      toast.error(t('services.detail.picture.errors.failed_to_compress'));
-      return false;
+      throw t('services.detail.picture.errors.failed_to_compress');
     }
 
     const { data, status } = await patchClientPicture(
@@ -123,20 +108,16 @@ export const useClientPictureForm = (
     if (!data || status) {
       switch (status) {
         case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          break;
+          throw t('toast.invalid_token');
         case 'FORBIDDEN':
-          toast.error(t('toast.invalid_user'));
-          break;
+          throw t('toast.invalid_user');
         case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
+          throw t('toast.server_error');
         case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+          throw t('toast.unknown_error');
       }
 
-      return false;
+      return;
     }
 
     try {
@@ -148,14 +129,29 @@ export const useClientPictureForm = (
 
       if (!uploadResponse.ok) throw uploadResponse;
     } catch (error) {
-      toast.error(t('services.detail.picture.errors.failed_to_upload'));
-      return false;
+      throw t('services.detail.picture.errors.failed_to_upload');
     }
 
     onUpdated();
-
-    return true;
   };
 
-  return { form, changeImage, deleteImage, uploadImage };
+  const changeImageWithToast = (event: ChangeEvent<HTMLInputElement>) =>
+    toast.promise(handleChangeImage(event).then(uploadImage), {
+      loading: t('services.detail.picture.saving'),
+      success: t('services.detail.picture.uploaded'),
+      error: (err) => err.toString(),
+    });
+
+  const deleteImageWithToast = () =>
+    toast.promise(deleteImage(), {
+      loading: t('services.detail.picture.deleting'),
+      success: t('services.detail.picture.deleted'),
+      error: (err) => err.toString(),
+    });
+
+  return {
+    form,
+    changeImage: changeImageWithToast,
+    deleteImage: deleteImageWithToast,
+  };
 };

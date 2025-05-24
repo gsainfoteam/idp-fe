@@ -1,6 +1,5 @@
 import { useParams } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { ClientIdTokenForm } from '../components/client-id-token-form';
@@ -22,10 +21,7 @@ const Inner = ({
   refetch: () => void;
 }) => {
   const { t } = useTranslation();
-  const onUpdated = () => {
-    toast.success(t('services.detail.updated'));
-    refetch();
-  };
+  const onUpdated = () => refetch();
 
   const { form: infoForm, onSubmit: onInfoSubmit } = useClientInfoForm(client);
   const { form: scopesForm } = useClientDetailsForm(client, onUpdated);

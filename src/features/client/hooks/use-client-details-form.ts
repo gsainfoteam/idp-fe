@@ -49,53 +49,61 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
     if (!updateRequired) return;
 
     const timer = setTimeout(async () => {
-      const urls = (values.urls ?? [])
-        .filter((v) => v != null)
-        .filter((v) => v !== '');
+      await toast.promise(
+        async () => {
+          const urls = (values.urls ?? [])
+            .filter((v) => v != null)
+            .filter((v) => v !== '');
 
-      const { data, status } = await patchClient(client.clientId, {
-        scopes: Object.entries(values.scopes ?? {})
-          .filter(([, value]) => value === 'required')
-          .map(([key]) => key),
-        optionalScopes: Object.entries(values.scopes ?? {})
-          .filter(([, value]) => value === 'optional')
-          .map(([key]) => key),
-        idTokenAllowed: values.idTokenAllowed,
-        urls,
-      });
+          const { data, status } = await patchClient(client.clientId, {
+            scopes: Object.entries(values.scopes ?? {})
+              .filter(([, value]) => value === 'required')
+              .map(([key]) => key),
+            optionalScopes: Object.entries(values.scopes ?? {})
+              .filter(([, value]) => value === 'optional')
+              .map(([key]) => key),
+            idTokenAllowed: values.idTokenAllowed,
+            urls,
+          });
 
-      if (!data || status) {
-        switch (status) {
-          case 'UNAUTHORIZED':
-            toast.error(t('toast.invalid_user'));
-            break;
-          case 'FORBIDDEN':
-            toast.error(t('common.errors.forbidden'));
-            break;
-          case 'SERVER_ERROR':
-            toast.error(t('toast.server_error'));
-            break;
-          case 'UNKNOWN_ERROR':
-            toast.error(t('toast.unknown_error'));
-            break;
-        }
+          if (!data || status) {
+            switch (status) {
+              case 'UNAUTHORIZED':
+                toast.error(t('toast.invalid_user'));
+                break;
+              case 'FORBIDDEN':
+                toast.error(t('common.errors.forbidden'));
+                break;
+              case 'SERVER_ERROR':
+                toast.error(t('toast.server_error'));
+                break;
+              case 'UNKNOWN_ERROR':
+                toast.error(t('toast.unknown_error'));
+                break;
+            }
 
-        return;
-      }
+            return;
+          }
 
-      setUpdateRequired(false);
-      onUpdated();
+          setUpdateRequired(false);
+          onUpdated();
 
-      form.reset({
-        idTokenAllowed: data.idTokenAllowed,
-        scopes: Object.fromEntries([
-          ...data.scopes.map((v) => [v, 'required']),
-          ...data.optionalScopes.map((v) => [v, 'optional']),
-        ]),
-        urls: data.urls,
-      });
+          form.reset({
+            idTokenAllowed: data.idTokenAllowed,
+            scopes: Object.fromEntries([
+              ...data.scopes.map((v) => [v, 'required']),
+              ...data.optionalScopes.map((v) => [v, 'optional']),
+            ]),
+            urls: data.urls,
+          });
+        },
+        {
+          loading: t('services.detail.saving'),
+          success: t('services.detail.updated'),
+          error: t('services.detail.update_failed'),
+        },
+      );
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [client.clientId, form, onUpdated, t, updateRequired, values]);
 
