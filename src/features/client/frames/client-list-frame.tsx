@@ -38,7 +38,7 @@ export function ClientListFrame() {
                   name={client.name}
                   img={client.picture ?? undefined}
                   seed={uniqueKey(client.clientId)}
-                  className="text-title-1 rounded-lg"
+                  className="rounded-lg"
                 />
                 <div className="flex-1">
                   <div className="text-title-3 text-neutral-900">

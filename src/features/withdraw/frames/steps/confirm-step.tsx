@@ -73,7 +73,7 @@ export function ConfirmStep({
                     img={client.picture ?? undefined}
                     name={client.name}
                     seed={uniqueKey(client.clientId)}
-                    className="text-title-1 rounded-lg"
+                    className="rounded-lg"
                   />
                   <div className="flex-1">
                     <div className="text-title-3 text-neutral-900">
@@ -88,7 +88,7 @@ export function ConfirmStep({
                   size={32}
                   img={user.picture ?? undefined}
                   name={context.name}
-                  seed={uniqueKey(context.studentId.toString())}
+                  seed={uniqueKey(context.studentId)}
                 />
                 <div className="mt-3 flex flex-col items-center">
                   <div className="text-title-1 text-center text-neutral-950">

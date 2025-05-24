@@ -1,13 +1,13 @@
-import { deleteUserPicture } from '@/data/delete-user-picture';
-import { patchUserPicture } from '@/data/patch-user-picture';
-import { useAuth } from '@/features/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { z } from 'zod';
+import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { patchClientPicture } from '@/data/patch-client-picture';
+import { Client } from './use-client';
 import imageCompression from 'browser-image-compression';
+import { deleteClientPicture } from '@/data/delete-client-picture';
 
 const MAX_IMAGE_KB = 1024;
 
@@ -15,55 +15,64 @@ const schema = z.object({
   image: z.instanceof(File).optional(),
 });
 
-export const useProfileEditForm = (
-  previewFile: string | null,
+export const useClientPictureForm = (
+  client: Client,
   setPreviewImage: Dispatch<SetStateAction<string | null>>,
+  onUpdated: () => void,
 ) => {
-  const { refetch } = useAuth();
   const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(schema),
   });
 
-  const { formState, getValues, setValue } = form;
+  const { formState, watch, setValue } = form;
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return false;
 
     if (!file.type.startsWith('image/')) {
-      toast.error(t('profile_change.errors.invalid_image_type'));
+      toast.error(t('services.detail.picture.errors.invalid_image_type'));
       return false;
     }
 
     if (file.size > MAX_IMAGE_KB * 1024) {
       toast.error(
-        t('profile_change.errors.image_too_large', {
+        t('services.detail.picture.errors.image_too_large', {
           max_size_mb: MAX_IMAGE_KB / 1024,
         }),
       );
       return false;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      if (typeof e.target?.result === 'string') {
-        setPreviewImage(e.target?.result);
-        setValue('image', file, { shouldDirty: true });
-      }
-    };
-
-    return true;
+    return new Promise<boolean>((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        if (typeof e.target?.result === 'string') {
+          setPreviewImage(e.target?.result);
+          setValue('image', file, { shouldDirty: true });
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      };
+      reader.onerror = () => {
+        resolve(false);
+      };
+    });
   };
 
   const deleteImage = async () => {
-    const { status } = await deleteUserPicture();
+    const { status } = await deleteClientPicture(client.clientId);
 
     if (status) {
       switch (status) {
         case 'INVALID_TOKEN':
           toast.error(t('toast.invalid_token'));
+          break;
+        case 'FORBIDDEN':
+          toast.error(t('toast.invalid_user'));
           break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
@@ -78,12 +87,13 @@ export const useProfileEditForm = (
 
     setPreviewImage(null);
     setValue('image', undefined, { shouldDirty: true });
-    await refetch();
+    onUpdated();
+
     return true;
   };
 
-  const changeImage = async () => {
-    const imageFile = getValues('image');
+  const uploadImage = async () => {
+    const imageFile = watch('image');
     if (!imageFile) return false;
 
     const error = formState.errors.image;
@@ -101,16 +111,22 @@ export const useProfileEditForm = (
         fileType: 'image/webp',
       });
     } catch (error) {
-      toast.error(t('profile_change.errors.failed_to_compress'));
+      toast.error(t('services.detail.picture.errors.failed_to_compress'));
       return false;
     }
 
-    const { data, status } = await patchUserPicture(compressedFile.size);
+    const { data, status } = await patchClientPicture(
+      client.clientId,
+      compressedFile.size,
+    );
 
     if (!data || status) {
       switch (status) {
         case 'INVALID_TOKEN':
           toast.error(t('toast.invalid_token'));
+          break;
+        case 'FORBIDDEN':
+          toast.error(t('toast.invalid_user'));
           break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
@@ -131,19 +147,15 @@ export const useProfileEditForm = (
       });
 
       if (!uploadResponse.ok) throw uploadResponse;
-      await refetch();
     } catch (error) {
-      toast.error(t('profile_change.errors.failed_to_upload'));
+      toast.error(t('services.detail.picture.errors.failed_to_upload'));
       return false;
     }
+
+    onUpdated();
 
     return true;
   };
 
-  const onSubmit = async () => {
-    if (!previewFile) return await deleteImage();
-    else return await changeImage();
-  };
-
-  return { form, onSubmit, handleImageChange };
+  return { form, changeImage, deleteImage, uploadImage };
 };

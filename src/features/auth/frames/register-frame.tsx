@@ -10,7 +10,7 @@ import {
   Pretty,
   RequireKeys,
   useFunnel,
-  UndoWarningStep,
+  UndoWarningOverlay,
 } from '@/features/core';
 
 type StepContext = Pretty<
@@ -61,7 +61,7 @@ export function RegisterFrame() {
       undoOverlay={funnel.Render.overlay({
         // undoOverlay -> complete/info/password/code -> emailOverlay -> email
         render: ({ history, close }) => (
-          <UndoWarningStep onNext={() => history.go(-3)} close={close} />
+          <UndoWarningOverlay onNext={() => history.go(-3)} close={close} />
         ),
       })}
       code={({ history, context }) => (
