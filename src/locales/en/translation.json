@@ -203,8 +203,13 @@
           "failed_to_compress": "Failed to compress image",
           "failed_to_upload": "Failed to upload image",
           "image_too_large": "Image size exceeds {{max_size_mb}}MB",
-          "invalid_image_type": "Invalid image type"
-        }
+          "invalid_image_type": "Invalid image type",
+          "failed_to_read": "Failed to read image"
+        },
+        "deleted": "Image has been deleted",
+        "deleting": "Deleting image ...",
+        "saving": "Saving image ...",
+        "uploaded": "Image has been uploaded"
       },
       "info": {
         "title": "Service Information",
@@ -244,7 +249,9 @@
           "format": "Please enter the URL"
         }
       },
-      "success": "Connection has been completed"
+      "success": "Connection has been completed",
+      "saving": "Saving changes ...",
+      "update_failed": "Failed to save changes"
     },
     "openid": {
       "enable": "Enable id_token",
@@ -384,7 +391,8 @@
       "failed_to_upload": "Failed to upload image",
       "failed_to_compress": "Failed to compress image",
       "image_too_large": "Image size exceeds {{max_size_mb}}MB",
-      "invalid_image_type": "Invalid image type"
+      "invalid_image_type": "Invalid image type",
+      "failed_to_read": "Failed to read image"
     }
   }
 }

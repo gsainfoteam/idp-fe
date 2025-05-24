@@ -196,10 +196,18 @@
     },
     "detail": {
       "title": "서비스 상세",
+      "success": "연동이 완료되었어요",
       "updated": "변경사항이 저장되었어요",
+      "saving": "변경사항 저장 중...",
+      "update_failed": "변경사항을 저장하는데 실패했어요",
       "picture": {
         "title": "서비스 로고",
+        "saving": "이미지 업로드 중...",
+        "deleting": "이미지 삭제 중...",
+        "uploaded": "이미지가 업로드되었어요",
+        "deleted": "이미지가 삭제되었어요",
         "errors": {
+          "failed_to_read": "이미지를 읽는데 실패했어요",
           "failed_to_upload": "이미지 업로드에 실패했어요",
           "failed_to_compress": "이미지 압축에 실패했습니다",
           "image_too_large": "이미지 크기가 {{max_size_mb}}MB를 초과했습니다",
@@ -243,8 +251,7 @@
         "errors": {
           "format": "URL을 입력해주세요"
         }
-      },
-      "success": "연동이 완료되었어요"
+      }
     },
     "openid": {
       "enable": "id_token 활성화",
@@ -384,7 +391,8 @@
       "failed_to_upload": "이미지 업로드에 실패했어요",
       "failed_to_compress": "이미지 압축에 실패했습니다",
       "image_too_large": "이미지 크기가 {{max_size_mb}}MB를 초과했습니다",
-      "invalid_image_type": "잘못된 파일 형식입니다"
+      "invalid_image_type": "잘못된 파일 형식입니다",
+      "failed_to_read": "이미지를 읽는데 실패했어요"
     }
   }
 }
