@@ -92,7 +92,7 @@ export function FunnelLayout({
               </div>
 
               {/* Content Box */}
-              <div className="z-0 w-full flex-1 bg-white px-5 pt-2 pb-4">
+              <div className="z-0 w-full flex-1 bg-white px-5 py-4">
                 {children}
               </div>
             </LoadingOverlay>

@@ -61,7 +61,11 @@ function Inner({
               >
                 {t('authorize.buttons.cancel')}
               </Button>
-              <Button variant="primary" className="w-full">
+              <Button
+                variant="primary"
+                className="w-full"
+                disabled={!!form.formState.errors.root}
+              >
                 {t('authorize.buttons.continue')}
               </Button>
             </div>
