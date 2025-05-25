@@ -97,10 +97,10 @@ export function Button({
           <LoadingEllipse
             className={cn(
               variant === 'default'
-                ? 'bg-neutral-600'
+                ? 'bg-button-loading-ellipse-default'
                 : variant === 'primary'
-                  ? 'bg-neutral-200'
-                  : 'bg-primary-600',
+                  ? 'bg-button-loading-ellipse-primary'
+                  : 'bg-button-loading-ellipse-secondary',
             )}
           />
         </div>

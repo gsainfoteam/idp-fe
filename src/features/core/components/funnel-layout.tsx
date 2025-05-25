@@ -60,7 +60,7 @@ export function FunnelLayout({
               {title && !hideUndo && (
                 <div className="absolute left-0">
                   <BackButton
-                    style={{ color: 'var(--color-neutral-600)' }}
+                    style={{ color: 'var(--color-back-button)' }}
                     onUndo={onUndo}
                   />
                 </div>

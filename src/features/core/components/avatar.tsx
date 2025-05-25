@@ -56,7 +56,7 @@ export function Avatar({
     return (
       <div
         className={cn(
-          'flex items-center justify-center rounded-full font-extrabold text-white',
+          'text-avatar-label flex items-center justify-center rounded-full font-extrabold',
           className,
         )}
         style={{

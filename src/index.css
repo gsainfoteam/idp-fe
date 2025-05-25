@@ -77,9 +77,26 @@
   --color-avatar-green: #a5d6a7;
   --color-avatar-purple: #b39dda;
   --color-avatar-orange: #ffcc80;
+  --color-avatar-label: #ffffff;
+
+  /* Back Button Color */
+  --color-back-button: #5d5d5d;
+
+  /* Bottom Sheet Colors */
+  --color-bottom-sheet-background: #ffffff;
+  --color-bottom-sheet-shadow: #000000;
+  --color-bottom-sheet-handle: #d1d1d1;
 
   /* Button Colors */
-  
+  --color-button-primary: #ff5f0a;
+  --color-button-primary-hover: #ff4500;
+  --color-button-primary-active: #cc2f02;
+  --color-button-primary-disabled: #a1250b;
+  --color-button-primary-disabled-hover: #82220c;
+  --color-button-primary-disabled-active: #460d04;
+  --color-button-loading-ellipse-default: #5d5d5d;
+  --color-button-loading-ellipse-primary: #d1d1d1;
+  --color-button-loading-ellipse-secondary: #ff5f0a;
 }
 
 @layer theme {
@@ -122,6 +139,21 @@
     --color-neutral-800: #9d9d9d;
     --color-neutral-900: #adadad;
     --color-neutral-950: #f6f6f6;
+
+    /* Back Button Color */
+    --color-back-button: #ffffff;
+
+    /* Avatar Colors */
+    --color-avatar-label: #000000;
+
+    /* Bottom Sheet Colors */
+    --color-bottom-sheet-background: #1a1a1a;
+    --color-bottom-sheet-shadow: #000000;
+    --color-bottom-sheet-handle: #2d2d2d;
+
+    /* Button Colors */
+    --color-button-loading-ellipse-default: #ffffff;
+    --color-button-loading-ellipse-primary: #2d2d2d;
   }
 }
 
