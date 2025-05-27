@@ -26,7 +26,7 @@ export const Checkbox = forwardRef<
               : 'cursor-pointer',
           )}
         >
-          <CheckIcon className="hidden text-white" />
+          <CheckIcon className="text-button-label hidden" />
         </div>
         <div
           className={cn(
