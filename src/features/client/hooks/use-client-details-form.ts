@@ -11,7 +11,7 @@ import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
-  name: z.string().min(1),
+  name: z.string().refine((v) => v.trim() !== ''),
   idTokenAllowed: z.boolean(),
   scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
   urls: z.array(z.string().url()),
