@@ -24,13 +24,13 @@ const Inner = ({
   const { t } = useTranslation();
   const onUpdated = () => refetch();
 
-  const { form } = useClientDetailsForm(client, onUpdated);
+  const { form, setNameBlurred } = useClientDetailsForm(client, onUpdated);
 
   return (
     <FormProvider {...form}>
       <FunnelLayout
         title={t('services.detail.title')}
-        stepTitle={<ClientNameForm />}
+        stepTitle={<ClientNameForm setNameBlurred={setNameBlurred} />}
       >
         <div className="mb-4 flex flex-col gap-5">
           <ClientPictureForm client={client} onUpdated={onUpdated} />

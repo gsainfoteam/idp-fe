@@ -1,14 +1,17 @@
 import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { cn } from '@/features/core';
 import { useFormContext } from 'react-hook-form';
 import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
-export function ClientNameForm() {
+export function ClientNameForm({
+  setNameBlurred,
+}: {
+  setNameBlurred: Dispatch<SetStateAction<boolean>>;
+}) {
   const { register, watch, formState } =
     useFormContext<ClientDetailsFormSchema>();
 
-  const [isFocused, setFocused] = useState(false);
   const [isError, setIsError] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
 
@@ -33,21 +36,17 @@ export function ClientNameForm() {
 
   return (
     <div ref={containerRef} className="flex w-full items-center gap-2">
-      <label className="flex items-center gap-2">
+      <label className="group flex items-center gap-2">
         <input
           type="text"
           style={{ width: inputWidth }}
           className={cn(
-            'border-b-2 bg-white transition-colors focus:outline-none',
-            isError
-              ? 'border-red-400'
-              : isFocused
-                ? 'border-neutral-400'
-                : 'border-transparent',
+            'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
+            isError && 'border-red-400 focus:border-red-400',
           )}
-          onFocus={() => setFocused(true)}
+          onFocus={() => setNameBlurred(false)}
           {...register('name', {
-            onBlur: () => setFocused(false),
+            onBlur: () => setNameBlurred(true),
           })}
         />
         <span ref={spanRef} className="invisible absolute">
@@ -55,12 +54,8 @@ export function ClientNameForm() {
         </span>
         <EditLineIcon
           className={cn(
-            'transition-colors',
-            isError
-              ? 'text-red-400'
-              : isFocused
-                ? 'text-neutral-400'
-                : 'text-neutral-200',
+            'text-neutral-200 transition-colors group-focus-within:text-neutral-400',
+            isError && 'text-red-400 group-focus-within:text-red-400',
           )}
           width={iconSize}
           height={iconSize}
