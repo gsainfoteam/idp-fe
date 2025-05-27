@@ -3,13 +3,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
-import CheckIcon from '@/assets/icons/line/check.svg?react';
-import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
 import { PasswordInput } from './password-input';
 import { Label } from './label';
 import { timeString } from '../utils/time-string';
 
+import AddIcon from '@/assets/icons/line/add.svg?react';
+import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
+
 import { Input } from './input';
+import { CopyInput } from './copy-input';
 
 const meta = {
   component: Input,
@@ -87,12 +89,12 @@ export function InputTestFrame() {
           <Input
             className="w-[200px]"
             placeholder="텍스트를 입력하세요"
-            prefixAdornment={<CheckIcon />}
+            prefixAdornment={<AddIcon />}
           />
           <Input
             className="w-[200px]"
             placeholder="텍스트 입력"
-            prefixAdornment={<CheckIcon />}
+            prefixAdornment={<ChevronRightIcon />}
             error
           />
           <Input
@@ -106,15 +108,22 @@ export function InputTestFrame() {
               />
             }
           />
-          <Input
-            className="w-[200px]"
+          <CopyInput
+            className="w-[250px]"
             placeholder="텍스트를 입력하세요"
-            suffixAdornment={<ClipboardIcon onClick={() => alert('Copied!')} />}
+            value="asdf"
+            success="Copied!"
           />
           <Input
             className="w-[100px]"
             placeholder="체중"
             suffixAdornment={<div className="text-label-1">kg</div>}
+          />
+          <CopyInput
+            className="w-[200px]"
+            placeholder="텍스트를 입력하세요"
+            value="1234567890"
+            success="Copied!"
           />
           <PasswordInput
             className="w-[250px]"
