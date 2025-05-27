@@ -33,7 +33,7 @@ export const useTheme = () => {
     const handleChange = (e: MediaQueryListEvent) => {
       const newTheme = e.matches ? 'dark' : 'light';
       setSystemTheme(newTheme);
-      applyTheme(newTheme);
+      if (theme === 'system') applyTheme(newTheme);
     };
 
     mediaQuery.addEventListener('change', handleChange);
