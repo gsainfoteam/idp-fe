@@ -11,6 +11,7 @@ import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
+  name: z.string().min(1),
   idTokenAllowed: z.boolean(),
   scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
   urls: z.array(z.string().url()),
@@ -23,6 +24,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
+      name: client.name,
       idTokenAllowed: client.idTokenAllowed,
       scopes: Object.fromEntries([
         ...client.scopes.map((v) => [v, 'required']),
@@ -30,11 +32,13 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
       ]),
       urls: client.urls,
     },
+    mode: 'onChange',
   });
 
   const [updateRequired, setUpdateRequired] = useState(false);
   const values = useWatch({ control: form.control });
   const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
+  const isInvalid = Object.keys(form.formState.errors).length > 0;
 
   useEffect(() => {
     if (!updateRequired) return;
@@ -46,7 +50,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [updateRequired]);
 
   useEffect(() => {
-    if (!updateRequired) return;
+    if (!updateRequired || isInvalid) return;
 
     const timer = setTimeout(async () => {
       await toast.promise(
@@ -56,6 +60,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
             .filter((v) => v !== '');
 
           const { data, status } = await patchClient(client.clientId, {
+            name: values.name,
             scopes: Object.entries(values.scopes ?? {})
               .filter(([, value]) => value === 'required')
               .map(([key]) => key),
@@ -89,6 +94,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
           onUpdated();
 
           form.reset({
+            name: data.name,
             idTokenAllowed: data.idTokenAllowed,
             scopes: Object.fromEntries([
               ...data.scopes.map((v) => [v, 'required']),
@@ -105,13 +111,13 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
       );
     }, 1000);
     return () => clearTimeout(timer);
-  }, [client.clientId, form, onUpdated, t, updateRequired, values]);
+  }, [client.clientId, form, onUpdated, t, updateRequired, values, isInvalid]);
 
   useEffect(() => {
-    if (hasDirty) {
+    if (hasDirty && !isInvalid) {
       setUpdateRequired(true);
     }
-  }, [hasDirty]);
+  }, [hasDirty, isInvalid]);
 
   return { form, setUpdateRequired };
 };
