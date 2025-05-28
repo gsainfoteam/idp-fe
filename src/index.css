@@ -88,15 +88,33 @@
   --color-bottom-sheet-handle: #d1d1d1;
 
   /* Button Colors */
+  --color-button-neutral-border: #d1d1d1;
+  --color-button-default-label: #000000;
+  --color-button-default-background: #f6f6f6;
+  --color-button-default-active: #e7e7e7;
+  --color-button-default-disabled-border: #b0b0b0;
+  --color-button-default-disabled-background: #d1d1d1;
+  --color-button-default-disabled-label: #5d5d5d;
   --color-button-primary: #ff5f0a;
   --color-button-primary-hover: #ff4500;
   --color-button-primary-active: #cc2f02;
   --color-button-primary-disabled: #a1250b;
   --color-button-primary-disabled-hover: #82220c;
   --color-button-primary-disabled-active: #460d04;
+  --color-button-text-label: #ff5f0a;
+  --color-button-text-active: #cc2f02;
+  --color-button-text-disabled: #d1d1d1;
+  --color-button-secondary-border: #ff5f0a;
+  --color-button-secondary-background: #ffffff;
+  --color-button-secondary-active: #fff6ec;
+  --color-button-secondary-disabled-background: #f6f6f6;
+  --color-button-secondary-label: #ff5f0a;
+  --color-button-secondary-disabled-label: #5d5d5d;
+  --color-button-secondary-disabled-background: #f6f6f6;
   --color-button-loading-ellipse-default: #5d5d5d;
   --color-button-loading-ellipse-primary: #d1d1d1;
   --color-button-loading-ellipse-secondary: #ff5f0a;
+  --color-button-label: #ffffff;
 }
 
 @layer theme {
@@ -154,6 +172,38 @@
     /* Button Colors */
     --color-button-loading-ellipse-default: #ffffff;
     --color-button-loading-ellipse-primary: #2d2d2d;
+    --button-primary: #ff4500;
+    --button-primary-hover: #ff5f0a;
+    --button-primary-active: #cc2f02;
+    --button-primary-disabled: #a1250b;
+    --button-primary-50: #2d1a0c;
+    --color-button-neutral-border: #d1d1d1;
+    --color-button-default-label: #000000;
+    --color-button-default-background: #f6f6f6;
+    --color-button-default-active: #e7e7e7;
+    --color-button-default-disabled-border: #b0b0b0;
+    --color-button-default-disabled-background: #d1d1d1;
+    --color-button-default-disabled-label: #5d5d5d;
+    --color-button-primary: #ff5f0a;
+    --color-button-primary-hover: #ff4500;
+    --color-button-primary-active: #cc2f02;
+    --color-button-primary-disabled: #a1250b;
+    --color-button-primary-disabled-hover: #82220c;
+    --color-button-primary-disabled-active: #460d04;
+    --color-button-text-label: #ff5f0a;
+    --color-button-text-active: #cc2f02;
+    --color-button-text-disabled: #d1d1d1;
+    --color-button-secondary-border: #ff5f0a;
+    --color-button-secondary-background: #ffffff;
+    --color-button-secondary-active: #fff6ec;
+    --color-button-secondary-disabled-background: #f6f6f6;
+    --color-button-secondary-label: #ff5f0a;
+    --color-button-secondary-disabled-label: #5d5d5d;
+    --color-button-secondary-disabled-background: #f6f6f6;
+    --color-button-loading-ellipse-default: #5d5d5d;
+    --color-button-loading-ellipse-primary: #d1d1d1;
+    --color-button-loading-ellipse-secondary: #ff5f0a;
+    --color-button-label: #ffffff;
   }
 }
 

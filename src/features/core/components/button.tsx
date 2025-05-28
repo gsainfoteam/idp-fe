@@ -17,12 +17,12 @@ const buttonStyle = cva(
     variants: {
       variant: {
         default:
-          'rounded-lg border border-neutral-200 bg-neutral-50 px-5 py-3 text-black active:bg-neutral-100 disabled:border-neutral-300 disabled:bg-neutral-200 disabled:text-neutral-300',
+          'border-button-default-disabled-border bg-button-default-background active:bg-button-default-active disabled:border-button-default-disabled-border disabled:bg-button-default-disabled-background disabled:text-button-default-disabled-label text-button-default-label rounded-lg border px-5 py-3',
         primary:
-          'bg-primary-600 active:bg-primary-700 rounded-lg px-5 py-3 text-white disabled:bg-neutral-200',
+          'bg-button-primary active:bg-button-primary-active disabled:bg-button-primary-disabled text-button-label rounded-lg px-5 py-3',
         secondary:
-          'text-primary-600 border-primary-600 active:bg-primary-50 rounded-lg border bg-white px-5 py-3 disabled:border-neutral-200 disabled:bg-neutral-50 disabled:text-neutral-200',
-        text: 'text-primary-600 active:text-primary-700 px-5 py-3 disabled:text-neutral-200',
+          'text-button-primary border-button-primary active:bg-button-primary-50 disabled:border-button-secondary-disabled-border disabled:bg-button-secondary-disabled-background disabled:text-button-secondary-disabled-label rounded-lg border bg-white px-5 py-3',
+        text: 'text-button-primary active:text-button-text-active disabled:text-button-text-disabled px-5 py-3',
         link: 'text-body-1 text-neutral-400 underline active:text-neutral-600 disabled:cursor-default disabled:text-neutral-200',
       },
       loading: {
@@ -38,22 +38,23 @@ const buttonStyle = cva(
       {
         variant: 'default',
         loading: true,
-        className: 'border-neutral-300 bg-neutral-200',
+        className:
+          'bg-button-default-disabled-background border-button-default-disabled-border',
       },
       {
         variant: 'primary',
         loading: true,
-        className: 'bg-primary-700',
+        className: 'bg-button-primary-active',
       },
       {
         variant: 'secondary',
         loading: true,
-        className: 'bg-primary-50',
+        className: 'bg-button-secondary-active',
       },
       {
         variant: 'link',
         loading: true,
-        className: 'text-neutral-200',
+        className: 'text-button-text-disabled',
       },
     ],
   },
