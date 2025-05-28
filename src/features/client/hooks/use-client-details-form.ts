@@ -36,7 +36,6 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   });
 
   const [updateRequired, setUpdateRequired] = useState(false);
-  const [isNameBlurred, setNameBlurred] = useState(true);
   const values = useWatch({ control: form.control });
   const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
   const isInvalid = Object.keys(form.formState.errors).length > 0;
@@ -51,7 +50,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [updateRequired]);
 
   useEffect(() => {
-    if (!updateRequired || isInvalid || !isNameBlurred) return;
+    if (!updateRequired || isInvalid) return;
 
     const timer = setTimeout(async () => {
       await toast.promise(
@@ -115,10 +114,10 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [client.clientId, form, onUpdated, t, updateRequired, values, isInvalid]);
 
   useEffect(() => {
-    if (hasDirty && !isInvalid && isNameBlurred) {
+    if (hasDirty && !isInvalid) {
       setUpdateRequired(true);
     }
-  }, [hasDirty, isInvalid, isNameBlurred]);
+  }, [hasDirty, isInvalid]);
 
-  return { form, setUpdateRequired, setNameBlurred };
+  return { form };
 };

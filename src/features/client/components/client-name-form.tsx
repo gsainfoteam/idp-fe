@@ -1,16 +1,16 @@
 import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/features/core';
+import { Client } from '../hooks/use-client';
+import { useClientNameForm } from '../hooks/use-client-name-form';
 import { useFormContext } from 'react-hook-form';
 import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
-export function ClientNameForm({
-  setNameBlurred,
-}: {
-  setNameBlurred: Dispatch<SetStateAction<boolean>>;
-}) {
-  const { register, watch, formState } =
-    useFormContext<ClientDetailsFormSchema>();
+export function ClientNameForm({ client }: { client: Client }) {
+  const {
+    form: { register, watch, formState },
+  } = useClientNameForm({ client });
+  const { setValue } = useFormContext<ClientDetailsFormSchema>();
 
   const [isError, setIsError] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
@@ -44,9 +44,11 @@ export function ClientNameForm({
             'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
             isError && 'border-red-400 focus:border-red-400',
           )}
-          onFocus={() => setNameBlurred(false)}
           {...register('name', {
-            onBlur: () => setNameBlurred(true),
+            onBlur: () => {
+              if (formState.errors.name == null)
+                setValue('name', name, { shouldDirty: true });
+            },
           })}
         />
         <span ref={spanRef} className="invisible absolute">
