@@ -143,6 +143,13 @@
   --color-input-disabled-background: #e7e7e7;
   --color-input-disabled-text: #5d5d5d;
   --color-input-error-label: #ff2534;
+
+  /* Label Colors */
+  --color-label-required: #ff2534;
+  --color-label-text: #3d3d3d;
+
+  /* Modal Colors */
+  --color-modal-background: #ffffff;
 }
 
 @layer theme {
@@ -255,6 +262,13 @@
     --color-input-placeholder: #b0b0b0;
     --color-input-border: #b0b0b0;
     --color-input-focus-border: #ff8232;
+
+    /* Label Colors */
+    --color-label-required: #ff2534;
+    --color-label-text: #ffffff;
+
+    /* Modal Colors */
+    --color-modal-background: #1a1a1a;
   }
 }
 
