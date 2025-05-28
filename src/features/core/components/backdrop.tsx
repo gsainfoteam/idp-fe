@@ -4,13 +4,13 @@ import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion';
 import { cn } from '../utils/cn';
 
 interface BackdropProps extends Omit<HTMLMotionProps<'div'>, 'ref'> {
-  open: boolean;
-  onClose: () => void;
+  isOpen: boolean;
+  close: () => void;
 }
 
 export function Backdrop({
-  open,
-  onClose,
+  isOpen,
+  close,
   className,
   onClick,
   children,
@@ -20,19 +20,19 @@ export function Backdrop({
   const pointerDownRef = useRef<EventTarget | null>(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!isOpen) return;
 
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && open) onClose();
+      if (event.key === 'Escape' && isOpen) close();
     };
 
     window.addEventListener('keydown', handleEscKey);
     return () => window.removeEventListener('keydown', handleEscKey);
-  }, [open, onClose]);
+  }, [isOpen, close]);
 
   return (
     <AnimatePresence>
-      {open && (
+      {isOpen && (
         <motion.div
           key="backdrop"
           initial={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export function Backdrop({
 
             if (pointerDown === backdrop && pointerUp === backdrop) {
               onClick?.(e);
-              onClose();
+              close();
             }
           }}
           {...props}

@@ -7,7 +7,7 @@ import Logo from '@/assets/logos/logo.svg?react';
 const meta = {
   component: Backdrop,
   argTypes: {
-    open: {
+    isOpen: {
       options: [true, false],
       control: { type: 'boolean' },
     },
@@ -36,7 +36,7 @@ const BackdropWithState = ({
   }, [initialOpen]);
 
   return (
-    <Backdrop open={open} onClose={() => setOpen(false)} className={className}>
+    <Backdrop isOpen={open} close={() => setOpen(false)} className={className}>
       <Logo />
     </Backdrop>
   );
@@ -44,11 +44,11 @@ const BackdropWithState = ({
 
 export const Default: Story = {
   args: {
-    open: true,
-    onClose: () => {},
+    isOpen: true,
+    close: () => {},
     className: 'bg-dimmed-50',
   },
-  render: ({ open, className }) => {
+  render: ({ isOpen: open, className }) => {
     return <BackdropWithState open={open} className={className} />;
   },
 };
