@@ -115,6 +115,21 @@
   --color-button-loading-ellipse-primary: #d1d1d1;
   --color-button-loading-ellipse-secondary: #ff5f0a;
   --color-button-label: #ffffff;
+
+  /* Checkbox Colors */
+  --color-checkbox-peer-checked-background: #ff5f0a;
+  --color-checkbox-border: #6d6d6d;
+  --color-checkbox-background: #ffffff;
+  --color-checkbox-disabled-background: #b0b0b0;
+  --color-checkbox-peer-checked-disabled-background: #b0b0b0;
+  --color-checkbox-label: #000000;
+
+  /* Funnel Layout Colors */
+  --color-funnel-background: #ffffff;
+  --color-funnel-shadow: #ffffff;
+  --color-funnel-title: #5d5d5d;
+  --color-funnel-steptitle: #0e0e0e;
+  --color-funnel-description: #6d6d6d;
 }
 
 @layer theme {
@@ -204,6 +219,21 @@
     --color-button-loading-ellipse-primary: #d1d1d1;
     --color-button-loading-ellipse-secondary: #ff5f0a;
     --color-button-label: #ffffff;
+
+    /* Checkbox Colors */
+    --color-checkbox-peer-checked-background: #ff5f0a;
+    --color-checkbox-border: #6d6d6d;
+    --color-checkbox-background: #1a1a1a;
+    --color-checkbox-disabled-background: #b0b0b0;
+    --color-checkbox-peer-checked-disabled-background: #b0b0b0;
+    --color-checkbox-label: #ffffff;
+
+    /* Funnel Layout Colors */
+    --color-funnel-background: #1a1a1a;
+    --color-funnel-shadow: #1a1a1a;
+    --color-funnel-title: #ffffff;
+    --color-funnel-steptitle: #ffffff;
+    --color-funnel-description: #b0b0b0;
   }
 }
 

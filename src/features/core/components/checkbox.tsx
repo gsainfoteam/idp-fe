@@ -20,9 +20,9 @@ export const Checkbox = forwardRef<
         <div
           className={cn(
             'm-1 flex size-6 items-center justify-center rounded transition-all',
-            'peer-checked:bg-primary-500 border border-neutral-500 bg-white peer-checked:border-none peer-checked:*:block',
+            'peer-checked:bg-checkbox-peer-checked-background border-checkbox-border bg-checkbox-background border peer-checked:border-none peer-checked:*:block',
             disabled
-              ? 'cursor-default bg-neutral-300 peer-checked:bg-neutral-300'
+              ? 'bg-checkbox-disabled-background peer-checked:bg-checkbox-peer-checked-disabled-background cursor-default'
               : 'cursor-pointer',
           )}
         >
@@ -30,7 +30,7 @@ export const Checkbox = forwardRef<
         </div>
         <div
           className={cn(
-            'text-body-1 ml-2 text-black',
+            'text-body-1 text-checkbox-label ml-2',
             disabled ? 'cursor-default' : 'cursor-pointer',
           )}
         >
