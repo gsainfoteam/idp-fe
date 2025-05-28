@@ -62,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <div className="relative w-full">
             <div
               ref={prefixRef}
-              className="absolute ml-4 flex h-full cursor-pointer items-center justify-center [&>*]:text-neutral-400"
+              className="[&>*]:text-input-children absolute ml-4 flex h-full cursor-pointer items-center justify-center"
             >
               {prefixAdornment}
             </div>
@@ -75,26 +75,28 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               }}
               className={cn(
                 'w-full rounded-lg py-3',
-                'text-body-1 text-neutral-950 placeholder:text-neutral-400',
-                'focus:border-primary-400 border border-neutral-400 bg-white shadow-none focus:border focus:outline-none',
+                'text-body-1 text-input-text placeholder:text-input-placeholder',
+                'focus:border-input-focus-border border-input-border bg-input-background border shadow-none focus:border focus:outline-none',
                 error &&
-                  'border-red-500 bg-white shadow-[inset_0_0_0_1px_theme(colors.red.500)] focus:border-red-500 focus:shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
+                  'border-input-error-border bg-input-background focus:border-input-error-border shadow-[inset_0_0_0_1px_theme(colors.red.500)] focus:shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
                 disabled &&
-                  'border border-neutral-400 bg-neutral-100 text-neutral-600',
+                  'border-input-disabled-border bg-input-disabled-background text-input-disabled-text',
                 inputClassName,
               )}
               {...props}
             />
             <div
               ref={suffixRef}
-              className="absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center [&>*]:text-neutral-400"
+              className="[&>*]:text-input-children absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center"
             >
               {suffixAdornment}
             </div>
           </div>
         </div>
         {typeof error === 'string' && error.trim().length > 0 && (
-          <div className="text-label-1 mt-1 px-1 text-red-500">{error}</div>
+          <div className="text-label-1 text-input-error-label mt-1 px-1">
+            {error}
+          </div>
         )}
       </div>
     );
