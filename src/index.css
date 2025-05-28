@@ -156,6 +156,15 @@
   --color-multi-state-switch-selected-background: #ffffff;
   --color-multi-state-switch-selected-label: #000000;
   --color-multi-state-switch-unselected-label: #6d6d6d;
+
+  /* Switch Colors */
+  --color-switch-track-background: #d1d1d1;
+  --color-switch-track-background-checked: #ff5f0a;
+  --color-switch-track-disabled-background: #b0b0b0;
+  --color-switch-track-disabled-background-checked: #b0b0b0;
+  --color-switch-track-disabled-checked-children: #ffffff;
+  --color-switch-handle-background: #ffffff;
+  --color-switch-handle-background-disabled: #6d6d6d;
 }
 
 @layer theme {
@@ -281,6 +290,15 @@
     --color-multi-state-switch-selected-background: #000000;
     --color-multi-state-switch-selected-label: #ffffff;
     --color-multi-state-switch-unselected-label: #b0b0b0;
+
+    /* Switch Colors */
+    --color-switch-track-background: #d1d1d1;
+    --color-switch-track-background-checked: #ff5f0a;
+    --color-switch-track-disabled-background: #4f4f4f;
+    --color-switch-track-disabled-background-checked: #4f4f4f;
+    --color-switch-track-disabled-checked-children: #ffffff;
+    --color-switch-handle-background: #d1d1d1;
+    --color-switch-handle-background-disabled: #6d6d6d;
   }
 }
 
