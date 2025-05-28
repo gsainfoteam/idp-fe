@@ -226,11 +226,11 @@
     /* Button Colors */
     --color-button-loading-ellipse-default: #ffffff;
     --color-button-loading-ellipse-primary: #2d2d2d;
-    --button-primary: #ff4500;
-    --button-primary-hover: #ff5f0a;
-    --button-primary-active: #cc2f02;
-    --button-primary-disabled: #a1250b;
-    --button-primary-50: #2d1a0c;
+    --color-button-primary: #ff4500;
+    --color-button-primary-hover: #ff5f0a;
+    --color-button-primary-active: #cc2f02;
+    --color-button-primary-disabled: #a1250b;
+    --color-button-primary-50: #2d1a0c;
     --color-button-neutral-border: #d1d1d1;
     --color-button-default-label: #000000;
     --color-button-default-background: #f6f6f6;
