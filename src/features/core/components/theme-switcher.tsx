@@ -1,9 +1,8 @@
 import { Theme, useTheme } from '../hooks/use-theme';
 
-import AutoLightIcon from '@/assets/icons/line/auto-light-mode.svg?react';
-import AutoDarkIcon from '@/assets/icons/line/auto-dark-mode.svg?react';
-import LightIcon from '@/assets/icons/line/light-mode.svg?react';
-import DarkIcon from '@/assets/icons/line/dark-mode.svg?react';
+import AutoModeIcon from '@/assets/icons/solid/auto-mode.svg?react';
+import LightModeIcon from '@/assets/icons/line/light-mode.svg?react';
+import DarkModeIcon from '@/assets/icons/line/dark-mode.svg?react';
 import { cn } from '../utils/cn';
 
 export function ThemeSwitcher({ className }: { className?: string }) {
@@ -28,15 +27,11 @@ export function ThemeSwitcher({ className }: { className?: string }) {
       onClick={handleClick}
     >
       {theme === 'system' ? (
-        systemTheme === 'dark' ? (
-          <AutoDarkIcon width={30} height={30} className={color} />
-        ) : (
-          <AutoLightIcon width={30} height={30} className={color} />
-        )
+        <AutoModeIcon width={30} height={30} className={color} />
       ) : theme === 'light' ? (
-        <DarkIcon width={30} height={30} className={color} />
+        <LightModeIcon width={30} height={30} className={color} />
       ) : (
-        <LightIcon width={30} height={30} className={color} />
+        <DarkModeIcon width={30} height={30} className={color} />
       )}
     </button>
   );
