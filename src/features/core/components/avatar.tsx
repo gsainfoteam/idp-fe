@@ -9,25 +9,22 @@ interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const colorMap = [
   {
-    background: '#BDBDBD',
+    background: 'var(--color-avatar-gray)',
   },
   {
-    background: '#EF9A9A',
+    background: 'var(--color-avatar-red)',
   },
   {
-    background: '#90CAF9',
+    background: 'var(--color-avatar-blue)',
   },
   {
-    background: '#A5D6A7',
+    background: 'var(--color-avatar-green)',
   },
   {
-    background: '#F48FB1',
+    background: 'var(--color-avatar-purple)',
   },
   {
-    background: '#B39DDB',
-  },
-  {
-    background: '#FFCC80',
+    background: 'var(--color-avatar-orange)',
   },
 ];
 
@@ -59,7 +56,7 @@ export function Avatar({
     return (
       <div
         className={cn(
-          'flex items-center justify-center rounded-full font-extrabold text-white',
+          'text-avatar-label flex items-center justify-center rounded-full font-extrabold',
           className,
         )}
         style={{
