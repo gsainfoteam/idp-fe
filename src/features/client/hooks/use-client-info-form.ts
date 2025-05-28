@@ -9,7 +9,7 @@ import { patchClientSecret } from '@/data/patch-client-secret';
 
 const schema = z.object({
   clientId: z.string().min(1),
-  clientSecret: z.string().nullable(),
+  clientSecret: z.string(),
 });
 
 export type ClientInfoFormSchema = z.infer<typeof schema>;
@@ -19,7 +19,6 @@ export const useClientInfoForm = (client: Client) => {
     resolver: zodResolver(schema),
     defaultValues: {
       clientId: client.clientId,
-      clientSecret: null,
     },
   });
   const { t } = useTranslation();
@@ -34,7 +33,7 @@ export const useClientInfoForm = (client: Client) => {
       }
       return;
     }
-    form.setValue('clientSecret', data?.clientSecret ?? null);
+    form.setValue('clientSecret', data.clientSecret);
   });
 
   return { form, onSubmit };

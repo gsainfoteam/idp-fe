@@ -1,25 +1,10 @@
-import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { useClientInfoForm } from '../hooks/use-client-info-form';
 
-import ClipboardIcon from '@/assets/icons/line/clipboard.svg?react';
-import { Button, Input, Label } from '@/features/core';
+import { Button, Label } from '@/features/core';
+import { CopyInput } from '@/features/core/components/copy-input';
 import { Client } from '../hooks/use-client';
-
-const useCopy = () => {
-  const { t } = useTranslation();
-  const copy = async (text: string, message: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success(message);
-    } catch (err) {
-      console.error(err);
-      toast.error(t('common.errors.copy_failed'));
-    }
-  };
-  return copy;
-};
 
 export function ClientInfoForm({ client }: { client: Client }) {
   const { t } = useTranslation();
@@ -27,9 +12,9 @@ export function ClientInfoForm({ client }: { client: Client }) {
     form: { watch, formState },
     onSubmit,
   } = useClientInfoForm(client);
+
   const id = watch('clientId');
   const secret = watch('clientSecret');
-  const copy = useCopy();
 
   return (
     <form onSubmit={onSubmit}>
@@ -37,32 +22,21 @@ export function ClientInfoForm({ client }: { client: Client }) {
         <div className="text-title-3">{t('services.detail.info.title')}</div>
         <div className="flex flex-col gap-5">
           <Label text={t('services.detail.info.id')}>
-            <Input
+            <CopyInput
               value={id}
+              success={t('services.detail.info.id_copied')}
               readOnly
-              suffixAdornment={
-                <ClipboardIcon
-                  onClick={() => copy(id, t('services.detail.info.id_copied'))}
-                />
-              }
             />
           </Label>
           <Label text={t('services.detail.info.secret')}>
             <div className="flex gap-2">
-              <Input
+              <CopyInput
                 className="flex-1"
-                value={secret ?? id}
-                readOnly
                 type={secret ? 'text' : 'password'}
-                suffixAdornment={
-                  secret ? (
-                    <ClipboardIcon
-                      onClick={() =>
-                        copy(secret, t('services.detail.info.secret_copied'))
-                      }
-                    />
-                  ) : null
-                }
+                value={secret ?? id}
+                success={t('services.detail.info.secret_copied')}
+                readOnly
+                showIcon={!!secret}
               />
               <Button variant="default" disabled={formState.isSubmitting}>
                 {t('services.detail.info.regenerate_secret.action')}

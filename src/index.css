@@ -8,6 +8,8 @@
 }
 
 @theme {
+  --color-button-label: #ffffff;
+
   --color-white: #ffffff;
   --color-black: #000000;
   --color-dimmed-20: rgba(0, 0, 0, 0.2);
@@ -72,6 +74,8 @@
 
 @layer theme {
   .dark {
+    --color-button-label: #ffffff;
+
     --color-white: #1a1a1a;
     --color-black: #ffffff;
     --color-dimmed-20: rgba(255, 255, 255, 0.2);

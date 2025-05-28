@@ -45,7 +45,7 @@ export function FunnelLayout({
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: direction < 0 ? 100 : -100, opacity: 0 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="flex h-dvh items-center justify-center"
+      className="flex h-dvh items-center justify-center bg-white"
     >
       <div className="relative h-dvh w-full md:aspect-[420/800] md:w-auto">
         <div className="flex h-full w-full flex-col bg-white">
@@ -92,7 +92,7 @@ export function FunnelLayout({
               </div>
 
               {/* Content Box */}
-              <div className="z-0 w-full flex-1 bg-white px-5 pt-2 pb-4">
+              <div className="z-0 w-full flex-1 bg-white px-5 py-4">
                 {children}
               </div>
             </LoadingOverlay>
