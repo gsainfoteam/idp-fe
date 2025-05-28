@@ -9,9 +9,10 @@ import { useCallback, useState } from 'react';
 type CopyInputProps = Omit<InputProps, 'suffixAdornment'> & {
   value: string;
   success?: string;
+  showIcon?: boolean;
 };
 
-export function CopyInput({ value, success, ...props }: CopyInputProps) {
+export function CopyInput({ value, success, showIcon = true, ...props }: CopyInputProps) {
   const [copied, setCopied] = useState<true | false | null>(null);
   const copy = useCopy();
 
@@ -27,16 +28,18 @@ export function CopyInput({ value, success, ...props }: CopyInputProps) {
       value={value}
       {...props}
       suffixAdornment={
-        copied === null ? (
-          <ClipboardAddIcon
-            onClick={handleCopy}
-            onMouseLeave={() => setCopied(null)}
-          />
-        ) : copied ? (
-          <ClipboardCheckIcon onMouseLeave={() => setCopied(null)} />
-        ) : (
-          <ClipboardXIcon onMouseLeave={() => setCopied(null)} />
-        )
+        showIcon ?
+          copied === null ? (
+            <ClipboardAddIcon
+              onClick={handleCopy}
+              onMouseLeave={() => setCopied(null)}
+            />
+          ) : copied ? (
+            <ClipboardCheckIcon onMouseLeave={() => setCopied(null)} />
+          ) : (
+            <ClipboardXIcon onMouseLeave={() => setCopied(null)} />
+          ) 
+        : null
       }
     />
   );
