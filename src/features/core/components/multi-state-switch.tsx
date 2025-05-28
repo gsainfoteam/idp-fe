@@ -22,15 +22,18 @@ export function MultiStateSwitch({
   }, [selected, setSelected, labels]);
 
   return (
-    <div className="flex h-fit w-full rounded-lg bg-neutral-100" {...props}>
+    <div
+      className="bg-multi-state-switch-background flex h-fit w-full rounded-lg"
+      {...props}
+    >
       {labels.map((label, idx) => (
         <button
           key={idx}
           className={cn(
             'flex w-full cursor-pointer items-center justify-center rounded-lg py-3 text-center',
             idx === selected
-              ? 'text-title-3 bg-white text-black shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]'
-              : 'text-body-1 bg-transparent text-neutral-500',
+              ? 'text-title-3 bg-multi-state-switch-selected-background text-multi-state-switch-selected-label shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]'
+              : 'text-body-1 text-multi-state-switch-unselected-label bg-transparent',
           )}
           onClick={() => {
             setSelected(idx);

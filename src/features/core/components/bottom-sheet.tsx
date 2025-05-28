@@ -58,11 +58,11 @@ export function BottomSheet({
         dragElastic={0.2}
         onDragEnd={handleDragEnd}
         className={cn(
-          'fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] bg-white px-5 pt-9 pb-5 shadow-xl',
+          'bg-bottom-sheet-background shadow-bottom-sheet-shadow fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] px-5 pt-9 pb-5 shadow-xl',
           className,
         )}
       >
-        <div className="absolute top-2 left-1/2 h-1.5 w-12.5 -translate-x-1/2 rounded-full bg-neutral-200" />
+        <div className="bg-bottom-sheet-handle absolute top-2 left-1/2 h-1.5 w-12.5 -translate-x-1/2 rounded-full" />
         {children}
       </motion.div>
     </Backdrop>

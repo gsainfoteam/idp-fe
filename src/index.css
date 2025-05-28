@@ -70,6 +70,103 @@
   --text-label-2: 12px;
   --text-label-2--font-weight: 400;
   --text-label-2--line-height: 120%;
+
+  /* Semantic Colors */
+  /* Avatar Colors */
+  --color-avatar-gray: #bdbdbd;
+  --color-avatar-red: #ef9a9a;
+  --color-avatar-blue: #90caf9;
+  --color-avatar-green: #a5d6a7;
+  --color-avatar-purple: #b39dda;
+  --color-avatar-orange: #ffcc80;
+  --color-avatar-label: #ffffff;
+
+  /* Back Button Color */
+  --color-back-button: #5d5d5d;
+
+  /* Bottom Sheet Colors */
+  --color-bottom-sheet-background: #ffffff;
+  --color-bottom-sheet-shadow: #000000;
+  --color-bottom-sheet-handle: #d1d1d1;
+
+  /* Button Colors */
+  --color-button-neutral-border: #d1d1d1;
+  --color-button-default-label: #000000;
+  --color-button-default-background: #f6f6f6;
+  --color-button-default-active: #e7e7e7;
+  --color-button-default-disabled-border: #b0b0b0;
+  --color-button-default-disabled-background: #d1d1d1;
+  --color-button-default-disabled-label: #5d5d5d;
+  --color-button-primary: #ff5f0a;
+  --color-button-primary-hover: #ff4500;
+  --color-button-primary-active: #cc2f02;
+  --color-button-primary-disabled: #a1250b;
+  --color-button-primary-disabled-hover: #82220c;
+  --color-button-primary-disabled-active: #460d04;
+  --color-button-text-label: #ff5f0a;
+  --color-button-text-active: #cc2f02;
+  --color-button-text-disabled: #d1d1d1;
+  --color-button-secondary-border: #ff5f0a;
+  --color-button-secondary-background: #ffffff;
+  --color-button-secondary-active: #fff6ec;
+  --color-button-secondary-disabled-background: #f6f6f6;
+  --color-button-secondary-label: #ff5f0a;
+  --color-button-secondary-disabled-label: #5d5d5d;
+  --color-button-secondary-disabled-background: #f6f6f6;
+  --color-button-loading-ellipse-default: #5d5d5d;
+  --color-button-loading-ellipse-primary: #d1d1d1;
+  --color-button-loading-ellipse-secondary: #ff5f0a;
+  --color-button-label: #ffffff;
+
+  /* Checkbox Colors */
+  --color-checkbox-peer-checked-background: #ff5f0a;
+  --color-checkbox-border: #6d6d6d;
+  --color-checkbox-background: #ffffff;
+  --color-checkbox-disabled-background: #b0b0b0;
+  --color-checkbox-peer-checked-disabled-background: #b0b0b0;
+  --color-checkbox-label: #000000;
+
+  /* Funnel Layout Colors */
+  --color-funnel-background: #ffffff;
+  --color-funnel-shadow: #ffffff;
+  --color-funnel-title: #5d5d5d;
+  --color-funnel-steptitle: #0e0e0e;
+  --color-funnel-description: #6d6d6d;
+
+  /* Input Colors */
+  --color-input-background: #ffffff;
+  --color-input-children: #888888;
+  --color-input-text: #0e0e0e;
+  --color-input-placeholder: #888888;
+  --color-input-border: #888888;
+  --color-input-focus-border: #ff8232;
+  --color-input-error-border: #ff2534;
+  --color-input-disabled-border: #888888;
+  --color-input-disabled-background: #e7e7e7;
+  --color-input-disabled-text: #5d5d5d;
+  --color-input-error-label: #ff2534;
+
+  /* Label Colors */
+  --color-label-required: #ff2534;
+  --color-label-text: #3d3d3d;
+
+  /* Modal Colors */
+  --color-modal-background: #ffffff;
+
+  /* Multi State Switch Colors */
+  --color-multi-state-switch-background: #e7e7e7;
+  --color-multi-state-switch-selected-background: #ffffff;
+  --color-multi-state-switch-selected-label: #000000;
+  --color-multi-state-switch-unselected-label: #6d6d6d;
+
+  /* Switch Colors */
+  --color-switch-track-background: #d1d1d1;
+  --color-switch-track-background-checked: #ff5f0a;
+  --color-switch-track-disabled-background: #b0b0b0;
+  --color-switch-track-disabled-background-checked: #b0b0b0;
+  --color-switch-track-disabled-checked-children: #ffffff;
+  --color-switch-handle-background: #ffffff;
+  --color-switch-handle-background-disabled: #6d6d6d;
 }
 
 @layer theme {
@@ -114,6 +211,98 @@
     --color-neutral-800: #9d9d9d;
     --color-neutral-900: #adadad;
     --color-neutral-950: #f6f6f6;
+
+    /* Back Button Color */
+    --color-back-button: #ffffff;
+
+    /* Avatar Colors */
+    --color-avatar-label: #000000;
+
+    /* Bottom Sheet Colors */
+    --color-bottom-sheet-background: #1a1a1a;
+    --color-bottom-sheet-shadow: #000000;
+    --color-bottom-sheet-handle: #2d2d2d;
+
+    /* Button Colors */
+    --color-button-loading-ellipse-default: #ffffff;
+    --color-button-loading-ellipse-primary: #2d2d2d;
+    --color-button-primary: #ff4500;
+    --color-button-primary-hover: #ff5f0a;
+    --color-button-primary-active: #cc2f02;
+    --color-button-primary-disabled: #a1250b;
+    --color-button-primary-50: #2d1a0c;
+    --color-button-neutral-border: #d1d1d1;
+    --color-button-default-label: #000000;
+    --color-button-default-background: #f6f6f6;
+    --color-button-default-active: #e7e7e7;
+    --color-button-default-disabled-border: #b0b0b0;
+    --color-button-default-disabled-background: #d1d1d1;
+    --color-button-default-disabled-label: #5d5d5d;
+    --color-button-primary: #ff5f0a;
+    --color-button-primary-hover: #ff4500;
+    --color-button-primary-active: #cc2f02;
+    --color-button-primary-disabled: #a1250b;
+    --color-button-primary-disabled-hover: #82220c;
+    --color-button-primary-disabled-active: #460d04;
+    --color-button-text-label: #ff5f0a;
+    --color-button-text-active: #cc2f02;
+    --color-button-text-disabled: #d1d1d1;
+    --color-button-secondary-border: #ff5f0a;
+    --color-button-secondary-background: #ffffff;
+    --color-button-secondary-active: #fff6ec;
+    --color-button-secondary-disabled-background: #f6f6f6;
+    --color-button-secondary-label: #ff5f0a;
+    --color-button-secondary-disabled-label: #5d5d5d;
+    --color-button-secondary-disabled-background: #f6f6f6;
+    --color-button-loading-ellipse-default: #5d5d5d;
+    --color-button-loading-ellipse-primary: #d1d1d1;
+    --color-button-loading-ellipse-secondary: #ff5f0a;
+    --color-button-label: #ffffff;
+
+    /* Checkbox Colors */
+    --color-checkbox-peer-checked-background: #ff5f0a;
+    --color-checkbox-border: #6d6d6d;
+    --color-checkbox-background: #1a1a1a;
+    --color-checkbox-disabled-background: #b0b0b0;
+    --color-checkbox-peer-checked-disabled-background: #b0b0b0;
+    --color-checkbox-label: #ffffff;
+
+    /* Funnel Layout Colors */
+    --color-funnel-background: #1a1a1a;
+    --color-funnel-shadow: #1a1a1a;
+    --color-funnel-title: #ffffff;
+    --color-funnel-steptitle: #ffffff;
+    --color-funnel-description: #b0b0b0;
+
+    /* Input Colors */
+    --color-input-background: #1a1a1a;
+    --color-input-children: #b0b0b0;
+    --color-input-text: #ffffff;
+    --color-input-placeholder: #b0b0b0;
+    --color-input-border: #b0b0b0;
+    --color-input-focus-border: #ff8232;
+
+    /* Label Colors */
+    --color-label-required: #ff2534;
+    --color-label-text: #ffffff;
+
+    /* Modal Colors */
+    --color-modal-background: #1a1a1a;
+
+    /* Multi State Switch Colors */
+    --color-multi-state-switch-background: #1a1a1a;
+    --color-multi-state-switch-selected-background: #000000;
+    --color-multi-state-switch-selected-label: #ffffff;
+    --color-multi-state-switch-unselected-label: #b0b0b0;
+
+    /* Switch Colors */
+    --color-switch-track-background: #d1d1d1;
+    --color-switch-track-background-checked: #ff5f0a;
+    --color-switch-track-disabled-background: #4f4f4f;
+    --color-switch-track-disabled-background-checked: #4f4f4f;
+    --color-switch-track-disabled-checked-children: #ffffff;
+    --color-switch-handle-background: #d1d1d1;
+    --color-switch-handle-background-disabled: #6d6d6d;
   }
 }
 

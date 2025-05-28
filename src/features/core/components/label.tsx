@@ -18,10 +18,10 @@ export function Label({
     <div>
       <label {...props}>
         <div
-          className={cn('text-label-1 mb-1 flex text-neutral-900', className)}
+          className={cn('text-label-1 text-label-text mb-1 flex', className)}
         >
           {text}
-          {required && <div className="text-red-500">*</div>}
+          {required && <div className="text-label-required">*</div>}
         </div>
         {children}
       </label>

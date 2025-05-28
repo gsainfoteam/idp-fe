@@ -17,12 +17,12 @@ const buttonStyle = cva(
     variants: {
       variant: {
         default:
-          'rounded-lg bg-neutral-50 px-5 py-3 text-black [box-shadow:inset_0_0_0_1px_var(--color-neutral-200)] active:bg-neutral-100 disabled:bg-neutral-200 disabled:text-neutral-300 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-300)]',
+          'bg-button-default-background active:bg-button-default-active disabled:bg-button-default-disabled-background disabled:text-button-default-disabled-label text-button-default-label rounded-lg px-5 py-3 [box-shadow:inset_0_0_0_1px_var(--color-button-default-disabled-border)] disabled:[box-shadow:inset_0_0_0_1px_var(--color-button-default-disabled-border)]',
         primary:
-          'bg-primary-600 active:bg-primary-700 rounded-lg px-5 py-3 text-white disabled:bg-neutral-200',
+          'bg-button-primary active:bg-button-primary-active disabled:bg-button-primary-disabled text-button-label rounded-lg px-5 py-3',
         secondary:
-          'text-primary-600 active:bg-primary-50 rounded-lg bg-white px-5 py-3 [box-shadow:inset_0_0_0_1px_var(--color-primary-600)] disabled:bg-neutral-50 disabled:text-neutral-200 disabled:[box-shadow:inset_0_0_0_1px_var(--color-neutral-200)]',
-        text: 'text-primary-600 active:text-primary-700 px-5 py-3 disabled:text-neutral-200',
+          'text-button-primary active:bg-button-primary-50 disabled:bg-button-secondary-disabled-background disabled:text-button-secondary-disabled-label rounded-lg bg-white px-5 py-3 [box-shadow:inset_0_0_0_1px_var(--color-button-primary)] disabled:[box-shadow:inset_0_0_0_1px_var(--color-button-secondary-disabled-border)]',
+        text: 'text-button-primary active:text-button-text-active disabled:text-button-text-disabled px-5 py-3',
         link: 'text-body-1 text-neutral-400 underline active:text-neutral-600 disabled:cursor-default disabled:text-neutral-200',
       },
       loading: {
@@ -38,22 +38,23 @@ const buttonStyle = cva(
       {
         variant: 'default',
         loading: true,
-        className: 'border-neutral-300 bg-neutral-200',
+        className:
+          'bg-button-default-disabled-background [box-shadow:inset_0_0_0_1px_var(--color-button-default-disabled-border)]',
       },
       {
         variant: 'primary',
         loading: true,
-        className: 'bg-primary-700',
+        className: 'bg-button-primary-active',
       },
       {
         variant: 'secondary',
         loading: true,
-        className: 'bg-primary-50',
+        className: 'bg-button-secondary-active',
       },
       {
         variant: 'link',
         loading: true,
-        className: 'text-neutral-200',
+        className: 'text-button-text-disabled',
       },
     ],
   },
