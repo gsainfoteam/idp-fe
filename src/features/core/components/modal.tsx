@@ -1,40 +1,122 @@
-import { PropsWithChildren } from 'react';
+import { createContext, PropsWithChildren, useContext } from 'react';
 import { motion } from 'framer-motion';
-
 import { cn } from '../utils/cn';
-
 import { Backdrop } from './backdrop';
 
-interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
-  open: boolean;
-  onClose: () => void;
+interface ModalContextType {
+  close: () => void;
 }
 
-export function Modal({
-  open,
-  onClose,
+const ModalContext = createContext<ModalContextType | null>(null);
+
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+  isOpen: boolean;
+  close: () => void;
+}
+
+const Modal = ({
+  isOpen,
+  close,
   children,
   className,
-}: PropsWithChildren<ModalProps>) {
+}: PropsWithChildren<ModalProps>) => {
   return (
-    <Backdrop open={open} onClose={onClose}>
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{
-          type: 'spring',
-          duration: 0.3,
-          damping: 20,
-          stiffness: 250,
-        }}
-        className={cn(
-          'bg-modal-background relative flex w-[400px] flex-col rounded-[20px] p-6 md:p-7',
-          className,
-        )}
-      >
-        {children}
-      </motion.div>
-    </Backdrop>
+    <ModalContext.Provider value={{ close }}>
+      <Backdrop isOpen={isOpen} close={close}>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          transition={{
+            type: 'spring',
+            duration: 0.3,
+            damping: 20,
+            stiffness: 250,
+          }}
+          className={cn(
+            'bg-modal-background relative flex w-fit flex-col rounded-[20px]',
+            className,
+          )}
+        >
+          {children}
+        </motion.div>
+      </Backdrop>
+    </ModalContext.Provider>
   );
-}
+};
+
+Modal.Header = ({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return (
+    <div
+      className={cn(
+        'text-title-1 w-full px-6 pt-6 pb-2 text-pretty whitespace-pre-wrap text-neutral-950',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+Modal.Body = ({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return (
+    <div
+      className={cn(
+        'text-body-1 w-full px-6 py-2 text-pretty whitespace-pre-wrap text-neutral-600',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+Modal.Footer = ({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return (
+    <div
+      className={cn('flex w-full gap-3 px-5 pt-3 pb-5', className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+Modal.Close = ({
+  children,
+  className,
+  onClick,
+  ...props
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  const context = useContext(ModalContext);
+  if (!context) throw new Error('Modal.Close must be used within a Modal');
+
+  return (
+    <div
+      onClick={(e) => {
+        onClick?.(e);
+        context.close();
+      }}
+      className={cn('w-full cursor-pointer', className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+export { Modal };
