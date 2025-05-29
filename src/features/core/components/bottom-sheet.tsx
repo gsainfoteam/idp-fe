@@ -83,7 +83,7 @@ BottomSheet.Header = ({
   return (
     <div
       className={cn(
-        'text-title-1 w-full px-5 pb-3 text-pretty text-neutral-950',
+        'text-title-1 w-full px-5 pb-3 text-pretty whitespace-pre-wrap text-neutral-950',
         className,
       )}
       {...props}
@@ -101,7 +101,7 @@ BottomSheet.Body = ({
   return (
     <div
       className={cn(
-        'text-body-1 w-full px-5 pb-3 text-pretty text-neutral-600',
+        'text-body-1 w-full px-5 pb-3 text-pretty whitespace-pre-wrap text-neutral-600',
         className,
       )}
       {...props}
