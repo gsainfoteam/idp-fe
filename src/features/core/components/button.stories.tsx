@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './button';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
+import { IconButton } from './icon-button';
 
 const meta = {
   component: Button,
@@ -79,24 +80,21 @@ const ButtonGroup = ({
         loading={loading}
         disabled={disabled}
       />
-      <Button
+      <IconButton
         variant="secondary"
-        className="px-3"
-        prefixIcon={<EditIcon />}
+        icon={<EditIcon />}
         loading={loading}
         disabled={disabled}
       />
-      <Button
+      <IconButton
         variant="text"
-        className="px-3"
-        prefixIcon={<EditIcon />}
+        icon={<EditIcon />}
         loading={loading}
         disabled={disabled}
       />
-      <Button
+      <IconButton
         variant="link"
-        className="px-3"
-        prefixIcon={<EditIcon />}
+        icon={<EditIcon />}
         loading={loading}
         disabled={disabled}
       />
