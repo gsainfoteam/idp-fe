@@ -8,7 +8,15 @@ const meta = {
     (Story) => (
       <>
         <Story />
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            style: {
+              background: 'var(--color-toast-background)',
+              color: 'var(--color-toast-text)',
+              border: '1px solid var(--color-toast-border)',
+            },
+          }}
+        />
       </>
     ),
   ],
