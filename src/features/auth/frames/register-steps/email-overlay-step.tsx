@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useEmailOverlayForm } from '../../hooks/register-steps/use-email-overlay-form';
 
-import { Button, Modal } from '@/features/core';
+import { Button, Dialog } from '@/features/core';
 import { BottomSheet } from '@/features/core';
 
 function Inner() {
@@ -63,17 +63,17 @@ export function EmailOverlayStep({
   };
 
   return isPC && !context.emailAgree ? (
-    <Modal isOpen={isOpen} close={handleClose} className="w-[400px]">
-      <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
-      <Modal.Body>
+    <Dialog isOpen={isOpen} close={handleClose} className="w-[400px]">
+      <Dialog.Header>{t('register.steps.email_overlay.title')}</Dialog.Header>
+      <Dialog.Body>
         <Inner />
-      </Modal.Body>
-      <Modal.Footer>
-        <Modal.Close>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close>
           <Button variant="secondary" className="w-full">
             {t('register.steps.email_overlay.sub_button')}
           </Button>
-        </Modal.Close>
+        </Dialog.Close>
         <Button
           variant="primary"
           onClick={onSubmit}
@@ -82,8 +82,8 @@ export function EmailOverlayStep({
         >
           {t('register.steps.email_overlay.button')}
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </Dialog.Footer>
+    </Dialog>
   ) : (
     <BottomSheet isOpen={isOpen} close={handleClose}>
       <BottomSheet.Header>

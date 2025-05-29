@@ -3,25 +3,25 @@ import { motion } from 'framer-motion';
 import { cn } from '../utils/cn';
 import { Backdrop } from './backdrop';
 
-interface ModalContextType {
+interface DialogContextType {
   close: () => void;
 }
 
-const ModalContext = createContext<ModalContextType | null>(null);
+const DialogContext = createContext<DialogContextType | null>(null);
 
-interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   close: () => void;
 }
 
-const Modal = ({
+const Dialog = ({
   isOpen,
   close,
   children,
   className,
-}: PropsWithChildren<ModalProps>) => {
+}: PropsWithChildren<DialogProps>) => {
   return (
-    <ModalContext.Provider value={{ close }}>
+    <DialogContext.Provider value={{ close }}>
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -34,18 +34,18 @@ const Modal = ({
             stiffness: 250,
           }}
           className={cn(
-            'bg-modal-background relative flex w-fit flex-col rounded-[20px]',
+            'bg-dialog-background relative flex w-fit flex-col rounded-[20px]',
             className,
           )}
         >
           {children}
         </motion.div>
       </Backdrop>
-    </ModalContext.Provider>
+    </DialogContext.Provider>
   );
 };
 
-Modal.Header = ({
+Dialog.Header = ({
   children,
   className,
   ...props
@@ -63,7 +63,7 @@ Modal.Header = ({
   );
 };
 
-Modal.Body = ({
+Dialog.Body = ({
   children,
   className,
   ...props
@@ -81,7 +81,7 @@ Modal.Body = ({
   );
 };
 
-Modal.Footer = ({
+Dialog.Footer = ({
   children,
   className,
   ...props
@@ -96,14 +96,14 @@ Modal.Footer = ({
   );
 };
 
-Modal.Close = ({
+Dialog.Close = ({
   children,
   className,
   onClick,
   ...props
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const context = useContext(ModalContext);
-  if (!context) throw new Error('Modal.Close must be used within a Modal');
+  const context = useContext(DialogContext);
+  if (!context) throw new Error('Dialog.Close must be used within a Dialog');
 
   return (
     <div
@@ -119,4 +119,4 @@ Modal.Close = ({
   );
 };
 
-export { Modal };
+export { Dialog };

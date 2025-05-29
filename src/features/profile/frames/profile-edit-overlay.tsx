@@ -40,7 +40,7 @@ export function ProfileEditOverlay({
 
   if (!user) return null;
 
-  // TODO: md 버전에서는 modal로
+  // TODO: md 버전에서는 dialog로
 
   return (
     <BottomSheet isOpen={open} close={handleClose}>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Modal } from '@/features/core';
+import { Button, Dialog } from '@/features/core';
 
 export function UndoWarningStep({
   onNext,
@@ -14,7 +14,7 @@ export function UndoWarningStep({
   const [open, setOpen] = useState(true);
 
   return (
-    <Modal
+    <Dialog
       isOpen={open}
       close={() => {
         setOpen(false);
@@ -22,14 +22,14 @@ export function UndoWarningStep({
       }}
       className="mx-10 w-auto"
     >
-      <Modal.Header>{t('common.undo_overlay.title')}</Modal.Header>
-      <Modal.Body>{t('common.undo_overlay.content')}</Modal.Body>
-      <Modal.Footer>
-        <Modal.Close>
+      <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
+      <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close>
           <Button variant="secondary" className="w-full">
             {t('common.undo_overlay.sub_button')}
           </Button>
-        </Modal.Close>
+        </Dialog.Close>
         <Button
           variant="primary"
           onClick={() => {
@@ -40,7 +40,7 @@ export function UndoWarningStep({
         >
           {t('common.undo_overlay.button')}
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </Dialog.Footer>
+    </Dialog>
   );
 }
