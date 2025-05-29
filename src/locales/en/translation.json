@@ -380,7 +380,10 @@
     "fetch_error": "Failed to load data",
     "invalid_body": "Invalid API Body",
     "invalid_token": "The token is invalid",
-    "invalid_user": "User not found"
+    "invalid_user": "User not found",
+    "file_too_large": "File size exceeds {{max_size_mb}}MB",
+    "failed_to_read": "Failed to read file",
+    "file_too_many": "You can only upload up to {{max_files}} files"
   },
   "language": "en",
   "profile_change": {
