@@ -3,16 +3,16 @@ import { useIsMounted } from './use-is-mounted';
 
 export function useLoading(): [
   boolean,
-  <T>(promise: Promise<T>) => Promise<T>,
+  <T>(promise: Promise<T> | (() => Promise<T>)) => Promise<T>,
 ] {
   const [loading, setLoading] = useState(false);
   const { getIsMounted } = useIsMounted();
 
   const startLoading = useCallback(
-    async <T>(promise: Promise<T>) => {
+    async <T>(promise: Promise<T> | (() => Promise<T>)) => {
       try {
         setLoading(true);
-        return await promise;
+        return await (typeof promise === 'function' ? promise() : promise);
       } finally {
         if (getIsMounted()) {
           setLoading(false);
