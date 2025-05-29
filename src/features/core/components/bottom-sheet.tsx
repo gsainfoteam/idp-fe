@@ -139,8 +139,8 @@ BottomSheet.Close = ({
   return (
     <div
       onClick={(e) => {
-        context.close();
         onClick?.(e);
+        context.close();
       }}
       className={cn('w-full cursor-pointer', className)}
       {...props}
