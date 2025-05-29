@@ -2,10 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Client } from '../hooks/use-client';
 import { useTranslation } from 'react-i18next';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
-import { Avatar, Button, UndoWarningOverlay, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  UndoWarningOverlay,
+  uniqueKey,
+  FileUpload,
+} from '@/features/core';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 import { useLoading } from '@/features/core';
+import { IconButton } from '@/features/core/components/icon-button';
 
 export function ClientPictureForm({
   client,
@@ -14,12 +20,12 @@ export function ClientPictureForm({
   client: Client;
   onUpdated: () => void;
 }) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLDivElement>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [uploadLoading, startUploadLoading] = useLoading();
   const [deleteLoading, startDeleteLoading] = useLoading();
   const { t } = useTranslation();
-  const { changeImage, deleteImage } = useClientPictureForm(
+  const { uploadImage, deleteImage, onSave } = useClientPictureForm(
     client,
     setPreviewImage,
     onUpdated,
@@ -48,28 +54,27 @@ export function ClientPictureForm({
             />
           </div>
           <div className="flex flex-col gap-3">
-            <div className="relative">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => startUploadLoading(changeImage(e))}
-                className="absolute h-0 w-0 appearance-none opacity-0"
-              />
-              <Button
+            <FileUpload
+              ref={fileInputRef}
+              accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+              maxSizeMb={1}
+              onSave={(files, previewUrls) =>
+                startUploadLoading(onSave(files, previewUrls).then(uploadImage))
+              }
+            >
+              <IconButton
                 variant="primary"
-                className="p-2.5"
                 loading={uploadLoading}
-                prefixIcon={<EditIcon />}
-                onClick={() => fileInputRef.current?.click()}
+                className="p-2.5"
+                icon={<EditIcon />}
               />
-            </div>
-            <Button
+            </FileUpload>
+            <IconButton
               variant="secondary"
-              className="p-2.5"
               loading={deleteLoading}
-              prefixIcon={<TrashBinIcon />}
               disabled={!previewImage}
+              className="p-2.5"
+              icon={<TrashBinIcon />}
               onClick={() => setOpen(true)}
             />
           </div>

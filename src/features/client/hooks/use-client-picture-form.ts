@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -8,8 +8,6 @@ import { patchClientPicture } from '@/data/patch-client-picture';
 import { Client } from './use-client';
 import imageCompression from 'browser-image-compression';
 import { deleteClientPicture } from '@/data/delete-client-picture';
-
-const MAX_IMAGE_KB = 1024;
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -27,35 +25,9 @@ export const useClientPictureForm = (
 
   const { formState, watch, setValue } = form;
 
-  const handleChangeImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      throw t('services.detail.picture.errors.invalid_image_type');
-    }
-
-    if (file.size > MAX_IMAGE_KB * 1024) {
-      throw t('services.detail.picture.errors.image_too_large', {
-        max_size_mb: MAX_IMAGE_KB / 1024,
-      });
-    }
-
-    return new Promise<void>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        if (typeof e.target?.result === 'string') {
-          setPreviewImage(e.target?.result);
-          setValue('image', file, { shouldDirty: true });
-          resolve();
-        } else {
-          reject(t('services.detail.picture.errors.failed_to_read'));
-        }
-      };
-      reader.onerror = () =>
-        reject(t('services.detail.picture.errors.failed_to_read'));
-    });
+  const onSave = async (files: File[], previewUrls: string[]) => {
+    setPreviewImage(previewUrls[0]!);
+    setValue('image', files[0]!, { shouldDirty: true });
   };
 
   const deleteImage = async () => {
@@ -79,19 +51,10 @@ export const useClientPictureForm = (
     onUpdated();
   };
 
-  const uploadImage = async () => {
-    const imageFile = watch('image');
-    if (!imageFile) return;
-
-    const error = formState.errors.image;
-    if (error?.message != null) {
-      throw error.message;
-    }
-
-    let compressedFile: File;
+  const compressImage = async (file: File) => {
     try {
-      compressedFile = await imageCompression(imageFile, {
-        maxSizeMB: MAX_IMAGE_KB / 1024,
+      return await imageCompression(file, {
+        maxSizeMB: 1,
         maxWidthOrHeight: 512,
         useWebWorker: true,
         fileType: 'image/webp',
@@ -99,10 +62,20 @@ export const useClientPictureForm = (
     } catch (error) {
       throw t('services.detail.picture.errors.failed_to_compress');
     }
+  };
+
+  const uploadImage = async () => {
+    const image = watch('image');
+    if (!image) return;
+
+    const error = formState.errors.image;
+    if (error?.message != null) throw error.message;
+
+    const compressedImage = await compressImage(image);
 
     const { data, status } = await patchClientPicture(
       client.clientId,
-      compressedFile.size,
+      compressedImage.size,
     );
 
     if (!data || status) {
@@ -124,7 +97,7 @@ export const useClientPictureForm = (
       const uploadResponse = await fetch(data.presignedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'image/webp' },
-        body: compressedFile,
+        body: compressedImage,
       });
 
       if (!uploadResponse.ok) throw uploadResponse;
@@ -135,15 +108,15 @@ export const useClientPictureForm = (
     onUpdated();
   };
 
-  const changeImageWithToast = (event: ChangeEvent<HTMLInputElement>) =>
-    toast.promise(handleChangeImage(event).then(uploadImage), {
+  const uploadImageWithToast = () =>
+    toast.promise(uploadImage, {
       loading: t('services.detail.picture.saving'),
       success: t('services.detail.picture.uploaded'),
       error: (err) => err.toString(),
     });
 
   const deleteImageWithToast = () =>
-    toast.promise(deleteImage(), {
+    toast.promise(deleteImage, {
       loading: t('services.detail.picture.deleting'),
       success: t('services.detail.picture.deleted'),
       error: (err) => err.toString(),
@@ -151,7 +124,8 @@ export const useClientPictureForm = (
 
   return {
     form,
-    changeImage: changeImageWithToast,
+    uploadImage: uploadImageWithToast,
     deleteImage: deleteImageWithToast,
+    onSave,
   };
 };
