@@ -42,7 +42,7 @@ export function EmailOverlayStep({
 } & Parameters<typeof useEmailOverlayForm>[0]) {
   const { form, onSubmit } = useEmailOverlayForm({ context, onNext });
   const { t } = useTranslation();
-  const [open, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(true);
   const [isPC, setIsPC] = useState(false);
 
   useEffect(() => {
@@ -63,34 +63,17 @@ export function EmailOverlayStep({
   };
 
   return isPC && !context.emailAgree ? (
-    <Modal open={open} onClose={handleClose} className="w-[400px]">
-      <div className="text-title-1 w-full text-pretty whitespace-pre-wrap text-neutral-950">
-        {t('register.steps.email_overlay.title')}
-      </div>
-      <Inner />
-      <div className="mt-6 flex w-full justify-end gap-3">
-        <Button variant="secondary" onClick={handleClose}>
-          {t('register.steps.email_overlay.sub_button')}
-        </Button>
-        <Button
-          variant="primary"
-          onClick={onSubmit}
-          loading={form.formState.isSubmitting}
-        >
-          {t('register.steps.email_overlay.button')}
-        </Button>
-      </div>
-    </Modal>
-  ) : (
-    <BottomSheet open={open} onClose={handleClose}>
-      <div className="text-title-1 w-full text-pretty whitespace-pre-wrap text-neutral-950">
-        {t('register.steps.email_overlay.title')}
-      </div>
-      <Inner />
-      <div className="mt-6 flex w-full justify-end gap-3">
-        <Button variant="secondary" onClick={handleClose} className="w-full">
-          {t('register.steps.email_overlay.sub_button')}
-        </Button>
+    <Modal isOpen={isOpen} close={handleClose} className="w-[400px]">
+      <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
+      <Modal.Body>
+        <Inner />
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close>
+          <Button variant="secondary" className="w-full">
+            {t('register.steps.email_overlay.sub_button')}
+          </Button>
+        </Modal.Close>
         <Button
           variant="primary"
           onClick={onSubmit}
@@ -99,7 +82,31 @@ export function EmailOverlayStep({
         >
           {t('register.steps.email_overlay.button')}
         </Button>
-      </div>
+      </Modal.Footer>
+    </Modal>
+  ) : (
+    <BottomSheet isOpen={isOpen} close={handleClose}>
+      <BottomSheet.Header>
+        {t('register.steps.email_overlay.title')}
+      </BottomSheet.Header>
+      <BottomSheet.Body>
+        <Inner />
+      </BottomSheet.Body>
+      <BottomSheet.Footer>
+        <BottomSheet.Close>
+          <Button variant="secondary" className="w-full">
+            {t('register.steps.email_overlay.sub_button')}
+          </Button>
+        </BottomSheet.Close>
+        <Button
+          variant="primary"
+          onClick={onSubmit}
+          loading={form.formState.isSubmitting}
+          className="w-full"
+        >
+          {t('register.steps.email_overlay.button')}
+        </Button>
+      </BottomSheet.Footer>
     </BottomSheet>
   );
 }
