@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MultiStateSwitch } from './multi-state-switch';
+import { MultiStateSwitch } from '@/features/core';
 
 const meta = {
   component: MultiStateSwitch,

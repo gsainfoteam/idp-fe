@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Button } from './button';
+import { Button } from '@/features/core';
 
 const meta = {
   component: Button,

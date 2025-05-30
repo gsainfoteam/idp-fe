@@ -1,43 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from './button';
+import { Button, IconButton } from '@/features/core';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
-import { IconButton } from './icon-button';
 
 const meta = {
   component: Button,
+  argTypes: {
+    loading: {
+      control: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+  },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Main: Story = {
   args: {
     variant: 'default',
     loading: false,
     disabled: false,
   },
-  render: () => <ButtonGroup loading={false} disabled={false} />,
-};
-
-export const Loading: Story = {
-  args: {
-    variant: 'default',
-    loading: true,
-    disabled: false,
-  },
-  render: () => <ButtonGroup loading={true} disabled={false} />,
-};
-
-export const Disabled: Story = {
-  args: {
-    variant: 'default',
-    loading: false,
-    disabled: true,
-  },
-  render: () => <ButtonGroup loading={false} disabled={true} />,
+  render: ({ loading, disabled }) => (
+    <ButtonGroup loading={loading ?? false} disabled={disabled ?? false} />
+  ),
 };
 
 const ButtonGroup = ({

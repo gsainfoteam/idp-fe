@@ -3,15 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
-import { PasswordInput } from './password-input';
-import { Label } from './label';
-import { timeString } from '../utils/time-string';
+import {
+  PasswordInput,
+  Label,
+  timeString,
+  Input,
+  CopyInput,
+} from '@/features/core';
 
 import AddIcon from '@/assets/icons/line/add.svg?react';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-
-import { Input } from './input';
-import { CopyInput } from './copy-input';
 
 const meta = {
   component: Input,

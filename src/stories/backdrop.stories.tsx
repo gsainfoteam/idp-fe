@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { Backdrop } from './backdrop';
+import { Backdrop } from '@/features/core';
 import Logo from '@/assets/logos/logo.svg?react';
 
 const meta = {

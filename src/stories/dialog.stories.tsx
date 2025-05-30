@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { Button } from './button';
-import { Dialog } from './dialog';
+import { Button, Dialog } from '@/features/core';
 
 const meta = {
   component: Dialog,
