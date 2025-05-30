@@ -40,14 +40,12 @@ export function ProfileEditOverlay({
 
   if (!user) return null;
 
-  // TODO: md 버전에서는 modal로
+  // TODO: md 버전에서는 dialog로
 
   return (
-    <BottomSheet open={open} onClose={handleClose}>
-      <div className="text-title-1 mb-3 w-full text-pretty text-neutral-950">
-        {t('profile_change.title')}
-      </div>
-      <div className="flex w-full items-center justify-center">
+    <BottomSheet isOpen={open} close={handleClose}>
+      <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
+      <BottomSheet.Body className="flex justify-center">
         <div
           className="relative w-fit cursor-pointer"
           onClick={handleEditClick}
@@ -77,15 +75,17 @@ export function ProfileEditOverlay({
             />
           </div>
         </div>
-      </div>
-      <div className="mt-7 flex w-full justify-end gap-3">
-        <Button
-          variant="secondary"
-          onClick={() => setPreviewImage(null)}
-          className="w-full"
-        >
-          {t('profile_change.sub_button')}
-        </Button>
+      </BottomSheet.Body>
+      <BottomSheet.Footer>
+        <BottomSheet.Close>
+          <Button
+            variant="secondary"
+            onClick={() => setPreviewImage(null)}
+            className="w-full"
+          >
+            {t('profile_change.sub_button')}
+          </Button>
+        </BottomSheet.Close>
         <Button
           variant="primary"
           onClick={async () => {
@@ -97,7 +97,7 @@ export function ProfileEditOverlay({
         >
           {t('profile_change.button')}
         </Button>
-      </div>
+      </BottomSheet.Footer>
     </BottomSheet>
   );
 }

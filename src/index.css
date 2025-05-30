@@ -150,8 +150,8 @@
   --color-label-required: #ff2534;
   --color-label-text: #3d3d3d;
 
-  /* Modal Colors */
-  --color-modal-background: #ffffff;
+  /* Dialog Colors */
+  --color-dialog-background: #ffffff;
 
   /* Multi State Switch Colors */
   --color-multi-state-switch-background: #e7e7e7;
@@ -291,8 +291,8 @@
     --color-label-required: #ff2534;
     --color-label-text: #ffffff;
 
-    /* Modal Colors */
-    --color-modal-background: #1a1a1a;
+    /* Dialog Colors */
+    --color-dialog-background: #1a1a1a;
 
     /* Multi State Switch Colors */
     --color-multi-state-switch-background: #1a1a1a;
