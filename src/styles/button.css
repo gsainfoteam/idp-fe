@@ -25,23 +25,23 @@
   /* Button Primary Colors */
   --color-button-primary-default-background: #ff4500;
   --color-button-primary-default-border: transparent;
-  --color-button-primary-default-label: #ffffff;
+  --color-button-primary-default-label: #e7e7e7;
 
   --color-button-primary-hover-background: #e53e00;
   --color-button-primary-hover-border: transparent;
-  --color-button-primary-hover-label: #ffffff;
+  --color-button-primary-hover-label: #e7e7e7;
 
   --color-button-primary-active-background: #cc2f02;
   --color-button-primary-active-border: transparent;
-  --color-button-primary-active-label: #ffffff;
+  --color-button-primary-active-label: #e7e7e7;
 
   --color-button-primary-loading-background: #a1250b;
   --color-button-primary-loading-border: transparent;
-  --color-button-primary-loading-label: #ffffff;
+  --color-button-primary-loading-label: #e7e7e7;
 
   --color-button-primary-disabled-background: #dadada;
   --color-button-primary-disabled-border: transparent;
-  --color-button-primary-disabled-label: #ffffff;
+  --color-button-primary-disabled-label: #e7e7e7;
 
   /* Button Secondary Colors */
   --color-button-secondary-default-background: #ffffff;
@@ -109,37 +109,109 @@
 
 @layer theme {
   .dark {
-    /* Button Colors */
-    --color-button-primary: #ff4500;
-    --color-button-primary-hover: #e53e00;
-    --color-button-primary-active: #cc2f02;
-    --color-button-primary-loading: #a1250b;
-    --color-button-primary-disabled: #dadada;
+    /* Button Default Colors */
+    --color-button-default-default-background: #454545;
+    --color-button-default-default-border: #5d5d5d;
+    --color-button-default-default-label: #e7e7e7;
 
-    --color-button-primary-50: #2d1a0c;
-    --color-button-neutral-border: #d1d1d1;
-    --color-button-default-label: #000000;
-    --color-button-default-background: #f6f6f6;
-    --color-button-default-active: #e7e7e7;
-    --color-button-default-disabled-border: #b0b0b0;
-    --color-button-default-disabled-background: #d1d1d1;
-    --color-button-default-disabled-label: #5d5d5d;
-    --color-button-primary: #ff5f0a;
-    --color-button-primary-hover: #ff4500;
-    --color-button-primary-active: #cc2f02;
-    --color-button-primary-disabled: #a1250b;
-    --color-button-primary-disabled-hover: #82220c;
-    --color-button-primary-disabled-active: #460d04;
-    --color-button-text-label: #ff5f0a;
-    --color-button-text-active: #cc2f02;
-    --color-button-text-disabled: #d1d1d1;
-    --color-button-secondary-border: #ff5f0a;
-    --color-button-secondary-background: #ffffff;
-    --color-button-secondary-active: #fff6ec;
-    --color-button-secondary-disabled-background: #f6f6f6;
-    --color-button-secondary-label: #ff5f0a;
-    --color-button-secondary-disabled-label: #5d5d5d;
-    --color-button-secondary-disabled-background: #f6f6f6;
-    --color-button-label: #ffffff;
+    --color-button-default-hover-background: #3d3d3d;
+    --color-button-default-hover-border: #5d5d5d;
+    --color-button-default-hover-label: #e7e7e7;
+
+    --color-button-default-active-background: #323232;
+    --color-button-default-active-border: #454545;
+    --color-button-default-active-label: #e7e7e7;
+
+    --color-button-default-loading-background: #2c2c2c;
+    --color-button-default-loading-border: #454545;
+    --color-button-default-loading-label: #e7e7e7;
+
+    --color-button-default-disabled-background: #222222;
+    --color-button-default-disabled-border: #353535;
+    --color-button-default-disabled-label: #424242;
+
+    /* Button Primary Colors */
+    --color-button-primary-default-background: #cc2f02;
+    --color-button-primary-default-border: transparent;
+    --color-button-primary-default-label: #e7e7e7;
+
+    --color-button-primary-hover-background: #ba3009;
+    --color-button-primary-hover-border: transparent;
+    --color-button-primary-hover-label: #e7e7e7;
+
+    --color-button-primary-active-background: #a1250b;
+    --color-button-primary-active-border: transparent;
+    --color-button-primary-active-label: #e7e7e7;
+
+    --color-button-primary-loading-background: #a1250b;
+    --color-button-primary-loading-border: transparent;
+    --color-button-primary-loading-label: #e7e7e7;
+
+    --color-button-primary-disabled-background: #222222;
+    --color-button-primary-disabled-border: transparent;
+    --color-button-primary-disabled-label: #424242;
+
+    /* Button Secondary Colors */
+    --color-button-secondary-default-background: transparent;
+    --color-button-secondary-default-border: #cc2f02;
+    --color-button-secondary-default-label: #cc2f02;
+
+    --color-button-secondary-hover-background: rgba(255, 107, 58, 0.05);
+    --color-button-secondary-hover-border: #cc2f02;
+    --color-button-secondary-hover-label: #cc2f02;
+
+    --color-button-secondary-active-background: rgba(255, 107, 58, 0.1);
+    --color-button-secondary-active-border: #cc2f02;
+    --color-button-secondary-active-label: #cc2f02;
+
+    --color-button-secondary-loading-background: rgba(255, 107, 58, 0.1);
+    --color-button-secondary-loading-border: #cc2f02;
+    --color-button-secondary-loading-label: #cc2f02;
+
+    --color-button-secondary-disabled-background: #222222;
+    --color-button-secondary-disabled-border: #353535;
+    --color-button-secondary-disabled-label: #424242;
+
+    /* Button Text Colors */
+    --color-button-text-default-background: transparent;
+    --color-button-text-default-border: transparent;
+    --color-button-text-default-label: #cc2f02;
+
+    --color-button-text-hover-background: rgba(255, 143, 58, 0.05);
+    --color-button-text-hover-border: transparent;
+    --color-button-text-hover-label: #cc2f02;
+
+    --color-button-text-active-background: rgba(255, 143, 58, 0.1);
+    --color-button-text-active-border: transparent;
+    --color-button-text-active-label: #cc2f02;
+
+    --color-button-text-loading-background: rgba(255, 143, 58, 0.1);
+    --color-button-text-loading-border: transparent;
+    --color-button-text-loading-label: #cc2f02;
+
+    --color-button-text-disabled-background: transparent;
+    --color-button-text-disabled-border: transparent;
+    --color-button-text-disabled-label: #3d3d3d;
+
+    /* Button Link Colors */
+    --color-button-link-default-background: transparent;
+    --color-button-link-default-border: transparent;
+    --color-button-link-default-label: #B0B0B0;
+
+    --color-button-link-hover-background: transparent;
+    --color-button-link-hover-border: transparent;
+    --color-button-link-hover-label: #d1d1d1;
+
+    --color-button-link-active-background: transparent;
+    --color-button-link-active-border: transparent;
+    --color-button-link-active-label: #e7e7e7;
+
+    --color-button-link-loading-background: transparent;
+    --color-button-link-loading-border: transparent;
+    --color-button-link-loading-label: #3d3d3d;
+
+    --color-button-link-disabled-background: transparent;
+    --color-button-link-disabled-border: transparent;
+    --color-button-link-disabled-label: #3d3d3d;
   }
 } 

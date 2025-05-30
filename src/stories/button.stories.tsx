@@ -38,57 +38,57 @@ const ButtonGroup = ({
   loading: boolean;
   disabled: boolean;
 }) => (
-  <div className="flex flex-col gap-4">
-    <div className="flex gap-4">
-      <Button variant="default" loading={loading} disabled={disabled}>
-        Default
-      </Button>
-      <Button variant="primary" loading={loading} disabled={disabled}>
-        Primary
-      </Button>
-      <Button variant="secondary" loading={loading} disabled={disabled}>
-        Secondary
-      </Button>
-      <Button variant="text" loading={loading} disabled={disabled}>
-        Text
-      </Button>
-      <Button variant="link" loading={loading} disabled={disabled}>
-        Link
-      </Button>
-    </div>
-    <div className="flex gap-4">
-      <Button
-        variant="default"
-        className="px-3"
-        prefixIcon={<EditIcon />}
-        loading={loading}
-        disabled={disabled}
-      />
-      <Button
-        variant="primary"
-        className="px-3"
-        prefixIcon={<EditIcon />}
-        loading={loading}
-        disabled={disabled}
-      />
-      <IconButton
-        variant="secondary"
-        icon={<EditIcon />}
-        loading={loading}
-        disabled={disabled}
-      />
-      <IconButton
-        variant="text"
-        icon={<EditIcon />}
-        loading={loading}
-        disabled={disabled}
-      />
-      <IconButton
-        variant="link"
-        icon={<EditIcon />}
-        loading={loading}
-        disabled={disabled}
-      />
+  <div className="bg-funnel-background absolute inset-0">
+    <div className="flex flex-col gap-4 p-4">
+      <div className="flex gap-4">
+        <Button variant="default" loading={loading} disabled={disabled}>
+          Default
+        </Button>
+        <Button variant="primary" loading={loading} disabled={disabled}>
+          Primary
+        </Button>
+        <Button variant="secondary" loading={loading} disabled={disabled}>
+          Secondary
+        </Button>
+        <Button variant="text" loading={loading} disabled={disabled}>
+          Text
+        </Button>
+        <Button variant="link" loading={loading} disabled={disabled}>
+          Link
+        </Button>
+      </div>
+      <div className="flex gap-4">
+        <IconButton
+          variant="default"
+          icon={<EditIcon />}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="primary"
+          icon={<EditIcon />}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="secondary"
+          icon={<EditIcon />}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="text"
+          icon={<EditIcon />}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="link"
+          icon={<EditIcon />}
+          loading={loading}
+          disabled={disabled}
+        />
+      </div>
     </div>
   </div>
 );
