@@ -11,6 +11,7 @@ import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
+  name: z.string().refine((v) => v.trim() !== ''),
   idTokenAllowed: z.boolean(),
   scopes: z.record(ClientScopeEnum, z.enum(['no', 'optional', 'required'])),
   urls: z.array(z.string().url()),
@@ -23,6 +24,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
+      name: client.name,
       idTokenAllowed: client.idTokenAllowed,
       scopes: Object.fromEntries([
         ...client.scopes.map((v) => [v, 'required']),
@@ -30,11 +32,13 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
       ]),
       urls: client.urls,
     },
+    mode: 'onChange',
   });
 
   const [updateRequired, setUpdateRequired] = useState(false);
   const values = useWatch({ control: form.control });
   const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
+  const isInvalid = Object.keys(form.formState.errors).length > 0;
 
   useEffect(() => {
     if (!updateRequired) return;
@@ -46,64 +50,74 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [updateRequired]);
 
   useEffect(() => {
-    if (!updateRequired) return;
+    if (!updateRequired || isInvalid) return;
 
     const timer = setTimeout(async () => {
-      const urls = (values.urls ?? [])
-        .filter((v) => v != null)
-        .filter((v) => v !== '');
+      await toast.promise(
+        async () => {
+          const urls = (values.urls ?? [])
+            .filter((v) => v != null)
+            .filter((v) => v !== '');
 
-      const { data, status } = await patchClient(client.clientId, {
-        scopes: Object.entries(values.scopes ?? {})
-          .filter(([, value]) => value === 'required')
-          .map(([key]) => key),
-        optionalScopes: Object.entries(values.scopes ?? {})
-          .filter(([, value]) => value === 'optional')
-          .map(([key]) => key),
-        idTokenAllowed: values.idTokenAllowed,
-        urls,
-      });
+          const { data, status } = await patchClient(client.clientId, {
+            name: values.name,
+            scopes: Object.entries(values.scopes ?? {})
+              .filter(([, value]) => value === 'required')
+              .map(([key]) => key),
+            optionalScopes: Object.entries(values.scopes ?? {})
+              .filter(([, value]) => value === 'optional')
+              .map(([key]) => key),
+            idTokenAllowed: values.idTokenAllowed,
+            urls,
+          });
 
-      if (!data || status) {
-        switch (status) {
-          case 'UNAUTHORIZED':
-            toast.error(t('toast.invalid_user'));
-            break;
-          case 'FORBIDDEN':
-            toast.error(t('common.errors.forbidden'));
-            break;
-          case 'SERVER_ERROR':
-            toast.error(t('toast.server_error'));
-            break;
-          case 'UNKNOWN_ERROR':
-            toast.error(t('toast.unknown_error'));
-            break;
-        }
+          if (!data || status) {
+            switch (status) {
+              case 'UNAUTHORIZED':
+                toast.error(t('toast.invalid_user'));
+                break;
+              case 'FORBIDDEN':
+                toast.error(t('common.errors.forbidden'));
+                break;
+              case 'SERVER_ERROR':
+                toast.error(t('toast.server_error'));
+                break;
+              case 'UNKNOWN_ERROR':
+                toast.error(t('toast.unknown_error'));
+                break;
+            }
 
-        return;
-      }
+            return;
+          }
 
-      setUpdateRequired(false);
-      onUpdated();
+          setUpdateRequired(false);
+          onUpdated();
 
-      form.reset({
-        idTokenAllowed: data.idTokenAllowed,
-        scopes: Object.fromEntries([
-          ...data.scopes.map((v) => [v, 'required']),
-          ...data.optionalScopes.map((v) => [v, 'optional']),
-        ]),
-        urls: data.urls,
-      });
+          form.reset({
+            name: data.name,
+            idTokenAllowed: data.idTokenAllowed,
+            scopes: Object.fromEntries([
+              ...data.scopes.map((v) => [v, 'required']),
+              ...data.optionalScopes.map((v) => [v, 'optional']),
+            ]),
+            urls: data.urls,
+          });
+        },
+        {
+          loading: t('services.detail.saving'),
+          success: t('services.detail.updated'),
+          error: t('services.detail.update_failed'),
+        },
+      );
     }, 1000);
-
     return () => clearTimeout(timer);
-  }, [client.clientId, form, onUpdated, t, updateRequired, values]);
+  }, [client.clientId, form, onUpdated, t, updateRequired, values, isInvalid]);
 
   useEffect(() => {
-    if (hasDirty) {
+    if (hasDirty && !isInvalid) {
       setUpdateRequired(true);
     }
-  }, [hasDirty]);
+  }, [hasDirty, isInvalid]);
 
-  return { form, setUpdateRequired };
+  return { form };
 };

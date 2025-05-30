@@ -1,11 +1,18 @@
 import { useAuth } from '@/features/auth';
-import { Avatar, BottomSheet, Button, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  BottomSheet,
+  Button,
+  FileUpload,
+  uniqueKey,
+} from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useProfileEditForm } from '../hooks/use-profile-edit-form';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
+import { useLoading } from '@/features/core';
 
 export function ProfileEditOverlay({
   open,
@@ -15,18 +22,12 @@ export function ProfileEditOverlay({
   close: () => void;
 }) {
   const [previewFile, setPreviewImage] = useState<string | null>(null);
+  const [loading, startLoading] = useLoading();
+
   const { user } = useAuth();
   const { t } = useTranslation();
-  const {
-    form: { formState },
-    onSubmit,
-    handleImageChange,
-  } = useProfileEditForm(previewFile, setPreviewImage);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleEditClick = () => {
-    fileInputRef.current?.click();
-  };
+  const { onSubmit, onSave } = useProfileEditForm(previewFile, setPreviewImage);
+  const fileInputRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     setPreviewImage(user?.picture ?? null);
@@ -48,32 +49,29 @@ export function ProfileEditOverlay({
       <BottomSheet.Body className="flex justify-center">
         <div
           className="relative w-fit cursor-pointer"
-          onClick={handleEditClick}
+          onClick={() => fileInputRef.current?.click()}
         >
           <Avatar
             name={user.name}
             img={previewFile ?? undefined}
             seed={uniqueKey(user.studentId)}
             size={30}
-            className="text-title-1"
           />
-          <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                if (!handleImageChange(e)) close();
-              }}
-              className="absolute h-0 w-0 appearance-none opacity-0"
-            />
-            <EditIcon
-              color="white"
-              width={20}
-              height={20}
-              className="cursor-pointer"
-            />
-          </div>
+          <FileUpload
+            ref={fileInputRef}
+            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            maxSizeMb={1}
+            onSave={onSave}
+          >
+            <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
+              <EditIcon
+                color="white"
+                width={20}
+                height={20}
+                className="cursor-pointer"
+              />
+            </div>
+          </FileUpload>
         </div>
       </BottomSheet.Body>
       <BottomSheet.Footer>
@@ -88,11 +86,9 @@ export function ProfileEditOverlay({
         </BottomSheet.Close>
         <Button
           variant="primary"
-          onClick={async () => {
-            if (await onSubmit()) handleClose();
-          }}
+          onClick={() => startLoading(onSubmit().then(handleClose))}
           disabled={previewFile === user.picture}
-          loading={formState.isSubmitting}
+          loading={loading}
           className="w-full"
         >
           {t('profile_change.button')}

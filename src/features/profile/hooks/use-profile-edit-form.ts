@@ -2,14 +2,12 @@ import { deleteUserPicture } from '@/data/delete-user-picture';
 import { patchUserPicture } from '@/data/patch-user-picture';
 import { useAuth } from '@/features/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import imageCompression from 'browser-image-compression';
-
-const MAX_IMAGE_KB = 1024;
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -27,34 +25,9 @@ export const useProfileEditForm = (
 
   const { formState, getValues, setValue } = form;
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return false;
-
-    if (!file.type.startsWith('image/')) {
-      toast.error(t('profile_change.errors.invalid_image_type'));
-      return false;
-    }
-
-    if (file.size > MAX_IMAGE_KB * 1000) {
-      toast.error(
-        t('profile_change.errors.image_too_large', {
-          max_size_mb: MAX_IMAGE_KB / 1024,
-        }),
-      );
-      return false;
-    }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      if (typeof e.target?.result === 'string') {
-        setPreviewImage(e.target?.result);
-        setValue('image', file, { shouldDirty: true });
-      }
-    };
-
-    return true;
+  const onSave = async (files: File[], previewUrls: string[]) => {
+    setPreviewImage(previewUrls[0]!);
+    setValue('image', files[0]!, { shouldDirty: true });
   };
 
   const deleteImage = async () => {
@@ -82,9 +55,23 @@ export const useProfileEditForm = (
     return true;
   };
 
+  const compressImage = async (file: File) => {
+    try {
+      return await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 512,
+        useWebWorker: true,
+        fileType: 'image/webp',
+      });
+    } catch (error) {
+      toast.error(t('profile_change.errors.failed_to_compress'));
+      return null;
+    }
+  };
+
   const changeImage = async () => {
-    const imageFile = getValues('image');
-    if (!imageFile) return false;
+    const image = getValues('image');
+    if (!image) return false;
 
     const error = formState.errors.image;
     if (error?.message != null) {
@@ -92,20 +79,10 @@ export const useProfileEditForm = (
       return false;
     }
 
-    let compressedFile: File;
-    try {
-      compressedFile = await imageCompression(imageFile, {
-        maxSizeMB: MAX_IMAGE_KB / 1024,
-        maxWidthOrHeight: 512,
-        useWebWorker: true,
-        fileType: 'image/webp',
-      });
-    } catch (error) {
-      toast.error(t('profile_change.errors.failed_to_compress'));
-      return false;
-    }
+    const compressedImage = await compressImage(image);
+    if (!compressedImage) return false;
 
-    const { data, status } = await patchUserPicture(compressedFile.size);
+    const { data, status } = await patchUserPicture(compressedImage.size);
 
     if (!data || status) {
       switch (status) {
@@ -127,7 +104,7 @@ export const useProfileEditForm = (
       const uploadResponse = await fetch(data.presignedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'image/webp' },
-        body: compressedFile,
+        body: compressedImage,
       });
 
       if (!uploadResponse.ok) throw uploadResponse;
@@ -145,5 +122,5 @@ export const useProfileEditForm = (
     else return await changeImage();
   };
 
-  return { form, onSubmit, handleImageChange };
+  return { form, onSubmit, onSave };
 };

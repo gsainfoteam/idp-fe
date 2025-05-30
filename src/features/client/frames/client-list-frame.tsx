@@ -38,17 +38,17 @@ export function ClientListFrame() {
                   name={client.name}
                   img={client.picture ?? undefined}
                   seed={uniqueKey(client.clientId)}
-                  className="text-title-1 rounded-lg"
+                  className="shrink-0 rounded-lg"
                 />
-                <div className="flex-1">
-                  <div className="text-title-3 text-neutral-900">
+                <div className="min-w-0 flex-1">
+                  <div className="text-title-3 truncate text-neutral-900">
                     {client.name}
                   </div>
-                  <div className="text-label-2 text-neutral-400">
+                  <div className="text-label-2 truncate text-neutral-400">
                     ID: {client.clientId}
                   </div>
                 </div>
-                <ChevronRightIcon className="text-neutral-400" />
+                <ChevronRightIcon className="shrink-0 text-neutral-400" />
               </div>
             </Link>
           ))}
