@@ -167,6 +167,11 @@
   --color-switch-track-disabled-checked-children: #ffffff;
   --color-switch-handle-background: #ffffff;
   --color-switch-handle-background-disabled: #6d6d6d;
+
+  /* Toast Colors */
+  --color-toast-background: #ffffff;
+  --color-toast-text: #000000;
+  --color-toast-border: #d1d1d1;
 }
 
 @layer theme {
@@ -303,6 +308,11 @@
     --color-switch-track-disabled-checked-children: #ffffff;
     --color-switch-handle-background: #d1d1d1;
     --color-switch-handle-background-disabled: #6d6d6d;
+
+    /* Toast Colors */
+    --color-toast-background: #1a1a1a;
+    --color-toast-text: #ffffff;
+    --color-toast-border: #454545;
   }
 }
 
