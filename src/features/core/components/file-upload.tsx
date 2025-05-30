@@ -39,41 +39,26 @@ export function FileUpload({
       return;
     }
 
-    return new Promise<void>((resolve, reject) => {
-      const previewUrls: string[] = [];
-      const readFile = (index: number) => {
-        if (index >= files.length) {
-          onSave(files, previewUrls);
-          resolve();
-          return;
-        }
-
-        const file = files[index];
-        if (!file) {
-          reject(t('toast.failed_to_read'));
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          if (typeof e.target?.result === 'string') {
-            previewUrls.push(e.target.result);
-            readFile(index + 1);
-          } else {
-            toast.error(t('toast.failed_to_read'));
-            reject(t('toast.failed_to_read'));
-            return;
-          }
-        };
-        reader.onerror = () => {
-          toast.error(t('toast.failed_to_read'));
-          reject(t('toast.failed_to_read'));
-        };
-      };
-
-      readFile(0);
-    });
+    Promise.all(
+      files.map((file) => {
+        return new Promise<string>((resolveFile, rejectFile) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            if (typeof e.target?.result === 'string') {
+              resolveFile(e.target.result);
+            } else {
+              rejectFile(t('toast.failed_to_read'));
+            }
+          };
+          reader.onerror = () => {
+            rejectFile(t('toast.failed_to_read'));
+          };
+        });
+      }),
+    )
+      .then((previewUrls) => onSave(files, previewUrls))
+      .catch((error) => toast.error(error));
   };
 
   return (
