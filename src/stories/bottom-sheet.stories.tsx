@@ -3,21 +3,17 @@ import { useEffect, useState } from 'react';
 
 import { BottomSheet, Button } from '@/features/core';
 
-const meta = {
-  component: BottomSheet,
-  argTypes: {
-    isOpen: {
-      options: [true, false],
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof BottomSheet>;
+type BottomSheetStoryProps = {
+  isOpen: boolean;
+  header: string;
+  body: string;
+};
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-const BottomSheetWithState = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
+const BottomSheetWithState = ({
+  isOpen: initialOpen,
+  header,
+  body,
+}: BottomSheetStoryProps) => {
   const [open, setOpen] = useState(initialOpen);
 
   useEffect(() => {
@@ -26,11 +22,8 @@ const BottomSheetWithState = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
 
   return (
     <BottomSheet isOpen={open} close={() => setOpen(false)}>
-      <BottomSheet.Header>Title must be so long</BottomSheet.Header>
-      <BottomSheet.Body>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non
-        nulla vitae augue pellentesque mollis.
-      </BottomSheet.Body>
+      <BottomSheet.Header>{header}</BottomSheet.Header>
+      <BottomSheet.Body>{body}</BottomSheet.Body>
       <BottomSheet.Footer>
         <BottomSheet.Close>
           <Button variant="secondary" className="w-full">
@@ -53,12 +46,26 @@ const BottomSheetWithState = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   );
 };
 
+const meta = {
+  component: BottomSheetWithState,
+  argTypes: {
+    isOpen: {
+      options: [true, false],
+      control: { type: 'boolean' },
+    },
+    header: { control: 'text' },
+    body: { control: 'text' },
+  },
+} satisfies Meta<typeof BottomSheetWithState>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
 export const Default: Story = {
   args: {
     isOpen: false,
-    close: () => {},
-  },
-  render: ({ isOpen }) => {
-    return <BottomSheetWithState isOpen={isOpen} />;
+    header: 'Bottom Sheet',
+    body: 'A bottom sheet is a modal that appears from the bottom of the screen.',
   },
 };

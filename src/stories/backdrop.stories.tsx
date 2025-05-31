@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import { Backdrop } from '@/features/core';
-import Logo from '@/assets/logos/logo.svg?react';
+import Favicon from '@/assets/logos/favicon.svg?react';
 
 const meta = {
   component: Backdrop,
@@ -37,7 +37,7 @@ const BackdropWithState = ({
 
   return (
     <Backdrop isOpen={open} close={() => setOpen(false)} className={className}>
-      <Logo />
+      <Favicon />
     </Backdrop>
   );
 };
