@@ -25,11 +25,11 @@
   /* Button Primary Colors */
   --color-button-primary-default-background: #ff4500;
   --color-button-primary-default-border: transparent;
-  --color-button-primary-default-label: #e7e7e7;
+  --color-button-primary-default-label: #ffffff;
 
   --color-button-primary-hover-background: #e53e00;
   --color-button-primary-hover-border: transparent;
-  --color-button-primary-hover-label: #e7e7e7;
+  --color-button-primary-hover-label: #ffffff;
 
   --color-button-primary-active-background: #cc2f02;
   --color-button-primary-active-border: transparent;
@@ -41,7 +41,7 @@
 
   --color-button-primary-disabled-background: #dadada;
   --color-button-primary-disabled-border: transparent;
-  --color-button-primary-disabled-label: #888888;
+  --color-button-primary-disabled-label: #ffffff;
 
   /* Button Secondary Colors */
   --color-button-secondary-default-background: #ffffff;
