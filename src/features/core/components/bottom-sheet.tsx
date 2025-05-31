@@ -67,7 +67,7 @@ const BottomSheet = ({
             className,
           )}
         >
-          <div className="bg-bottom-sheet-handle absolute top-2 left-1/2 h-1.5 w-12.5 -translate-x-1/2 rounded-full" />
+          <div className="bg-bottom-sheet-handle absolute top-3 left-1/2 h-1 w-12.5 -translate-x-1/2 rounded-full" />
           {children}
         </motion.div>
       </Backdrop>
@@ -83,7 +83,7 @@ BottomSheet.Header = ({
   return (
     <div
       className={cn(
-        'text-title-1 w-full px-5 pb-3 text-pretty whitespace-pre-wrap text-neutral-950',
+        'text-title-1 text-bottom-sheet-header w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}
@@ -101,7 +101,7 @@ BottomSheet.Body = ({
   return (
     <div
       className={cn(
-        'text-body-1 w-full px-5 pb-3 text-pretty whitespace-pre-wrap text-neutral-600',
+        'text-body-1 text-bottom-sheet-body w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}
