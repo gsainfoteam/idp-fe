@@ -41,7 +41,7 @@
 
   --color-button-primary-disabled-background: #dadada;
   --color-button-primary-disabled-border: transparent;
-  --color-button-primary-disabled-label: #e7e7e7;
+  --color-button-primary-disabled-label: #888888;
 
   /* Button Secondary Colors */
   --color-button-secondary-default-background: #ffffff;
@@ -196,7 +196,7 @@
     /* Button Link Colors */
     --color-button-link-default-background: transparent;
     --color-button-link-default-border: transparent;
-    --color-button-link-default-label: #B0B0B0;
+    --color-button-link-default-label: #b0b0b0;
 
     --color-button-link-hover-background: transparent;
     --color-button-link-hover-border: transparent;
@@ -214,4 +214,4 @@
     --color-button-link-disabled-border: transparent;
     --color-button-link-disabled-label: #3d3d3d;
   }
-} 
+}

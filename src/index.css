@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import './styles/button.css';
+@import './styles/input.css';
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 
 @layer base {
@@ -103,19 +105,6 @@
   --color-funnel-steptitle: #0e0e0e;
   --color-funnel-description: #6d6d6d;
 
-  /* Input Colors */
-  --color-input-background: #ffffff;
-  --color-input-children: #888888;
-  --color-input-text: #0e0e0e;
-  --color-input-placeholder: #888888;
-  --color-input-border: #888888;
-  --color-input-focus-border: #ff8232;
-  --color-input-error-border: #ff2534;
-  --color-input-disabled-border: #888888;
-  --color-input-disabled-background: #e7e7e7;
-  --color-input-disabled-text: #5d5d5d;
-  --color-input-error-label: #ff2534;
-
   /* Label Colors */
   --color-label-required: #ff2534;
   --color-label-text: #3d3d3d;
@@ -171,14 +160,6 @@
     --color-funnel-title: #ffffff;
     --color-funnel-steptitle: #ffffff;
     --color-funnel-description: #b0b0b0;
-
-    /* Input Colors */
-    --color-input-background: #1a1a1a;
-    --color-input-children: #b0b0b0;
-    --color-input-text: #ffffff;
-    --color-input-placeholder: #b0b0b0;
-    --color-input-border: #b0b0b0;
-    --color-input-focus-border: #ff8232;
 
     /* Label Colors */
     --color-label-required: #ff2534;

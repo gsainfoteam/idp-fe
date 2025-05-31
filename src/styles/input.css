@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-input-placeholder: #888888;
+
+  /* Input Default Colors */
+  --color-input-default-background: #ffffff;
+  --color-input-default-border: #5d5d5d;
+  --color-input-default-label: #0e0e0e;
+
+  /* Input Focus Colors */
+  --color-input-focus-background: #fffbf6;
+  --color-input-focus-border: #ff4500;
+  --color-input-focus-label: #0e0e0e;
+
+  /* Input Error Colors */
+  --color-input-error-background: #ffffff;
+  --color-input-error-border: #ff2534;
+  --color-input-error-label: #0e0e0e;
+
+  /* Input Disabled Colors */
+  --color-input-disabled-background: #dadada;
+  --color-input-disabled-border: #888888;
+  --color-input-disabled-label: #888888;
+}
+
+@layer theme {
+  .dark {
+    --color-input-placeholder: #888888;
+
+    /* Input Default Colors */
+    --color-input-default-background: #191919;
+    --color-input-default-border: #323232;
+    --color-input-default-label: #e7e7e7;
+
+    /* Input Focus Colors */
+    --color-input-focus-background: #1e1612;
+    --color-input-focus-border: #ff4500;
+    --color-input-focus-label: #e7e7e7;
+
+    /* Input Error Colors */
+    --color-input-error-background: #191919;
+    --color-input-error-border: #d5000f;
+    --color-input-error-label: #e7e7e7;
+
+    /* Input Disabled Colors */
+    --color-input-disabled-background: #222222;
+    --color-input-disabled-border: #424242;
+    --color-input-disabled-label: #424242;
+  }
+}
