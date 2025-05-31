@@ -10,7 +10,7 @@
   --color-input-default-label: var(--color-black);
 
   /* Input Focus Colors */
-  --color-input-focus-background: --alpha(var(--color-primary-400), 5%);
+  --color-input-focus-background: --alpha(var(--color-primary-400) / 5%);
   --color-input-focus-border: var(--color-primary-600);
   --color-input-focus-label: var(--color-black);
 
@@ -35,7 +35,7 @@
     --color-input-default-label: var(--color-neutral-100);
 
     /* Input Focus Colors */
-    --color-input-focus-background: --alpha(var(--color-primary-400), 5%);
+    --color-input-focus-background: --alpha(var(--color-primary-400) / 5%);
     --color-input-focus-border: var(--color-primary-600);
     --color-input-focus-label: var(--color-neutral-100);
 
