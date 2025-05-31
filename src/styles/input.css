@@ -1,51 +1,52 @@
 @import 'tailwindcss';
+@import './primitive.css';
 
 @theme {
-  --color-input-placeholder: #888888;
+  --color-input-placeholder: var(--color-neutral-400);
 
   /* Input Default Colors */
-  --color-input-default-background: #ffffff;
-  --color-input-default-border: #5d5d5d;
-  --color-input-default-label: #0e0e0e;
+  --color-input-default-background: var(--color-white);
+  --color-input-default-border: var(--color-neutral-600);
+  --color-input-default-label: var(--color-black);
 
   /* Input Focus Colors */
-  --color-input-focus-background: #fffbf6;
-  --color-input-focus-border: #ff4500;
-  --color-input-focus-label: #0e0e0e;
+  --color-input-focus-background: --alpha(var(--color-primary-400), 5%);
+  --color-input-focus-border: var(--color-primary-600);
+  --color-input-focus-label: var(--color-black);
 
   /* Input Error Colors */
-  --color-input-error-background: #ffffff;
-  --color-input-error-border: #ff2534;
-  --color-input-error-label: #0e0e0e;
+  --color-input-error-background: var(--color-white);
+  --color-input-error-border: var(--color-red-500);
+  --color-input-error-label: var(--color-black);
 
   /* Input Disabled Colors */
-  --color-input-disabled-background: #dadada;
-  --color-input-disabled-border: #888888;
-  --color-input-disabled-label: #888888;
+  --color-input-disabled-background: var(--color-neutral-200);
+  --color-input-disabled-border: var(--color-neutral-400);
+  --color-input-disabled-label: var(--color-neutral-400);
 }
 
 @layer theme {
   .dark {
-    --color-input-placeholder: #888888;
+    --color-input-placeholder: var(--color-neutral-400);
 
     /* Input Default Colors */
-    --color-input-default-background: #191919;
-    --color-input-default-border: #323232;
-    --color-input-default-label: #e7e7e7;
+    --color-input-default-background: var(--color-neutral-980);
+    --color-input-default-border: var(--color-neutral-900);
+    --color-input-default-label: var(--color-neutral-100);
 
     /* Input Focus Colors */
-    --color-input-focus-background: #1e1612;
-    --color-input-focus-border: #ff4500;
-    --color-input-focus-label: #e7e7e7;
+    --color-input-focus-background: --alpha(var(--color-primary-400), 5%);
+    --color-input-focus-border: var(--color-primary-600);
+    --color-input-focus-label: var(--color-neutral-100);
 
     /* Input Error Colors */
-    --color-input-error-background: #191919;
-    --color-input-error-border: #d5000f;
-    --color-input-error-label: #e7e7e7;
+    --color-input-error-background: var(--color-neutral-980);
+    --color-input-error-border: var(--color-red-700);
+    --color-input-error-label: var(--color-neutral-100);
 
     /* Input Disabled Colors */
-    --color-input-disabled-background: #222222;
-    --color-input-disabled-border: #424242;
-    --color-input-disabled-label: #424242;
+    --color-input-disabled-background: var(--color-neutral-960);
+    --color-input-disabled-border: var(--color-neutral-800);
+    --color-input-disabled-label: var(--color-neutral-800);
   }
 }

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './styles/primitive.css';
 @import './styles/button.css';
 @import './styles/input.css';
 @import './styles/multi-state-switch.css';
@@ -12,67 +13,6 @@
 }
 
 @theme {
-  --color-white: #ffffff;
-  --color-black: #000000;
-  --color-dimmed-20: rgba(0, 0, 0, 0.2);
-  --color-dimmed-50: rgba(0, 0, 0, 0.5);
-  --color-dimmed-80: rgba(0, 0, 0, 0.8);
-  --color-red-50: #fff0f1;
-  --color-red-100: #ffdddf;
-  --color-red-200: #ffc1c5;
-  --color-red-300: #ff959c;
-  --color-red-400: #ff5964;
-  --color-red-500: #ff2534;
-  --color-red-600: #ed0212;
-  --color-red-700: #d5000f;
-  --color-red-800: #b00410;
-  --color-red-900: #910b14;
-  --color-red-950: #500005;
-  --color-primary-50: #fff6ec;
-  --color-primary-100: #ffead3;
-  --color-primary-200: #ffd1a5;
-  --color-primary-300: #ffb06d;
-  --color-primary-400: #ff8232;
-  --color-primary-500: #ff5f0a;
-  --color-primary-600: #ff4500;
-  --color-primary-700: #cc2f02;
-  --color-primary-800: #a1250b;
-  --color-primary-900: #82220c;
-  --color-primary-950: #460d04;
-  --color-neutral-50: #f6f6f6;
-  --color-neutral-100: #e7e7e7;
-  --color-neutral-200: #d1d1d1;
-  --color-neutral-300: #b0b0b0;
-  --color-neutral-400: #888888;
-  --color-neutral-500: #6d6d6d;
-  --color-neutral-600: #5d5d5d;
-  --color-neutral-700: #4f4f4f;
-  --color-neutral-800: #454545;
-  --color-neutral-900: #3d3d3d;
-  --color-neutral-950: #0e0e0e;
-
-  --text-title-1: 22px;
-  --text-title-1--font-weight: 700;
-  --text-title-1--line-height: 150%;
-  --text-title-2: 18px;
-  --text-title-2--font-weight: 600;
-  --text-title-2--line-height: 150%;
-  --text-title-3: 16px;
-  --text-title-3--font-weight: 600;
-  --text-title-3--line-height: 150%;
-  --text-body-1: 16px;
-  --text-body-1--font-weight: 400;
-  --text-body-1--line-height: 150%;
-  --text-body-2: 14px;
-  --text-body-2--font-weight: 400;
-  --text-body-2--line-height: 140%;
-  --text-label-1: 14px;
-  --text-label-1--font-weight: 400;
-  --text-label-1--line-height: 120%;
-  --text-label-2: 12px;
-  --text-label-2--font-weight: 400;
-  --text-label-2--line-height: 120%;
-
   /* Semantic Colors */
   /* Avatar Colors */
   --color-avatar-gray: #bdbdbd;
@@ -112,12 +52,6 @@
 
   /* Dialog Colors */
   --color-dialog-background: #ffffff;
-
-  /* Multi State Switch Colors */
-  --color-multi-state-switch-background: #e7e7e7;
-  --color-multi-state-switch-selected-background: #ffffff;
-  --color-multi-state-switch-selected-label: #000000;
-  --color-multi-state-switch-unselected-label: #6d6d6d;
 
   /* Switch Colors */
   --color-switch-track-background: #d1d1d1;
@@ -168,12 +102,6 @@
 
     /* Dialog Colors */
     --color-dialog-background: #1a1a1a;
-
-    /* Multi State Switch Colors */
-    --color-multi-state-switch-background: #1a1a1a;
-    --color-multi-state-switch-selected-background: #000000;
-    --color-multi-state-switch-selected-label: #ffffff;
-    --color-multi-state-switch-unselected-label: #b0b0b0;
 
     /* Switch Colors */
     --color-switch-track-background: #d1d1d1;

@@ -1,27 +1,28 @@
 @import 'tailwindcss';
+@import './primitive.css';
 
 @theme {
-  --color-mss-selected-default-background: #ffffff;
-  --color-mss-selected-default-label: #000000;
-  --color-mss-default-default-background: #e7e7e7;
-  --color-mss-default-default-label: #6d6d6d;
+  --color-mss-selected-default-background: var(--color-white);
+  --color-mss-selected-default-label: var(--color-black);
+  --color-mss-default-default-background: var(--color-neutral-100);
+  --color-mss-default-default-label: var(--color-neutral-500);
 
-  --color-mss-selected-disabled-background: #e1e1e1;
-  --color-mss-selected-disabled-label: #b0b0b0;
-  --color-mss-default-disabled-background: #d1d1d1;
-  --color-mss-default-disabled-label: #b0b0b0;
+  --color-mss-selected-disabled-background: var(--color-neutral-100);
+  --color-mss-selected-disabled-label: var(--color-neutral-300);
+  --color-mss-default-disabled-background: var(--color-neutral-200);
+  --color-mss-default-disabled-label: var(--color-neutral-300);
 }
 
 @layer theme {
   .dark {
-    --color-mss-selected-default-background: #151515;
-    --color-mss-selected-default-label: #ffffff;
-    --color-mss-default-default-background: #2b2b2b;
-    --color-mss-default-default-label: #9b9b9b;
+    --color-mss-selected-default-background: var(--color-neutral-980);
+    --color-mss-selected-default-label: var(--color-white);
+    --color-mss-default-default-background: var(--color-neutral-940);
+    --color-mss-default-default-label: var(--color-neutral-350);
 
-    --color-mss-selected-disabled-background: #1a1a1a;
-    --color-mss-selected-disabled-label: #484848;
-    --color-mss-default-disabled-background: #2b2b2b;
-    --color-mss-default-disabled-label: #484848;
+    --color-mss-selected-disabled-background: var(--color-neutral-960);
+    --color-mss-selected-disabled-label: var(--color-neutral-700);
+    --color-mss-default-disabled-background: var(--color-neutral-940);
+    --color-mss-default-disabled-label: var(--color-neutral-700);
   }
 }
