@@ -60,8 +60,7 @@ export function InputTestFrame() {
   }, [remainTime]);
 
   return (
-    <div>
-      <h1 className="text-title-1 px-10 pt-10">Input</h1>
+    <div className="bg-funnel-background absolute inset-0">
       <div className="m-10 flex flex-col gap-5">
         <div className="flex gap-5">
           <Input className="w-[200px]" placeholder="텍스트를 입력하세요" />
