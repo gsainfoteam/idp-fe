@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -13,32 +13,47 @@ export const useTheme = () => {
         : 'light',
   );
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const applyTheme = (resolvedTheme: Exclude<Theme, 'system'>) => {
-      root.classList.remove('light', 'dark');
-      root.classList.add(resolvedTheme);
-    };
+  const updateTheme = (newTheme: Theme) => {
+    setTheme(newTheme);
 
+    const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
-    if (theme === 'system') {
-      applyTheme(mediaQuery.matches ? 'dark' : 'light');
+
+    if (newTheme === 'system') {
+      const resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        .matches
+        ? 'dark'
+        : 'light';
+
+      root.classList.add(resolvedTheme);
       localStorage.removeItem('theme');
     } else {
-      applyTheme(theme);
-      localStorage.theme = theme;
+      root.classList.add(newTheme);
+      localStorage.theme = newTheme;
     }
+  };
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       const newTheme = e.matches ? 'dark' : 'light';
       setSystemTheme(newTheme);
-      if (theme === 'system') applyTheme(newTheme);
+
+      if (theme === 'system') {
+        const root = window.document.documentElement;
+        root.classList.remove('light', 'dark');
+        root.classList.add(newTheme);
+      }
     };
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
-  return { theme, systemTheme, setTheme };
+  const isDark = useMemo(
+    () => theme === 'dark' || (theme === 'system' && systemTheme === 'dark'),
+    [theme, systemTheme],
+  );
+
+  return { theme, systemTheme, setTheme: updateTheme, isDark };
 };

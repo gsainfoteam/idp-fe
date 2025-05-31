@@ -6,7 +6,7 @@ import DarkModeIcon from '@/assets/icons/line/dark-mode.svg?react';
 import { cn } from '../utils/cn';
 
 export function ThemeSwitcher({ className }: { className?: string }) {
-  const { theme, systemTheme, setTheme } = useTheme();
+  const { theme, setTheme, isDark } = useTheme();
 
   const handleClick = () => {
     const themes: Theme[] = ['system', 'light', 'dark'];
@@ -15,10 +15,7 @@ export function ThemeSwitcher({ className }: { className?: string }) {
     setTheme(themes[nextIndex]!);
   };
 
-  const color =
-    (theme === 'system' ? systemTheme : theme) === 'dark'
-      ? 'text-[#ffffff]'
-      : 'text-[#000000]';
+  const color = isDark ? 'text-[#ffffff]' : 'text-[#000000]';
 
   return (
     <button
