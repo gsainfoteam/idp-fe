@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-bottom-sheet-background: var(--color-white);
+  --color-bottom-sheet-header: var(--color-black);
+  --color-bottom-sheet-body: var(--color-neutral-400);
+  --color-bottom-sheet-handle: var(--color-neutral-100);
+}
+
+@layer theme {
+  .dark {
+    --color-bottom-sheet-background: var(--color-neutral-960);
+    --color-bottom-sheet-header: var(--color-white);
+    --color-bottom-sheet-body: var(--color-neutral-400);
+    --color-bottom-sheet-handle: var(--color-neutral-800);
+  }
+}

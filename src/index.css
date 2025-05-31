@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './styles/primitive.css';
+@import './styles/bottom-sheet.css';
 @import './styles/button.css';
 @import './styles/input.css';
 @import './styles/multi-state-switch.css';
@@ -25,11 +26,6 @@
 
   /* Back Button Color */
   --color-back-button: #5d5d5d;
-
-  /* Bottom Sheet Colors */
-  --color-bottom-sheet-background: #ffffff;
-  --color-bottom-sheet-shadow: #000000;
-  --color-bottom-sheet-handle: #d1d1d1;
 
   /* Checkbox Colors */
   --color-checkbox-peer-checked-background: #ff5f0a;
@@ -75,11 +71,6 @@
 
     /* Avatar Colors */
     --color-avatar-label: #000000;
-
-    /* Bottom Sheet Colors */
-    --color-bottom-sheet-background: #1a1a1a;
-    --color-bottom-sheet-shadow: #000000;
-    --color-bottom-sheet-handle: #2d2d2d;
 
     /* Checkbox Colors */
     --color-checkbox-peer-checked-background: #ff5f0a;
