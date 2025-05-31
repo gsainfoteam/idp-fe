@@ -75,15 +75,13 @@ export function ProfileEditOverlay({
         </div>
       </BottomSheet.Body>
       <BottomSheet.Footer>
-        <BottomSheet.Close>
-          <Button
-            variant="secondary"
-            onClick={() => setPreviewImage(null)}
-            className="w-full"
-          >
-            {t('profile_change.sub_button')}
-          </Button>
-        </BottomSheet.Close>
+        <Button
+          variant="secondary"
+          onClick={() => setPreviewImage(null)}
+          className="w-full"
+        >
+          {t('profile_change.sub_button')}
+        </Button>
         <Button
           variant="primary"
           onClick={() => startLoading(onSubmit().then(handleClose))}
