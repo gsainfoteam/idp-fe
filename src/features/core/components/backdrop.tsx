@@ -42,7 +42,7 @@ export function Backdrop({
             duration: 0.15,
           }}
           className={cn(
-            'bg-dimmed-50 fixed inset-0 z-50 h-full w-full',
+            'fixed inset-0 z-50 h-full w-full bg-black/50',
             className,
           )}
           onPointerDown={(e) => {
