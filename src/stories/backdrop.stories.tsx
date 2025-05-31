@@ -12,7 +12,7 @@ const meta = {
       control: { type: 'boolean' },
     },
     className: {
-      options: ['bg-dimmed-20', 'bg-dimmed-50', 'bg-dimmed-80'],
+      options: ['bg-black/20', 'bg-black/50', 'bg-black/80'],
       control: { type: 'select' },
     },
   },
@@ -46,7 +46,7 @@ export const Default: Story = {
   args: {
     isOpen: true,
     close: () => {},
-    className: 'bg-dimmed-50',
+    className: 'bg-black/50',
   },
   render: ({ isOpen: open, className }) => {
     return <BackdropWithState open={open} className={className} />;
