@@ -18,7 +18,6 @@
 @theme {
   --color-label: var(--color-black);
 
-  /* Semantic Colors */
   /* Avatar Colors */
   --color-avatar-gray: #bdbdbd;
   --color-avatar-red: #ef9a9a;
@@ -41,18 +40,6 @@
   /* Label Colors */
   --color-label-required: #ff2534;
   --color-label-text: #3d3d3d;
-
-  /* Dialog Colors */
-  --color-dialog-background: #ffffff;
-
-  /* Switch Colors */
-  --color-switch-track-background: #d1d1d1;
-  --color-switch-track-background-checked: #ff5f0a;
-  --color-switch-track-disabled-background: #b0b0b0;
-  --color-switch-track-disabled-background-checked: #b0b0b0;
-  --color-switch-track-disabled-checked-children: #ffffff;
-  --color-switch-handle-background: #ffffff;
-  --color-switch-handle-background-disabled: #6d6d6d;
 
   /* Toast Colors */
   --color-toast-background: #ffffff;
@@ -80,18 +67,6 @@
     /* Label Colors */
     --color-label-required: #ff2534;
     --color-label-text: #ffffff;
-
-    /* Dialog Colors */
-    --color-dialog-background: #1a1a1a;
-
-    /* Switch Colors */
-    --color-switch-track-background: #d1d1d1;
-    --color-switch-track-background-checked: #ff5f0a;
-    --color-switch-track-disabled-background: #4f4f4f;
-    --color-switch-track-disabled-background-checked: #4f4f4f;
-    --color-switch-track-disabled-checked-children: #ffffff;
-    --color-switch-handle-background: #d1d1d1;
-    --color-switch-handle-background-disabled: #6d6d6d;
 
     /* Toast Colors */
     --color-toast-background: #1a1a1a;
