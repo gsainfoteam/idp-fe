@@ -6,6 +6,7 @@
 @import './styles/modal.css';
 @import './styles/checkbox.css';
 @import './styles/switch.css';
+@import './styles/toast.css';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 
@@ -40,11 +41,6 @@
   /* Label Colors */
   --color-label-required: #ff2534;
   --color-label-text: #3d3d3d;
-
-  /* Toast Colors */
-  --color-toast-background: #ffffff;
-  --color-toast-text: #000000;
-  --color-toast-border: #d1d1d1;
 }
 
 @layer theme {
@@ -67,11 +63,6 @@
     /* Label Colors */
     --color-label-required: #ff2534;
     --color-label-text: #ffffff;
-
-    /* Toast Colors */
-    --color-toast-background: #1a1a1a;
-    --color-toast-text: #ffffff;
-    --color-toast-border: #454545;
   }
 }
 

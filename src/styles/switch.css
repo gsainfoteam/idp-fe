@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './primitive.css';
 
 @theme {
   --color-switch-default-on-track: var(--color-primary-600);

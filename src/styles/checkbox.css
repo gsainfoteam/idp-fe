@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './primitive.css';
 
 @theme {
   --color-checkbox-checked-foreground: var(--color-white);
