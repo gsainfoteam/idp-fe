@@ -63,11 +63,11 @@ const BottomSheet = ({
           dragElastic={0.2}
           onDragEnd={handleDragEnd}
           className={cn(
-            'bg-bottom-sheet-background fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] pt-9 shadow-xl',
+            'bg-modal-background fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] pt-9 shadow-xl',
             className,
           )}
         >
-          <div className="bg-bottom-sheet-handle absolute top-3 left-1/2 h-1 w-12.5 -translate-x-1/2 rounded-full" />
+          <div className="bg-modal-handle absolute top-3 left-1/2 h-1 w-12.5 -translate-x-1/2 rounded-full" />
           {children}
         </motion.div>
       </Backdrop>
@@ -83,7 +83,7 @@ BottomSheet.Header = ({
   return (
     <div
       className={cn(
-        'text-title-1 text-bottom-sheet-header w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
+        'text-title-1 text-modal-header w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}
@@ -101,7 +101,7 @@ BottomSheet.Body = ({
   return (
     <div
       className={cn(
-        'text-body-1 text-bottom-sheet-body w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
+        'text-body-1 text-modal-body w-full px-5 pb-3 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}
