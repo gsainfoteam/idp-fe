@@ -2,7 +2,8 @@ import { forwardRef } from 'react';
 
 import { cn } from '../utils/cn';
 
-interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface SwitchProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   trackClassName?: string;
   handleClassName?: string;
 }

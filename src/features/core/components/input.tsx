@@ -2,14 +2,6 @@ import { forwardRef, useCallback, useState } from 'react';
 
 import { cn, palette } from '@/features/core';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  error?: string | boolean;
-  inputClassName?: string;
-  prefixAdornment?: React.ReactNode;
-  suffixAdornment?: React.ReactNode;
-}
-
 const inputColors = palette((hasError: boolean) => ({
   default: {
     placeholder: 'placeholder:text-input-placeholder',
@@ -36,6 +28,14 @@ const inputColors = palette((hasError: boolean) => ({
     text: 'disabled:text-input-disabled-label',
   },
 }));
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  error?: string | boolean;
+  inputClassName?: string;
+  prefixAdornment?: React.ReactNode;
+  suffixAdornment?: React.ReactNode;
+}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (

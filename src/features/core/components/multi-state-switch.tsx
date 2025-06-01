@@ -2,14 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { cn, palette } from '@/features/core';
 
-export interface MultiStateSwitchProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  labels: string[];
-  selected?: number;
-  disabled?: boolean;
-  onChangeIndex?: (index: number, label: string) => void;
-}
-
 const mssColors = palette((selected: boolean) => ({
   default: {
     background: selected
@@ -30,6 +22,14 @@ const mssColors = palette((selected: boolean) => ({
       : 'disabled:text-mss-default-disabled-label',
   },
 }));
+
+export interface MultiStateSwitchProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  labels: string[];
+  selected?: number;
+  disabled?: boolean;
+  onChangeIndex?: (index: number, label: string) => void;
+}
 
 export function MultiStateSwitch({
   labels,

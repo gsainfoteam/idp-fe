@@ -2,15 +2,6 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn, LoadingEllipse, palette } from '@/features/core';
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: NonNullable<VariantProps<typeof buttonStyles>['variant']>;
-  loading?: boolean;
-  prefixIcon?: React.ReactNode;
-  suffixIcon?: React.ReactNode;
-  labelClassName?: string;
-}
-
 const buttonColors = {
   default: palette((loading: boolean) => ({
     default: {
@@ -184,6 +175,15 @@ const buttonStyles = cva(
     },
   },
 );
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: NonNullable<VariantProps<typeof buttonStyles>['variant']>;
+  loading?: boolean;
+  prefixIcon?: React.ReactNode;
+  suffixIcon?: React.ReactNode;
+  labelClassName?: string;
+}
 
 export function Button({
   variant,

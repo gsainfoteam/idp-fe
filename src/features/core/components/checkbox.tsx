@@ -3,9 +3,6 @@ import { forwardRef } from 'react';
 import CheckIcon from '@/assets/icons/line/checkbox.svg?react';
 import { cn, palette } from '@/features/core';
 
-export interface CheckboxProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
-
 const checkboxColors = palette(() => ({
   default: {
     background: 'bg-transparent',
@@ -26,6 +23,9 @@ const checkboxColors = palette(() => ({
     foreground: 'peer-disabled:text-checkbox-disabled-foreground',
   },
 }));
+
+export interface CheckboxProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ disabled = false, className, children, ...props }, ref) => {

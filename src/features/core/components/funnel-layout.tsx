@@ -7,7 +7,7 @@ import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
 import { motion, usePresenceData } from 'framer-motion';
 
-interface FunnelLayoutProps extends React.Attributes {
+export interface FunnelLayoutProps extends React.Attributes {
   title?: string;
   stepTitle?: React.ReactNode;
   description?: string;
