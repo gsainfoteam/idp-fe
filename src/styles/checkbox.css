@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-checkbox-checked-foreground: var(--color-white);
+  --color-checkbox-disabled-foreground: var(--color-neutral-100);
+  --color-checkbox-checked-background: var(--color-primary-600);
+  --color-checkbox-disabled-background: var(--color-neutral-300);
+  --color-checkbox-default-border: var(--color-neutral-500);
+  --color-checkbox-checked-border: var(--color-checkbox-checked-background);
+  --color-checkbox-disabled-border: var(--color-checkbox-disabled-background);
+}
+
+@layer theme {
+  .dark {
+    --color-checkbox-checked-foreground: var(--color-white);
+    --color-checkbox-disabled-foreground: var(--color-neutral-600);
+    --color-checkbox-checked-background: var(--color-primary-700);
+    --color-checkbox-disabled-background: var(--color-neutral-920);
+    --color-checkbox-default-border: var(--color-neutral-600);
+    --color-checkbox-checked-border: var(--color-checkbox-checked-background);
+    --color-checkbox-disabled-border: var(--color-checkbox-disabled-background);
+  }
+}

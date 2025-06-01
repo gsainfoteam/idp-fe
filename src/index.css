@@ -1,9 +1,10 @@
 @import 'tailwindcss';
 @import './styles/primitive.css';
-@import './styles/modal.css';
 @import './styles/button.css';
 @import './styles/input.css';
 @import './styles/multi-state-switch.css';
+@import './styles/modal.css';
+@import './styles/checkbox.css';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 
@@ -14,6 +15,8 @@
 }
 
 @theme {
+  --color-label: var(--color-black);
+
   /* Semantic Colors */
   /* Avatar Colors */
   --color-avatar-gray: #bdbdbd;
@@ -26,14 +29,6 @@
 
   /* Back Button Color */
   --color-back-button: #5d5d5d;
-
-  /* Checkbox Colors */
-  --color-checkbox-peer-checked-background: #ff5f0a;
-  --color-checkbox-border: #6d6d6d;
-  --color-checkbox-background: #ffffff;
-  --color-checkbox-disabled-background: #b0b0b0;
-  --color-checkbox-peer-checked-disabled-background: #b0b0b0;
-  --color-checkbox-label: #000000;
 
   /* Funnel Layout Colors */
   --color-funnel-background: #ffffff;
@@ -66,19 +61,13 @@
 
 @layer theme {
   .dark {
+    --color-label: var(--color-white);
+
     /* Back Button Color */
     --color-back-button: #ffffff;
 
     /* Avatar Colors */
     --color-avatar-label: #000000;
-
-    /* Checkbox Colors */
-    --color-checkbox-peer-checked-background: #ff5f0a;
-    --color-checkbox-border: #6d6d6d;
-    --color-checkbox-background: #1a1a1a;
-    --color-checkbox-disabled-background: #b0b0b0;
-    --color-checkbox-peer-checked-disabled-background: #b0b0b0;
-    --color-checkbox-label: #ffffff;
 
     /* Funnel Layout Colors */
     --color-funnel-background: #1a1a1a;
