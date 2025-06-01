@@ -21,28 +21,30 @@ const BottomSheetWithState = ({
   }, [initialOpen]);
 
   return (
-    <BottomSheet isOpen={open} close={() => setOpen(false)}>
-      <BottomSheet.Header>{header}</BottomSheet.Header>
-      <BottomSheet.Body>{body}</BottomSheet.Body>
-      <BottomSheet.Footer>
-        <BottomSheet.Close>
-          <Button variant="secondary" className="w-full">
-            Close
-          </Button>
-        </BottomSheet.Close>
-        <BottomSheet.Close>
-          <Button
-            variant="primary"
-            onClick={() => {
-              alert('Success!');
-            }}
-            className="w-full"
-          >
-            Success
-          </Button>
-        </BottomSheet.Close>
-      </BottomSheet.Footer>
-    </BottomSheet>
+    <div className="bg-funnel-background absolute inset-0">
+      <BottomSheet isOpen={open} close={() => setOpen(false)}>
+        <BottomSheet.Header>{header}</BottomSheet.Header>
+        <BottomSheet.Body>{body}</BottomSheet.Body>
+        <BottomSheet.Footer>
+          <BottomSheet.Close>
+            <Button variant="secondary" className="w-full">
+              Close
+            </Button>
+          </BottomSheet.Close>
+          <BottomSheet.Close>
+            <Button
+              variant="primary"
+              onClick={() => {
+                alert('Success!');
+              }}
+              className="w-full"
+            >
+              Success
+            </Button>
+          </BottomSheet.Close>
+        </BottomSheet.Footer>
+      </BottomSheet>
+    </div>
   );
 };
 

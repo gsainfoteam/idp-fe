@@ -22,31 +22,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    error: false,
-    disabled: false,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export const Error: Story = {
-  args: {
-    error: 'Error Message',
-    disabled: false,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    error: false,
-    disabled: true,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export function InputTestFrame() {
+function InputTestFrame() {
   const [remainTime, setRemainTime] = useState(30);
 
   useEffect(() => {

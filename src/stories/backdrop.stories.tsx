@@ -49,6 +49,10 @@ export const Default: Story = {
     className: 'bg-black/50',
   },
   render: ({ isOpen: open, className }) => {
-    return <BackdropWithState open={open} className={className} />;
+    return (
+      <div className="bg-funnel-background absolute inset-0">
+        <BackdropWithState open={open} className={className} />
+      </div>
+    );
   },
 };

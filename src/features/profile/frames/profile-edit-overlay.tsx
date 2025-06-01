@@ -64,6 +64,7 @@ export function ProfileEditOverlay({
             onSave={onSave}
           >
             <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
+              {/* TODO: 아이콘 컴포넌트로 변경 */}
               <EditIcon
                 color="white"
                 width={20}

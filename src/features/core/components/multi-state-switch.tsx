@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { cn, palette } from '@/features/core';
 
-interface MultiStateSwitchProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MultiStateSwitchProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   labels: string[];
   selected?: number;
   disabled?: boolean;
