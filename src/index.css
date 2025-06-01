@@ -5,6 +5,7 @@
 @import './styles/multi-state-switch.css';
 @import './styles/modal.css';
 @import './styles/checkbox.css';
+@import './styles/switch.css';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 
