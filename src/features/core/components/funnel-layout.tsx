@@ -18,8 +18,6 @@ export interface FunnelLayoutProps extends React.Attributes {
   contentClassName?: string;
 }
 
-// TODO: 스크롤 바도 따로 컴포넌트화 해야할듯 다크모드에서 애매함
-
 function FunnelLayout({
   key,
   title,
@@ -77,7 +75,7 @@ function FunnelLayout({
 
           <div
             ref={scrollRef}
-            className="flex w-full flex-1 flex-col overflow-y-auto"
+            className="scrollbar flex w-full flex-1 flex-col overflow-y-scroll"
           >
             <LoadingOverlay show={loading} className="flex flex-1 flex-col">
               {/* Step Title Box */}
