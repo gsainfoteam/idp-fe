@@ -6,7 +6,7 @@ import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 
-import { Button, IconButton, Input } from '@/features/core';
+import { IconButton, Input } from '@/features/core';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
 
 export function ClientUrlsForm() {
