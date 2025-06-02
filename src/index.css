@@ -60,7 +60,12 @@
     --color-back-button: #ffffff;
 
     /* Avatar Colors */
-    --color-avatar-label: #000000;
+    --color-avatar-gray: #686868;
+    --color-avatar-red: #db6767;
+    --color-avatar-blue: #5da1d8;
+    --color-avatar-green: #67b96a;
+    --color-avatar-purple: #8767c3;
+    --color-avatar-orange: #e09f3f;
 
     /* Funnel Layout Colors */
     --color-funnel-background: #1a1a1a;
