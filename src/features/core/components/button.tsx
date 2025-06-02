@@ -162,7 +162,7 @@ const buttonStyles = cva(
         primary: 'text-title-3 px-5 py-3',
         secondary: 'text-title-3 px-5 py-3',
         text: 'text-title-3 px-5 py-3',
-        link: 'text-body-1 underline',
+        link: 'text-body-1 underline underline-offset-8',
       },
       loading: {
         true: 'pointer-events-none cursor-default',

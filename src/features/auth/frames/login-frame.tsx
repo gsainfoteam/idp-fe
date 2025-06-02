@@ -57,21 +57,25 @@ export function LoginFrame() {
               <div className="flex w-full items-center justify-center gap-1">
                 <Link to="/auth/register" search={(prev) => ({ ...prev })}>
                   <Button
-                    variant="text"
-                    className="text-body-2 p-0 text-neutral-800"
+                    variant="link"
                     type="button"
+                    className="text-body-2 no-underline"
                   >
                     {t('login.buttons.register')}
                   </Button>
                 </Link>
-                <div className="text-body-2 text-neutral-400">
+                <Button
+                  variant="link"
+                  className="text-body-2 no-underline"
+                  disabled
+                >
                   {t('login.buttons.or')}
-                </div>
+                </Button>
                 <Link to="/issue-password" search={(prev) => ({ ...prev })}>
                   <Button
-                    variant="text"
-                    className="text-body-2 p-0 text-neutral-800"
+                    variant="link"
                     type="button"
+                    className="text-body-2 no-underline"
                   >
                     {t('login.buttons.find_password')}
                   </Button>

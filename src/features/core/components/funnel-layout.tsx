@@ -18,7 +18,9 @@ export interface FunnelLayoutProps extends React.Attributes {
   contentClassName?: string;
 }
 
-export function FunnelLayout({
+// TODO: 스크롤 바도 따로 컴포넌트화 해야할듯 다크모드에서 애매함
+
+function FunnelLayout({
   key,
   title,
   stepTitle,
@@ -116,3 +118,9 @@ export function FunnelLayout({
     </motion.div>
   );
 }
+
+FunnelLayout.Separator = () => {
+  return <div className="bg-funnel-separator -mx-5 h-2" />;
+};
+
+export { FunnelLayout };

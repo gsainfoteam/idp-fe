@@ -40,7 +40,9 @@ export function ClientScopesForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.scopes.title')}</div>
+      <div className="text-title-3 text-basics-primary-label">
+        {t('services.detail.scopes.title')}
+      </div>
       <div className="flex flex-col gap-5">
         <Controller
           control={control}

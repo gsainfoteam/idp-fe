@@ -50,6 +50,7 @@ export function ConfirmStep({
                 {t('withdraw.steps.confirm.sub_button')}
               </Button>
             </Link>
+            {/* TODO: color prop? 추가 임의의 색은 아니더라도 success error warning info default만이라도? */}
             <Button
               variant="primary"
               className="w-full bg-red-600"
@@ -72,13 +73,15 @@ export function ConfirmStep({
                   seed={uniqueKey(user.studentId)}
                 />
                 <div className="flex flex-col">
-                  <div className="text-title-3">{user.name}</div>
-                  <div className="text-body-2 text-neutral-400">
+                  <div className="text-title-3 text-basics-primary-label">
+                    {user.name}
+                  </div>
+                  <div className="text-body-2 text-basics-secondary-label">
                     {user.email}
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-lg border border-neutral-100">
+              <div className="border-basics-tertiary-label flex flex-col rounded-lg border">
                 {clients.map((client) => (
                   <div
                     className="flex items-center gap-3 p-3"
@@ -92,10 +95,10 @@ export function ConfirmStep({
                       className="shrink-0 rounded-lg"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="text-title-3 truncate text-neutral-900">
+                      <div className="text-title-3 text-basics-primary-label truncate">
                         {client.name}
                       </div>
-                      <div className="text-label-2 truncate text-neutral-400">
+                      <div className="text-label-2 text-basics-secondary-label truncate">
                         ID: {client.clientId}
                       </div>
                     </div>
@@ -112,10 +115,10 @@ export function ConfirmStep({
                 seed={uniqueKey(context.studentId.toString())}
               />
               <div className="mt-3 flex flex-col items-center">
-                <div className="text-title-1 text-center text-neutral-950">
+                <div className="text-title-1 text-basics-primary-label text-center">
                   {context.name}
                 </div>
-                <div className="text-body-1 text-center text-neutral-400">
+                <div className="text-body-1 text-basics-secondary-label text-center">
                   {context.email}
                 </div>
               </div>

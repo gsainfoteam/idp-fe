@@ -34,13 +34,13 @@ const Inner = ({
       >
         <div className="mb-4 flex flex-col gap-5">
           <ClientPictureForm client={client} onUpdated={onUpdated} />
-          <div className="-mx-5 h-2 bg-neutral-50" />
+          <FunnelLayout.Separator />
           <ClientInfoForm client={client} />
-          <div className="-mx-5 h-2 bg-neutral-50" />
+          <FunnelLayout.Separator />
           <ClientIdTokenForm />
-          <div className="-mx-5 h-2 bg-neutral-50" />
+          <FunnelLayout.Separator />
           <ClientScopesForm />
-          <div className="-mx-5 h-2 bg-neutral-50" />
+          <FunnelLayout.Separator />
           <ClientUrlsForm />
         </div>
       </FunnelLayout>

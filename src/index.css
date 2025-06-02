@@ -18,6 +18,10 @@
 
 @theme {
   --color-label: var(--color-black);
+  --color-basics-primary-label: var(--color-black);
+  --color-basics-secondary-label: var(--color-neutral-400);
+  --color-basics-tertiary-label: var(--color-neutral-200);
+  --color-basics-error-label: var(--color-red-400);
 
   /* Avatar Colors */
   --color-avatar-gray: #bdbdbd;
@@ -37,6 +41,7 @@
   --color-funnel-title: #5d5d5d;
   --color-funnel-steptitle: #0e0e0e;
   --color-funnel-description: #6d6d6d;
+  --color-funnel-separator: var(--color-neutral-50);
 
   /* Label Colors */
   --color-label-required: #ff2534;
@@ -46,6 +51,10 @@
 @layer theme {
   .dark {
     --color-label: var(--color-white);
+    --color-basics-primary-label: var(--color-white);
+    --color-basics-secondary-label: var(--color-neutral-400);
+    --color-basics-tertiary-label: var(--color-neutral-600);
+    --color-basics-error-label: var(--color-red-400);
 
     /* Back Button Color */
     --color-back-button: #ffffff;
@@ -59,6 +68,7 @@
     --color-funnel-title: #ffffff;
     --color-funnel-steptitle: #ffffff;
     --color-funnel-description: #b0b0b0;
+    --color-funnel-separator: var(--color-neutral-940);
 
     /* Label Colors */
     --color-label-required: #ff2534;
