@@ -47,7 +47,7 @@ export function MultiStateSwitch({
       {...props}
     >
       <motion.div
-        className="bg-multi-state-switch-selected-background absolute top-0 bottom-0 rounded-lg shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]"
+        className="bg-multi-state-switch-selected-background absolute top-0 bottom-0 rounded-lg ring-2 ring-neutral-100 ring-inset"
         animate={indicatorStyle}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       />
