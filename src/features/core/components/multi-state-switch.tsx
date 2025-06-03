@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { motion } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
@@ -16,6 +17,24 @@ export function MultiStateSwitch({
 }: MultiStateSwitchProps) {
   const [selected, setSelected] = useState(initialSelected);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const buttons = container.querySelectorAll('button');
+    const selectedBtn = buttons[selected];
+    if (selectedBtn) {
+      const rect = selectedBtn.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      setIndicatorStyle({
+        left: rect.left - parentRect.left,
+        width: rect.width,
+      });
+    }
+  }, [selected, labels]);
+
   useEffect(() => {
     if (selected < 0) setSelected(0);
     if (selected >= labels.length) setSelected(labels.length - 1);
@@ -23,17 +42,23 @@ export function MultiStateSwitch({
 
   return (
     <div
-      className="bg-multi-state-switch-background flex h-fit w-full rounded-lg"
+      ref={containerRef}
+      className="bg-multi-state-switch-background relative flex h-fit w-full rounded-lg"
       {...props}
     >
+      <motion.div
+        className="bg-multi-state-switch-selected-background absolute top-0 bottom-0 rounded-lg shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]"
+        animate={indicatorStyle}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      />
       {labels.map((label, idx) => (
         <button
           key={idx}
           className={cn(
-            'flex w-full cursor-pointer items-center justify-center rounded-lg py-3 text-center',
+            'relative z-10 flex w-full cursor-pointer items-center justify-center rounded-lg py-3 text-center',
             idx === selected
-              ? 'text-title-3 bg-multi-state-switch-selected-background text-multi-state-switch-selected-label shadow-[inset_0_0_0_2px_theme(colors.neutral.100)]'
-              : 'text-body-1 text-multi-state-switch-unselected-label bg-transparent',
+              ? 'text-title-3 text-multi-state-switch-selected-label'
+              : 'text-body-1 text-multi-state-switch-unselected-label',
           )}
           onClick={() => {
             setSelected(idx);
