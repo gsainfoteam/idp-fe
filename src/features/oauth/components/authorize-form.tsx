@@ -86,8 +86,8 @@ export function AuthorizeForm({
         <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
       </Checkbox>
       <div className="h-2.5" />
-      <div className="rounded-lg border border-neutral-200 px-5 py-4">
-        <div className="text-body-2 mb-1 text-neutral-800">
+      <div className="border-basics-tertiary-label rounded-lg border px-5 py-4">
+        <div className="text-body-2 text-basics-secondary-label mb-1">
           {t('authorize.labels.required')}
         </div>
         <div className="flex flex-col gap-1 pl-1">
@@ -108,7 +108,7 @@ export function AuthorizeForm({
           ))}
         </div>
         <div className="h-2.5" />
-        <div className="text-body-2 mb-1 text-neutral-800">
+        <div className="text-body-2 text-basics-secondary-label mb-1">
           {t('authorize.labels.optional')}
         </div>
         <div className="flex flex-col gap-1 pl-1">

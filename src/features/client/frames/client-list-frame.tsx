@@ -11,6 +11,8 @@ export function ClientListFrame() {
   const { t } = useTranslation();
   const { clients } = useClientList();
 
+  // TODO: Error Boundary + Suspense
+
   return (
     <FunnelLayout
       stepTitle={t('services.list.title')}
@@ -32,7 +34,7 @@ export function ClientListFrame() {
               to="/clients/$id"
               params={{ id: client.clientId }}
             >
-              <div className="flex items-center gap-3 rounded-lg border border-neutral-100 p-3">
+              <div className="border-basics-tertiary-label flex items-center gap-3 rounded-lg border p-3">
                 <Avatar
                   size={10}
                   name={client.name}
@@ -41,14 +43,14 @@ export function ClientListFrame() {
                   className="shrink-0 rounded-lg"
                 />
                 <div className="min-w-0 flex-1">
-                  <div className="text-title-3 truncate text-neutral-900">
+                  <div className="text-title-3 text-basics-primary-label truncate">
                     {client.name}
                   </div>
-                  <div className="text-label-2 truncate text-neutral-400">
+                  <div className="text-label-2 text-basics-secondary-label truncate">
                     ID: {client.clientId}
                   </div>
                 </div>
-                <ChevronRightIcon className="shrink-0 text-neutral-400" />
+                <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
               </div>
             </Link>
           ))}
@@ -56,7 +58,7 @@ export function ClientListFrame() {
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <img src={puzzleImage} className="size-[100px] opacity-40" />
-          <div className="text-body-1 text-center whitespace-pre-wrap text-neutral-600">
+          <div className="text-body-1 text-basics-secondary-label text-center whitespace-pre-wrap">
             {t('services.list.empty')}
           </div>
         </div>

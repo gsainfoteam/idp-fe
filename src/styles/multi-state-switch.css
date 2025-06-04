@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-mss-selected-default-background: var(--color-white);
+  --color-mss-selected-default-label: var(--color-black);
+  --color-mss-default-default-background: var(--color-neutral-100);
+  --color-mss-default-default-label: var(--color-neutral-500);
+
+  --color-mss-selected-disabled-background: var(--color-neutral-100);
+  --color-mss-selected-disabled-label: var(--color-neutral-300);
+  --color-mss-default-disabled-background: var(--color-neutral-200);
+  --color-mss-default-disabled-label: var(--color-neutral-300);
+}
+
+@layer theme {
+  .dark {
+    --color-mss-selected-default-background: var(--color-neutral-980);
+    --color-mss-selected-default-label: var(--color-white);
+    --color-mss-default-default-background: var(--color-neutral-940);
+    --color-mss-default-default-label: var(--color-neutral-350);
+
+    --color-mss-selected-disabled-background: var(--color-neutral-960);
+    --color-mss-selected-disabled-label: var(--color-neutral-700);
+    --color-mss-default-disabled-background: var(--color-neutral-940);
+    --color-mss-default-disabled-label: var(--color-neutral-700);
+  }
+}

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { Backdrop } from './backdrop';
-import Logo from '@/assets/logos/logo.svg?react';
+import { Backdrop } from '@/features/core';
+import Favicon from '@/assets/logos/favicon.svg?react';
 
 const meta = {
   component: Backdrop,
@@ -12,7 +12,7 @@ const meta = {
       control: { type: 'boolean' },
     },
     className: {
-      options: ['bg-dimmed-20', 'bg-dimmed-50', 'bg-dimmed-80'],
+      options: ['bg-black/20', 'bg-black/50', 'bg-black/80'],
       control: { type: 'select' },
     },
   },
@@ -37,7 +37,7 @@ const BackdropWithState = ({
 
   return (
     <Backdrop isOpen={open} close={() => setOpen(false)} className={className}>
-      <Logo />
+      <Favicon />
     </Backdrop>
   );
 };
@@ -46,9 +46,13 @@ export const Default: Story = {
   args: {
     isOpen: true,
     close: () => {},
-    className: 'bg-dimmed-50',
+    className: 'bg-black/50',
   },
   render: ({ isOpen: open, className }) => {
-    return <BackdropWithState open={open} className={className} />;
+    return (
+      <div className="bg-funnel-background absolute inset-0">
+        <BackdropWithState open={open} className={className} />
+      </div>
+    );
   },
 };

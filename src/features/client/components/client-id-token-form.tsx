@@ -11,10 +11,14 @@ export function ClientIdTokenForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.openid.title')}</div>
+      <div className="text-title-3 text-basics-primary-label">
+        {t('services.detail.openid.title')}
+      </div>
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <div>{t('services.detail.openid.enable')}</div>
+          <div className="text-label-1 text-basics-primary-label">
+            {t('services.detail.openid.enable')}
+          </div>
           <Controller
             control={control}
             name="idTokenAllowed"

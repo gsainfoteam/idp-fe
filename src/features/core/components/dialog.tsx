@@ -34,7 +34,7 @@ const Dialog = ({
             stiffness: 250,
           }}
           className={cn(
-            'bg-dialog-background relative flex w-fit flex-col rounded-[20px]',
+            'bg-modal-background relative flex w-fit flex-col rounded-[20px]',
             className,
           )}
         >
@@ -53,7 +53,7 @@ Dialog.Header = ({
   return (
     <div
       className={cn(
-        'text-title-1 w-full px-6 pt-6 pb-2 text-pretty whitespace-pre-wrap text-neutral-950',
+        'text-title-1 text-modal-header w-full px-6 pt-6 pb-2 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}
@@ -71,7 +71,7 @@ Dialog.Body = ({
   return (
     <div
       className={cn(
-        'text-body-1 w-full px-6 py-2 text-pretty whitespace-pre-wrap text-neutral-600',
+        'text-body-1 text-modal-body w-full px-6 py-2 text-pretty whitespace-pre-wrap',
         className,
       )}
       {...props}

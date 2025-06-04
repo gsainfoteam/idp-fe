@@ -1,6 +1,33 @@
 import { forwardRef, useCallback, useState } from 'react';
 
-import { cn } from '@/features/core';
+import { cn, palette } from '@/features/core';
+
+const inputColors = palette((hasError: boolean) => ({
+  default: {
+    placeholder: 'placeholder:text-input-placeholder',
+    background: 'bg-input-default-background',
+    border: 'inset-ring-input-default-border inset-ring',
+    text: 'text-input-default-label',
+  },
+  focus: {
+    placeholder: !hasError && 'placeholder:text-input-placeholder',
+    background: !hasError && 'focus:bg-input-focus-background',
+    border: !hasError && 'focus:inset-ring-input-focus-border focus:inset-ring',
+    text: !hasError && 'focus:text-input-focus-label',
+  },
+  error: {
+    placeholder: 'placeholder:text-input-placeholder',
+    background: hasError && 'bg-input-error-background',
+    border: hasError && 'inset-ring-input-error-border inset-ring-2',
+    text: hasError && 'text-input-error-label',
+  },
+  disabled: {
+    placeholder: 'disabled:placeholder:text-input-disabled-label',
+    background: 'disabled:bg-input-disabled-background',
+    border: 'disabled:inset-ring-input-disabled-border disabled:inset-ring',
+    text: 'disabled:text-input-disabled-label',
+  },
+}));
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -62,7 +89,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <div className="relative w-full">
             <div
               ref={prefixRef}
-              className="[&>*]:text-input-children absolute ml-4 flex h-full cursor-pointer items-center justify-center"
+              className={cn(
+                'absolute ml-4 flex h-full cursor-pointer items-center justify-center',
+                'text-input-placeholder',
+              )}
             >
               {prefixAdornment}
             </div>
@@ -75,26 +105,27 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               }}
               className={cn(
                 'w-full rounded-lg py-3',
-                'text-body-1 text-input-text placeholder:text-input-placeholder',
-                'focus:border-input-focus-border border-input-border bg-input-background border shadow-none focus:border focus:outline-none',
-                error &&
-                  'border-input-error-border bg-input-background focus:border-input-error-border shadow-[inset_0_0_0_1px_theme(colors.red.500)] focus:shadow-[inset_0_0_0_1px_theme(colors.red.500)]',
-                disabled &&
-                  'border-input-disabled-border bg-input-disabled-background text-input-disabled-text',
+                'text-body-1',
+                'shadow-none focus:outline-none',
+                'transition duration-200',
+                inputColors(!!error),
                 inputClassName,
               )}
               {...props}
             />
             <div
               ref={suffixRef}
-              className="[&>*]:text-input-children absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center"
+              className={cn(
+                'absolute inset-y-0 right-0 mr-4 flex h-full cursor-pointer items-center justify-center',
+                'text-input-placeholder',
+              )}
             >
               {suffixAdornment}
             </div>
           </div>
         </div>
         {typeof error === 'string' && error.trim().length > 0 && (
-          <div className="text-label-1 text-input-error-label mt-1 px-1">
+          <div className="text-label-1 text-input-error-border mt-1 px-1">
             {error}
           </div>
         )}

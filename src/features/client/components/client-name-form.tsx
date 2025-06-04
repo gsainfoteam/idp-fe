@@ -41,8 +41,9 @@ export function ClientNameForm({ client }: { client: Client }) {
           type="text"
           style={{ width: inputWidth }}
           className={cn(
-            'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
-            isError && 'border-red-400 focus:border-red-400',
+            'bg-funnel-background focus:border-basics-secondary-label border-b-2 border-transparent transition-colors focus:outline-none',
+            isError &&
+              'border-basics-error-label focus:border-basics-error-label',
           )}
           {...register('name', {
             onBlur: () => {
@@ -56,8 +57,9 @@ export function ClientNameForm({ client }: { client: Client }) {
         </span>
         <EditLineIcon
           className={cn(
-            'text-neutral-200 transition-colors group-focus-within:text-neutral-400',
-            isError && 'text-red-400 group-focus-within:text-red-400',
+            'text-basics-tertiary-label group-focus-within:text-basics-secondary-label transition-colors',
+            isError &&
+              'text-basics-error-label group-focus-within:text-basics-error-label',
           )}
           width={iconSize}
           height={iconSize}
