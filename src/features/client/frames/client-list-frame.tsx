@@ -11,6 +11,8 @@ export function ClientListFrame() {
   const { t } = useTranslation();
   const { clients } = useClientList();
 
+  // TODO: Error Boundary + Suspense
+
   return (
     <FunnelLayout
       stepTitle={t('services.list.title')}

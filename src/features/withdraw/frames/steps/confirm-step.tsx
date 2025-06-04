@@ -50,7 +50,6 @@ export function ConfirmStep({
                 {t('withdraw.steps.confirm.sub_button')}
               </Button>
             </Link>
-            {/* TODO: color prop? 추가 임의의 색은 아니더라도 success error warning info default만이라도? */}
             <Button variant="red" disabled={!clients} loading={isLoading}>
               {t('withdraw.steps.confirm.button')}
             </Button>
@@ -58,7 +57,7 @@ export function ConfirmStep({
         }
       >
         <div className="flex flex-col gap-3">
-          {/* TODO: add loading and error */}
+          {/* TODO: Error Boundary + Suspense */}
           {clients.length ? (
             <div className="flex flex-col gap-6">
               <div className="flex h-fit w-full items-center gap-3 px-3">
