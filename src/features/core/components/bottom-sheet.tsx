@@ -31,10 +31,6 @@ const BottomSheet = ({
     return () => window.removeEventListener('keydown', handleEscKey);
   }, [isOpen, close]);
 
-  useEffect(() => {
-    if (isOpen) controls.start({ y: 0 });
-  }, [isOpen, controls]);
-
   const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
@@ -50,7 +46,7 @@ const BottomSheet = ({
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
           initial={{ y: '100%' }}
-          animate={controls}
+          animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{
             type: 'spring',
@@ -142,7 +138,7 @@ BottomSheet.Close = ({
         onClick?.(e);
         context.close();
       }}
-      className={cn('w-full cursor-pointer', className)}
+      className={cn('w-fit cursor-pointer', className)}
       {...props}
     >
       {children}
