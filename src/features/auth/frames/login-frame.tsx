@@ -58,6 +58,7 @@ export function LoginFrame() {
                 <Link to="/auth/register" search={(prev) => ({ ...prev })}>
                   <Button
                     variant="link"
+                    size="none"
                     type="button"
                     className="text-body-2 no-underline"
                   >
@@ -65,7 +66,8 @@ export function LoginFrame() {
                   </Button>
                 </Link>
                 <Button
-                  variant="link"
+                  variant="grayText"
+                  size="none"
                   className="text-body-2 no-underline"
                   disabled
                 >
@@ -74,6 +76,7 @@ export function LoginFrame() {
                 <Link to="/issue-password" search={(prev) => ({ ...prev })}>
                   <Button
                     variant="link"
+                    size="none"
                     type="button"
                     className="text-body-2 no-underline"
                   >

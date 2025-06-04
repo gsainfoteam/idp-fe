@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['large', 'medium', 'small'],
+      options: ['large', 'medium', 'small', 'none'],
     },
     loading: {
       control: 'boolean',
@@ -45,7 +45,7 @@ const ButtonGroup = ({
   loading,
   disabled,
 }: {
-  size: 'large' | 'medium' | 'small';
+  size: 'large' | 'medium' | 'small' | 'none';
   loading: boolean;
   disabled: boolean;
 }) => (

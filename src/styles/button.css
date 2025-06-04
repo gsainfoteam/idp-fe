@@ -294,19 +294,19 @@
       var(--color-neutral-400) / 5%
     );
     --color-button-gray-text-hover-border: transparent;
-    --color-button-gray-text-hover-label: var(--color-neutral-300);
+    --color-button-gray-text-hover-label: var(--color-neutral-200);
 
     --color-button-gray-text-active-background: --alpha(
       var(--color-neutral-400) / 10%
     );
     --color-button-gray-text-active-border: transparent;
-    --color-button-gray-text-active-label: var(--color-neutral-300);
+    --color-button-gray-text-active-label: var(--color-neutral-100);
 
     --color-button-gray-text-loading-background: --alpha(
       var(--color-neutral-400) / 10%
     );
     --color-button-gray-text-loading-border: transparent;
-    --color-button-gray-text-loading-label: var(--color-neutral-300);
+    --color-button-gray-text-loading-label: var(--color-neutral-100);
 
     --color-button-gray-text-disabled-background: transparent;
     --color-button-gray-text-disabled-border: transparent;

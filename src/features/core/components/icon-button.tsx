@@ -12,10 +12,11 @@ export function IconButton({
   variant,
   ...props
 }: IconButtonProps) {
-  const sizeStyles = {
+  const sizeStyles: Record<NonNullable<IconButtonProps['size']>, string> = {
     large: 'p-3',
     medium: 'p-2',
     small: 'p-1',
+    none: 'p-0',
   };
 
   return (

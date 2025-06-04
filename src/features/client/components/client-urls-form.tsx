@@ -50,16 +50,16 @@ export function ClientUrlsForm() {
           />
         </div>
         {urls.length > 0 && (
-          <div className="border-basics-tertiary-label flex flex-col gap-3 rounded-lg border px-4 py-3">
+          <div className="border-basics-tertiary-label flex flex-col gap-4 rounded-lg border p-4">
             {urls.map((url, index) => (
-              <div className="flex flex-col gap-3" key={index}>
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-4" key={index}>
+                <div className="flex items-center gap-4">
                   <div className="text-body-1 text-basics-primary-label flex-1">
                     {url}
                   </div>
                   <IconButton
                     variant="grayText"
-                    size="small"
+                    size="none"
                     icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(
