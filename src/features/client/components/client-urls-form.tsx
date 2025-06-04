@@ -23,7 +23,7 @@ export function ClientUrlsForm() {
         {t('services.detail.urls.title')}
       </div>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-2">
+        <div className="flex items-start gap-2">
           <Input
             className="flex-1"
             type="url"
@@ -44,7 +44,7 @@ export function ClientUrlsForm() {
                   });
                   reset();
                 }}
-                icon={<PlusIcon className="text-basics-primary-label" />}
+                icon={<PlusIcon />}
               />
             )}
           />
@@ -58,9 +58,9 @@ export function ClientUrlsForm() {
                     {url}
                   </div>
                   <IconButton
-                    variant="text"
-                    className="p-0"
-                    icon={<TrashBinIcon width={30} height={30} />}
+                    variant="grayText"
+                    size="small"
+                    icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(
                         'urls',
