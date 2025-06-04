@@ -75,7 +75,7 @@ function FunnelLayout({
 
           <div
             ref={scrollRef}
-            className="scrollbar flex w-full flex-1 flex-col overflow-y-scroll"
+            className="flex w-full flex-1 flex-col overflow-y-scroll [&::-webkit-scrollbar]:hidden"
           >
             <LoadingOverlay show={loading} className="flex flex-1 flex-col">
               {/* Step Title Box */}
