@@ -18,6 +18,7 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
     const navigate = useNavigate();
     const router = useRouter();
     const search = useSearch({ strict: false });
+
     const stepName = `${id}-step` as const;
     const currentStep = new URLSearchParams(location.searchStr).get(stepName);
     const currentContext = location.state?.funnelContext?.[id];
@@ -29,6 +30,7 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
           } as typeof initialState)
         : initialState;
     }, [currentStep, currentContext, initialState]);
+
     const history: (typeof initialState)[] = useMemo(() => {
       const histories = location.state?.funnelHistories?.[id];
       if (Array.isArray(histories) && histories.length > 0) {
@@ -38,6 +40,7 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
       }
     }, [location.state?.funnelHistories, id, currentState]);
     const currentIndex = history.length - 1;
+
     return useMemo(
       () => ({
         history,
@@ -49,7 +52,9 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
             ),
             ...(state.step != null ? [[stepName, state.step]] : []),
           ]);
+
           searchParams.set(stepName, state.step);
+
           navigate({
             replace: false,
             to: `${location.pathname}?${searchParams.toString()}`,
@@ -75,7 +80,9 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
             ),
             ...(state.step != null ? [[stepName, state.step]] : []),
           ]);
+
           searchParams.set(stepName, state.step);
+
           navigate({
             replace: true,
             to: `${location.pathname}?${searchParams.toString()}`,
@@ -102,21 +109,24 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
           const currentSearchParams = new URLSearchParams(
             window.location.search,
           );
+
           if (
             !currentSearchParams.has(stepName) ||
             !(id in (newLocationState.funnelContext ?? {})) ||
             !(id in (newLocationState.funnelHistories ?? {}))
-          ) {
+          )
             return;
-          }
+
           delete newLocationState.funnelContext[id];
           delete newLocationState.funnelHistories[id];
+
           const searchParams = new URLSearchParams([
             ...Object.entries(search).filter(
               (v): v is [string, string] =>
                 v[1] !== undefined && v[0] !== stepName,
             ),
           ]);
+
           navigate({
             replace: true,
             to: `${location.pathname}?${searchParams.toString()}`,
@@ -138,3 +148,44 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
     );
   },
 );
+
+export function useCleanupFunnel() {
+  const location = useLocation();
+  const search = useSearch({ strict: false });
+  const navigate = useNavigate();
+
+  return (stepName?: `${string}-step`) => {
+    const currentSearchParams = new URLSearchParams(window.location.search);
+    const newLocationState = { ...location.state };
+
+    Object.entries(search).forEach((v) => {
+      if (v[0].endsWith('-step')) stepName = v[0] as `${string}-step`;
+    });
+    if (stepName == null) return;
+
+    const id = stepName.split('-')[0]!;
+
+    if (
+      !currentSearchParams.has(stepName) ||
+      !(id in (newLocationState.funnelContext ?? {})) ||
+      !(id in (newLocationState.funnelHistories ?? {}))
+    ) {
+      return;
+    }
+
+    delete newLocationState.funnelContext[id];
+    delete newLocationState.funnelHistories[id];
+
+    const searchParams = new URLSearchParams([
+      ...Object.entries(search).filter(
+        (v): v is [string, string] => v[1] !== undefined && v[0] !== stepName,
+      ),
+    ]);
+
+    navigate({
+      replace: true,
+      to: `${location.pathname}?${searchParams.toString()}`,
+      state: newLocationState,
+    });
+  };
+}
