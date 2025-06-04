@@ -36,7 +36,7 @@
 
     /* Input Focus Colors */
     --color-input-focus-background: --alpha(var(--color-primary-400) / 5%);
-    --color-input-focus-border: var(--color-primary-600);
+    --color-input-focus-border: var(--color-primary-700);
     --color-input-focus-label: var(--color-neutral-100);
 
     /* Input Error Colors */
