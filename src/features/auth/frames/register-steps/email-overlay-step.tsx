@@ -69,7 +69,7 @@ export function EmailOverlayStep({
         <Inner />
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close>
+        <Dialog.Close className="grow">
           <Button variant="secondary" className="w-full">
             {t('register.steps.email_overlay.sub_button')}
           </Button>
@@ -78,7 +78,7 @@ export function EmailOverlayStep({
           variant="primary"
           onClick={onSubmit}
           loading={form.formState.isSubmitting}
-          className="w-full"
+          className="grow"
         >
           {t('register.steps.email_overlay.button')}
         </Button>
@@ -93,7 +93,7 @@ export function EmailOverlayStep({
         <Inner />
       </BottomSheet.Body>
       <BottomSheet.Footer>
-        <BottomSheet.Close>
+        <BottomSheet.Close className="grow">
           <Button variant="secondary" className="w-full">
             {t('register.steps.email_overlay.sub_button')}
           </Button>
@@ -102,7 +102,7 @@ export function EmailOverlayStep({
           variant="primary"
           onClick={onSubmit}
           loading={form.formState.isSubmitting}
-          className="w-full"
+          className="grow"
         >
           {t('register.steps.email_overlay.button')}
         </Button>
