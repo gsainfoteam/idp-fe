@@ -16,14 +16,19 @@ export function AuthorizeForm({
   const { control, setValue, setError, clearErrors } =
     useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const { clientScopes } = useLoaderData({
+  const { clientScopes, consents } = useLoaderData({
     from: '/_auth-required/authorize',
   });
+
+  const consent = consents?.data?.list.find(
+    (c) => c.clientUuid === client.clientId,
+  );
 
   const requiredScopes = useMemo(
     () => clientScopes.filter((v) => client.scopes.includes(v)),
     [clientScopes, client.scopes],
   );
+
   const optionalScopes = useMemo(
     () => clientScopes.filter((v) => client.optionalScopes.includes(v)),
     [clientScopes, client.optionalScopes],
@@ -73,10 +78,10 @@ export function AuthorizeForm({
 
   useEffect(() => {
     requiredScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, false);
+      setValue(`scopes.${scope}`, consent?.scopes.includes(scope) ?? false);
     });
     optionalScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, false);
+      setValue(`scopes.${scope}`, consent?.scopes.includes(scope) ?? false);
     });
   }, [requiredScopes, optionalScopes, setValue]);
 
@@ -87,9 +92,11 @@ export function AuthorizeForm({
       </Checkbox>
       <div className="h-2.5" />
       <div className="rounded-lg border border-neutral-200 px-5 py-4">
-        <div className="text-body-2 mb-1 text-neutral-800">
-          {t('authorize.labels.required')}
-        </div>
+        {requiredScopes.length > 0 && (
+          <div className="text-body-2 mb-1 text-neutral-800">
+            {t('authorize.labels.required')}
+          </div>
+        )}
         <div className="flex flex-col gap-1 pl-1">
           {requiredScopes.map((scope) => (
             <Controller
@@ -107,10 +114,14 @@ export function AuthorizeForm({
             />
           ))}
         </div>
-        <div className="h-2.5" />
-        <div className="text-body-2 mb-1 text-neutral-800">
-          {t('authorize.labels.optional')}
-        </div>
+        {requiredScopes.length > 0 && optionalScopes.length > 0 && (
+          <div className="h-2.5" />
+        )}
+        {optionalScopes.length > 0 && (
+          <div className="text-body-2 mb-1 text-neutral-800">
+            {t('authorize.labels.optional')}
+          </div>
+        )}
         <div className="flex flex-col gap-1 pl-1">
           {optionalScopes.map((scope) => (
             <Controller
