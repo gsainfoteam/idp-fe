@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { RegisterSteps } from '../register-frame';
@@ -7,10 +7,13 @@ import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function CompleteStep({
   context,
+  onNext,
 }: {
   context: RegisterSteps['complete'];
+  onNext: () => void;
 }) {
   const { t } = useTranslation();
+  const navigate = useNavigate({ from: '/auth/register' });
 
   return (
     <FunnelLayout
@@ -18,18 +21,16 @@ export function CompleteStep({
       stepTitle={t('register.steps.complete.title')}
       hideUndo
       button={
-        <Link
-          to="/auth/login"
-          search={(prev) =>
-            Object.fromEntries(
-              Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
-            )
-          }
+        <Button
+          variant="primary"
+          className="w-full"
+          onClick={async () => {
+            await onNext();
+            await navigate({ to: '/auth/login' });
+          }}
         >
-          <Button variant="primary" className="w-full">
-            {t('register.steps.complete.button')}
-          </Button>
-        </Link>
+          {t('register.steps.complete.button')}
+        </Button>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">

@@ -11,6 +11,7 @@ import {
   RequireKeys,
   useFunnel,
   UndoWarningOverlay,
+  useCleanupFunnel,
 } from '@/features/core';
 
 type StepContext = Pretty<
@@ -40,6 +41,8 @@ export function RegisterFrame() {
       step: 'email',
     },
   });
+
+  const cleanup = useCleanupFunnel();
 
   return (
     <funnel.Render
@@ -85,7 +88,12 @@ export function RegisterFrame() {
           onUndo={() => history.push('undoOverlay', {})}
         />
       )}
-      complete={({ context }) => <CompleteStep context={context} />}
+      complete={({ context, step }) => (
+        <CompleteStep
+          context={context}
+          onNext={() => cleanup(`${step}-step`)}
+        />
+      )}
     />
   );
 }

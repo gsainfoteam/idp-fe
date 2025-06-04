@@ -1,11 +1,12 @@
-import { Link } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import thumbsUpImg from '@/assets/icons/color/thumbs-up.png';
 import { Button, FunnelLayout } from '@/features/core';
 
-export function CompleteStep() {
+export function CompleteStep({ onNext }: { onNext: () => void }) {
   const { t } = useTranslation();
+  const navigate = useNavigate({ from: '/issue-password' });
 
   return (
     <FunnelLayout
@@ -13,18 +14,16 @@ export function CompleteStep() {
       stepTitle={t('issue_password.steps.complete.title')}
       hideUndo
       button={
-        <Link
-          to="/auth/login"
-          search={(prev) =>
-            Object.fromEntries(
-              Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
-            )
-          }
+        <Button
+          variant="primary"
+          className="w-full"
+          onClick={async () => {
+            await onNext();
+            await navigate({ to: '/auth/login' });
+          }}
         >
-          <Button variant="primary" className="w-full">
-            {t('issue_password.steps.complete.button')}
-          </Button>
-        </Link>
+          {t('issue_password.steps.complete.button')}
+        </Button>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">
