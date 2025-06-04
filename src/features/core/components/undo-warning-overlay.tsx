@@ -25,7 +25,7 @@ export function UndoWarningOverlay({
       <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
       <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close>
+        <Dialog.Close className="grow">
           <Button variant="secondary" className="w-full">
             {t('common.undo_overlay.sub_button')}
           </Button>
@@ -36,7 +36,7 @@ export function UndoWarningOverlay({
             setOpen(false);
             onNext();
           }}
-          className="w-full"
+          className="grow"
         >
           {t('common.undo_overlay.button')}
         </Button>

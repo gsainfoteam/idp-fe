@@ -111,7 +111,7 @@ Dialog.Close = ({
         onClick?.(e);
         context.close();
       }}
-      className={cn('w-full cursor-pointer', className)}
+      className={cn('w-fit cursor-pointer', className)}
       {...props}
     >
       {children}
