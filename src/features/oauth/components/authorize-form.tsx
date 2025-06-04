@@ -83,7 +83,7 @@ export function AuthorizeForm({
     optionalScopes.forEach((scope) => {
       setValue(`scopes.${scope}`, consent?.scopes.includes(scope) ?? false);
     });
-  }, [requiredScopes, optionalScopes, setValue]);
+  }, [requiredScopes, optionalScopes, setValue, consent]);
 
   return (
     <div className="flex flex-col">
