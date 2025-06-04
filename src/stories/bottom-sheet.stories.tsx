@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { BottomSheet, Button } from '@/features/core';
+import { BottomSheet, Button, FunnelLayout } from '@/features/core';
 
 type BottomSheetStoryProps = {
   isOpen: boolean;
@@ -21,7 +21,18 @@ const BottomSheetWithState = ({
   }, [initialOpen]);
 
   return (
-    <div className="bg-funnel-background absolute inset-0">
+    <>
+      <FunnelLayout
+        title="Bottom Sheet"
+        stepTitle="Step Title"
+        button={
+          <Button variant="primary" onClick={() => setOpen(true)}>
+            Open
+          </Button>
+        }
+      >
+        Hello World
+      </FunnelLayout>
       <BottomSheet isOpen={open} close={() => setOpen(false)}>
         <BottomSheet.Header>{header}</BottomSheet.Header>
         <BottomSheet.Body>{body}</BottomSheet.Body>
@@ -44,7 +55,7 @@ const BottomSheetWithState = ({
           </BottomSheet.Close>
         </BottomSheet.Footer>
       </BottomSheet>
-    </div>
+    </>
   );
 };
 

@@ -7,6 +7,10 @@ import EditIcon from '@/assets/icons/solid/edit.svg?react';
 const meta = {
   component: Button,
   argTypes: {
+    size: {
+      control: 'select',
+      options: ['large', 'medium', 'small'],
+    },
     loading: {
       control: 'boolean',
     },
@@ -23,37 +27,92 @@ type Story = StoryObj<typeof meta>;
 export const Main: Story = {
   args: {
     variant: 'default',
+    size: 'large',
     loading: false,
     disabled: false,
   },
-  render: ({ loading, disabled }) => (
-    <ButtonGroup loading={loading ?? false} disabled={disabled ?? false} />
+  render: ({ size = 'large', loading, disabled }) => (
+    <ButtonGroup
+      size={size}
+      loading={loading ?? false}
+      disabled={disabled ?? false}
+    />
   ),
 };
 
 const ButtonGroup = ({
+  size,
   loading,
   disabled,
 }: {
+  size: 'large' | 'medium' | 'small';
   loading: boolean;
   disabled: boolean;
 }) => (
   <div className="bg-funnel-background absolute inset-0">
     <div className="flex flex-col gap-4 p-4">
       <div className="flex gap-4">
-        <Button variant="default" loading={loading} disabled={disabled}>
+        <Button
+          variant="default"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
           Default
         </Button>
-        <Button variant="primary" loading={loading} disabled={disabled}>
+        <Button
+          variant="primary"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
           Primary
         </Button>
-        <Button variant="secondary" loading={loading} disabled={disabled}>
+        <Button
+          variant="red"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
+          Red
+        </Button>
+        <Button
+          variant="secondary"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
           Secondary
         </Button>
-        <Button variant="text" loading={loading} disabled={disabled}>
+        <Button
+          variant="text"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
           Text
         </Button>
-        <Button variant="link" loading={loading} disabled={disabled}>
+        <Button
+          variant="grayText"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
+          Gray Text
+        </Button>
+        <Button
+          variant="link"
+          size={size}
+          className="h-fit"
+          loading={loading}
+          disabled={disabled}
+        >
           Link
         </Button>
       </div>
@@ -61,30 +120,49 @@ const ButtonGroup = ({
         <IconButton
           variant="default"
           icon={<EditIcon />}
+          size={size}
           loading={loading}
           disabled={disabled}
         />
         <IconButton
           variant="primary"
           icon={<EditIcon />}
+          size={size}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="red"
+          icon={<EditIcon />}
+          size={size}
           loading={loading}
           disabled={disabled}
         />
         <IconButton
           variant="secondary"
           icon={<EditIcon />}
+          size={size}
           loading={loading}
           disabled={disabled}
         />
         <IconButton
           variant="text"
           icon={<EditIcon />}
+          size={size}
+          loading={loading}
+          disabled={disabled}
+        />
+        <IconButton
+          variant="grayText"
+          icon={<EditIcon />}
+          size={size}
           loading={loading}
           disabled={disabled}
         />
         <IconButton
           variant="link"
           icon={<EditIcon />}
+          size={size}
           loading={loading}
           disabled={disabled}
         />

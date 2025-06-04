@@ -44,6 +44,27 @@
   --color-button-primary-disabled-border: transparent;
   --color-button-primary-disabled-label: var(--color-neutral-50);
 
+  /* Button Red Colors */
+  --color-button-red-default-background: var(--color-red-600);
+  --color-button-red-default-border: transparent;
+  --color-button-red-default-label: var(--color-white);
+
+  --color-button-red-hover-background: var(--color-red-650);
+  --color-button-red-hover-border: transparent;
+  --color-button-red-hover-label: var(--color-white);
+
+  --color-button-red-active-background: var(--color-red-700);
+  --color-button-red-active-border: transparent;
+  --color-button-red-active-label: var(--color-neutral-50);
+
+  --color-button-red-loading-background: var(--color-red-800);
+  --color-button-red-loading-border: transparent;
+  --color-button-red-loading-label: var(--color-neutral-50);
+
+  --color-button-red-disabled-background: var(--color-neutral-200);
+  --color-button-red-disabled-border: transparent;
+  --color-button-red-disabled-label: var(--color-neutral-50);
+
   /* Button Secondary Colors */
   --color-button-secondary-default-background: var(--color-white);
   --color-button-secondary-default-border: var(--color-primary-600);
@@ -95,6 +116,33 @@
   --color-button-text-disabled-background: transparent;
   --color-button-text-disabled-border: transparent;
   --color-button-text-disabled-label: var(--color-neutral-200);
+
+  /* Button Gray Text Colors */
+  --color-button-gray-text-default-background: transparent;
+  --color-button-gray-text-default-border: transparent;
+  --color-button-gray-text-default-label: var(--color-neutral-600);
+
+  --color-button-gray-text-hover-background: --alpha(
+    var(--color-neutral-400) / 5%
+  );
+  --color-button-gray-text-hover-border: transparent;
+  --color-button-gray-text-hover-label: var(--color-neutral-650);
+
+  --color-button-gray-text-active-background: --alpha(
+    var(--color-neutral-400) / 10%
+  );
+  --color-button-gray-text-active-border: transparent;
+  --color-button-gray-text-active-label: var(--color-neutral-700);
+
+  --color-button-gray-text-loading-background: --alpha(
+    var(--color-neutral-400) / 10%
+  );
+  --color-button-gray-text-loading-border: transparent;
+  --color-button-gray-text-loading-label: var(--color-neutral-700);
+
+  --color-button-gray-text-disabled-background: transparent;
+  --color-button-gray-text-disabled-border: transparent;
+  --color-button-gray-text-disabled-label: var(--color-neutral-200);
 
   /* Button Link Colors */
   --color-button-link-default-background: transparent;
@@ -162,6 +210,27 @@
     --color-button-primary-disabled-border: transparent;
     --color-button-primary-disabled-label: var(--color-neutral-800);
 
+    /* Button Red Colors */
+    --color-button-red-default-background: var(--color-red-700);
+    --color-button-red-default-border: transparent;
+    --color-button-red-default-label: var(--color-neutral-100);
+
+    --color-button-red-hover-background: var(--color-red-750);
+    --color-button-red-hover-border: transparent;
+    --color-button-red-hover-label: var(--color-neutral-100);
+
+    --color-button-red-active-background: var(--color-red-800);
+    --color-button-red-active-border: transparent;
+    --color-button-red-active-label: var(--color-neutral-100);
+
+    --color-button-red-loading-background: var(--color-red-800);
+    --color-button-red-loading-border: transparent;
+    --color-button-red-loading-label: var(--color-neutral-100);
+
+    --color-button-red-disabled-background: var(--color-neutral-960);
+    --color-button-red-disabled-border: transparent;
+    --color-button-red-disabled-label: var(--color-neutral-800);
+
     /* Button Secondary Colors */
     --color-button-secondary-default-background: transparent;
     --color-button-secondary-default-border: var(--color-primary-700);
@@ -215,6 +284,33 @@
     --color-button-text-disabled-background: transparent;
     --color-button-text-disabled-border: transparent;
     --color-button-text-disabled-label: var(--color-neutral-900);
+
+    /* Button Gray Text Colors */
+    --color-button-gray-text-default-background: transparent;
+    --color-button-gray-text-default-border: transparent;
+    --color-button-gray-text-default-label: var(--color-neutral-300);
+
+    --color-button-gray-text-hover-background: --alpha(
+      var(--color-neutral-400) / 5%
+    );
+    --color-button-gray-text-hover-border: transparent;
+    --color-button-gray-text-hover-label: var(--color-neutral-300);
+
+    --color-button-gray-text-active-background: --alpha(
+      var(--color-neutral-400) / 10%
+    );
+    --color-button-gray-text-active-border: transparent;
+    --color-button-gray-text-active-label: var(--color-neutral-300);
+
+    --color-button-gray-text-loading-background: --alpha(
+      var(--color-neutral-400) / 10%
+    );
+    --color-button-gray-text-loading-border: transparent;
+    --color-button-gray-text-loading-label: var(--color-neutral-300);
+
+    --color-button-gray-text-disabled-background: transparent;
+    --color-button-gray-text-disabled-border: transparent;
+    --color-button-gray-text-disabled-label: var(--color-neutral-900);
 
     /* Button Link Colors */
     --color-button-link-default-background: transparent;

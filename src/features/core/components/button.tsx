@@ -2,7 +2,44 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn, LoadingEllipse, palette } from '@/features/core';
 
-const buttonColors = {
+const buttonStyles = cva(
+  cn(
+    'relative flex items-center justify-center text-center',
+    'w-fit cursor-pointer rounded-lg',
+    'transition duration-200',
+  ),
+  {
+    variants: {
+      variant: {
+        default: 'text-title-3',
+        red: 'text-title-3',
+        primary: 'text-title-3',
+        secondary: 'text-title-3',
+        text: 'text-title-3',
+        grayText: 'text-title-3',
+        link: 'text-body-1 underline underline-offset-4',
+      },
+      size: {
+        large: 'px-5 py-3',
+        medium: 'px-4 py-2',
+        small: 'px-3 py-1.5',
+      },
+      loading: {
+        true: 'pointer-events-none cursor-default',
+        false: '',
+      },
+      disabled: {
+        true: 'cursor-default',
+        false: '',
+      },
+    },
+  },
+);
+
+const buttonColors: Record<
+  NonNullable<VariantProps<typeof buttonStyles>['variant']>,
+  ReturnType<typeof palette>
+> = {
   default: palette((loading: boolean) => ({
     default: {
       background: 'bg-button-default-default-background',
@@ -59,6 +96,64 @@ const buttonColors = {
       border:
         'disabled:inset-ring-button-primary-disabled-border disabled:inset-ring',
       text: 'disabled:text-button-primary-disabled-label',
+    },
+  })),
+  red: palette((loading: boolean) => ({
+    default: {
+      background: 'bg-button-red-default-background',
+      border: 'inset-ring-button-red-default-border inset-ring',
+      text: 'text-button-red-default-label',
+    },
+    hover: {
+      background: 'hover:bg-button-red-hover-background',
+      border: 'hover:inset-ring-button-red-hover-border hover:inset-ring',
+      text: 'hover:text-button-red-hover-label',
+    },
+    active: {
+      background: 'active:bg-button-red-active-background',
+      border: 'active:inset-ring-button-red-active-border active:inset-ring',
+      text: 'active:text-button-red-active-label',
+    },
+    loading: {
+      background: loading && 'bg-button-red-loading-background',
+      border: loading && 'inset-ring-button-red-loading-border inset-ring',
+      text: loading && 'text-button-red-loading-label',
+    },
+    disabled: {
+      background: 'disabled:bg-button-red-disabled-background',
+      border:
+        'disabled:inset-ring-button-red-disabled-border disabled:inset-ring',
+      text: 'disabled:text-button-red-disabled-label',
+    },
+  })),
+  grayText: palette((loading: boolean) => ({
+    default: {
+      background: 'bg-button-gray-text-default-background',
+      border: 'inset-ring-button-gray-text-default-border inset-ring',
+      text: 'text-button-gray-text-default-label',
+    },
+    hover: {
+      background: 'hover:bg-button-gray-text-hover-background',
+      border: 'hover:inset-ring-button-gray-text-hover-border hover:inset-ring',
+      text: 'hover:text-button-gray-text-hover-label',
+    },
+    active: {
+      background: 'active:bg-button-gray-text-active-background',
+      border:
+        'active:inset-ring-button-gray-text-active-border active:inset-ring',
+      text: 'active:text-button-gray-text-active-label',
+    },
+    loading: {
+      background: loading && 'bg-button-gray-text-loading-background',
+      border:
+        loading && 'inset-ring-button-gray-text-loading-border inset-ring',
+      text: loading && 'text-button-gray-text-loading-label',
+    },
+    disabled: {
+      background: 'disabled:bg-button-gray-text-disabled-background',
+      border:
+        'disabled:inset-ring-button-gray-text-disabled-border disabled:inset-ring',
+      text: 'disabled:text-button-gray-text-disabled-label',
     },
   })),
   secondary: palette((loading: boolean) => ({
@@ -149,36 +244,10 @@ const buttonColors = {
   })),
 };
 
-const buttonStyles = cva(
-  cn(
-    'relative flex items-center justify-center text-center',
-    'w-fit cursor-pointer rounded-lg',
-    'transition duration-200',
-  ),
-  {
-    variants: {
-      variant: {
-        default: 'text-title-3 px-5 py-3',
-        primary: 'text-title-3 px-5 py-3',
-        secondary: 'text-title-3 px-5 py-3',
-        text: 'text-title-3 px-5 py-3',
-        link: 'text-body-1 underline underline-offset-4',
-      },
-      loading: {
-        true: 'pointer-events-none cursor-default',
-        false: '',
-      },
-      disabled: {
-        true: 'cursor-default',
-        false: '',
-      },
-    },
-  },
-);
-
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: NonNullable<VariantProps<typeof buttonStyles>['variant']>;
+  variant?: NonNullable<VariantProps<typeof buttonStyles>['variant']>;
+  size?: NonNullable<VariantProps<typeof buttonStyles>['size']>;
   loading?: boolean;
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
@@ -186,7 +255,8 @@ export interface ButtonProps
 }
 
 export function Button({
-  variant,
+  variant = 'primary',
+  size = 'large',
   disabled = false,
   loading = false,
   prefixIcon,
@@ -202,7 +272,7 @@ export function Button({
     <button
       disabled={disabled}
       className={cn(
-        buttonStyles({ variant, loading, disabled }),
+        buttonStyles({ variant, size, loading, disabled }),
         buttonColors[variant](loading),
         className,
       )}

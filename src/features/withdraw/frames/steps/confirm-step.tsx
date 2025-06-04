@@ -51,12 +51,7 @@ export function ConfirmStep({
               </Button>
             </Link>
             {/* TODO: color prop? 추가 임의의 색은 아니더라도 success error warning info default만이라도? */}
-            <Button
-              variant="primary"
-              className="w-full bg-red-600"
-              disabled={!clients}
-              loading={isLoading}
-            >
+            <Button variant="red" disabled={!clients} loading={isLoading}>
               {t('withdraw.steps.confirm.button')}
             </Button>
           </div>

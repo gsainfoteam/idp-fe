@@ -7,14 +7,21 @@ export type IconButtonProps = Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'> & {
 
 export function IconButton({
   className,
+  size = 'large',
   icon,
   variant,
   ...props
 }: IconButtonProps) {
+  const sizeStyles = {
+    large: 'p-3',
+    medium: 'p-2',
+    small: 'p-1',
+  };
+
   return (
     <Button
       variant={variant}
-      className={cn(variant !== 'link' && 'px-3', className)}
+      className={cn('aspect-square', sizeStyles[size], className)}
       prefixIcon={icon}
       {...props}
     />
