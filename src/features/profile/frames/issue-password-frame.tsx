@@ -28,7 +28,8 @@ export function IssuePasswordFrame() {
           onNext={(data) => history.push('complete', data)}
         />
       )}
-      complete={() => <CompleteStep />}
+      // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
+      complete={() => <CompleteStep onNext={() => funnel.history.cleanup()} />}
     />
   );
 }

@@ -85,7 +85,13 @@ export function RegisterFrame() {
           onUndo={() => history.push('undoOverlay', {})}
         />
       )}
-      complete={({ context }) => <CompleteStep context={context} />}
+      complete={({ context }) => (
+        <CompleteStep
+          context={context}
+          // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
+          onNext={() => funnel.history.cleanup()}
+        />
+      )}
     />
   );
 }
