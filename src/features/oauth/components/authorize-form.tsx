@@ -91,54 +91,55 @@ export function AuthorizeForm({
         <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
       </Checkbox>
       <div className="h-2.5" />
-      <div className="rounded-lg border border-neutral-200 px-5 py-4">
+      <div className="flex flex-col gap-2.5 rounded-lg border border-neutral-200 px-5 py-4">
         {requiredScopes.length > 0 && (
-          <div className="text-body-2 mb-1 text-neutral-800">
-            {t('authorize.labels.required')}
+          <div className="flex flex-col gap-1">
+            <div className="text-body-2 text-neutral-800">
+              {t('authorize.labels.required')}
+            </div>
+            <div className="flex flex-col gap-1 pl-1">
+              {requiredScopes.map((scope) => (
+                <Controller
+                  key={scope}
+                  name={`scopes.${scope}`}
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      checked={field.value ?? false}
+                      onChange={field.onChange}
+                    >
+                      {t(`authorize.checkboxes.${scope}`)}
+                    </Checkbox>
+                  )}
+                />
+              ))}
+            </div>
           </div>
-        )}
-        <div className="flex flex-col gap-1 pl-1">
-          {requiredScopes.map((scope) => (
-            <Controller
-              key={scope}
-              name={`scopes.${scope}`}
-              control={control}
-              render={({ field }) => (
-                <Checkbox
-                  checked={field.value ?? false}
-                  onChange={field.onChange}
-                >
-                  {t(`authorize.checkboxes.${scope}`)}
-                </Checkbox>
-              )}
-            />
-          ))}
-        </div>
-        {requiredScopes.length > 0 && optionalScopes.length > 0 && (
-          <div className="h-2.5" />
         )}
         {optionalScopes.length > 0 && (
-          <div className="text-body-2 mb-1 text-neutral-800">
-            {t('authorize.labels.optional')}
+          <div className="flex flex-col gap-1">
+            <div className="text-body-2 text-neutral-800">
+              {t('authorize.labels.optional')}
+            </div>
+            <div className="flex flex-col gap-1 pl-1">
+              {optionalScopes.map((scope) => (
+                <Controller
+                  key={scope}
+                  name={`scopes.${scope}`}
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      checked={field.value ?? false}
+                      onChange={field.onChange}
+                    >
+                      {t(`authorize.checkboxes.${scope}`)}
+                    </Checkbox>
+                  )}
+                />
+              ))}
+            </div>
           </div>
         )}
-        <div className="flex flex-col gap-1 pl-1">
-          {optionalScopes.map((scope) => (
-            <Controller
-              key={scope}
-              name={`scopes.${scope}`}
-              control={control}
-              render={({ field }) => (
-                <Checkbox
-                  checked={field.value ?? false}
-                  onChange={field.onChange}
-                >
-                  {t(`authorize.checkboxes.${scope}`)}
-                </Checkbox>
-              )}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );
