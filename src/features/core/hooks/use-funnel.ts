@@ -5,7 +5,7 @@ import {
   useSearch,
 } from '@tanstack/react-router';
 import { createUseFunnel } from '@use-funnel/core';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 interface TanstackRouterRouteOption {
   viewTransition?: boolean;
@@ -18,6 +18,7 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
     const navigate = useNavigate();
     const router = useRouter();
     const search = useSearch({ strict: false });
+    const cleanup = useCleanupFunnel();
 
     const stepName = `${id}-step` as const;
     const currentStep = new URLSearchParams(location.searchStr).get(stepName);
@@ -105,33 +106,7 @@ export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
           router.history.go(index);
         },
         cleanup() {
-          const newLocationState = { ...location.state };
-          const currentSearchParams = new URLSearchParams(
-            window.location.search,
-          );
-
-          if (
-            !currentSearchParams.has(stepName) ||
-            !(id in (newLocationState.funnelContext ?? {})) ||
-            !(id in (newLocationState.funnelHistories ?? {}))
-          )
-            return;
-
-          delete newLocationState.funnelContext[id];
-          delete newLocationState.funnelHistories[id];
-
-          const searchParams = new URLSearchParams([
-            ...Object.entries(search).filter(
-              (v): v is [string, string] =>
-                v[1] !== undefined && v[0] !== stepName,
-            ),
-          ]);
-
-          navigate({
-            replace: true,
-            to: `${location.pathname}?${searchParams.toString()}`,
-            state: newLocationState,
-          });
+          cleanup(stepName);
         },
       }),
       [
@@ -154,38 +129,35 @@ export function useCleanupFunnel() {
   const search = useSearch({ strict: false });
   const navigate = useNavigate();
 
-  return (stepName?: `${string}-step`) => {
-    const currentSearchParams = new URLSearchParams(window.location.search);
-    const newLocationState = { ...location.state };
+  return useCallback(
+    (stepName: `${string}-step`) => {
+      const currentSearchParams = new URLSearchParams(window.location.search);
+      const newLocationState = { ...location.state };
+      const id = stepName.split('-')[0]!;
 
-    Object.entries(search).forEach((v) => {
-      if (v[0].endsWith('-step')) stepName = v[0] as `${string}-step`;
-    });
-    if (stepName == null) return;
+      if (
+        !currentSearchParams.has(stepName) ||
+        !(id in (newLocationState.funnelContext ?? {})) ||
+        !(id in (newLocationState.funnelHistories ?? {}))
+      ) {
+        return;
+      }
 
-    const id = stepName.split('-')[0]!;
+      delete newLocationState.funnelContext[id];
+      delete newLocationState.funnelHistories[id];
 
-    if (
-      !currentSearchParams.has(stepName) ||
-      !(id in (newLocationState.funnelContext ?? {})) ||
-      !(id in (newLocationState.funnelHistories ?? {}))
-    ) {
-      return;
-    }
+      const searchParams = new URLSearchParams([
+        ...Object.entries(search).filter(
+          (v): v is [string, string] => v[1] !== undefined && v[0] !== stepName,
+        ),
+      ]);
 
-    delete newLocationState.funnelContext[id];
-    delete newLocationState.funnelHistories[id];
-
-    const searchParams = new URLSearchParams([
-      ...Object.entries(search).filter(
-        (v): v is [string, string] => v[1] !== undefined && v[0] !== stepName,
-      ),
-    ]);
-
-    navigate({
-      replace: true,
-      to: `${location.pathname}?${searchParams.toString()}`,
-      state: newLocationState,
-    });
-  };
+      navigate({
+        replace: true,
+        to: `${location.pathname}?${searchParams.toString()}`,
+        state: newLocationState,
+      });
+    },
+    [location.pathname, location.state, navigate, search],
+  );
 }

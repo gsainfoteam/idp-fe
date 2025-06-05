@@ -6,22 +6,25 @@ import {
 } from '@tanstack/react-router';
 
 import { useAuth } from '@/features/auth';
-import { useCleanupFunnel } from '@/features/core';
+
+const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
+  // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함, useCleanupFunnel 사용 안 됨
+  return Object.fromEntries(
+    Object.entries(search).filter(([key]) => !key.endsWith('-step')),
+  );
+};
 
 const AuthRequiredLayout = () => {
   const { user } = useAuth();
   const router = useRouter();
-  // FIXME: useLocation에서는 Maximum update depth exceeded 오류가 발생함 useCleanupFunnel 코드 수정 필요
-  const cleanup = useCleanupFunnel();
 
   if (user === undefined) return null;
   if (user === null) {
-    cleanup();
     return (
       <Navigate
         to="/auth/login"
         search={(prev) => ({
-          ...prev,
+          ...cleanupAllFunnel(prev),
           redirect: router.history.location.href,
         })}
         replace
