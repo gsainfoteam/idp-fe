@@ -19,7 +19,6 @@ export function AuthorizeForm({
   const { clientScopes, consents } = useLoaderData({
     from: '/_auth-required/authorize',
   });
-
   const consent = consents?.data?.list.find(
     (c) => c.clientUuid === client.clientId,
   );
@@ -28,42 +27,36 @@ export function AuthorizeForm({
     () => clientScopes.filter((v) => client.scopes.includes(v)),
     [clientScopes, client.scopes],
   );
+  const requiredScopeValues = useWatch({
+    name: requiredScopes.map((scope) => `scopes.${scope}` as const),
+  });
+  const requiredAllAgree = useMemo(
+    () => requiredScopeValues.every(Boolean),
+    [requiredScopeValues],
+  );
+  const toggleRequiredAll = (checked: boolean) => {
+    requiredScopes.forEach((scope) => setValue(`scopes.${scope}`, checked));
+  };
 
   const optionalScopes = useMemo(
     () => clientScopes.filter((v) => client.optionalScopes.includes(v)),
     [clientScopes, client.optionalScopes],
   );
-
-  const requiredScopeValues = useWatch({
-    name: requiredScopes.map((scope) => `scopes.${scope}` as const),
-  });
-
   const optionalScopeValues = useWatch({
     name: optionalScopes.map((scope) => `scopes.${scope}` as const),
   });
+  const optionalAllAgree = useMemo(
+    () => optionalScopeValues.every(Boolean),
+    [optionalScopeValues],
+  );
+  const toggleOptionalAll = (checked: boolean) => {
+    optionalScopes.forEach((scope) => setValue(`scopes.${scope}`, checked));
+  };
 
   const allAgree = useMemo(
-    () =>
-      (requiredScopeValues.every(Boolean) &&
-        optionalScopeValues.every(Boolean)) ||
-      false,
-    [requiredScopeValues, optionalScopeValues],
+    () => requiredAllAgree && optionalAllAgree,
+    [requiredAllAgree, optionalAllAgree],
   );
-
-  const toggleAll = (checked: boolean) => {
-    requiredScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, checked, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
-    });
-    optionalScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, checked, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
-    });
-  };
 
   useEffect(() => {
     if (requiredScopeValues.some((v) => !v)) {
@@ -87,14 +80,23 @@ export function AuthorizeForm({
 
   return (
     <div className="flex flex-col">
-      <Checkbox checked={allAgree} onChange={() => toggleAll(!allAgree)}>
+      <Checkbox
+        checked={allAgree}
+        onChange={() => {
+          toggleRequiredAll(!allAgree);
+          toggleOptionalAll(!allAgree);
+        }}
+      >
         <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
       </Checkbox>
       <div className="h-2.5" />
       <div className="flex flex-col gap-2.5 rounded-lg border border-neutral-200 px-5 py-4">
         {requiredScopes.length > 0 && (
           <div className="flex flex-col gap-1">
-            <div className="text-body-2 text-neutral-800">
+            <div
+              className="text-body-2 text-neutral-800"
+              onClick={() => toggleRequiredAll(!requiredAllAgree)}
+            >
               {t('authorize.labels.required')}
             </div>
             <div className="flex flex-col gap-1 pl-1">
@@ -118,7 +120,10 @@ export function AuthorizeForm({
         )}
         {optionalScopes.length > 0 && (
           <div className="flex flex-col gap-1">
-            <div className="text-body-2 text-neutral-800">
+            <div
+              className="text-body-2 text-neutral-800"
+              onClick={() => toggleOptionalAll(!optionalAllAgree)}
+            >
               {t('authorize.labels.optional')}
             </div>
             <div className="flex flex-col gap-1 pl-1">
