@@ -8,7 +8,7 @@ import {
 import { useAuth } from '@/features/auth';
 
 const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
-  // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함, useCleanupFunnel 사용 안 됨
+  // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함
   return Object.fromEntries(
     Object.entries(search).filter(([key]) => !key.endsWith('-step')),
   );
