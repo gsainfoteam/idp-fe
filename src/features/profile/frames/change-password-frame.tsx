@@ -8,12 +8,7 @@ import { NewPasswordStep } from './change-password-steps/new-password-step';
 
 import { patchUserPassword } from '@/data/patch-user-password';
 import { useAuth, useToken } from '@/features/auth';
-import {
-  Pretty,
-  RequireKeys,
-  useCleanupFunnel,
-  useFunnel,
-} from '@/features/core';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 type StepContext = Pretty<Partial<Parameters<typeof patchUserPassword>[0]>>;
 
@@ -30,8 +25,6 @@ export function ChangePasswordFrame() {
   const { user } = useAuth();
   const { token } = useToken();
   const { t } = useTranslation();
-
-  const cleanup = useCleanupFunnel();
   const funnel = useFunnel<ChangePasswordSteps>({
     id: 'change_password',
     initial: {
@@ -69,7 +62,8 @@ export function ChangePasswordFrame() {
         <CompleteStep
           step={step}
           onUndo={() => history.back()}
-          onNext={() => cleanup(`${step}-step`)}
+          // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
+          onNext={() => funnel.history.cleanup()}
         />
       )}
     />
