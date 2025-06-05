@@ -4,160 +4,186 @@ import {
   useRouter,
   useSearch,
 } from '@tanstack/react-router';
-import { createUseFunnel } from '@use-funnel/core';
-import { useMemo, useCallback } from 'react';
+import { AnyFunnelState, createUseFunnel } from '@use-funnel/core';
+import { useMemo } from 'react';
+
+type AnyContext = Record<string, any>;
+type AnyStepContextMap = Record<string, AnyContext>;
 
 interface TanstackRouterRouteOption {
   viewTransition?: boolean;
   resetScroll?: boolean;
 }
 
-export const useFunnel = createUseFunnel<TanstackRouterRouteOption>(
-  ({ id, initialState }) => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const router = useRouter();
-    const search = useSearch({ strict: false });
-    const cleanup = useCleanupFunnel();
-
-    const stepName = `${id}-step` as const;
-    const currentStep = new URLSearchParams(location.searchStr).get(stepName);
-    const currentContext = location.state?.funnelContext?.[id];
-    const currentState = useMemo(() => {
-      return currentStep != null && currentContext != null
-        ? ({
-            step: currentStep,
-            context: currentContext,
-          } as typeof initialState)
-        : initialState;
-    }, [currentStep, currentContext, initialState]);
-
-    const history: (typeof initialState)[] = useMemo(() => {
-      const histories = location.state?.funnelHistories?.[id];
-      if (Array.isArray(histories) && histories.length > 0) {
-        return histories;
-      } else {
-        return [currentState];
-      }
-    }, [location.state?.funnelHistories, id, currentState]);
-    const currentIndex = history.length - 1;
-
-    return useMemo(
-      () => ({
-        history,
-        currentIndex,
-        push(state, { resetScroll, viewTransition } = {}) {
-          const searchParams = new URLSearchParams([
-            ...Object.entries(search).filter(
-              (v): v is [string, string] => v[1] !== undefined,
-            ),
-            ...(state.step != null ? [[stepName, state.step]] : []),
-          ]);
-
-          searchParams.set(stepName, state.step);
-
-          navigate({
-            replace: false,
-            to: `${location.pathname}?${searchParams.toString()}`,
-            state: {
-              ...location.state,
-              funnelContext: {
-                ...location.state?.funnelContext,
-                [id]: state.context,
-              },
-              funnelHistories: {
-                ...location.state?.funnelHistories,
-                [id]: [...(history ?? []), state],
-              },
-            },
-            viewTransition,
-            resetScroll,
-          });
-        },
-        replace(state, { resetScroll, viewTransition } = {}) {
-          const searchParams = new URLSearchParams([
-            ...Object.entries(search).filter(
-              (v): v is [string, string] => v[1] !== undefined,
-            ),
-            ...(state.step != null ? [[stepName, state.step]] : []),
-          ]);
-
-          searchParams.set(stepName, state.step);
-
-          navigate({
-            replace: true,
-            to: `${location.pathname}?${searchParams.toString()}`,
-            state: {
-              ...location.state,
-              funnelContext: {
-                ...location.state?.funnelContext,
-                [id]: state.context,
-              },
-              funnelHistories: {
-                ...location.state?.funnelHistories,
-                [id]: [...(history ?? []).slice(0, currentIndex), state],
-              },
-            },
-            viewTransition,
-            resetScroll,
-          });
-        },
-        go(index) {
-          router.history.go(index);
-        },
-        cleanup() {
-          cleanup(stepName);
-        },
-      }),
-      [
-        currentIndex,
-        history,
-        id,
-        location.pathname,
-        location.state,
-        navigate,
-        router.history,
-        search,
-        stepName,
-      ],
-    );
-  },
-);
-
-export function useCleanupFunnel() {
+const useFunnelRouter = ({
+  id,
+  initialState,
+}: {
+  id: string;
+  initialState: AnyFunnelState;
+}) => {
   const location = useLocation();
-  const search = useSearch({ strict: false });
   const navigate = useNavigate();
+  const router = useRouter();
+  const search = useSearch({ strict: false });
 
-  return useCallback(
-    (stepName: `${string}-step`) => {
-      const currentSearchParams = new URLSearchParams(window.location.search);
-      const newLocationState = { ...location.state };
-      const id = stepName.split('-')[0]!;
+  const stepName = `${id}-step` as const;
+  const currentStep = new URLSearchParams(location.searchStr).get(stepName);
+  const currentContext = location.state?.funnelContext?.[id];
+  const currentState = useMemo(() => {
+    return currentStep != null && currentContext != null
+      ? ({
+          step: currentStep,
+          context: currentContext,
+        } as typeof initialState)
+      : initialState;
+  }, [currentStep, currentContext, initialState]);
 
-      if (
-        !currentSearchParams.has(stepName) ||
-        !(id in (newLocationState.funnelContext ?? {})) ||
-        !(id in (newLocationState.funnelHistories ?? {}))
+  const history: (typeof initialState)[] = useMemo(() => {
+    const histories = location.state?.funnelHistories?.[id];
+    if (Array.isArray(histories) && histories.length > 0) {
+      return histories;
+    } else {
+      return [currentState];
+    }
+  }, [location.state?.funnelHistories, id, currentState]);
+  const currentIndex = history.length - 1;
+
+  return useMemo(
+    () => ({
+      history,
+      currentIndex,
+      push(
+        state: AnyFunnelState,
+        { resetScroll, viewTransition }: TanstackRouterRouteOption = {},
       ) {
-        return;
-      }
+        const searchParams = new URLSearchParams([
+          ...Object.entries(search).filter(
+            (v): v is [string, string] => v[1] !== undefined,
+          ),
+          ...(state.step != null ? [[stepName, state.step]] : []),
+        ]);
 
-      delete newLocationState.funnelContext[id];
-      delete newLocationState.funnelHistories[id];
+        searchParams.set(stepName, state.step);
 
-      const searchParams = new URLSearchParams([
-        ...Object.entries(search).filter(
-          (v): v is [string, string] => v[1] !== undefined && v[0] !== stepName,
-        ),
-      ]);
+        navigate({
+          replace: false,
+          to: `${location.pathname}?${searchParams.toString()}`,
+          state: {
+            ...location.state,
+            funnelContext: {
+              ...location.state?.funnelContext,
+              [id]: state.context,
+            },
+            funnelHistories: {
+              ...location.state?.funnelHistories,
+              [id]: [...(history ?? []), state],
+            },
+          },
+          viewTransition,
+          resetScroll,
+        });
+      },
+      replace(
+        state: AnyFunnelState,
+        { resetScroll, viewTransition }: TanstackRouterRouteOption = {},
+      ) {
+        const searchParams = new URLSearchParams([
+          ...Object.entries(search).filter(
+            (v): v is [string, string] => v[1] !== undefined,
+          ),
+          ...(state.step != null ? [[stepName, state.step]] : []),
+        ]);
 
-      navigate({
-        replace: true,
-        to: `${location.pathname}?${searchParams.toString()}`,
-        state: newLocationState,
-      });
-    },
-    [location.pathname, location.state, navigate, search],
+        searchParams.set(stepName, state.step);
+
+        navigate({
+          replace: true,
+          to: `${location.pathname}?${searchParams.toString()}`,
+          state: {
+            ...location.state,
+            funnelContext: {
+              ...location.state?.funnelContext,
+              [id]: state.context,
+            },
+            funnelHistories: {
+              ...location.state?.funnelHistories,
+              [id]: [...(history ?? []).slice(0, currentIndex), state],
+            },
+          },
+          viewTransition,
+          resetScroll,
+        });
+      },
+      go(index: number) {
+        router.history.go(index);
+      },
+      cleanup() {
+        const currentSearchParams = new URLSearchParams(window.location.search);
+        const newLocationState = { ...location.state };
+        const id = stepName.split('-')[0]!;
+
+        if (
+          !currentSearchParams.has(stepName) ||
+          !(id in (newLocationState.funnelContext ?? {})) ||
+          !(id in (newLocationState.funnelHistories ?? {}))
+        ) {
+          return;
+        }
+
+        delete newLocationState.funnelContext[id];
+        delete newLocationState.funnelHistories[id];
+
+        const searchParams = new URLSearchParams([
+          ...Object.entries(search).filter(
+            (v): v is [string, string] =>
+              v[1] !== undefined && v[0] !== stepName,
+          ),
+        ]);
+
+        navigate({
+          replace: true,
+          to: `${location.pathname}?${searchParams.toString()}`,
+          state: newLocationState,
+        });
+      },
+    }),
+    [
+      currentIndex,
+      history,
+      id,
+      location.pathname,
+      location.state,
+      navigate,
+      router.history,
+      search,
+      stepName,
+    ],
   );
-}
+};
+
+const useFunnelInternal =
+  createUseFunnel<TanstackRouterRouteOption>(useFunnelRouter);
+
+export const useFunnel = <TStepContextMap extends AnyStepContextMap>(
+  ...props: Parameters<typeof useFunnelInternal<TStepContextMap>>
+) => {
+  const { id, initial: initialState } = props[0];
+
+  const {
+    history: baseHistory,
+    Render,
+    ...funnel
+  } = useFunnelInternal<TStepContextMap>(...props);
+  const router = useFunnelRouter({ id, initialState });
+
+  return {
+    ...funnel,
+    // TODO: Render 컴포넌트 타입 수정 필요
+    Render,
+    history: {
+      ...baseHistory,
+      cleanup: router.cleanup,
+    },
+  };
+};
