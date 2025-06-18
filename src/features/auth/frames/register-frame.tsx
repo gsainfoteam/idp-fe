@@ -46,6 +46,7 @@ export function RegisterFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
+          // TODO: context.emailAgree에 따라 emailOverlay 또는 code 로 이동
           onNext={(data) => history.push('emailOverlay', data)}
         />
       )}

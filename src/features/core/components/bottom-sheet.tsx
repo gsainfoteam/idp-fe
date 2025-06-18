@@ -2,24 +2,20 @@ import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
 import { motion, PanInfo, useAnimationControls } from 'framer-motion';
 import { cn } from '../utils/cn';
 import { Backdrop } from './backdrop';
+import { ModalProps } from './modal';
+import { ModalContext } from './modal';
 
-interface BottomSheetContextType {
-  close: () => void;
-}
-
-const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
-
-interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
-  isOpen: boolean;
-  close: () => void;
-}
+const BottomSheetContext = createContext<Pick<ModalProps, 'close'> | null>(
+  null,
+);
 
 const BottomSheet = ({
   isOpen,
   close,
   children,
   className,
-}: PropsWithChildren<BottomSheetProps>) => {
+  key,
+}: PropsWithChildren<ModalProps>) => {
   const controls = useAnimationControls();
 
   useEffect(() => {
@@ -45,6 +41,7 @@ const BottomSheet = ({
     <BottomSheetContext.Provider value={{ close }}>
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
+          key={key}
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
@@ -128,9 +125,14 @@ BottomSheet.Close = ({
   onClick,
   ...props
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const context = useContext(BottomSheetContext);
+  const bottomSheetContext = useContext(BottomSheetContext);
+  const modalContext = useContext(ModalContext);
+  const context = bottomSheetContext || modalContext;
+
   if (!context)
-    throw new Error('BottomSheet.Close must be used within a BottomSheet');
+    throw new Error(
+      'BottomSheet.Close must be used within a BottomSheet or Modal',
+    );
 
   return (
     <div

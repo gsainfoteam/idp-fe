@@ -20,7 +20,6 @@ export function UndoWarningOverlay({
         setOpen(false);
         close();
       }}
-      className="mx-10 w-auto"
     >
       <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
       <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>

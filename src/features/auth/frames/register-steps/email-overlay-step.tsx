@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useEmailOverlayForm } from '../../hooks/register-steps/use-email-overlay-form';
 
-import { Button, Dialog } from '@/features/core';
-import { BottomSheet } from '@/features/core';
+import { Button, Modal } from '@/features/core';
 
 function Inner() {
   const { t } = useTranslation();
@@ -43,37 +42,24 @@ export function EmailOverlayStep({
   const { form, onSubmit } = useEmailOverlayForm({ context, onNext });
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(true);
-  const [isPC, setIsPC] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
-    const handleResize = (e: MediaQueryListEvent | MediaQueryList) => {
-      setIsPC(e.matches);
-    };
-
-    handleResize(mediaQuery);
-
-    mediaQuery.addEventListener('change', handleResize);
-    return () => mediaQuery.removeEventListener('change', handleResize);
-  }, []);
 
   const handleClose = () => {
     setOpen(false);
     close();
   };
 
-  return isPC && !context.emailAgree ? (
-    <Dialog isOpen={isOpen} close={handleClose} className="w-[400px]">
-      <Dialog.Header>{t('register.steps.email_overlay.title')}</Dialog.Header>
-      <Dialog.Body>
+  return (
+    <Modal isOpen={isOpen} close={handleClose} className="w-[400px]">
+      <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
+      <Modal.Body>
         <Inner />
-      </Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close className="grow">
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close className="grow">
           <Button variant="secondary" className="w-full">
             {t('register.steps.email_overlay.sub_button')}
           </Button>
-        </Dialog.Close>
+        </Modal.Close>
         <Button
           variant="primary"
           onClick={onSubmit}
@@ -82,31 +68,7 @@ export function EmailOverlayStep({
         >
           {t('register.steps.email_overlay.button')}
         </Button>
-      </Dialog.Footer>
-    </Dialog>
-  ) : (
-    <BottomSheet isOpen={isOpen} close={handleClose}>
-      <BottomSheet.Header>
-        {t('register.steps.email_overlay.title')}
-      </BottomSheet.Header>
-      <BottomSheet.Body>
-        <Inner />
-      </BottomSheet.Body>
-      <BottomSheet.Footer>
-        <BottomSheet.Close className="grow">
-          <Button variant="secondary" className="w-full">
-            {t('register.steps.email_overlay.sub_button')}
-          </Button>
-        </BottomSheet.Close>
-        <Button
-          variant="primary"
-          onClick={onSubmit}
-          loading={form.formState.isSubmitting}
-          className="grow"
-        >
-          {t('register.steps.email_overlay.button')}
-        </Button>
-      </BottomSheet.Footer>
-    </BottomSheet>
+      </Modal.Footer>
+    </Modal>
   );
 }
