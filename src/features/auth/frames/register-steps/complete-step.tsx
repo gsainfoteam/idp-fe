@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { RegisterSteps } from '../register-frame';
@@ -13,7 +12,6 @@ export function CompleteStep({
   onNext: () => void;
 }) {
   const { t } = useTranslation();
-  const navigate = useNavigate({ from: '/auth/register' });
 
   return (
     <FunnelLayout
@@ -21,14 +19,7 @@ export function CompleteStep({
       stepTitle={t('register.steps.complete.title')}
       hideUndo
       button={
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={async () => {
-            await onNext();
-            await navigate({ to: '/auth/login' });
-          }}
-        >
+        <Button variant="primary" className="w-full" onClick={onNext}>
           {t('register.steps.complete.button')}
         </Button>
       }

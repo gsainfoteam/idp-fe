@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { CompleteStep } from './issue-password-steps/complete-step';
 import { EmailStep } from './issue-password-steps/email-step';
 
@@ -12,6 +13,7 @@ export type IssuePasswordSteps = {
 };
 
 export function IssuePasswordFrame() {
+  const navigate = useNavigate({ from: '/issue-password' });
   const funnel = useFunnel<IssuePasswordSteps>({
     id: 'issue_password',
     initial: {
@@ -29,7 +31,14 @@ export function IssuePasswordFrame() {
         />
       )}
       // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
-      complete={() => <CompleteStep onNext={() => funnel.history.cleanup()} />}
+      complete={() => (
+        <CompleteStep
+          onNext={() => {
+            funnel.history.cleanup();
+            navigate({ to: '/auth/login' });
+          }}
+        />
+      )}
     />
   );
 }

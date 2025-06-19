@@ -22,7 +22,7 @@ export type ChangePasswordSteps = {
 };
 
 export function ChangePasswordFrame() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { token } = useToken();
   const { t } = useTranslation();
   const funnel = useFunnel<ChangePasswordSteps>({
@@ -62,8 +62,10 @@ export function ChangePasswordFrame() {
         <CompleteStep
           step={step}
           onUndo={() => history.back()}
-          // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
-          onNext={() => funnel.history.cleanup()}
+          onNext={() => {
+            funnel.history.cleanup();
+            signOut();
+          }}
         />
       )}
     />

@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { CodeStep } from './register-steps/code-step';
 import { CompleteStep } from './register-steps/complete-step';
 import { EmailOverlayStep } from './register-steps/email-overlay-step';
@@ -33,6 +34,7 @@ export type RegisterSteps = {
 };
 
 export function RegisterFrame() {
+  const navigate = useNavigate({ from: '/auth/register' });
   const funnel = useFunnel<RegisterSteps>({
     id: 'register',
     initial: {
@@ -89,7 +91,10 @@ export function RegisterFrame() {
         <CompleteStep
           context={context}
           // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
-          onNext={() => funnel.history.cleanup()}
+          onNext={() => {
+            funnel.history.cleanup();
+            navigate({ to: '/auth/login' });
+          }}
         />
       )}
     />

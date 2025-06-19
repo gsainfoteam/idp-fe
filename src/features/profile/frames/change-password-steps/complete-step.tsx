@@ -14,7 +14,7 @@ export function CompleteStep({
   onNext: () => void;
 }) {
   const { t } = useTranslation();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   if (!user) return null;
 
@@ -27,14 +27,7 @@ export function CompleteStep({
       hideUndo
       button={
         // signOut이 되면 자동으로 /auth/login으로 이동하도록 라우팅 되어있음
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={async () => {
-            await onNext();
-            await signOut();
-          }}
-        >
+        <Button variant="primary" className="w-full" onClick={onNext}>
           {t('change_password.steps.complete.button')}
         </Button>
       }
