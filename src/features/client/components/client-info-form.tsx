@@ -19,7 +19,9 @@ export function ClientInfoForm({ client }: { client: Client }) {
   return (
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-4">
-        <div className="text-title-3">{t('services.detail.info.title')}</div>
+        <div className="text-title-3 text-basics-primary-label">
+          {t('services.detail.info.title')}
+        </div>
         <div className="flex flex-col gap-5">
           <Label text={t('services.detail.info.id')}>
             <CopyInput

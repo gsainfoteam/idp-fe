@@ -1,7 +1,8 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { Toaster } from 'react-hot-toast';
 
 import { routeTree } from './routeTree.gen';
+import { ToastProvider } from './features/core';
+
 const router = createRouter({ routeTree, defaultPreload: 'intent' });
 
 declare module '@tanstack/react-router' {
@@ -14,7 +15,7 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <Toaster />
+      <ToastProvider />
     </>
   );
 };

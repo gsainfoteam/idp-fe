@@ -36,10 +36,10 @@ function MenuButton({
       className={`w-full justify-start px-4 py-3 ${
         variant === 'default'
           ? 'bg-neutral-50 active:bg-neutral-100'
-          : 'bg-red-50 active:bg-red-100'
+          : 'bg-warning-50 active:bg-warning-100'
       }`}
       labelClassName={`gap-3 text-body-1 ${
-        variant === 'default' ? 'text-neutral-950' : 'text-red-900'
+        variant === 'default' ? 'text-neutral-950' : 'text-warning-900'
       }`}
       prefixIcon={icon}
       onClick={onClick}
@@ -76,8 +76,12 @@ export function ProfileFrame() {
               onClick={() => setOpen(true)}
             />
             <div className="flex flex-col">
-              <div className="text-title-3">{user.name}</div>
-              <div className="text-body-2 text-neutral-400">{user.email}</div>
+              <div className="text-title-3 text-basics-primary-label">
+                {user.name}
+              </div>
+              <div className="text-body-2 text-basics-secondary-label">
+                {user.email}
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -132,8 +136,8 @@ export function ProfileFrame() {
                 variant="danger"
                 icon={
                   <WithdrawalIcon
-                    stroke="var(--color-red-800)"
-                    fill="var(--color-red-200)"
+                    stroke="var(--color-warning-800)"
+                    fill="var(--color-warning-200)"
                   />
                 }
               >

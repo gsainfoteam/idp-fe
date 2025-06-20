@@ -3,15 +3,16 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
 import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
-import { PasswordInput } from './password-input';
-import { Label } from './label';
-import { timeString } from '../utils/time-string';
+import {
+  PasswordInput,
+  Label,
+  timeString,
+  Input,
+  CopyInput,
+} from '@/features/core';
 
 import AddIcon from '@/assets/icons/line/add.svg?react';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-
-import { Input } from './input';
-import { CopyInput } from './copy-input';
 
 const meta = {
   component: Input,
@@ -21,31 +22,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    error: false,
-    disabled: false,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export const Error: Story = {
-  args: {
-    error: 'Error Message',
-    disabled: false,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    error: false,
-    disabled: true,
-    placeholder: 'm@gm.gist.ac.kr',
-  },
-};
-
-export function InputTestFrame() {
+function InputTestFrame() {
   const [remainTime, setRemainTime] = useState(30);
 
   useEffect(() => {
@@ -59,8 +36,7 @@ export function InputTestFrame() {
   }, [remainTime]);
 
   return (
-    <div>
-      <h1 className="text-title-1 px-10 pt-10">Input</h1>
+    <div className="bg-funnel-background absolute inset-0">
       <div className="m-10 flex flex-col gap-5">
         <div className="flex gap-5">
           <Input className="w-[200px]" placeholder="텍스트를 입력하세요" />
@@ -103,8 +79,8 @@ export function InputTestFrame() {
             error
             prefixAdornment={
               <WithdrawIcon
-                stroke="var(--color-red-800)"
-                fill="var(--color-red-200)"
+                stroke="var(--color-warning-800)"
+                fill="var(--color-warning-200)"
               />
             }
           />

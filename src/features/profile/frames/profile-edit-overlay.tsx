@@ -4,6 +4,7 @@ import {
   BottomSheet,
   Button,
   FileUpload,
+  IconButton,
   uniqueKey,
 } from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
@@ -47,15 +48,13 @@ export function ProfileEditOverlay({
     <BottomSheet isOpen={open} close={handleClose}>
       <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
       <BottomSheet.Body className="flex justify-center">
-        <div
-          className="relative w-fit cursor-pointer"
-          onClick={() => fileInputRef.current?.click()}
-        >
+        <div className="relative w-fit cursor-pointer">
           <Avatar
             name={user.name}
             img={previewFile ?? undefined}
             seed={uniqueKey(user.studentId)}
             size={30}
+            onClick={() => fileInputRef.current?.click()}
           />
           <FileUpload
             ref={fileInputRef}
@@ -63,27 +62,24 @@ export function ProfileEditOverlay({
             maxSizeMb={1}
             onSave={onSave}
           >
-            <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
-              <EditIcon
-                color="white"
-                width={20}
-                height={20}
-                className="cursor-pointer"
+            <div className="absolute right-0 bottom-0">
+              <IconButton
+                variant="primary"
+                icon={<EditIcon width={20} height={20} />}
+                className="border-funnel-background rounded-full border-4 p-2"
               />
             </div>
           </FileUpload>
         </div>
       </BottomSheet.Body>
       <BottomSheet.Footer>
-        <BottomSheet.Close>
-          <Button
-            variant="secondary"
-            onClick={() => setPreviewImage(null)}
-            className="w-full"
-          >
-            {t('profile_change.sub_button')}
-          </Button>
-        </BottomSheet.Close>
+        <Button
+          variant="secondary"
+          onClick={() => setPreviewImage(null)}
+          className="w-full"
+        >
+          {t('profile_change.sub_button')}
+        </Button>
         <Button
           variant="primary"
           onClick={() => startLoading(onSubmit().then(handleClose))}

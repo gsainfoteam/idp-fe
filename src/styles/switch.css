@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-switch-default-on-track: var(--color-primary-600);
+  --color-switch-default-off-track: var(--color-neutral-200);
+  --color-switch-default-handle: var(--color-white);
+  --color-switch-disabled-track: var(--color-neutral-300);
+  --color-switch-disabled-handle: var(--color-neutral-200);
+}
+
+@layer theme {
+  .dark {
+    --color-switch-default-on-track: var(--color-primary-700);
+    --color-switch-default-off-track: var(--color-neutral-700);
+    --color-switch-default-handle: var(--color-white);
+    --color-switch-disabled-track: var(--color-neutral-800);
+    --color-switch-disabled-handle: var(--color-neutral-700);
+  }
+}

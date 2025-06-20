@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { uniqueKey } from '../utils/unique-key';
-
-import { Avatar } from './avatar';
+import { Avatar, uniqueKey } from '@/features/core';
 
 const meta = {
   component: Avatar,
