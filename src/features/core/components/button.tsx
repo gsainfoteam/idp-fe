@@ -12,7 +12,7 @@ const buttonStyles = cva(
     variants: {
       variant: {
         default: 'text-title-3',
-        red: 'text-title-3',
+        warning: 'text-title-3',
         primary: 'text-title-3',
         secondary: 'text-title-3',
         text: 'text-title-3',
@@ -99,32 +99,33 @@ const buttonColors: Record<
       text: 'disabled:text-button-primary-disabled-label',
     },
   })),
-  red: palette((loading: boolean) => ({
+  warning: palette((loading: boolean) => ({
     default: {
-      background: 'bg-button-red-default-background',
-      border: 'inset-ring-button-red-default-border inset-ring',
-      text: 'text-button-red-default-label',
+      background: 'bg-button-warning-default-background',
+      border: 'inset-ring-button-warning-default-border inset-ring',
+      text: 'text-button-warning-default-label',
     },
     hover: {
-      background: 'hover:bg-button-red-hover-background',
-      border: 'hover:inset-ring-button-red-hover-border hover:inset-ring',
-      text: 'hover:text-button-red-hover-label',
+      background: 'hover:bg-button-warning-hover-background',
+      border: 'hover:inset-ring-button-warning-hover-border hover:inset-ring',
+      text: 'hover:text-button-warning-hover-label',
     },
     active: {
-      background: 'active:bg-button-red-active-background',
-      border: 'active:inset-ring-button-red-active-border active:inset-ring',
-      text: 'active:text-button-red-active-label',
+      background: 'active:bg-button-warning-active-background',
+      border:
+        'active:inset-ring-button-warning-active-border active:inset-ring',
+      text: 'active:text-button-warning-active-label',
     },
     loading: {
-      background: loading && 'bg-button-red-loading-background',
-      border: loading && 'inset-ring-button-red-loading-border inset-ring',
-      text: loading && 'text-button-red-loading-label',
+      background: loading && 'bg-button-warning-loading-background',
+      border: loading && 'inset-ring-button-warning-loading-border inset-ring',
+      text: loading && 'text-button-warning-loading-label',
     },
     disabled: {
-      background: 'disabled:bg-button-red-disabled-background',
+      background: 'disabled:bg-button-warning-disabled-background',
       border:
-        'disabled:inset-ring-button-red-disabled-border disabled:inset-ring',
-      text: 'disabled:text-button-red-disabled-label',
+        'disabled:inset-ring-button-warning-disabled-border disabled:inset-ring',
+      text: 'disabled:text-button-warning-disabled-label',
     },
   })),
   grayText: palette((loading: boolean) => ({

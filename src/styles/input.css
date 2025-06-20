@@ -16,7 +16,7 @@
 
   /* Input Error Colors */
   --color-input-error-background: var(--color-white);
-  --color-input-error-border: var(--color-red-500);
+  --color-input-error-border: var(--color-warning-500);
   --color-input-error-label: var(--color-black);
 
   /* Input Disabled Colors */
@@ -41,7 +41,7 @@
 
     /* Input Error Colors */
     --color-input-error-background: var(--color-neutral-980);
-    --color-input-error-border: var(--color-red-700);
+    --color-input-error-border: var(--color-warning-700);
     --color-input-error-label: var(--color-neutral-100);
 
     /* Input Disabled Colors */

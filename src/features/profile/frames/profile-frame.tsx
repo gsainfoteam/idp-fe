@@ -36,10 +36,10 @@ function MenuButton({
       className={`w-full justify-start px-4 py-3 ${
         variant === 'default'
           ? 'bg-neutral-50 active:bg-neutral-100'
-          : 'bg-red-50 active:bg-red-100'
+          : 'bg-warning-50 active:bg-warning-100'
       }`}
       labelClassName={`gap-3 text-body-1 ${
-        variant === 'default' ? 'text-neutral-950' : 'text-red-900'
+        variant === 'default' ? 'text-neutral-950' : 'text-warning-900'
       }`}
       prefixIcon={icon}
       onClick={onClick}
@@ -136,8 +136,8 @@ export function ProfileFrame() {
                 variant="danger"
                 icon={
                   <WithdrawalIcon
-                    stroke="var(--color-red-800)"
-                    fill="var(--color-red-200)"
+                    stroke="var(--color-warning-800)"
+                    fill="var(--color-warning-200)"
                   />
                 }
               >

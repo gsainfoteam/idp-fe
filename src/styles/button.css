@@ -44,26 +44,26 @@
   --color-button-primary-disabled-border: transparent;
   --color-button-primary-disabled-label: var(--color-neutral-50);
 
-  /* Button Red Colors */
-  --color-button-red-default-background: var(--color-red-600);
-  --color-button-red-default-border: transparent;
-  --color-button-red-default-label: var(--color-white);
+  /* Button Warning Colors */
+  --color-button-warning-default-background: var(--color-warning-600);
+  --color-button-warning-default-border: transparent;
+  --color-button-warning-default-label: var(--color-white);
 
-  --color-button-red-hover-background: var(--color-red-650);
-  --color-button-red-hover-border: transparent;
-  --color-button-red-hover-label: var(--color-white);
+  --color-button-warning-hover-background: var(--color-warning-650);
+  --color-button-warning-hover-border: transparent;
+  --color-button-warning-hover-label: var(--color-white);
 
-  --color-button-red-active-background: var(--color-red-700);
-  --color-button-red-active-border: transparent;
-  --color-button-red-active-label: var(--color-neutral-50);
+  --color-button-warning-active-background: var(--color-warning-700);
+  --color-button-warning-active-border: transparent;
+  --color-button-warning-active-label: var(--color-neutral-50);
 
-  --color-button-red-loading-background: var(--color-red-800);
-  --color-button-red-loading-border: transparent;
-  --color-button-red-loading-label: var(--color-neutral-50);
+  --color-button-warning-loading-background: var(--color-warning-800);
+  --color-button-warning-loading-border: transparent;
+  --color-button-warning-loading-label: var(--color-neutral-50);
 
-  --color-button-red-disabled-background: var(--color-neutral-200);
-  --color-button-red-disabled-border: transparent;
-  --color-button-red-disabled-label: var(--color-neutral-50);
+  --color-button-warning-disabled-background: var(--color-neutral-200);
+  --color-button-warning-disabled-border: transparent;
+  --color-button-warning-disabled-label: var(--color-neutral-50);
 
   /* Button Secondary Colors */
   --color-button-secondary-default-background: var(--color-white);
@@ -210,26 +210,26 @@
     --color-button-primary-disabled-border: transparent;
     --color-button-primary-disabled-label: var(--color-neutral-800);
 
-    /* Button Red Colors */
-    --color-button-red-default-background: var(--color-red-700);
-    --color-button-red-default-border: transparent;
-    --color-button-red-default-label: var(--color-neutral-100);
+    /* Button Warning Colors */
+    --color-button-warning-default-background: var(--color-warning-700);
+    --color-button-warning-default-border: transparent;
+    --color-button-warning-default-label: var(--color-neutral-100);
 
-    --color-button-red-hover-background: var(--color-red-750);
-    --color-button-red-hover-border: transparent;
-    --color-button-red-hover-label: var(--color-neutral-100);
+    --color-button-warning-hover-background: var(--color-warning-750);
+    --color-button-warning-hover-border: transparent;
+    --color-button-warning-hover-label: var(--color-neutral-100);
 
-    --color-button-red-active-background: var(--color-red-800);
-    --color-button-red-active-border: transparent;
-    --color-button-red-active-label: var(--color-neutral-100);
+    --color-button-warning-active-background: var(--color-warning-800);
+    --color-button-warning-active-border: transparent;
+    --color-button-warning-active-label: var(--color-neutral-100);
 
-    --color-button-red-loading-background: var(--color-red-800);
-    --color-button-red-loading-border: transparent;
-    --color-button-red-loading-label: var(--color-neutral-100);
+    --color-button-warning-loading-background: var(--color-warning-800);
+    --color-button-warning-loading-border: transparent;
+    --color-button-warning-loading-label: var(--color-neutral-100);
 
-    --color-button-red-disabled-background: var(--color-neutral-960);
-    --color-button-red-disabled-border: transparent;
-    --color-button-red-disabled-label: var(--color-neutral-800);
+    --color-button-warning-disabled-background: var(--color-neutral-960);
+    --color-button-warning-disabled-border: transparent;
+    --color-button-warning-disabled-label: var(--color-neutral-800);
 
     /* Button Secondary Colors */
     --color-button-secondary-default-background: transparent;

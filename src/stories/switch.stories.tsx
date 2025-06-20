@@ -18,7 +18,10 @@ export const Multiple: Story = {
     <div className="bg-funnel-background absolute inset-0">
       <div className="flex flex-col gap-4 p-4">
         <Switch disabled={disabled} />
-        <Switch disabled={disabled} trackClassName="peer-checked:bg-red-500" />
+        <Switch
+          disabled={disabled}
+          trackClassName="peer-checked:bg-warning-500"
+        />
         <Switch disabled={disabled} trackClassName="peer-checked:bg-blue-500" />
       </div>
     </div>

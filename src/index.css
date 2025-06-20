@@ -21,11 +21,11 @@
   --color-basics-primary-label: var(--color-black);
   --color-basics-secondary-label: var(--color-neutral-400);
   --color-basics-tertiary-label: var(--color-neutral-200);
-  --color-basics-error-label: var(--color-red-400);
+  --color-basics-error-label: var(--color-warning-400);
 
   /* Avatar Colors */
   --color-avatar-gray: #bdbdbd;
-  --color-avatar-red: #ef9a9a;
+  --color-avatar-warning: #ef9a9a;
   --color-avatar-blue: #90caf9;
   --color-avatar-green: #a5d6a7;
   --color-avatar-purple: #b39dda;
@@ -54,14 +54,14 @@
     --color-basics-primary-label: var(--color-white);
     --color-basics-secondary-label: var(--color-neutral-400);
     --color-basics-tertiary-label: var(--color-neutral-600);
-    --color-basics-error-label: var(--color-red-400);
+    --color-basics-error-label: var(--color-warning-400);
 
     /* Back Button Color */
     --color-back-button: #ffffff;
 
     /* Avatar Colors */
     --color-avatar-gray: #686868;
-    --color-avatar-red: #db6767;
+    --color-avatar-warning: #db6767;
     --color-avatar-blue: #5da1d8;
     --color-avatar-green: #67b96a;
     --color-avatar-purple: #8767c3;

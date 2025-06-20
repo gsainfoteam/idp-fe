@@ -79,8 +79,8 @@ function InputTestFrame() {
             error
             prefixAdornment={
               <WithdrawIcon
-                stroke="var(--color-red-800)"
-                fill="var(--color-red-200)"
+                stroke="var(--color-warning-800)"
+                fill="var(--color-warning-200)"
               />
             }
           />

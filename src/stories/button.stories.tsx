@@ -71,13 +71,13 @@ const ButtonGroup = ({
           Primary
         </Button>
         <Button
-          variant="red"
+          variant="warning"
           size={size}
           className="h-fit"
           loading={loading}
           disabled={disabled}
         >
-          Red
+          Warning
         </Button>
         <Button
           variant="secondary"
@@ -132,7 +132,7 @@ const ButtonGroup = ({
           disabled={disabled}
         />
         <IconButton
-          variant="red"
+          variant="warning"
           icon={<EditIcon />}
           size={size}
           loading={loading}
