@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import toast, { Toaster, ToastBar } from 'react-hot-toast';
-import { Button } from '@/features/core';
-import { ReactElement } from 'react';
+import toast from 'react-hot-toast';
+import { Button, ToastProvider } from '@/features/core';
 
 function ToastTestFrame({ label }: { label: string }) {
   return (
@@ -30,48 +29,7 @@ const meta = {
     (Story) => (
       <>
         <Story />
-        <Toaster
-          toastOptions={{
-            style: {
-              background: 'var(--color-toast-background)',
-              color: 'var(--color-toast-text)',
-              border: '1px solid var(--color-toast-border)',
-              paddingTop: 10,
-              paddingBottom: 10,
-              paddingLeft: 12,
-              paddingRight: 12,
-            },
-            duration: 100000,
-            success: {
-              iconTheme: {
-                primary: 'var(--color-toast-icon-success)',
-                secondary: 'white',
-              },
-            },
-            error: {
-              iconTheme: {
-                primary: 'var(--color-toast-icon-error)',
-                secondary: 'white',
-              },
-            },
-          }}
-        >
-          {(t) => (
-            <ToastBar toast={t}>
-              {({ icon, message }) => (
-                <div className="flex items-center gap-3">
-                  {icon}
-                  <div className="text-body-1">
-                    {
-                      (message as ReactElement<{ children: string }>).props
-                        .children
-                    }
-                  </div>
-                </div>
-              )}
-            </ToastBar>
-          )}
-        </Toaster>
+        <ToastProvider duration={100000} />
       </>
     ),
   ],

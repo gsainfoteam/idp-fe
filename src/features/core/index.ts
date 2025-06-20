@@ -18,6 +18,7 @@ export * from './components/undo-warning-overlay';
 export * from './components/file-upload';
 export * from './components/icon-button';
 export * from './components/copy-input';
+export * from './components/toast';
 export * from './services/api';
 export * from './utils/cn';
 export * from './utils/palette';
