@@ -91,9 +91,9 @@ export function RegisterFrame() {
         <CompleteStep
           context={context}
           // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
-          onNext={() => {
+          onNext={async () => {
             funnel.history.cleanup();
-            navigate({ to: '/auth/login' });
+            await navigate({ to: '/auth/login' });
           }}
         />
       )}

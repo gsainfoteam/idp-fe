@@ -62,9 +62,9 @@ export function ChangePasswordFrame() {
         <CompleteStep
           step={step}
           onUndo={() => history.back()}
-          onNext={() => {
+          onNext={async () => {
             funnel.history.cleanup();
-            signOut();
+            await signOut();
           }}
         />
       )}
