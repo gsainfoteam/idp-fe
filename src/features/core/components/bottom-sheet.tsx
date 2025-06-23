@@ -127,9 +127,9 @@ BottomSheet.Close = ({
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
   const bottomSheetContext = useContext(BottomSheetContext);
   const modalContext = useContext(ModalContext);
-  const context = bottomSheetContext || modalContext;
+  const contexts = [bottomSheetContext, modalContext].filter((v) => v !== null);
 
-  if (!context)
+  if (contexts.length === 0)
     throw new Error(
       'BottomSheet.Close must be used within a BottomSheet or Modal',
     );
@@ -138,7 +138,7 @@ BottomSheet.Close = ({
     <div
       onClick={(e) => {
         onClick?.(e);
-        context.close();
+        contexts.forEach((context) => context.close());
       }}
       className={cn('w-fit cursor-pointer', className)}
       {...props}

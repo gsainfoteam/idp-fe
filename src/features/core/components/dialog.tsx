@@ -99,16 +99,16 @@ Dialog.Close = ({
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
   const dialogContext = useContext(DialogContext);
   const modalContext = useContext(ModalContext);
-  const context = dialogContext || modalContext;
+  const contexts = [dialogContext, modalContext].filter((v) => v !== null);
 
-  if (!context)
+  if (contexts.length === 0)
     throw new Error('Dialog.Close must be used within a Dialog or Modal');
 
   return (
     <div
       onClick={(e) => {
         onClick?.(e);
-        context.close();
+        contexts.forEach((context) => context.close());
       }}
       className={cn('w-fit cursor-pointer', className)}
       {...props}
