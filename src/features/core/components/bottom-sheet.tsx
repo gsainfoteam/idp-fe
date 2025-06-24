@@ -27,14 +27,36 @@ const BottomSheet = ({
     return () => window.removeEventListener('keydown', handleEscKey);
   }, [isOpen, close]);
 
+  useEffect(() => {
+    if (isOpen) {
+      const vh = typeof window !== 'undefined' ? window.innerHeight : 0;
+      controls.set({ y: vh });
+      controls.start({
+        y: 0,
+        transition: {
+          duration: 0.5,
+          type: 'spring',
+          damping: 20,
+          stiffness: 175,
+        },
+      });
+    }
+  }, [isOpen, controls]);
+
   const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const threshold = 100;
+    const threshold = 120;
 
-    if (info.offset.y > threshold) close();
-    else controls.start({ y: 0 });
+    if (info.offset.y > threshold) {
+      close();
+    } else {
+      controls.start({
+        y: 0,
+        transition: { type: 'spring', damping: 20, stiffness: 175 },
+      });
+    }
   };
 
   return (
@@ -42,18 +64,15 @@ const BottomSheet = ({
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
           key={key}
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{
-            type: 'spring',
-            duration: 0.5,
-            damping: 20,
-            stiffness: 175,
-          }}
+          animate={controls}
           drag="y"
-          dragConstraints={{ top: 0, bottom: 300 }}
+          exit={{
+            y: typeof window !== 'undefined' ? window.innerHeight : 0,
+            transition: { duration: 0.3 },
+          }}
+          dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.2}
+          onDragStart={() => controls.stop()}
           onDragEnd={handleDragEnd}
           className={cn(
             'bg-bottom-sheet-background fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] pt-9 shadow-xl',
