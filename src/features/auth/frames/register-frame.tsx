@@ -43,13 +43,26 @@ export function RegisterFrame() {
 
   return (
     <funnel.Render
-      email={({ history, context }) => (
-        <EmailStep
-          context={context}
-          // TODO: context.emailAgree에 따라 emailOverlay 또는 code 로 이동
-          onNext={(data) => history.push('emailOverlay', data)}
-        />
-      )}
+      email={funnel.Render.with({
+        events: {
+          skipOverlay: (data: { email: string }, { history }) => {
+            history.push('code', { ...data, emailAgree: true });
+          },
+          showOverlay: (data: { email: string }, { history }) => {
+            history.push('emailOverlay', data);
+          },
+        },
+        render: ({ context, dispatch }) => (
+          <EmailStep
+            context={context}
+            onNext={
+              context.emailAgree
+                ? (data) => dispatch('skipOverlay', data)
+                : (data) => dispatch('showOverlay', data)
+            }
+          />
+        ),
+      })}
       emailOverlay={funnel.Render.overlay({
         render: ({ context, history, close }) => (
           <EmailOverlayStep
