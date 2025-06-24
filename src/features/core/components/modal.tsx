@@ -16,7 +16,6 @@ export const ModalContext = createContext<Pick<ModalProps, 'close'> | null>(
 function Modal({ close, children, ...props }: PropsWithChildren<ModalProps>) {
   const { isDesktop } = useIsDesktop();
 
-  // TODO: dialog에서 bottom sheet로 변경될 때 애니메이션이 작동하지 않음
   return (
     <ModalContext.Provider value={{ close }}>
       {isDesktop ? (

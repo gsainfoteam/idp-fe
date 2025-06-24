@@ -49,7 +49,7 @@ export function EmailOverlayStep({
   };
 
   return (
-    <Modal isOpen={isOpen} close={handleClose} className="w-[400px]">
+    <Modal isOpen={isOpen} close={handleClose} className="min-w-100">
       <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
       <Modal.Body>
         <Inner />
