@@ -251,7 +251,12 @@
         "errors": {
           "format": "URL을 입력해주세요"
         }
-      }
+      },
+      "delete": {
+        "title": "민감한 설정",
+        "button": "서비스 삭제하기"
+      },
+      "description": "{{date}}에 삭제가 요청되었습니다"
     },
     "openid": {
       "enable": "id_token 활성화",
