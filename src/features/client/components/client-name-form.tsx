@@ -39,24 +39,26 @@ export function ClientNameForm({ client }: { client: Client }) {
   return (
     <div ref={containerRef} className="flex w-full items-center gap-2">
       <label className="group flex items-center gap-2">
-        // TODO: idf-100 머지되면 dark mode 지원하기
-        {disabled && <AlertOctagonIcon className="mr-1 text-red-700" />}
-        <input
-          type="text"
-          style={{ width: inputWidth }}
-          disabled={disabled}
-          className={cn(
-            'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
-            isError && 'border-red-400 focus:border-red-400',
-            disabled && 'text-red-700',
-          )}
-          {...register('name', {
-            onBlur: () => {
-              if (formState.errors.name == null)
-                setValue('name', name, { shouldDirty: true });
-            },
-          })}
-        />
+        {/* // TODO: idf-100 머지되면 dark mode 지원하기 */}
+        <div className="flex items-center gap-2">
+          {disabled && <AlertOctagonIcon className="text-red-700" />}
+          <input
+            type="text"
+            style={{ width: inputWidth }}
+            disabled={disabled}
+            className={cn(
+              'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
+              isError && 'border-red-400 focus:border-red-400',
+              disabled && 'border-none text-red-700',
+            )}
+            {...register('name', {
+              onBlur: () => {
+                if (formState.errors.name == null)
+                  setValue('name', name, { shouldDirty: true });
+              },
+            })}
+          />
+        </div>
         <span ref={spanRef} className="invisible absolute">
           {name || '\t'}
         </span>

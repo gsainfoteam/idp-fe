@@ -16,7 +16,7 @@ export function ClientDeleteForm({ client }: { client: Client }) {
       <div className="text-title-3">{t('services.detail.delete.title')}</div>
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          // TODO: idf-100 머지되면 variant="warning" 으로 바꾸기
+          {/* // TODO: idf-100 머지되면 variant="warning" 으로 바꾸기 */}
           <Button
             variant="primary"
             disabled={client.deleteRequestedAt != null}
