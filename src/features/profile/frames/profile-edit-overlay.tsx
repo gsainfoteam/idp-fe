@@ -1,11 +1,5 @@
 import { useAuth } from '@/features/auth';
-import {
-  Avatar,
-  BottomSheet,
-  Button,
-  FileUpload,
-  uniqueKey,
-} from '@/features/core';
+import { Avatar, Button, Modal, FileUpload, uniqueKey } from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -29,24 +23,22 @@ export function ProfileEditOverlay({
   const { onSubmit, onSave } = useProfileEditForm(previewFile, setPreviewImage);
   const fileInputRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => {
-    setPreviewImage(user?.picture ?? null);
-    close();
-  };
-
   useEffect(() => {
     if (!user) toast.error(t('toast.invalid_user'));
     else setPreviewImage(user.picture ?? null);
   }, [user]);
 
+  const handleClose = () => {
+    setPreviewImage(user?.picture ?? null);
+    close();
+  };
+
   if (!user) return null;
 
-  // TODO: md 버전에서는 dialog로
-
   return (
-    <BottomSheet isOpen={open} close={handleClose}>
-      <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
-      <BottomSheet.Body className="flex justify-center">
+    <Modal isOpen={open} close={handleClose} className="min-w-100">
+      <Modal.Header>{t('profile_change.title')}</Modal.Header>
+      <Modal.Body className="flex justify-center">
         <div
           className="relative w-fit cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
@@ -73,9 +65,9 @@ export function ProfileEditOverlay({
             </div>
           </FileUpload>
         </div>
-      </BottomSheet.Body>
-      <BottomSheet.Footer>
-        <BottomSheet.Close>
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close className="grow">
           <Button
             variant="secondary"
             onClick={() => setPreviewImage(null)}
@@ -83,17 +75,17 @@ export function ProfileEditOverlay({
           >
             {t('profile_change.sub_button')}
           </Button>
-        </BottomSheet.Close>
+        </Modal.Close>
         <Button
           variant="primary"
           onClick={() => startLoading(onSubmit().then(handleClose))}
           disabled={previewFile === user.picture}
           loading={loading}
-          className="w-full"
+          className="grow"
         >
           {t('profile_change.button')}
         </Button>
-      </BottomSheet.Footer>
-    </BottomSheet>
+      </Modal.Footer>
+    </Modal>
   );
 }

@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
+import { Modal } from './modal';
 import { Button } from './button';
-import { Dialog } from './dialog';
 
 const meta = {
-  component: Dialog,
+  component: Modal,
   argTypes: {
     isOpen: {
       options: [true, false],
       control: { type: 'boolean' },
     },
   },
-} satisfies Meta<typeof Dialog>;
+} satisfies Meta<typeof Modal>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ExampleDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
+const ExampleModal = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   const [isOpen, setOpen] = useState(initialOpen);
 
   useEffect(() => {
@@ -26,22 +26,22 @@ const ExampleDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   }, [initialOpen]);
 
   return (
-    <Dialog isOpen={isOpen} close={() => setOpen(false)}>
-      <Dialog.Header>Title must be so long</Dialog.Header>
-      <Dialog.Body>
+    <Modal isOpen={isOpen} close={() => setOpen(false)}>
+      <Modal.Header>Title must be so long</Modal.Header>
+      <Modal.Body>
         Lorem ipsum dolor sit amet, consectetur
         <br />
         adipiscing elit. Mauris non nulla vitae
         <br />
         augue pellentesque mollis.
-      </Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close>
           <Button variant="secondary" className="w-full">
             Close
           </Button>
-        </Dialog.Close>
-        <Dialog.Close>
+        </Modal.Close>
+        <Modal.Close>
           <Button
             variant="primary"
             onClick={() => {
@@ -51,47 +51,47 @@ const ExampleDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
           >
             Success
           </Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
+        </Modal.Close>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
-const UndoWarningDialog = () => {
+const UndoWarningModal = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <Dialog isOpen={open} close={() => setOpen(false)}>
-      <Dialog.Header>계속 진행하면 데이터가 소실됩니다.</Dialog.Header>
-      <Dialog.Body>계속 진행하시겠습니까?</Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>
+    <Modal isOpen={open} close={() => setOpen(false)}>
+      <Modal.Header>계속 진행하면 데이터가 소실됩니다.</Modal.Header>
+      <Modal.Body>계속 진행하시겠습니까?</Modal.Body>
+      <Modal.Footer>
+        <Modal.Close>
           <Button variant="secondary" className="w-full">
             그만두기
           </Button>
-        </Dialog.Close>
-        <Dialog.Close>
+        </Modal.Close>
+        <Modal.Close>
           <Button variant="primary" className="w-full">
             계속하기
           </Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
+        </Modal.Close>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
-const NoBodyDialog = () => {
+const NoBodyModal = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <Dialog isOpen={open} close={() => setOpen(false)}>
-      <Dialog.Header>알림을 받기 위해 앱 알림을 켤게요</Dialog.Header>
-      <Dialog.Footer>
-        <Dialog.Close className="flex justify-end">
+    <Modal isOpen={open} close={() => setOpen(false)}>
+      <Modal.Header>알림을 받기 위해 앱 알림을 켤게요</Modal.Header>
+      <Modal.Footer>
+        <Modal.Close className="flex justify-end">
           <Button variant="text">알림 켜기</Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
+        </Modal.Close>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
@@ -101,7 +101,7 @@ export const Default: Story = {
     close: () => {},
   },
   render: ({ isOpen }) => {
-    return <ExampleDialog isOpen={isOpen} />;
+    return <ExampleModal isOpen={isOpen} />;
   },
 };
 
@@ -111,7 +111,7 @@ export const UndoWarning: Story = {
     close: () => {},
   },
   render: () => {
-    return <UndoWarningDialog />;
+    return <UndoWarningModal />;
   },
 };
 
@@ -121,6 +121,6 @@ export const NoBody: Story = {
     close: () => {},
   },
   render: () => {
-    return <NoBodyDialog />;
+    return <NoBodyModal />;
   },
 };
