@@ -18,14 +18,13 @@ export function MultiStateSwitch({
   const [selected, setSelected] = useState(initialSelected);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
-    const buttons = container.querySelectorAll('button');
-    const selectedBtn = buttons[selected];
-    if (selectedBtn) {
+    const selectedBtn = buttonRefs.current[selected];
+    if (container && selectedBtn) {
       const rect = selectedBtn.getBoundingClientRect();
       const parentRect = container.getBoundingClientRect();
       setIndicatorStyle({
@@ -54,6 +53,9 @@ export function MultiStateSwitch({
       {labels.map((label, idx) => (
         <button
           key={idx}
+          ref={(el) => {
+            buttonRefs.current[idx] = el;
+          }}
           className={cn(
             'relative z-10 flex w-full cursor-pointer items-center justify-center rounded-lg py-3 text-center',
             idx === selected
