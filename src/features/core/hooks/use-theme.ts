@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -33,7 +33,7 @@ export const useTheme = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       const newTheme = e.matches ? 'dark' : 'light';
