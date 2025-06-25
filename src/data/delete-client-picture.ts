@@ -16,6 +16,7 @@ export const deleteClientPicture = async (clientId: string) => {
         path: { clientId },
       },
     });
+
     return {};
   } catch (err) {
     if (err instanceof Response) {

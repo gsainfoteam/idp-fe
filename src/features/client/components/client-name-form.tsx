@@ -1,4 +1,5 @@
 import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
+import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/features/core';
 import { Client } from '../hooks/use-client';
@@ -20,6 +21,7 @@ export function ClientNameForm({ client }: { client: Client }) {
 
   const name = watch('name');
   const iconSize = 24;
+  const disabled = client.deleteRequestedAt != null;
 
   useEffect(() => {
     if (spanRef.current && containerRef.current) {
@@ -37,12 +39,16 @@ export function ClientNameForm({ client }: { client: Client }) {
   return (
     <div ref={containerRef} className="flex w-full items-center gap-2">
       <label className="group flex items-center gap-2">
+        // TODO: idf-100 머지되면 dark mode 지원하기
+        {disabled && <AlertOctagonIcon className="mr-1 text-red-700" />}
         <input
           type="text"
           style={{ width: inputWidth }}
+          disabled={disabled}
           className={cn(
             'border-b-2 border-transparent bg-white transition-colors focus:border-neutral-400 focus:outline-none',
             isError && 'border-red-400 focus:border-red-400',
+            disabled && 'text-red-700',
           )}
           {...register('name', {
             onBlur: () => {
@@ -54,14 +60,16 @@ export function ClientNameForm({ client }: { client: Client }) {
         <span ref={spanRef} className="invisible absolute">
           {name || '\t'}
         </span>
-        <EditLineIcon
-          className={cn(
-            'text-neutral-200 transition-colors group-focus-within:text-neutral-400',
-            isError && 'text-red-400 group-focus-within:text-red-400',
-          )}
-          width={iconSize}
-          height={iconSize}
-        />
+        {!disabled && (
+          <EditLineIcon
+            className={cn(
+              'text-neutral-200 transition-colors group-focus-within:text-neutral-400',
+              isError && 'text-red-400 group-focus-within:text-red-400',
+            )}
+            width={iconSize}
+            height={iconSize}
+          />
+        )}
       </label>
     </div>
   );

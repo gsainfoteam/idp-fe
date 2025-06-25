@@ -3,15 +3,18 @@ import { motion } from 'framer-motion';
 
 import { cn } from '../utils/cn';
 
-interface MultiStateSwitchProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MultiStateSwitchProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   labels: string[];
   selected?: number;
+  disabled?: boolean;
   onChangeIndex?: (index: number, label: string) => void;
 }
 
 export function MultiStateSwitch({
   labels,
   selected: initialSelected = 0,
+  disabled = false,
   onChangeIndex,
   ...props
 }: MultiStateSwitchProps) {
@@ -24,6 +27,7 @@ export function MultiStateSwitch({
   useLayoutEffect(() => {
     const container = containerRef.current;
     const selectedBtn = buttonRefs.current[selected];
+
     if (container && selectedBtn) {
       const rect = selectedBtn.getBoundingClientRect();
       const parentRect = container.getBoundingClientRect();
@@ -53,6 +57,7 @@ export function MultiStateSwitch({
       {labels.map((label, idx) => (
         <button
           key={idx}
+          disabled={disabled}
           ref={(el) => {
             buttonRefs.current[idx] = el;
           }}
@@ -61,6 +66,7 @@ export function MultiStateSwitch({
             idx === selected
               ? 'text-title-3 text-multi-state-switch-selected-label'
               : 'text-body-1 text-multi-state-switch-unselected-label',
+            disabled ? 'cursor-default' : 'cursor-pointer',
           )}
           onClick={() => {
             setSelected(idx);

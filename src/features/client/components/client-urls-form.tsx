@@ -8,8 +8,9 @@ import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 
 import { Button, Input } from '@/features/core';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
+import { Client } from '../hooks/use-client';
 
-export function ClientUrlsForm() {
+export function ClientUrlsForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { watch, setValue } = useFormContext<ClientDetailsFormSchema>();
   const { form: urlForm, reset } = useClientUrlForm();
@@ -27,6 +28,7 @@ export function ClientUrlsForm() {
             type="url"
             placeholder={t('services.detail.urls.placeholder')}
             error={urlForm.formState.errors.newUrl?.message}
+            disabled={client.deleteRequestedAt != null}
             {...urlForm.register('newUrl')}
           />
           <Controller
@@ -36,7 +38,11 @@ export function ClientUrlsForm() {
               <Button
                 variant="primary"
                 className="h-fit px-3"
-                disabled={fieldState.invalid || !fieldState.isDirty}
+                disabled={
+                  fieldState.invalid ||
+                  !fieldState.isDirty ||
+                  client.deleteRequestedAt != null
+                }
                 onClick={() => {
                   setValue('urls', [newUrl, ...(urls ?? [])], {
                     shouldDirty: true,
@@ -59,6 +65,7 @@ export function ClientUrlsForm() {
                   <Button
                     variant="text"
                     className="p-0"
+                    disabled={client.deleteRequestedAt != null}
                     prefixIcon={
                       <TrashBinIcon
                         width={30}

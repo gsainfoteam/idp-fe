@@ -10,7 +10,7 @@ import { motion, usePresenceData } from 'framer-motion';
 interface FunnelLayoutProps extends React.Attributes {
   title?: string;
   stepTitle: React.ReactNode;
-  description?: string;
+  description?: string | null | undefined;
   button?: React.ReactNode;
   hideUndo?: boolean;
   loading?: boolean;

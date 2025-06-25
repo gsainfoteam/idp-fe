@@ -64,6 +64,7 @@ export function ClientPictureForm({
             >
               <IconButton
                 variant="primary"
+                disabled={client.deleteRequestedAt != null}
                 loading={uploadLoading}
                 className="p-2.5"
                 icon={<EditIcon />}
@@ -72,7 +73,7 @@ export function ClientPictureForm({
             <IconButton
               variant="secondary"
               loading={deleteLoading}
-              disabled={!previewImage}
+              disabled={!previewImage || client.deleteRequestedAt != null}
               className="p-2.5"
               icon={<TrashBinIcon />}
               onClick={() => setOpen(true)}
