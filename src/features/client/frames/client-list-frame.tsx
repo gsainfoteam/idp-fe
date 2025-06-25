@@ -76,7 +76,12 @@ export function ClientListFrame() {
                     ID: {client.clientId}
                   </div>
                 </div>
-                <ChevronRightIcon className="shrink-0 text-neutral-400" />
+                <ChevronRightIcon
+                  className={cn(
+                    'shrink-0 text-neutral-400',
+                    client.deleteRequestedAt != null && 'text-red-300',
+                  )}
+                />
               </div>
             </Link>
           ))}
