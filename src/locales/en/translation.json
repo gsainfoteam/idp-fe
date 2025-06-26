@@ -254,7 +254,13 @@
       "update_failed": "Failed to save changes",
       "delete": {
         "title": "Danger Zone",
-        "button": "Delete Service"
+        "button": "Delete Service",
+        "dialog": {
+          "header": "Continue?",
+          "body": "This action cannot be undone.",
+          "confirm": "Continue",
+          "cancel": "Cancel"
+        }
       },
       "description": "Deletion requested on {{date}}"
     },
