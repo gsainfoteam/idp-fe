@@ -26,3 +26,4 @@ export * from './hooks/use-theme';
 export * from './hooks/use-is-mounted';
 export * from './hooks/use-loading';
 export * from './hooks/use-copy';
+export * from './frames/not-found-frame';
