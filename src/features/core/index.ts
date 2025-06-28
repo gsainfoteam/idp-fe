@@ -14,7 +14,6 @@ export * from './components/multi-state-switch';
 export * from './components/password-input';
 export * from './components/switch';
 export * from './components/avatar';
-export * from './components/undo-warning-overlay';
 export * from './components/file-upload';
 export * from './services/api';
 export * from './utils/cn';
