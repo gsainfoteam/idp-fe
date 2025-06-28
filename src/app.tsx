@@ -2,7 +2,13 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { Toaster } from 'react-hot-toast';
 
 import { routeTree } from './routeTree.gen';
-const router = createRouter({ routeTree, defaultPreload: 'intent' });
+import { NotFoundFrame } from '@/features/core';
+
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+  defaultNotFoundComponent: () => <NotFoundFrame />,
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
