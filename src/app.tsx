@@ -1,9 +1,11 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { Toaster } from 'react-hot-toast';
-
+import { OverlayProvider } from 'overlay-kit';
 import { routeTree } from './routeTree.gen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NotFoundFrame } from '@/features/core';
-
+        
+const queryClient = new QueryClient();
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
@@ -18,10 +20,12 @@ declare module '@tanstack/react-router' {
 
 const App = () => {
   return (
-    <>
-      <RouterProvider router={router} />
-      <Toaster />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <OverlayProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </OverlayProvider>
+    </QueryClientProvider>
   );
 };
 
