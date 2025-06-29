@@ -12,8 +12,6 @@ import {
 } from '@/features/core';
 import { overlay } from 'overlay-kit';
 
-// FIXME: input에 엔터하면 이상함
-
 function EmailOverlay({
   isOpen,
   close,
@@ -71,7 +69,7 @@ function EmailOverlay({
 export function EmailStep({
   context,
   onNext,
-}: Parameters<typeof useEmailForm>[0]) {
+}: Omit<Parameters<typeof useEmailForm>[0], 'overlay'>) {
   const {
     form: { register, control },
     onSubmit,
