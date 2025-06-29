@@ -17,11 +17,9 @@ import { overlay } from 'overlay-kit';
 function EmailOverlay({
   isOpen,
   close,
-  isSubmitting,
 }: {
   isOpen: boolean;
   close: (agree: boolean) => void;
-  isSubmitting: boolean;
 }) {
   const { t } = useTranslation();
 
@@ -61,7 +59,6 @@ function EmailOverlay({
         <Button
           variant="primary"
           onClick={() => close(true)}
-          loading={isSubmitting}
           className="w-full"
         >
           {t('register.steps.email_overlay.button')}
@@ -71,16 +68,28 @@ function EmailOverlay({
   );
 }
 
-export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
+export function EmailStep({
+  context,
+  onNext,
+}: Parameters<typeof useEmailForm>[0]) {
   const {
     form: { register, control },
     onSubmit,
-  } = useEmailForm(props);
+  } = useEmailForm({
+    context,
+    onNext,
+    overlay: async () => {
+      return await overlay.openAsync<boolean>(({ isOpen, close }) => (
+        <EmailOverlay isOpen={isOpen} close={close} />
+      ));
+    },
+  });
+
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <FunnelLayout
         loading={isSubmitting}
         title={t('register.title')}
@@ -88,25 +97,9 @@ export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
         button={
           <Button
             variant="primary"
-            type="button"
             className="w-full"
             loading={isSubmitting}
             disabled={!(isValid && isDirty)}
-            onClick={async () => {
-              const result = await overlay.openAsync<boolean>(
-                ({ isOpen, close }) => (
-                  <EmailOverlay
-                    isOpen={isOpen}
-                    close={close}
-                    isSubmitting={isSubmitting}
-                  />
-                ),
-              );
-
-              if (result) {
-                await onSubmit();
-              }
-            }}
           >
             {t('register.steps.email.button')}
           </Button>

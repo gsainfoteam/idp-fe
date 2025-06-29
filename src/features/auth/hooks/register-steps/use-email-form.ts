@@ -22,11 +22,13 @@ const createSchema = (t: TFunction) =>
 
 export const useEmailForm = ({
   onNext,
+  overlay,
 }: {
   context: RegisterSteps['email'];
   onNext: (
     data: DifferenceNonNullable<RegisterSteps['code'], RegisterSteps['email']>,
   ) => void;
+  overlay: (isSubmitting: boolean) => Promise<boolean>;
 }) => {
   const { t } = useTranslation();
   const form = useForm({
@@ -35,6 +37,9 @@ export const useEmailForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    const result = await overlay(form.formState.isSubmitting);
+    if (result === false) return;
+
     const { status } = await postVerifyEmail({ email: formData.email });
 
     if (status) {
