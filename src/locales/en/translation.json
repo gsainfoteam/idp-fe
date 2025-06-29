@@ -397,5 +397,11 @@
       "invalid_image_type": "Invalid image type",
       "failed_to_read": "Failed to read image"
     }
+  },
+  "not_found": {
+    "title": "Error Page",
+    "step_title": "An error has occurred",
+    "description": "The page does not exist or is unavailable.",
+    "button": "Go Back"
   }
 }
