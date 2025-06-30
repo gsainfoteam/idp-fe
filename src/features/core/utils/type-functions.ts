@@ -24,3 +24,5 @@ export type DifferenceNonNullable<A, B> = Difference<
   RemovePartialKeys<A>,
   RemovePartialKeys<B>
 >;
+
+export type Falsy<T> = T | false | 0 | '' | null | undefined;

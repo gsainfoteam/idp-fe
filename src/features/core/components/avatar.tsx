@@ -12,7 +12,7 @@ const colorMap = [
     background: 'var(--color-avatar-gray)',
   },
   {
-    background: 'var(--color-avatar-red)',
+    background: 'var(--color-avatar-warning)',
   },
   {
     background: 'var(--color-avatar-blue)',

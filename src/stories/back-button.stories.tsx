@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BackButton } from './back-button';
+import { BackButton } from '@/features/core';
 
 const meta = {
   component: BackButton,

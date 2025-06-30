@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-funnel-background: var(--color-white);
+  --color-funnel-shadow: var(--color-white);
+  --color-funnel-title: var(--color-neutral-600);
+  --color-funnel-steptitle: var(--color-black);
+  --color-funnel-description: var(--color-neutral-500);
+  --color-funnel-separator: var(--color-neutral-50);
+}
+
+@layer theme {
+  .dark {
+    --color-funnel-background: var(--color-neutral-980);
+    --color-funnel-shadow: var(--color-neutral-980);
+    --color-funnel-title: var(--color-white);
+    --color-funnel-steptitle: var(--color-white);
+    --color-funnel-description: var(--color-neutral-300);
+    --color-funnel-separator: var(--color-neutral-940);
+  }
+}

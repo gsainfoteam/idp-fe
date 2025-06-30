@@ -87,14 +87,16 @@ export function AuthorizeForm({
           toggleOptionalAll(!allAgree);
         }}
       >
-        <div className="font-bold">{t('authorize.checkboxes.all_agree')}</div>
+        <div className="text-label font-bold">
+          {t('authorize.checkboxes.all_agree')}
+        </div>
       </Checkbox>
       <div className="h-2.5" />
-      <div className="flex flex-col gap-2.5 rounded-lg border border-neutral-200 px-5 py-4">
+      <div className="border-basics-tertiary-label flex flex-col gap-2.5 rounded-lg border px-5 py-4">
         {requiredScopes.length > 0 && (
           <div className="flex flex-col gap-1">
             <div
-              className="text-body-2 text-neutral-800"
+              className="text-body-2 text-basics-secondary-label"
               onClick={() => toggleRequiredAll(!requiredAllAgree)}
             >
               {t('authorize.labels.required')}
@@ -110,7 +112,9 @@ export function AuthorizeForm({
                       checked={field.value ?? false}
                       onChange={field.onChange}
                     >
-                      {t(`authorize.checkboxes.${scope}`)}
+                      <div className="text-label">
+                        {t(`authorize.checkboxes.${scope}`)}
+                      </div>
                     </Checkbox>
                   )}
                 />
@@ -121,7 +125,7 @@ export function AuthorizeForm({
         {optionalScopes.length > 0 && (
           <div className="flex flex-col gap-1">
             <div
-              className="text-body-2 text-neutral-800"
+              className="text-body-2 text-basics-secondary-label"
               onClick={() => toggleOptionalAll(!optionalAllAgree)}
             >
               {t('authorize.labels.optional')}
@@ -137,7 +141,9 @@ export function AuthorizeForm({
                       checked={field.value ?? false}
                       onChange={field.onChange}
                     >
-                      {t(`authorize.checkboxes.${scope}`)}
+                      <div className="text-label">
+                        {t(`authorize.checkboxes.${scope}`)}
+                      </div>
                     </Checkbox>
                   )}
                 />

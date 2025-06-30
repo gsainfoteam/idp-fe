@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
-import { MultiStateSwitch } from '@/features/core';
+import { Label, MultiStateSwitch } from '@/features/core';
 
 const choices = ['no', 'optional', 'required'] as const;
 type Choice = (typeof choices)[number];
@@ -20,8 +20,7 @@ const ScopeSwitch = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-2">
-      <div>{label}</div>
+    <Label text={label}>
       <MultiStateSwitch
         selected={choices.indexOf(value)}
         onChangeIndex={(index) => onChange(choices[index] as Choice)}
@@ -31,7 +30,7 @@ const ScopeSwitch = ({
           t('services.detail.scopes.choices.required'),
         ]}
       />
-    </div>
+    </Label>
   );
 };
 
@@ -41,7 +40,9 @@ export function ClientScopesForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.scopes.title')}</div>
+      <div className="text-title-3 text-basics-primary-label">
+        {t('services.detail.scopes.title')}
+      </div>
       <div className="flex flex-col gap-5">
         <Controller
           control={control}

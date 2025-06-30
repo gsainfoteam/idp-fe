@@ -1,18 +1,35 @@
 import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 
-import { cn } from '../utils/cn';
+import { cn, palette } from '@/features/core';
 
-interface MultiStateSwitchProps extends React.HTMLAttributes<HTMLDivElement> {
+const handleColor = palette((disabled: boolean) => ({
+  default: {
+    background: 'bg-mss-selected-default-background',
+    border: 'inset-ring-mss-default-default-background inset-ring-2',
+    label: 'text-mss-selected-default-label',
+  },
+  disabled: {
+    background: disabled && 'bg-mss-selected-disabled-background',
+    border: disabled && 'inset-ring-mss-default-disabled-background',
+    label: disabled && 'text-mss-selected-disabled-label',
+  },
+}));
+
+export interface MultiStateSwitchProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   labels: string[];
   selected?: number;
+  disabled?: boolean;
   onChangeIndex?: (index: number, label: string) => void;
 }
 
 export function MultiStateSwitch({
   labels,
   selected: initialSelected = 0,
+  disabled = false,
   onChangeIndex,
+  className,
   ...props
 }: MultiStateSwitchProps) {
   const [selected, setSelected] = useState(initialSelected);
@@ -42,11 +59,20 @@ export function MultiStateSwitch({
   return (
     <div
       ref={containerRef}
-      className="bg-multi-state-switch-background relative flex h-fit w-full rounded-lg"
+      className={cn(
+        'relative flex h-fit w-full rounded-lg',
+        disabled
+          ? 'bg-mss-default-disabled-background'
+          : 'bg-mss-default-default-background',
+        className,
+      )}
       {...props}
     >
       <motion.div
-        className="bg-multi-state-switch-selected-background absolute top-0 bottom-0 rounded-lg ring-2 ring-neutral-100 ring-inset"
+        className={cn(
+          'absolute top-0 bottom-0 rounded-lg',
+          handleColor(disabled),
+        )}
         animate={indicatorStyle}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       />
@@ -56,11 +82,13 @@ export function MultiStateSwitch({
           ref={(el) => {
             buttonRefs.current[idx] = el;
           }}
+          disabled={disabled}
           className={cn(
-            'relative z-10 flex w-full cursor-pointer items-center justify-center rounded-lg py-3 text-center',
-            idx === selected
-              ? 'text-title-3 text-multi-state-switch-selected-label'
-              : 'text-body-1 text-multi-state-switch-unselected-label',
+            'relative z-10 flex w-full items-center justify-center rounded-lg py-3 text-center',
+            idx === selected ? 'text-title-3' : 'text-body-1',
+            disabled
+              ? 'text-mss-selected-disabled-label cursor-default'
+              : 'text-mss-selected-default-label cursor-pointer',
           )}
           onClick={() => {
             setSelected(idx);
