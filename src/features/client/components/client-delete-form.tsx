@@ -7,6 +7,41 @@ import { useClientDeleteForm } from '../hooks/use-client-delete-form';
 import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 
+function ClientDeleteOverlay({
+  isOpen,
+  close,
+}: {
+  isOpen: boolean;
+  close: (_: boolean) => void;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <Dialog
+      isOpen={isOpen}
+      close={() => close(false)}
+      className="mx-10 min-w-75"
+    >
+      <Dialog.Header>{t('services.detail.delete.dialog.header')}</Dialog.Header>
+      <Dialog.Body>{t('services.detail.delete.dialog.body')}</Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close>
+          <Button variant="secondary" className="w-full">
+            {t('services.detail.delete.dialog.cancel')}
+          </Button>
+        </Dialog.Close>
+        <Button
+          variant="primary"
+          className="w-full"
+          onClick={() => close(true)}
+        >
+          {t('services.detail.delete.dialog.confirm')}
+        </Button>
+      </Dialog.Footer>
+    </Dialog>
+  );
+}
+
 export function ClientDeleteForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { onSubmit } = useClientDeleteForm(client);
@@ -24,36 +59,13 @@ export function ClientDeleteForm({ client }: { client: Client }) {
             prefixIcon={<TrashBinIcon />}
             className="bg-red-600"
             onClick={async () => {
-              const result = await overlay.openAsync(({ isOpen, close }) => (
-                <Dialog
-                  isOpen={isOpen}
-                  close={() => close(false)}
-                  className="mx-10 min-w-75"
-                >
-                  <Dialog.Header>
-                    {t('services.detail.delete.dialog.header')}
-                  </Dialog.Header>
-                  <Dialog.Body>
-                    {t('services.detail.delete.dialog.body')}
-                  </Dialog.Body>
-                  <Dialog.Footer>
-                    <Dialog.Close>
-                      <Button variant="secondary" className="w-full">
-                        {t('services.detail.delete.dialog.cancel')}
-                      </Button>
-                    </Dialog.Close>
-                    <Button
-                      variant="primary"
-                      className="w-full"
-                      onClick={() => close(true)}
-                    >
-                      {t('services.detail.delete.dialog.confirm')}
-                    </Button>
-                  </Dialog.Footer>
-                </Dialog>
-              ));
+              const result = await overlay.openAsync<boolean>(
+                ({ isOpen, close }) => (
+                  <ClientDeleteOverlay isOpen={isOpen} close={close} />
+                ),
+              );
 
-              if (result == true) {
+              if (result) {
                 await onSubmit();
                 await navigate({ to: '/clients' });
               }
