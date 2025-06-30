@@ -53,13 +53,18 @@ export function ThemeProvider({ children }: PropsWithChildren) {
       : 'light';
 
     setSystemTheme(newSystemTheme);
-    applyTheme();
-  }, [theme, applyTheme]);
+  }, [setSystemTheme]);
 
-  const updateTheme = (newTheme: Theme) => {
-    setTheme(newTheme);
+  const updateTheme = useCallback(
+    (newTheme: Theme) => {
+      setTheme(newTheme);
+    },
+    [setTheme],
+  );
+
+  useLayoutEffect(() => {
     applyTheme();
-  };
+  }, [applyTheme]);
 
   useLayoutEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)');
