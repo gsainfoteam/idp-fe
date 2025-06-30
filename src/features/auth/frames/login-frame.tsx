@@ -10,7 +10,6 @@ import {
   FunnelLayout,
   LoadingOverlay,
   ThemeSwitcher,
-  useTheme,
 } from '@/features/core';
 
 export function LoginFrame() {
