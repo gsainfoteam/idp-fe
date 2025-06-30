@@ -42,8 +42,6 @@ export function ProfileEditOverlay({
 
   if (!user) return null;
 
-  // TODO: md 버전에서는 dialog로
-
   return (
     <BottomSheet isOpen={isOpen} close={handleClose}>
       <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
