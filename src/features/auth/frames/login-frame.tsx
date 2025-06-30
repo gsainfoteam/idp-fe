@@ -2,11 +2,9 @@ import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { LoginForm } from '../components/login-form';
-import { useLoginForm } from '../hooks/use-login-form';
+import { LoginForm, useLoginForm } from '@/features/auth';
 
-import LightTextLogo from '@/assets/logos/light-text-logo.svg?react';
-import DarkTextLogo from '@/assets/logos/dark-text-logo.svg?react';
+import TextLogo from '@/assets/logos/text-logo.svg?react';
 import {
   Button,
   FunnelLayout,
@@ -14,17 +12,10 @@ import {
   ThemeSwitcher,
   useTheme,
 } from '@/features/core';
-import { useEffect } from 'react';
 
 export function LoginFrame() {
   const { form, onSubmit } = useLoginForm();
   const { t } = useTranslation();
-  const { isDark } = useTheme();
-
-  // DEBUG: 왜 안 되는지 확인하기
-  useEffect(() => {
-    console.log(isDark);
-  }, [isDark]);
 
   return (
     <FunnelLayout contentClassName="flex flex-col items-center justify-center">
@@ -33,7 +24,7 @@ export function LoginFrame() {
       </div>
       <div className="flex w-full flex-col items-center justify-center">
         <LoadingOverlay show={form.formState.isSubmitting}>
-          {isDark ? <LightTextLogo /> : <DarkTextLogo />}
+          <TextLogo className="text-dark dark:text-white" />
         </LoadingOverlay>
         <div className="h-8" />
         <FormProvider {...form}>
