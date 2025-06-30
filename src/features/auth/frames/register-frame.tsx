@@ -1,18 +1,14 @@
 import { useNavigate } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { CodeStep } from './register-steps/code-step';
 import { CompleteStep } from './register-steps/complete-step';
-import { EmailOverlayStep } from './register-steps/email-overlay-step';
 import { EmailStep } from './register-steps/email-step';
 import { InfoStep } from './register-steps/info-step';
 import { PasswordStep } from './register-steps/password-step';
 
 import { postUser } from '@/data/post-user';
-import {
-  Pretty,
-  RequireKeys,
-  useFunnel,
-  UndoWarningOverlay,
-} from '@/features/core';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
+import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';
 
 type StepContext = Pretty<
   Partial<Parameters<typeof postUser>[0]> & {
@@ -22,15 +18,13 @@ type StepContext = Pretty<
 
 export type RegisterSteps = {
   email: StepContext;
-  emailOverlay: RequireKeys<RegisterSteps['email'], 'email'>;
-  code: RequireKeys<RegisterSteps['emailOverlay'], 'emailAgree'>;
+  code: RequireKeys<RegisterSteps['email'], 'email' | 'emailAgree'>;
   password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
     RegisterSteps['info'],
     'name' | 'studentId' | 'phoneNumber'
   >;
-  undoOverlay: StepContext;
 };
 
 export function RegisterFrame() {
@@ -43,54 +37,46 @@ export function RegisterFrame() {
     },
   });
 
+  const undoWarning = async () => {
+    const result = await overlay.openAsync<boolean>(({ isOpen, close }) => (
+      <RegisterStepUndoWarningOverlay isOpen={isOpen} close={close} />
+    ));
+
+    if (result) funnel.history.back();
+  };
+
   return (
     <funnel.Render
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('emailOverlay', data)}
+          onNext={(data) => history.push('code', data)}
         />
       )}
-      emailOverlay={funnel.Render.overlay({
-        render: ({ context, history, close }) => (
-          <EmailOverlayStep
-            context={context}
-            onNext={(data) => history.push('code', data)}
-            close={close}
-          />
-        ),
-      })}
-      undoOverlay={funnel.Render.overlay({
-        // undoOverlay -> complete/info/password/code -> emailOverlay -> email
-        render: ({ history, close }) => (
-          <UndoWarningOverlay onNext={() => history.go(-3)} close={close} />
-        ),
-      })}
       code={({ history, context }) => (
         <CodeStep
           context={context}
           onNext={(data) => history.replace('password', data)}
-          onUndo={() => history.push('undoOverlay', {})}
+          onUndo={undoWarning}
         />
       )}
       password={({ history, context }) => (
         <PasswordStep
           context={context}
           onNext={(data) => history.replace('info', data)}
-          onUndo={() => history.push('undoOverlay', {})}
+          onUndo={undoWarning}
         />
       )}
       info={({ history, context }) => (
         <InfoStep
           context={context}
           onNext={(data) => history.replace('complete', data)}
-          onUndo={() => history.push('undoOverlay', {})}
+          onUndo={undoWarning}
         />
       )}
       complete={({ context }) => (
         <CompleteStep
           context={context}
-          // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
           onNext={async () => {
             funnel.history.cleanup();
             await navigate({ to: '/auth/login' });
