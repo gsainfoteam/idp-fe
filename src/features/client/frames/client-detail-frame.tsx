@@ -13,6 +13,7 @@ import { FunnelLayout } from '@/features/core';
 import { ClientPictureForm } from '../components/client-picture-form';
 
 import { ClientNameForm } from '../components/client-name-form';
+import { ClientDeleteForm } from '../components/client-delete-form';
 
 const Inner = ({
   client,
@@ -31,17 +32,25 @@ const Inner = ({
       <FunnelLayout
         title={t('services.detail.title')}
         stepTitle={<ClientNameForm client={client} />}
+        description={
+          client.deleteRequestedAt &&
+          t('services.detail.description', {
+            date: new Date(client.deleteRequestedAt).toLocaleString(),
+          })
+        }
       >
         <div className="mb-4 flex flex-col gap-5">
           <ClientPictureForm client={client} onUpdated={onUpdated} />
           <div className="-mx-5 h-2 bg-neutral-50" />
           <ClientInfoForm client={client} />
           <div className="-mx-5 h-2 bg-neutral-50" />
-          <ClientIdTokenForm />
+          <ClientIdTokenForm client={client} />
           <div className="-mx-5 h-2 bg-neutral-50" />
-          <ClientScopesForm />
+          <ClientScopesForm client={client} />
           <div className="-mx-5 h-2 bg-neutral-50" />
-          <ClientUrlsForm />
+          <ClientUrlsForm client={client} />
+          <div className="-mx-5 h-2 bg-neutral-50" />
+          <ClientDeleteForm client={client} />
         </div>
       </FunnelLayout>
     </FormProvider>
