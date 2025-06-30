@@ -15,6 +15,7 @@ import {
   Avatar,
   uniqueKey,
   ThemeSwitcher,
+  cn,
 } from '@/features/core';
 import { overlay } from 'overlay-kit';
 
@@ -34,14 +35,18 @@ function MenuButton({
   return (
     <Button
       variant="primary"
-      className={`w-full justify-start px-4 py-3 ${
+      className={cn(
+        'w-full justify-start px-4 py-3',
         variant === 'default'
-          ? 'bg-neutral-50 active:bg-neutral-100'
-          : 'bg-warning-50 active:bg-warning-100'
-      }`}
-      labelClassName={`gap-3 text-body-1 ${
-        variant === 'default' ? 'text-neutral-950' : 'text-warning-900'
-      }`}
+          ? 'hover:bg-neutral-75 dark:hover:bg-neutral-920 dark:bg-neutral-940 bg-neutral-50 active:bg-neutral-100 dark:active:bg-neutral-900'
+          : 'bg-warning-50 dark:hover:bg-neutral-920 dark:bg-neutral-940 hover:bg-warning-75 active:bg-warning-100 dark:active:bg-neutral-900',
+      )}
+      labelClassName={cn(
+        'text-body-1 gap-3',
+        variant === 'default'
+          ? 'text-neutral-950 dark:text-neutral-50'
+          : 'text-warning-900 dark:text-warning-300',
+      )}
       prefixIcon={icon}
       onClick={onClick}
     >
@@ -88,10 +93,7 @@ export function ProfileFrame() {
         <div className="flex flex-col gap-3">
           <MenuButton
             icon={
-              <UserIcon
-                stroke="var(--color-neutral-700)"
-                fill="var(--color-neutral-200)"
-              />
+              <UserIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
             }
             onClick={() => {
               overlay.open(({ isOpen, close }) => (
@@ -104,10 +106,7 @@ export function ProfileFrame() {
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
             <MenuButton
               icon={
-                <LockIcon
-                  stroke="var(--color-neutral-700)"
-                  fill="var(--color-neutral-200)"
-                />
+                <LockIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
               }
             >
               {t('profile.menu.password')}
@@ -116,10 +115,7 @@ export function ProfileFrame() {
           <Link to="/clients">
             <MenuButton
               icon={
-                <CodeIcon
-                  stroke="var(--color-neutral-700)"
-                  fill="var(--color-neutral-200)"
-                />
+                <CodeIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
               }
             >
               {t('profile.menu.developer')}
@@ -127,10 +123,7 @@ export function ProfileFrame() {
           </Link>
           <MenuButton
             icon={
-              <LogoutIcon
-                stroke="var(--color-neutral-700)"
-                fill="var(--color-neutral-200)"
-              />
+              <LogoutIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
             }
             onClick={signOut}
           >
@@ -140,10 +133,7 @@ export function ProfileFrame() {
             <MenuButton
               variant="danger"
               icon={
-                <WithdrawalIcon
-                  stroke="var(--color-red-800)"
-                  fill="var(--color-red-200)"
-                />
+                <WithdrawalIcon className="fill-red-200 stroke-red-800 dark:fill-red-800 dark:stroke-red-200" />
               }
             >
               {t('profile.menu.withdrawal')}

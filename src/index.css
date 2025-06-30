@@ -23,7 +23,7 @@
   --color-label: var(--color-black);
   --color-basics-primary-label: var(--color-black);
   --color-basics-secondary-label: var(--color-neutral-400);
-  --color-basics-tertiary-label: var(--color-neutral-200);
+  --color-basics-tertiary-label: var(--color-neutral-600);
   --color-basics-error-label: var(--color-warning-400);
 
   /* Back Button Color */
@@ -35,7 +35,7 @@
     --color-label: var(--color-white);
     --color-basics-primary-label: var(--color-white);
     --color-basics-secondary-label: var(--color-neutral-400);
-    --color-basics-tertiary-label: var(--color-neutral-600);
+    --color-basics-tertiary-label: var(--color-neutral-900);
     --color-basics-error-label: var(--color-warning-400);
 
     /* Back Button Color */
