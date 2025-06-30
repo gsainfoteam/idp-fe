@@ -79,8 +79,10 @@ export function ProfileFrame() {
             }}
           />
           <div className="flex flex-col">
-            <div className="text-title-3">{user.name}</div>
-            <div className="text-body-2 text-neutral-400">{user.email}</div>
+            <div className="text-title-3 text-label">{user.name}</div>
+            <div className="text-body-2 text-basics-secondary-label">
+              {user.email}
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-3">

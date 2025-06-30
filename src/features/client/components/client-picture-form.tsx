@@ -66,7 +66,9 @@ export function ClientPictureForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.picture.title')}</div>
+      <div className="text-title-3 text-label">
+        {t('services.detail.picture.title')}
+      </div>
       <div className="flex gap-3">
         <div
           className="h-fit w-fit cursor-pointer"
