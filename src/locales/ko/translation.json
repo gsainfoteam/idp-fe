@@ -408,5 +408,11 @@
       "invalid_image_type": "잘못된 파일 형식입니다",
       "failed_to_read": "이미지를 읽는데 실패했어요"
     }
+  },
+  "not_found": {
+    "title": "에러 페이지",
+    "step_title": "문제가 발생했습니다",
+    "description": "페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다.",
+    "button": "돌아가기"
   }
 }
