@@ -179,7 +179,6 @@ export const useFunnel = <TStepContextMap extends AnyStepContextMap>(
 
   return {
     ...funnel,
-    // TODO: Render 컴포넌트 타입 수정 필요
     Render,
     history: {
       ...baseHistory,
