@@ -16,10 +16,10 @@ import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useLoading } from '@/features/core';
 
 export function ProfileEditOverlay({
-  open,
+  isOpen,
   close,
 }: {
-  open: boolean;
+  isOpen: boolean;
   close: () => void;
 }) {
   const [previewFile, setPreviewImage] = useState<string | null>(null);
@@ -45,7 +45,7 @@ export function ProfileEditOverlay({
   // TODO: md 버전에서는 dialog로
 
   return (
-    <BottomSheet isOpen={open} close={handleClose}>
+    <BottomSheet isOpen={isOpen} close={handleClose}>
       <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
       <BottomSheet.Body className="flex justify-center">
         <div className="relative w-fit cursor-pointer">
@@ -76,6 +76,7 @@ export function ProfileEditOverlay({
         <Button
           variant="secondary"
           onClick={() => setPreviewImage(null)}
+          disabled={previewFile == null}
           className="w-full"
         >
           {t('profile_change.sub_button')}

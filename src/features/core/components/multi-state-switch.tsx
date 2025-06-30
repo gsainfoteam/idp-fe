@@ -1,25 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { motion } from 'framer-motion';
 
 import { cn, palette } from '@/features/core';
 
-const mssColors = palette((selected: boolean) => ({
+const handleColor = palette((disabled: boolean) => ({
   default: {
-    background: selected
-      ? 'bg-mss-selected-default-background'
-      : 'bg-mss-default-default-background',
+    background: 'bg-mss-selected-default-background',
     border: 'inset-ring-mss-default-default-background inset-ring-2',
-    label: selected
-      ? 'text-mss-selected-default-label'
-      : 'text-mss-default-default-label',
+    label: 'text-mss-selected-default-label',
   },
   disabled: {
-    background: selected
-      ? 'disabled:bg-mss-selected-disabled-background'
-      : 'disabled:bg-mss-default-disabled-background',
-    border: 'disabled:inset-ring-mss-default-disabled-background',
-    label: selected
-      ? 'disabled:text-mss-selected-disabled-label'
-      : 'disabled:text-mss-default-disabled-label',
+    background: disabled && 'bg-mss-selected-disabled-background',
+    border: disabled && 'inset-ring-mss-default-disabled-background',
+    label: disabled && 'text-mss-selected-disabled-label',
   },
 }));
 
@@ -41,6 +34,23 @@ export function MultiStateSwitch({
 }: MultiStateSwitchProps) {
   const [selected, setSelected] = useState(initialSelected);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const selectedBtn = buttonRefs.current[selected];
+    if (container && selectedBtn) {
+      const rect = selectedBtn.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      setIndicatorStyle({
+        left: rect.left - parentRect.left,
+        width: rect.width,
+      });
+    }
+  }, [selected, labels]);
+
   useEffect(() => {
     if (selected < 0) setSelected(0);
     if (selected >= labels.length) setSelected(labels.length - 1);
@@ -48,8 +58,9 @@ export function MultiStateSwitch({
 
   return (
     <div
+      ref={containerRef}
       className={cn(
-        'flex h-fit w-full rounded-lg',
+        'relative flex h-fit w-full rounded-lg',
         disabled
           ? 'bg-mss-default-disabled-background'
           : 'bg-mss-default-default-background',
@@ -57,15 +68,27 @@ export function MultiStateSwitch({
       )}
       {...props}
     >
+      <motion.div
+        className={cn(
+          'absolute top-0 bottom-0 rounded-lg',
+          handleColor(disabled),
+        )}
+        animate={indicatorStyle}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      />
       {labels.map((label, idx) => (
         <button
           key={idx}
+          ref={(el) => {
+            buttonRefs.current[idx] = el;
+          }}
           disabled={disabled}
           className={cn(
-            'flex w-full items-center justify-center rounded-lg py-3 text-center',
+            'relative z-10 flex w-full items-center justify-center rounded-lg py-3 text-center',
             idx === selected ? 'text-title-3' : 'text-body-1',
-            disabled ? 'cursor-default' : 'cursor-pointer',
-            mssColors(idx === selected),
+            disabled
+              ? 'text-mss-selected-disabled-label cursor-default'
+              : 'text-mss-selected-default-label cursor-pointer',
           )}
           onClick={() => {
             setSelected(idx);

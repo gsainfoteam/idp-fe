@@ -1,27 +1,17 @@
-import { useState } from 'react';
+import { Button, Dialog } from '@/features/core';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog } from '@/features/core';
-
-export function UndoWarningOverlay({
-  onNext,
+export function RegisterStepUndoWarningOverlay({
+  isOpen,
   close,
 }: {
-  onNext: () => void;
-  close: () => void;
+  isOpen: boolean;
+  close: (_: boolean) => void;
 }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(true);
 
   return (
-    <Dialog
-      isOpen={open}
-      close={() => {
-        setOpen(false);
-        close();
-      }}
-      className="mx-10 w-auto"
-    >
+    <Dialog isOpen={isOpen} close={() => close(false)} className="mx-10 w-auto">
       <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
       <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>
       <Dialog.Footer>
@@ -32,10 +22,7 @@ export function UndoWarningOverlay({
         </Dialog.Close>
         <Button
           variant="primary"
-          onClick={() => {
-            setOpen(false);
-            onNext();
-          }}
+          onClick={() => close(true)}
           className="w-full"
         >
           {t('common.undo_overlay.button')}
