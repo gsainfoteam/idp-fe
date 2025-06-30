@@ -11,10 +11,15 @@ interface ThemeState {
 }
 
 const useThemeStore = create<ThemeState>((set) => ({
-  theme: (localStorage.getItem('theme') as Theme) || 'system',
-  systemTheme: window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light',
+  theme:
+    (typeof window !== 'undefined' &&
+      (localStorage.getItem('theme') as Theme)) ||
+    'system',
+  systemTheme:
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light',
 
   setTheme: (newTheme: Theme) => {
     const root = document.documentElement;
