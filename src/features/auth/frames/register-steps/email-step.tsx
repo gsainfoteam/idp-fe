@@ -3,13 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useEmailForm } from '../../hooks/register-steps/use-email-form';
 
-import {
-  BottomSheet,
-  Button,
-  FunnelLayout,
-  Input,
-  Label,
-} from '@/features/core';
+import { Button, FunnelLayout, Input, Label, Modal } from '@/features/core';
 import { overlay } from 'overlay-kit';
 
 function EmailOverlay({
@@ -22,18 +16,16 @@ function EmailOverlay({
   const { t } = useTranslation();
 
   return (
-    <BottomSheet isOpen={isOpen} close={() => close(false)}>
-      <BottomSheet.Header>
-        {t('register.steps.email_overlay.title')}
-      </BottomSheet.Header>
-      <BottomSheet.Body>
-        <div className="mt-2 flex w-full flex-col gap-1.5">
+    <Modal isOpen={isOpen} close={() => close(false)} className="min-w-100">
+      <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
+      <Modal.Body>
+        <div className="mt-2 flex w-full flex-col justify-center gap-1.5">
           <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://infoteam-rulrudino.notion.site/GIST-1e5365ea27df8051a3e6f6dc2bb11ded"
           >
-            <Button variant="link" className="text-body-2">
+            <Button variant="link" size="none" className="text-body-2">
               {t('register.steps.email_overlay.contents.terms')}
             </Button>
           </a>
@@ -42,27 +34,23 @@ function EmailOverlay({
             rel="noopener noreferrer"
             href="https://infoteam-rulrudino.notion.site/GSA-90e5824ded1c42479ab61354c8d15db5?pvs=4"
           >
-            <Button variant="link" className="text-body-2">
+            <Button variant="link" size="none" className="text-body-2">
               {t('register.steps.email_overlay.contents.privacy')}
             </Button>
           </a>
         </div>
-      </BottomSheet.Body>
-      <BottomSheet.Footer>
-        <BottomSheet.Close>
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close className="grow">
           <Button variant="secondary" className="w-full">
             {t('register.steps.email_overlay.sub_button')}
           </Button>
-        </BottomSheet.Close>
-        <Button
-          variant="primary"
-          onClick={() => close(true)}
-          className="w-full"
-        >
+        </Modal.Close>
+        <Button variant="primary" onClick={() => close(true)} className="grow">
           {t('register.steps.email_overlay.button')}
         </Button>
-      </BottomSheet.Footer>
-    </BottomSheet>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

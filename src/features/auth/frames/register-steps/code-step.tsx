@@ -104,6 +104,7 @@ export function CodeStep({
           <div className="mt-1 flex w-full justify-end">
             <Button
               variant="link"
+              size="none"
               onClick={onResetTimer}
               loading={isResending}
               type="button"

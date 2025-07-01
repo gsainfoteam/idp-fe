@@ -1,11 +1,11 @@
 import { useAuth } from '@/features/auth';
 import {
   Avatar,
-  BottomSheet,
   Button,
+  Modal,
   FileUpload,
-  IconButton,
   uniqueKey,
+  IconButton,
 } from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -30,23 +30,26 @@ export function ProfileEditOverlay({
   const { onSubmit, onSave } = useProfileEditForm(previewFile, setPreviewImage);
   const fileInputRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => {
-    setPreviewImage(user?.picture ?? null);
-    close();
-  };
-
   useEffect(() => {
     if (!user) toast.error(t('toast.invalid_user'));
     else setPreviewImage(user.picture ?? null);
   }, [user]);
 
+  const handleClose = () => {
+    setPreviewImage(user?.picture ?? null);
+    close();
+  };
+
   if (!user) return null;
 
   return (
-    <BottomSheet isOpen={isOpen} close={handleClose}>
-      <BottomSheet.Header>{t('profile_change.title')}</BottomSheet.Header>
-      <BottomSheet.Body className="flex justify-center">
-        <div className="relative w-fit cursor-pointer">
+    <Modal isOpen={isOpen} close={handleClose} className="min-w-100">
+      <Modal.Header>{t('profile_change.title')}</Modal.Header>
+      <Modal.Body className="flex justify-center">
+        <div
+          className="relative w-fit cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+        >
           <Avatar
             name={user.name}
             img={previewFile ?? undefined}
@@ -69,13 +72,13 @@ export function ProfileEditOverlay({
             </div>
           </FileUpload>
         </div>
-      </BottomSheet.Body>
-      <BottomSheet.Footer>
+      </Modal.Body>
+      <Modal.Footer>
         <Button
           variant="secondary"
           onClick={() => setPreviewImage(null)}
           disabled={previewFile == null}
-          className="w-full"
+          className="grow"
         >
           {t('profile_change.sub_button')}
         </Button>
@@ -84,11 +87,11 @@ export function ProfileEditOverlay({
           onClick={() => startLoading(onSubmit().then(handleClose))}
           disabled={previewFile === user.picture}
           loading={loading}
-          className="w-full"
+          className="grow"
         >
           {t('profile_change.button')}
         </Button>
-      </BottomSheet.Footer>
-    </BottomSheet>
+      </Modal.Footer>
+    </Modal>
   );
 }

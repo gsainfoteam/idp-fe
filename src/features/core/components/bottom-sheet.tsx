@@ -2,24 +2,20 @@ import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
 import { motion, PanInfo, useAnimationControls } from 'framer-motion';
 import { cn } from '../utils/cn';
 import { Backdrop } from './backdrop';
+import { ModalProps } from './modal';
+import { ModalContext } from './modal';
 
-interface BottomSheetContextType {
-  close: () => void;
-}
-
-const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
-
-interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
-  isOpen: boolean;
-  close: () => void;
-}
+const BottomSheetContext = createContext<Pick<ModalProps, 'close'> | null>(
+  null,
+);
 
 const BottomSheet = ({
   isOpen,
   close,
   children,
   className,
-}: PropsWithChildren<BottomSheetProps>) => {
+  key,
+}: PropsWithChildren<ModalProps>) => {
   const controls = useAnimationControls();
 
   useEffect(() => {
@@ -32,35 +28,51 @@ const BottomSheet = ({
   }, [isOpen, close]);
 
   useEffect(() => {
-    if (isOpen) controls.start({ y: 0 });
+    if (isOpen) {
+      const vh = typeof window !== 'undefined' ? window.innerHeight : 0;
+      controls.set({ y: vh });
+      controls.start({
+        y: 0,
+        transition: {
+          duration: 0.5,
+          type: 'spring',
+          damping: 20,
+          stiffness: 175,
+        },
+      });
+    }
   }, [isOpen, controls]);
 
   const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const threshold = 100;
+    const threshold = 120;
 
-    if (info.offset.y > threshold) close();
-    else controls.start({ y: 0 });
+    if (info.offset.y > threshold) {
+      close();
+    } else {
+      controls.start({
+        y: 0,
+        transition: { type: 'spring', damping: 20, stiffness: 175 },
+      });
+    }
   };
 
   return (
     <BottomSheetContext.Provider value={{ close }}>
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
-          initial={{ y: '100%' }}
+          key={key}
           animate={controls}
-          exit={{ y: '100%' }}
-          transition={{
-            type: 'spring',
-            duration: 0.5,
-            damping: 20,
-            stiffness: 175,
-          }}
           drag="y"
-          dragConstraints={{ top: 0, bottom: 300 }}
+          exit={{
+            y: typeof window !== 'undefined' ? window.innerHeight : 0,
+            transition: { duration: 0.3 },
+          }}
+          dragConstraints={{ top: 0, bottom: 0 }}
           dragElastic={0.2}
+          onDragStart={() => controls.stop()}
           onDragEnd={handleDragEnd}
           className={cn(
             'bg-modal-background fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] pt-9 shadow-xl',
@@ -132,17 +144,22 @@ BottomSheet.Close = ({
   onClick,
   ...props
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const context = useContext(BottomSheetContext);
-  if (!context)
-    throw new Error('BottomSheet.Close must be used within a BottomSheet');
+  const bottomSheetContext = useContext(BottomSheetContext);
+  const modalContext = useContext(ModalContext);
+  const contexts = [bottomSheetContext, modalContext].filter((v) => v !== null);
+
+  if (contexts.length === 0)
+    throw new Error(
+      'BottomSheet.Close must be used within a BottomSheet or Modal',
+    );
 
   return (
     <div
       onClick={(e) => {
         onClick?.(e);
-        context.close();
+        contexts.forEach((context) => context.close());
       }}
-      className={cn('w-full cursor-pointer', className)}
+      className={cn('w-fit cursor-pointer', className)}
       {...props}
     >
       {children}

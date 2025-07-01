@@ -64,7 +64,7 @@ const UndoWarningDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   }, [initialOpen]);
 
   return (
-    <Dialog isOpen={open} close={() => setOpen(false)} className="mx-10 w-auto">
+    <Dialog isOpen={open} close={() => setOpen(false)}>
       <Dialog.Header>계속 진행하면 데이터가 소실됩니다.</Dialog.Header>
       <Dialog.Body>계속 진행하시겠습니까?</Dialog.Body>
       <Dialog.Footer>
@@ -91,7 +91,7 @@ const NoBodyDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   }, [initialOpen]);
 
   return (
-    <Dialog isOpen={open} close={() => setOpen(false)} className="mx-10 w-auto">
+    <Dialog isOpen={open} close={() => setOpen(false)}>
       <Dialog.Header>알림을 받기 위해 앱 알림을 켤게요</Dialog.Header>
       <Dialog.Footer>
         <Dialog.Close className="flex justify-end">

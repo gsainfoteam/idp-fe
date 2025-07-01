@@ -2,28 +2,23 @@ import { createContext, PropsWithChildren, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../utils/cn';
 import { Backdrop } from './backdrop';
+import { ModalProps } from './modal';
+import { ModalContext } from './modal';
 
-interface DialogContextType {
-  close: () => void;
-}
-
-const DialogContext = createContext<DialogContextType | null>(null);
-
-interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
-  isOpen: boolean;
-  close: () => void;
-}
+const DialogContext = createContext<Pick<ModalProps, 'close'> | null>(null);
 
 const Dialog = ({
   isOpen,
   close,
   children,
   className,
-}: PropsWithChildren<DialogProps>) => {
+  key,
+}: PropsWithChildren<ModalProps>) => {
   return (
     <DialogContext.Provider value={{ close }}>
       <Backdrop isOpen={isOpen} close={close}>
         <motion.div
+          key={key}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
@@ -34,7 +29,7 @@ const Dialog = ({
             stiffness: 250,
           }}
           className={cn(
-            'bg-modal-background relative flex w-fit flex-col rounded-[20px]',
+            'bg-modal-background relative mx-10 flex w-fit flex-col rounded-[20px]',
             className,
           )}
         >
@@ -102,16 +97,20 @@ Dialog.Close = ({
   onClick,
   ...props
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const context = useContext(DialogContext);
-  if (!context) throw new Error('Dialog.Close must be used within a Dialog');
+  const dialogContext = useContext(DialogContext);
+  const modalContext = useContext(ModalContext);
+  const contexts = [dialogContext, modalContext].filter((v) => v !== null);
+
+  if (contexts.length === 0)
+    throw new Error('Dialog.Close must be used within a Dialog or Modal');
 
   return (
     <div
       onClick={(e) => {
         onClick?.(e);
-        context.close();
+        contexts.forEach((context) => context.close());
       }}
-      className={cn('w-full cursor-pointer', className)}
+      className={cn('w-fit cursor-pointer', className)}
       {...props}
     >
       {children}
