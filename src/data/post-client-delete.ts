@@ -3,15 +3,15 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 
-enum DeleteClientPictureStatus {
+enum ClientDeleteStatus {
   INVALID_TOKEN = 401,
-  FORBIDDEN = 403,
+  INACCESSIBLE = 403,
   SERVER_ERROR = 500,
 }
 
-export const deleteClientPicture = async (clientId: string) => {
+export const postClientDelete = async (clientId: string) => {
   try {
-    await api.DELETE('/client/{clientId}/picture', {
+    await api.POST('/client/{clientId}/delete', {
       params: {
         path: { clientId },
       },
@@ -21,16 +21,14 @@ export const deleteClientPicture = async (clientId: string) => {
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/client/{clientId}/picture']['delete']['responses'],
+        keyof paths['/client/{clientId}/delete']['post']['responses'],
         ErrorStatus
       >;
 
       return {
         status:
-          status in DeleteClientPictureStatus
-            ? (DeleteClientPictureStatus[
-                status
-              ] as keyof typeof DeleteClientPictureStatus)
+          status in ClientDeleteStatus
+            ? (ClientDeleteStatus[status] as keyof typeof ClientDeleteStatus)
             : ('UNKNOWN_ERROR' as const),
       };
     }

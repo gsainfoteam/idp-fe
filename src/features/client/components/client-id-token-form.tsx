@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
 import { Switch } from '@/features/core';
+import { Client } from '../hooks/use-client';
 
-export function ClientIdTokenForm() {
+export function ClientIdTokenForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { control } = useFormContext<ClientDetailsFormSchema>();
 
@@ -22,8 +23,12 @@ export function ClientIdTokenForm() {
           <Controller
             control={control}
             name="idTokenAllowed"
-            render={({ field: { value, ...field } }) => (
-              <Switch {...field} checked={value} />
+            render={({ field: { value, disabled, ...field } }) => (
+              <Switch
+                disabled={disabled || client.deleteRequestedAt != null}
+                checked={value}
+                {...field}
+              />
             )}
           />
         </div>

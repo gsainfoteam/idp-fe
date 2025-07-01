@@ -251,7 +251,18 @@
       },
       "success": "Connection has been completed",
       "saving": "Saving changes ...",
-      "update_failed": "Failed to save changes"
+      "update_failed": "Failed to save changes",
+      "delete": {
+        "title": "Danger Zone",
+        "button": "Request to Delete Service",
+        "dialog": {
+          "header": "Continue?",
+          "body": "This action cannot be undone.",
+          "confirm": "Continue",
+          "cancel": "Cancel"
+        }
+      },
+      "description": "Deletion requested on {{date}}"
     },
     "openid": {
       "enable": "Enable id_token",

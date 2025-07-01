@@ -1,6 +1,7 @@
 import { ChangeEvent, PropsWithChildren, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { cn } from '../utils/cn';
 
 export type FileUploadProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -19,6 +20,7 @@ export function FileUpload({
   maxFiles = 1,
   maxSizeMb,
   onSave,
+  disabled,
   children,
   ...props
 }: PropsWithChildren<FileUploadProps>) {
@@ -63,12 +65,13 @@ export function FileUpload({
 
   return (
     <div
-      className="relative"
+      className={cn('relative', disabled && 'cursor-default')}
       ref={ref}
       onClick={() => fileInputRef.current?.click()}
     >
       <input
         accept={accept}
+        disabled={disabled}
         ref={fileInputRef}
         type="file"
         onChange={handleChange}

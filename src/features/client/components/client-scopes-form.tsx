@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
+import { Client } from '../hooks/use-client';
 import { Label, MultiStateSwitch } from '@/features/core';
 
 const choices = ['no', 'optional', 'required'] as const;
@@ -11,10 +12,12 @@ type Choice = (typeof choices)[number];
 const ScopeSwitch = ({
   label,
   value,
+  disabled = false,
   onChange,
 }: {
   label: string;
   value: Choice;
+  disabled?: boolean;
   onChange: (choice: Choice) => void;
 }) => {
   const { t } = useTranslation();
@@ -23,6 +26,7 @@ const ScopeSwitch = ({
     <Label text={label}>
       <MultiStateSwitch
         selected={choices.indexOf(value)}
+        disabled={disabled}
         onChangeIndex={(index) => onChange(choices[index] as Choice)}
         labels={[
           t('services.detail.scopes.choices.no'),
@@ -34,7 +38,7 @@ const ScopeSwitch = ({
   );
 };
 
-export function ClientScopesForm() {
+export function ClientScopesForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { control } = useFormContext<ClientDetailsFormSchema>();
 
@@ -47,44 +51,48 @@ export function ClientScopesForm() {
         <Controller
           control={control}
           name="scopes.profile"
-          render={({ field }) => (
+          render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.profile')}
+              disabled={disabled || client.deleteRequestedAt != null}
+              value={value ?? 'no'}
               {...field}
-              value={field.value ?? 'no'}
             />
           )}
         />
         <Controller
           control={control}
           name="scopes.student_id"
-          render={({ field }) => (
+          render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.student_id')}
+              disabled={disabled || client.deleteRequestedAt != null}
+              value={value ?? 'no'}
               {...field}
-              value={field.value ?? 'no'}
             />
           )}
         />
         <Controller
           control={control}
           name="scopes.email"
-          render={({ field }) => (
+          render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.email')}
+              disabled={disabled || client.deleteRequestedAt != null}
+              value={value ?? 'no'}
               {...field}
-              value={field.value ?? 'no'}
             />
           )}
         />
         <Controller
           control={control}
           name="scopes.phone_number"
-          render={({ field }) => (
+          render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.phone_number')}
+              disabled={disabled || client.deleteRequestedAt != null}
+              value={value ?? 'no'}
               {...field}
-              value={field.value ?? 'no'}
             />
           )}
         />

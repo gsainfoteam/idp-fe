@@ -6,7 +6,7 @@
 
   /* Input Default Colors */
   --color-input-default-background: var(--color-white);
-  --color-input-default-border: var(--color-neutral-600);
+  --color-input-default-border: var(--color-neutral-300);
   --color-input-default-label: var(--color-black);
 
   /* Input Focus Colors */

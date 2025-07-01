@@ -248,8 +248,8 @@ const buttonColors: Record<
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: NonNullable<VariantProps<typeof buttonStyles>['variant']>;
-  size?: NonNullable<VariantProps<typeof buttonStyles>['size']>;
+  variant?: VariantProps<typeof buttonStyles>['variant'];
+  size?: VariantProps<typeof buttonStyles>['size'];
   loading?: boolean;
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
@@ -275,7 +275,7 @@ export function Button({
       disabled={disabled}
       className={cn(
         buttonStyles({ variant, size, loading, disabled }),
-        buttonColors[variant](loading),
+        buttonColors[variant!](loading),
         className,
       )}
       {...props}

@@ -6,10 +6,11 @@ import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 
-import { IconButton, Input } from '@/features/core';
+import { cn, IconButton, Input } from '@/features/core';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
+import { Client } from '../hooks/use-client';
 
-export function ClientUrlsForm() {
+export function ClientUrlsForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { watch, setValue } = useFormContext<ClientDetailsFormSchema>();
   const { form: urlForm, reset } = useClientUrlForm();
@@ -29,6 +30,7 @@ export function ClientUrlsForm() {
             type="url"
             placeholder={t('services.detail.urls.placeholder')}
             error={urlForm.formState.errors.newUrl?.message}
+            disabled={client.deleteRequestedAt != null}
             {...urlForm.register('newUrl')}
           />
           <Controller
@@ -37,7 +39,12 @@ export function ClientUrlsForm() {
             render={({ fieldState }) => (
               <IconButton
                 variant="primary"
-                disabled={fieldState.invalid || !fieldState.isDirty}
+                className="h-fit"
+                disabled={
+                  fieldState.invalid ||
+                  !fieldState.isDirty ||
+                  client.deleteRequestedAt != null
+                }
                 onClick={() => {
                   setValue('urls', [newUrl, ...(urls ?? [])], {
                     shouldDirty: true,
@@ -52,14 +59,22 @@ export function ClientUrlsForm() {
         {urls.length > 0 && (
           <div className="border-basics-tertiary-label flex flex-col gap-4 rounded-lg border p-4">
             {urls.map((url, index) => (
-              <div className="flex flex-col gap-4" key={index}>
-                <div className="flex items-center gap-4">
-                  <div className="text-body-1 text-basics-primary-label flex-1">
+              <div className="flex flex-col gap-3" key={index}>
+                <div className="flex items-center gap-3">
+                  <div
+                    className={cn(
+                      'text-body-1 flex-1',
+                      client.deleteRequestedAt != null
+                        ? 'text-basics-secondary-label'
+                        : 'text-basics-primary-label',
+                    )}
+                  >
                     {url}
                   </div>
                   <IconButton
                     variant="grayText"
                     size="none"
+                    disabled={client.deleteRequestedAt != null}
                     icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(

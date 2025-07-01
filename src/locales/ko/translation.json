@@ -251,7 +251,18 @@
         "errors": {
           "format": "URL을 입력해주세요"
         }
-      }
+      },
+      "delete": {
+        "title": "민감한 설정",
+        "button": "서비스 삭제 요청하기",
+        "dialog": {
+          "header": "계속 진행하시겠습니까?",
+          "body": "계속하면 되돌릴 수 없습니다",
+          "confirm": "계속하기",
+          "cancel": "그만두기"
+        }
+      },
+      "description": "{{date}}에 삭제가 요청되었습니다"
     },
     "openid": {
       "enable": "id_token 활성화",

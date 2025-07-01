@@ -33,7 +33,7 @@ export const Main: Story = {
   },
   render: ({ size = 'large', loading, disabled }) => (
     <ButtonGroup
-      size={size}
+      size={size ?? 'large'}
       loading={loading ?? false}
       disabled={disabled ?? false}
     />

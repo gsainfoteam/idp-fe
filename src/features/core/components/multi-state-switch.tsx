@@ -41,6 +41,7 @@ export function MultiStateSwitch({
   useLayoutEffect(() => {
     const container = containerRef.current;
     const selectedBtn = buttonRefs.current[selected];
+
     if (container && selectedBtn) {
       const rect = selectedBtn.getBoundingClientRect();
       const parentRect = container.getBoundingClientRect();
@@ -79,10 +80,10 @@ export function MultiStateSwitch({
       {labels.map((label, idx) => (
         <button
           key={idx}
+          disabled={disabled}
           ref={(el) => {
             buttonRefs.current[idx] = el;
           }}
-          disabled={disabled}
           className={cn(
             'relative z-10 flex w-full items-center justify-center rounded-lg py-3 text-center',
             idx === selected ? 'text-title-3' : 'text-body-1',

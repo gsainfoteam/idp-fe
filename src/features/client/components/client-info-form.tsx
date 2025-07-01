@@ -26,6 +26,7 @@ export function ClientInfoForm({ client }: { client: Client }) {
           <Label text={t('services.detail.info.id')}>
             <CopyInput
               value={id}
+              disabled={client.deleteRequestedAt != null}
               success={t('services.detail.info.id_copied')}
               readOnly
             />
@@ -39,8 +40,14 @@ export function ClientInfoForm({ client }: { client: Client }) {
                 success={t('services.detail.info.secret_copied')}
                 readOnly
                 showIcon={!!secret}
+                disabled={client.deleteRequestedAt != null}
               />
-              <Button variant="default" disabled={formState.isSubmitting}>
+              <Button
+                variant="default"
+                disabled={
+                  formState.isSubmitting || client.deleteRequestedAt != null
+                }
+              >
                 {t('services.detail.info.regenerate_secret.action')}
               </Button>
             </div>
