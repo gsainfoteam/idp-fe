@@ -1,8 +1,15 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { Toaster } from 'react-hot-toast';
-
+import { OverlayProvider } from 'overlay-kit';
 import { routeTree } from './routeTree.gen';
-const router = createRouter({ routeTree, defaultPreload: 'intent' });
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NotFoundFrame, ThemeProvider, ToastProvider } from '@/features/core';
+
+const queryClient = new QueryClient();
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+  defaultNotFoundComponent: () => <NotFoundFrame />,
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -12,10 +19,14 @@ declare module '@tanstack/react-router' {
 
 const App = () => {
   return (
-    <>
-      <RouterProvider router={router} />
-      <Toaster />
-    </>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <OverlayProvider>
+          <RouterProvider router={router} />
+          <ToastProvider />
+        </OverlayProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

@@ -7,17 +7,18 @@ import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
 import { motion, usePresenceData } from 'framer-motion';
 
-interface FunnelLayoutProps extends React.Attributes {
+export interface FunnelLayoutProps extends React.Attributes {
   title?: string;
-  stepTitle: React.ReactNode;
+  stepTitle?: React.ReactNode;
   description?: string;
   button?: React.ReactNode;
   hideUndo?: boolean;
   loading?: boolean;
   onUndo?: (history: RouterHistory) => void;
+  contentClassName?: string;
 }
 
-export function FunnelLayout({
+function FunnelLayout({
   key,
   title,
   stepTitle,
@@ -26,6 +27,7 @@ export function FunnelLayout({
   hideUndo = false,
   loading = false,
   onUndo,
+  contentClassName,
   children,
 }: PropsWithChildren<FunnelLayoutProps>) {
   const direction = usePresenceData() ?? 1;
@@ -73,26 +75,33 @@ export function FunnelLayout({
 
           <div
             ref={scrollRef}
-            className="flex w-full flex-1 flex-col overflow-y-auto"
+            className="flex w-full flex-1 flex-col overflow-y-scroll [&::-webkit-scrollbar]:hidden"
           >
             <LoadingOverlay show={loading} className="flex flex-1 flex-col">
               {/* Step Title Box */}
-              <div className="bg-funnel-background z-0 w-full px-5 py-4">
-                <div className="text-title-1 text-funnel-steptitle w-full text-pretty whitespace-pre-wrap">
-                  {stepTitle}
+              {stepTitle && (
+                <div className="bg-funnel-background z-0 w-full px-5 py-4">
+                  <div className="text-title-1 text-funnel-steptitle w-full text-pretty whitespace-pre-wrap">
+                    {stepTitle}
+                  </div>
+                  {description && (
+                    <>
+                      <div className="h-2" />
+                      <div className="text-body-1 text-funnel-description text-pretty whitespace-pre-wrap">
+                        {description}
+                      </div>
+                    </>
+                  )}
                 </div>
-                {description && (
-                  <>
-                    <div className="h-2" />
-                    <div className="text-body-1 text-funnel-description text-pretty whitespace-pre-wrap">
-                      {description}
-                    </div>
-                  </>
-                )}
-              </div>
+              )}
 
               {/* Content Box */}
-              <div className="bg-funnel-background z-0 w-full flex-1 px-5 py-4">
+              <div
+                className={cn(
+                  'bg-funnel-background relative z-0 w-full flex-1 px-5 py-4',
+                  contentClassName,
+                )}
+              >
                 {children}
               </div>
             </LoadingOverlay>
@@ -107,3 +116,9 @@ export function FunnelLayout({
     </motion.div>
   );
 }
+
+FunnelLayout.Separator = () => {
+  return <div className="bg-funnel-separator -mx-5 h-2" />;
+};
+
+export { FunnelLayout };

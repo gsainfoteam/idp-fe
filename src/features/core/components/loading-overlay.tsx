@@ -2,8 +2,6 @@ import { PropsWithChildren } from 'react';
 
 import { cn } from '../utils/cn';
 
-// FIXME: A component is changing an uncontrolled input to be controlled.
-
 export function LoadingOverlay({
   children,
   show = false,

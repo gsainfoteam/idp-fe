@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-modal-background: var(--color-white);
+  --color-modal-header: var(--color-black);
+  --color-modal-body: var(--color-neutral-400);
+  --color-modal-handle: var(--color-neutral-100);
+}
+
+@layer theme {
+  .dark {
+    --color-modal-background: var(--color-neutral-980);
+    --color-modal-header: var(--color-white);
+    --color-modal-body: var(--color-neutral-400);
+    --color-modal-handle: var(--color-neutral-800);
+  }
+}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { LoadingEllipse } from './loading-ellipse';
+import { LoadingEllipse } from '@/features/core';
 
 const meta = {
   component: LoadingEllipse,

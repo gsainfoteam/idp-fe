@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-label-required: var(--color-warning-500);
+  --color-label-text: var(--color-neutral-900);
+}
+
+@layer theme {
+  .dark {
+    --color-label-required: var(--color-warning-500);
+    --color-label-text: var(--color-white);
+  }
+}

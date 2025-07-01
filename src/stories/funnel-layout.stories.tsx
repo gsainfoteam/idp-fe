@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from './button';
-import { FunnelLayout } from './funnel-layout';
+import { Button, FunnelLayout } from '@/features/core';
 
 const meta = {
   component: FunnelLayout,

@@ -7,7 +7,7 @@ import { useAuthorize } from '../hooks/use-authorize';
 import { useClient } from '../hooks/use-client';
 
 import { components } from '@/@types/api-schema';
-import { Button, FunnelLayout } from '@/features/core';
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function AuthorizeFrame() {
   const { clientId } = useLoaderData({
@@ -15,7 +15,7 @@ export function AuthorizeFrame() {
   });
   const { client } = useClient(clientId);
 
-  // TODO: Loading, Error 상태에 대한 UI를 추가해야 함 -> 모달 컴포넌트로 Error 메시지 띄우기, Loading Spinner 띄우기
+  // TODO: Error Boundary + Suspense
   if (client === undefined) {
     return null;
   } else if (client === null) {
@@ -49,7 +49,18 @@ function Inner({
         <FunnelLayout
           hideUndo
           loading={form.formState.isSubmitting}
-          stepTitle={t('authorize.title', { client: client.name })}
+          stepTitle={
+            <div className="flex flex-col gap-5">
+              <Avatar
+                name={client.name}
+                img={client.picture ?? undefined}
+                size={13}
+                seed={uniqueKey(client.clientId)}
+                className="rounded-lg border border-neutral-200"
+              />
+              {t('authorize.title', { client: client.name })}
+            </div>
+          }
           description={t('authorize.description', { client: client.name })}
           button={
             <div className="flex gap-2.5">

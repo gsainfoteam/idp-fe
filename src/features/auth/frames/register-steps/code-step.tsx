@@ -94,7 +94,7 @@ export function CodeStep({
               error={errors.code?.message}
               disabled={isSubmitting}
               suffixAdornment={
-                <div className="text-label-1 text-neutral-600">
+                <div className="text-label-1">
                   {timeString(Math.max(remainTime, 0))}
                 </div>
               }
@@ -104,6 +104,7 @@ export function CodeStep({
           <div className="mt-1 flex w-full justify-end">
             <Button
               variant="link"
+              size="none"
               onClick={onResetTimer}
               loading={isResending}
               type="button"

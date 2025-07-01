@@ -1,5 +1,12 @@
 import { useAuth } from '@/features/auth';
-import { Avatar, Button, Modal, FileUpload, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  Button,
+  Modal,
+  FileUpload,
+  uniqueKey,
+  IconButton,
+} from '@/features/core';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +16,10 @@ import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useLoading } from '@/features/core';
 
 export function ProfileEditOverlay({
-  open,
+  isOpen,
   close,
 }: {
-  open: boolean;
+  isOpen: boolean;
   close: () => void;
 }) {
   const [previewFile, setPreviewImage] = useState<string | null>(null);
@@ -36,7 +43,7 @@ export function ProfileEditOverlay({
   if (!user) return null;
 
   return (
-    <Modal isOpen={open} close={handleClose} className="min-w-100">
+    <Modal isOpen={isOpen} close={handleClose} className="min-w-100">
       <Modal.Header>{t('profile_change.title')}</Modal.Header>
       <Modal.Body className="flex justify-center">
         <div
@@ -48,6 +55,7 @@ export function ProfileEditOverlay({
             img={previewFile ?? undefined}
             seed={uniqueKey(user.studentId)}
             size={30}
+            onClick={() => fileInputRef.current?.click()}
           />
           <FileUpload
             ref={fileInputRef}
@@ -55,27 +63,25 @@ export function ProfileEditOverlay({
             maxSizeMb={1}
             onSave={onSave}
           >
-            <div className="bg-primary-600 absolute right-0 bottom-0 flex items-center justify-center rounded-full border-4 border-white p-1.5">
-              <EditIcon
-                color="white"
-                width={20}
-                height={20}
-                className="cursor-pointer"
+            <div className="absolute right-0 bottom-0">
+              <IconButton
+                variant="primary"
+                icon={<EditIcon width={20} height={20} />}
+                className="border-funnel-background rounded-full border-4 p-2"
               />
             </div>
           </FileUpload>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Modal.Close className="grow">
-          <Button
-            variant="secondary"
-            onClick={() => setPreviewImage(null)}
-            className="w-full"
-          >
-            {t('profile_change.sub_button')}
-          </Button>
-        </Modal.Close>
+        <Button
+          variant="secondary"
+          onClick={() => setPreviewImage(null)}
+          disabled={previewFile == null}
+          className="grow"
+        >
+          {t('profile_change.sub_button')}
+        </Button>
         <Button
           variant="primary"
           onClick={() => startLoading(onSubmit().then(handleClose))}
