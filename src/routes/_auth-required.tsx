@@ -7,26 +7,30 @@ import {
 
 import { useAuth } from '@/features/auth';
 
+const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
+  // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함
+  return Object.fromEntries(
+    Object.entries(search).filter(([key]) => !key.endsWith('-step')),
+  );
+};
+
 const AuthRequiredLayout = () => {
   const { user } = useAuth();
-  // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함
   const router = useRouter();
 
   if (user === undefined) return null;
-  if (user === null)
+  if (user === null) {
     return (
       <Navigate
         to="/auth/login"
         search={(prev) => ({
-          // funnel step 중간에 log out 되었을 경우 step 삭제
-          ...Object.fromEntries(
-            Object.entries(prev).filter(([key]) => !key.endsWith('-step')),
-          ),
+          ...cleanupAllFunnel(prev),
           redirect: router.history.location.href,
         })}
         replace
       />
     );
+  }
   return <Outlet />;
 };
 

@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { CodeStep } from './register-steps/code-step';
 import { CompleteStep } from './register-steps/complete-step';
@@ -27,6 +28,7 @@ export type RegisterSteps = {
 };
 
 export function RegisterFrame() {
+  const navigate = useNavigate({ from: '/auth/register' });
   const funnel = useFunnel<RegisterSteps>({
     id: 'register',
     initial: {
@@ -72,7 +74,15 @@ export function RegisterFrame() {
           onUndo={undoWarning}
         />
       )}
-      complete={({ context }) => <CompleteStep context={context} />}
+      complete={({ context }) => (
+        <CompleteStep
+          context={context}
+          onNext={async () => {
+            funnel.history.cleanup();
+            await navigate({ to: '/auth/login' });
+          }}
+        />
+      )}
     />
   );
 }

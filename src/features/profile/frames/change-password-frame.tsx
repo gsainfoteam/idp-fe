@@ -22,10 +22,9 @@ export type ChangePasswordSteps = {
 };
 
 export function ChangePasswordFrame() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { token } = useToken();
   const { t } = useTranslation();
-
   const funnel = useFunnel<ChangePasswordSteps>({
     id: 'change_password',
     initial: {
@@ -61,7 +60,14 @@ export function ChangePasswordFrame() {
         />
       )}
       complete={({ history, step }) => (
-        <CompleteStep step={step} onUndo={() => history.back()} />
+        <CompleteStep
+          step={step}
+          onUndo={() => history.back()}
+          onNext={async () => {
+            funnel.history.cleanup();
+            await signOut();
+          }}
+        />
       )}
     />
   );
