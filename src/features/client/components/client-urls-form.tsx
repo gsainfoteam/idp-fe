@@ -6,7 +6,7 @@ import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 
-import { Button, Input } from '@/features/core';
+import { cn, IconButton, Input } from '@/features/core';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
 import { Client } from '../hooks/use-client';
 
@@ -20,9 +20,11 @@ export function ClientUrlsForm({ client }: { client: Client }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.urls.title')}</div>
+      <div className="text-title-3 text-basics-primary-label">
+        {t('services.detail.urls.title')}
+      </div>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-2">
+        <div className="flex items-start gap-2">
           <Input
             className="flex-1"
             type="url"
@@ -35,9 +37,9 @@ export function ClientUrlsForm({ client }: { client: Client }) {
             control={urlForm.control}
             name="newUrl"
             render={({ fieldState }) => (
-              <Button
+              <IconButton
                 variant="primary"
-                className="h-fit px-3"
+                className="h-fit"
                 disabled={
                   fieldState.invalid ||
                   !fieldState.isDirty ||
@@ -49,30 +51,31 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   });
                   reset();
                 }}
-                prefixIcon={
-                  <PlusIcon width={28} height={28} className="text-white" />
-                }
+                icon={<PlusIcon />}
               />
             )}
           />
         </div>
         {urls.length > 0 && (
-          <div className="flex flex-col gap-3 rounded-lg border border-neutral-200 px-4 py-3">
+          <div className="border-basics-tertiary-label flex flex-col gap-4 rounded-lg border p-4">
             {urls.map((url, index) => (
               <div className="flex flex-col gap-3" key={index}>
                 <div className="flex items-center gap-3">
-                  <div className="text-body-1 flex-1">{url}</div>
-                  <Button
-                    variant="text"
-                    className="p-0"
+                  <div
+                    className={cn(
+                      'text-body-1 flex-1',
+                      client.deleteRequestedAt != null
+                        ? 'text-basics-secondary-label'
+                        : 'text-basics-primary-label',
+                    )}
+                  >
+                    {url}
+                  </div>
+                  <IconButton
+                    variant="grayText"
+                    size="none"
                     disabled={client.deleteRequestedAt != null}
-                    prefixIcon={
-                      <TrashBinIcon
-                        width={30}
-                        height={30}
-                        className="h-full text-neutral-200 active:text-neutral-300"
-                      />
-                    }
+                    icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(
                         'urls',
@@ -83,7 +86,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   />
                 </div>
                 {index !== urls.length - 1 && (
-                  <div className="h-[1px] w-full bg-neutral-200" />
+                  <div className="bg-funnel-separator h-[1px] w-full" />
                 )}
               </div>
             ))}

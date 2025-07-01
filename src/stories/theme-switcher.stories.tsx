@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { PasswordInput } from './password-input';
+import { ThemeSwitcher } from '@/features/core';
 
 const meta = {
-  component: PasswordInput,
-} satisfies Meta<typeof PasswordInput>;
+  component: ThemeSwitcher,
+} satisfies Meta<typeof ThemeSwitcher>;
 
 export default meta;
 

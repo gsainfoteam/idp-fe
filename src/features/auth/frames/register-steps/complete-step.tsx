@@ -39,10 +39,10 @@ export function CompleteStep({
           seed={uniqueKey(context.studentId)}
         />
         <div className="mt-3 flex flex-col items-center">
-          <div className="text-title-1 text-center text-neutral-950">
+          <div className="text-title-1 text-basics-primary-label text-center">
             {context.name}
           </div>
-          <div className="text-body-1 text-center text-neutral-400">
+          <div className="text-body-1 text-basics-secondary-label text-center">
             {context.email}
           </div>
         </div>

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { Button } from './button';
-import { Dialog } from './dialog';
+import { Button, Dialog } from '@/features/core';
 
 const meta = {
   component: Dialog,
@@ -57,8 +56,12 @@ const ExampleDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
   );
 };
 
-const UndoWarningDialog = () => {
-  const [open, setOpen] = useState(true);
+const UndoWarningDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
+  const [open, setOpen] = useState(initialOpen);
+
+  useEffect(() => {
+    setOpen(initialOpen);
+  }, [initialOpen]);
 
   return (
     <Dialog isOpen={open} close={() => setOpen(false)} className="mx-10 w-auto">
@@ -80,8 +83,12 @@ const UndoWarningDialog = () => {
   );
 };
 
-const NoBodyDialog = () => {
-  const [open, setOpen] = useState(true);
+const NoBodyDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
+  const [open, setOpen] = useState(initialOpen);
+
+  useEffect(() => {
+    setOpen(initialOpen);
+  }, [initialOpen]);
 
   return (
     <Dialog isOpen={open} close={() => setOpen(false)} className="mx-10 w-auto">
@@ -101,7 +108,11 @@ export const Default: Story = {
     close: () => {},
   },
   render: ({ isOpen }) => {
-    return <ExampleDialog isOpen={isOpen} />;
+    return (
+      <div className="bg-funnel-background absolute inset-0">
+        <ExampleDialog isOpen={isOpen} />
+      </div>
+    );
   },
 };
 
@@ -110,8 +121,12 @@ export const UndoWarning: Story = {
     isOpen: true,
     close: () => {},
   },
-  render: () => {
-    return <UndoWarningDialog />;
+  render: ({ isOpen }) => {
+    return (
+      <div className="bg-funnel-background absolute inset-0">
+        <UndoWarningDialog isOpen={isOpen} />
+      </div>
+    );
   },
 };
 
@@ -120,7 +135,11 @@ export const NoBody: Story = {
     isOpen: true,
     close: () => {},
   },
-  render: () => {
-    return <NoBodyDialog />;
+  render: ({ isOpen }) => {
+    return (
+      <div className="bg-funnel-background absolute inset-0">
+        <NoBodyDialog isOpen={isOpen} />
+      </div>
+    );
   },
 };

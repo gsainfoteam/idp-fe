@@ -11,6 +11,7 @@ const AuthRequiredLayout = () => {
   const { user } = useAuth();
   // NOTE: useLocation에서는 Maximum update depth exceeded 오류가 발생함
   const router = useRouter();
+
   if (user === undefined) return null;
   if (user === null)
     return (

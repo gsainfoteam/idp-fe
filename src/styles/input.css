@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-input-placeholder: var(--color-neutral-400);
+
+  /* Input Default Colors */
+  --color-input-default-background: var(--color-white);
+  --color-input-default-border: var(--color-neutral-300);
+  --color-input-default-label: var(--color-black);
+
+  /* Input Focus Colors */
+  --color-input-focus-background: --alpha(var(--color-primary-400) / 5%);
+  --color-input-focus-border: var(--color-primary-600);
+  --color-input-focus-label: var(--color-black);
+
+  /* Input Error Colors */
+  --color-input-error-background: var(--color-white);
+  --color-input-error-border: var(--color-warning-500);
+  --color-input-error-label: var(--color-black);
+
+  /* Input Disabled Colors */
+  --color-input-disabled-background: var(--color-neutral-200);
+  --color-input-disabled-border: var(--color-neutral-400);
+  --color-input-disabled-label: var(--color-neutral-400);
+}
+
+@layer theme {
+  .dark {
+    --color-input-placeholder: var(--color-neutral-400);
+
+    /* Input Default Colors */
+    --color-input-default-background: var(--color-neutral-980);
+    --color-input-default-border: var(--color-neutral-900);
+    --color-input-default-label: var(--color-neutral-100);
+
+    /* Input Focus Colors */
+    --color-input-focus-background: --alpha(var(--color-primary-400) / 5%);
+    --color-input-focus-border: var(--color-primary-700);
+    --color-input-focus-label: var(--color-neutral-100);
+
+    /* Input Error Colors */
+    --color-input-error-background: var(--color-neutral-980);
+    --color-input-error-border: var(--color-warning-700);
+    --color-input-error-label: var(--color-neutral-100);
+
+    /* Input Disabled Colors */
+    --color-input-disabled-background: var(--color-neutral-960);
+    --color-input-disabled-border: var(--color-neutral-800);
+    --color-input-disabled-label: var(--color-neutral-800);
+  }
+}

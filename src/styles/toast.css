@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-toast-background: var(--color-white);
+  --color-toast-text: var(--color-black);
+  --color-toast-border: var(--color-neutral-100);
+  --color-toast-icon-success: #43bf3a;
+  --color-toast-icon-error: #ec5a53;
+}
+
+@layer theme {
+  .dark {
+    --color-toast-background: var(--color-neutral-960);
+    --color-toast-text: var(--color-white);
+    --color-toast-border: var(--color-neutral-920);
+  }
+}

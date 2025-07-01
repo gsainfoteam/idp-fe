@@ -49,15 +49,15 @@ export function ClientDeleteForm({ client }: { client: Client }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.delete.title')}</div>
+      <div className="text-title-3 text-basics-primary-label">
+        {t('services.detail.delete.title')}
+      </div>
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          {/* // TODO: idf-100 머지되면 variant="warning" 으로 바꾸기 */}
           <Button
-            variant="primary"
+            variant="warning"
             disabled={client.deleteRequestedAt != null}
             prefixIcon={<TrashBinIcon />}
-            className="bg-red-600"
             onClick={async () => {
               const result = await overlay.openAsync<boolean>(
                 ({ isOpen, close }) => (

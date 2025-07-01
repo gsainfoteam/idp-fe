@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Client } from '../hooks/use-client';
 import { useTranslation } from 'react-i18next';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
-import { Avatar, uniqueKey, FileUpload, Dialog, Button } from '@/features/core';
+import {
+  Avatar,
+  uniqueKey,
+  FileUpload,
+  Dialog,
+  Button,
+  cn,
+} from '@/features/core';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 import { useLoading } from '@/features/core';
@@ -66,23 +73,33 @@ export function ClientPictureForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-title-3">{t('services.detail.picture.title')}</div>
+      <div className="text-title-3 text-label">
+        {t('services.detail.picture.title')}
+      </div>
       <div className="flex gap-3">
         <div
-          className="h-fit w-fit cursor-pointer"
+          className={cn(
+            'h-fit w-fit',
+            client.deleteRequestedAt != null
+              ? 'cursor-default'
+              : 'cursor-pointer',
+          )}
           onClick={() => fileInputRef.current?.click()}
         >
-          <Avatar
-            name={client.name}
-            img={previewImage ?? undefined}
-            seed={uniqueKey(client.clientId)}
-            size={25}
-            className="rounded-lg"
-          />
+          <div className={client.deleteRequestedAt != null ? 'grayscale' : ''}>
+            <Avatar
+              name={client.name}
+              img={previewImage ?? undefined}
+              seed={uniqueKey(client.clientId)}
+              size={25}
+              className="rounded-lg"
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-3">
           <FileUpload
             ref={fileInputRef}
+            disabled={client.deleteRequestedAt != null}
             accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
             maxSizeMb={1}
             onSave={(files, previewUrls) =>
@@ -92,6 +109,7 @@ export function ClientPictureForm({
             <IconButton
               variant="primary"
               loading={uploadLoading}
+              disabled={deleteLoading || client.deleteRequestedAt != null}
               className="p-2.5"
               icon={<EditIcon />}
             />
@@ -99,7 +117,7 @@ export function ClientPictureForm({
           <IconButton
             variant="secondary"
             loading={deleteLoading}
-            disabled={!previewImage}
+            disabled={!previewImage || client.deleteRequestedAt != null}
             className="p-2.5"
             icon={<TrashBinIcon />}
             onClick={async () => {
