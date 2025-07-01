@@ -23,7 +23,7 @@ export function IconButton({
     <Button
       variant={variant}
       size={size}
-      className={cn('aspect-square', sizeStyles[size], className)}
+      className={cn('aspect-square', sizeStyles[size ?? 'large'], className)}
       prefixIcon={icon}
       {...props}
     />
