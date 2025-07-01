@@ -25,7 +25,7 @@ function ClientDeleteOverlay({
       <Dialog.Header>{t('services.detail.delete.dialog.header')}</Dialog.Header>
       <Dialog.Body>{t('services.detail.delete.dialog.body')}</Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close>
+        <Dialog.Close className="w-full">
           <Button variant="secondary" className="w-full">
             {t('services.detail.delete.dialog.cancel')}
           </Button>
