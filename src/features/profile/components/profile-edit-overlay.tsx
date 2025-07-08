@@ -31,8 +31,9 @@ export function ProfileEditOverlay({
   const fileInputRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!user) toast.error(t('toast.invalid_user'));
-    else setPreviewImage(user.picture ?? null);
+    if (!user) {
+      if (isOpen) toast.error(t('toast.invalid_user'));
+    } else setPreviewImage(user.picture ?? null);
   }, [user]);
 
   const handleClose = () => {
