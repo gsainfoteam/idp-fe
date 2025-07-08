@@ -47,10 +47,7 @@ export function ProfileEditOverlay({
     <Modal isOpen={isOpen} close={handleClose} className="min-w-100">
       <Modal.Header>{t('profile_change.title')}</Modal.Header>
       <Modal.Body className="flex justify-center">
-        <div
-          className="relative w-fit cursor-pointer"
-          onClick={() => fileInputRef.current?.click()}
-        >
+        <div className="relative w-fit cursor-pointer">
           <Avatar
             name={user.name}
             img={previewFile ?? undefined}
