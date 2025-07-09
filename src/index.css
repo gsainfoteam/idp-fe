@@ -17,6 +17,10 @@
   html {
     font-family: Pretendard, 'Noto Sans SC', sans-serif;
   }
+
+  body {
+    background-color: var(--color-funnel-background);
+  }
 }
 
 @theme {
