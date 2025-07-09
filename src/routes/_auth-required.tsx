@@ -20,16 +20,7 @@ const AuthRequiredLayout = () => {
 
   if (user === undefined) return null;
   if (user === null) {
-    return (
-      <Navigate
-        to="/auth/login"
-        search={(prev) => ({
-          ...cleanupAllFunnel(prev),
-          redirect: router.history.location.href,
-        })}
-        replace
-      />
-    );
+    return <Navigate to="/auth/login" replace />;
   }
   return <Outlet />;
 };
