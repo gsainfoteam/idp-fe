@@ -88,11 +88,6 @@ export const useAuthorize = ({
       return authorize(consentedScopes);
     }
 
-    if (prompt === 'login') {
-      if (!recentLogin) return void signOut();
-      return; // show consent screen
-    }
-
     if (prompt === 'consent') return; // show consent screen
 
     if (consented) {
