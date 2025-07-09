@@ -5,15 +5,25 @@ import { Trans, useTranslation } from 'react-i18next';
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
 import { useClient } from '../hooks/use-client';
+import { useRecentLogin } from '../hooks/use-recent-login';
 
 import { components } from '@/@types/api-schema';
 import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { useAuth } from '@/features/auth';
 
 export function AuthorizeFrame() {
-  const { clientId } = useLoaderData({
+  const { clientId, prompt } = useLoaderData({
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
+
+  const { recentLogin } = useRecentLogin();
+  const { signOut } = useAuth();
+
+  if (prompt === 'login' && !recentLogin) {
+    signOut();
+    return null;
+  }
 
   // TODO: Error Boundary + Suspense
   if (client === undefined) {
