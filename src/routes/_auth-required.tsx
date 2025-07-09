@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Navigate,
-  Outlet,
-  useRouter,
-} from '@tanstack/react-router';
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 import { useAuth } from '@/features/auth';
 
@@ -16,7 +11,6 @@ const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
 
 const AuthRequiredLayout = () => {
   const { user } = useAuth();
-  const router = useRouter();
 
   if (user === undefined) return null;
   if (user === null) {
@@ -25,7 +19,6 @@ const AuthRequiredLayout = () => {
         to="/auth/login"
         search={(prev) => ({
           ...cleanupAllFunnel(prev),
-          redirect: router.history.location.href,
         })}
         replace
       />
