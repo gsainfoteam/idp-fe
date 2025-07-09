@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Navigate,
-  Outlet,
-  useRouter,
-} from '@tanstack/react-router';
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 import { useAuth } from '@/features/auth';
 
@@ -16,11 +11,18 @@ const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
 
 const AuthRequiredLayout = () => {
   const { user } = useAuth();
-  const router = useRouter();
 
   if (user === undefined) return null;
   if (user === null) {
-    return <Navigate to="/auth/login" replace />;
+    return (
+      <Navigate
+        to="/auth/login"
+        search={(prev) => ({
+          ...cleanupAllFunnel(prev),
+        })}
+        replace
+      />
+    );
   }
   return <Outlet />;
 };
