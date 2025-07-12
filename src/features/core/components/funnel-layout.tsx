@@ -5,7 +5,6 @@ import { cn } from '../utils/cn';
 
 import { BackButton } from './back-button';
 import { LoadingOverlay } from './loading-overlay';
-import { motion, usePresenceData } from 'framer-motion';
 
 export interface FunnelLayoutProps extends React.Attributes {
   title?: string;
@@ -19,7 +18,6 @@ export interface FunnelLayoutProps extends React.Attributes {
 }
 
 function FunnelLayout({
-  key,
   title,
   stepTitle,
   description,
@@ -30,7 +28,6 @@ function FunnelLayout({
   contentClassName,
   children,
 }: PropsWithChildren<FunnelLayoutProps>) {
-  const direction = usePresenceData() ?? 1;
   const [scrollAmount, setScrollAmount] = useState(0);
   const scrollRef = useCallback((div: HTMLDivElement) => {
     const handler = () => setScrollAmount(div.scrollTop);
@@ -40,15 +37,7 @@ function FunnelLayout({
   }, []);
 
   return (
-    <motion.div
-      layout
-      key={key}
-      initial={{ x: direction > 0 ? 100 : -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: direction < 0 ? 100 : -100, opacity: 0 }}
-      transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="bg-funnel-background flex h-dvh items-center justify-center"
-    >
+    <div className="bg-funnel-background flex h-dvh items-center justify-center">
       <div className="relative aspect-[420/800] h-dvh w-auto max-w-full">
         <div className="bg-funnel-background flex h-full w-full flex-col">
           {/* Title Bar */}
@@ -113,7 +102,7 @@ function FunnelLayout({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
