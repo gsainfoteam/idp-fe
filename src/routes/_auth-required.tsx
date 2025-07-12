@@ -21,6 +21,7 @@ const AuthRequiredLayout = () => {
           ...cleanupAllFunnel(prev),
         })}
         replace
+        viewTransition={{ types: ['reload'] }}
       />
     );
   }
