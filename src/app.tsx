@@ -18,7 +18,6 @@ const router = createRouter({
 
       const fromIndex = fromLocation.state.__TSR_index;
       const toIndex = toLocation.state.__TSR_index;
-      console.log('fromIndex:', fromIndex, 'toIndex:', toIndex);
 
       return [fromIndex > toIndex ? 'backwards' : 'forwards'];
     },

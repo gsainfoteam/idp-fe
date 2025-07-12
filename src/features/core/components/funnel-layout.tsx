@@ -47,7 +47,7 @@ function FunnelLayout({
               scrollAmount > 0 && 'shadow-funnel-shadow shadow-[0_8px_8px_0]',
             )}
           >
-            <div className="relative flex h-fit items-center justify-center">
+            <div className="no-transition relative flex h-fit items-center justify-center">
               {title && !hideUndo && (
                 <div className="absolute left-0">
                   <BackButton
