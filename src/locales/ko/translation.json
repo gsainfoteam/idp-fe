@@ -143,7 +143,7 @@
   },
   "authorize": {
     "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
-    "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다",
+    "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다.",
     "labels": {
       "required": "필수",
       "optional": "선택"
@@ -178,14 +178,14 @@
   "services": {
     "list": {
       "title": "내 서비스 목록",
-      "description": "내가 등록한 서비스를 여기에서 확인할 수 있어요",
+      "description": "내가 등록한 서비스를 여기에서 확인할 수 있어요.",
       "add": "서비스 추가하기",
       "empty": "아직 등록한 서비스가 없어요!\n아래의 버튼을 눌러 새 서비스를 등록하세요."
     },
     "add": {
       "title": "서비스 추가",
       "stepTitle": "서비스 추가하기",
-      "description": "직접 만든 서비스에\nGIST 메일로 로그인을 연동할 수 있어요",
+      "description": "직접 만든 서비스에\nGIST 메일로 로그인을 연동할 수 있어요.",
       "name": {
         "label": "서비스 이름 (client name)",
         "placeholder": "앱 이름을 입력해주세요",
@@ -196,6 +196,7 @@
     },
     "detail": {
       "title": "서비스 상세",
+      "description": "{{date}}에 삭제가 요청되었습니다.",
       "success": "연동이 완료되었어요",
       "updated": "변경사항이 저장되었어요",
       "saving": "변경사항 저장 중...",
@@ -230,7 +231,7 @@
           "action": "재생성",
           "title": "정말 재생성 하시겠습니까?",
           "cancel": "취소",
-          "description": "변경사항은 즉시 적용되며,\n작동중인 서비스가 중단될 수 있습니다"
+          "description": "변경사항은 즉시 적용되며,\n작동중인 서비스가 중단될 수 있습니다."
         }
       },
       "openid": {
@@ -267,8 +268,7 @@
           "confirm": "계속하기",
           "cancel": "그만두기"
         }
-      },
-      "description": "{{date}}에 삭제가 요청되었습니다"
+      }
     }
   },
   "change_password": {
@@ -320,7 +320,7 @@
     "steps": {
       "email": {
         "title": "이메일을 입력해주세요",
-        "description": "임시 비밀번호를 발급해드려요",
+        "description": "임시 비밀번호를 발급해드려요.",
         "inputs": {
           "email": {
             "label": "GIST 이메일",
@@ -358,8 +358,8 @@
       },
       "confirm": {
         "title": "정말로 탈퇴하시겠어요?",
-        "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다",
-        "description_without_services": "탈퇴하면 사용자의 정보는 복구되지 않습니다",
+        "description": "탈퇴하면 아래 서비스에 접근이 제한되며,\n사용자의 정보는 복구되지 않습니다.",
+        "description_without_services": "탈퇴하면 사용자의 정보는 복구되지 않습니다.",
         "button": "탈퇴하기",
         "sub_button": "취소"
       },

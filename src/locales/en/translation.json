@@ -143,7 +143,7 @@
   },
   "authorize": {
     "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
-    "description": "By continuing, the following information will be shared with '{{client}}'",
+    "description": "By continuing, the following information will be shared with '{{client}}'.",
     "labels": {
       "required": "Required",
       "optional": "Optional"
@@ -178,14 +178,14 @@
   "services": {
     "list": {
       "title": "My Services",
-      "description": "You can check the services you have registered here",
+      "description": "You can check the services you have registered here.",
       "add": "Add Service",
       "empty": "You have no registered services!\nClick the button below to register a new service."
     },
     "add": {
       "title": "Add Service",
       "stepTitle": "Add Service",
-      "description": "You can link your GIST email to your\nself-made service",
+      "description": "You can link your GIST email to your\nself-made service.",
       "name": {
         "label": "Service Name (client name)",
         "placeholder": "Enter the name of your app",
@@ -196,7 +196,11 @@
     },
     "detail": {
       "title": "Service Detail",
+      "description": "Deletion requested on {{date}}.",
       "updated": "Changes have been saved",
+      "success": "Connection has been completed",
+      "saving": "Saving changes ...",
+      "update_failed": "Failed to save changes",
       "picture": {
         "title": "Service Logo",
         "errors": {
@@ -227,7 +231,7 @@
           "action": "Regenerate",
           "title": "Are you sure you want to regenerate?",
           "cancel": "Cancel",
-          "description": "Changes are applied immediately,\nThe service in operation may be stopped"
+          "description": "Changes are applied immediately,\nThe service in operation may be stopped."
         }
       },
       "openid": {
@@ -255,9 +259,6 @@
           "format": "Please enter the URL"
         }
       },
-      "success": "Connection has been completed",
-      "saving": "Saving changes ...",
-      "update_failed": "Failed to save changes",
       "delete": {
         "title": "Danger Zone",
         "button": "Request to Delete Service",
@@ -267,8 +268,7 @@
           "confirm": "Continue",
           "cancel": "Cancel"
         }
-      },
-      "description": "Deletion requested on {{date}}"
+      }
     }
   },
   "change_password": {
@@ -320,7 +320,7 @@
     "steps": {
       "email": {
         "title": "Please enter your email",
-        "description": "We will issue a temporary password",
+        "description": "We will issue a temporary password.",
         "inputs": {
           "email": {
             "label": "GIST Email",
@@ -358,8 +358,8 @@
       },
       "confirm": {
         "title": "Are you sure you want to delete your account?",
-        "description": "Deleting your account will restrict access to the following services,\nand user information will not be recoverable",
-        "description_without_services": "User information will not be recoverable after deletion",
+        "description": "Deleting your account will restrict access to the following services,\nand user information will not be recoverable.",
+        "description_without_services": "User information will not be recoverable after deletion.",
         "button": "Delete Account",
         "sub_button": "Cancel"
       },
