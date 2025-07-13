@@ -3,12 +3,6 @@
     "errors": {
       "copy_failed": "Copy failed",
       "forbidden": "Forbidden"
-    },
-    "undo_overlay": {
-      "title": "Continuing will result in data loss",
-      "content": "Continue?",
-      "button": "Continue",
-      "sub_button": "Cancel"
     }
   },
   "register": {
@@ -35,6 +29,12 @@
         },
         "button": "Agree",
         "sub_button": "Close"
+      },
+      "undo_overlay": {
+        "title": "Cancel sign-up?",
+        "content": "Data will be lost.",
+        "button": "Quit",
+        "sub_button": "Cancel"
       },
       "code": {
         "title": "Enter the 6-digit code\nsent to your email",
@@ -143,7 +143,7 @@
   },
   "authorize": {
     "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
-    "description": "By continuing, the following information will be shared with '{{client}}'",
+    "description": "By continuing, the following information will be shared with '{{client}}'.",
     "labels": {
       "required": "Required",
       "optional": "Optional"
@@ -178,14 +178,14 @@
   "services": {
     "list": {
       "title": "My Services",
-      "description": "You can check the services you have registered here",
+      "description": "You can check the services you have registered here.",
       "add": "Add Service",
       "empty": "You have no registered services!\nClick the button below to register a new service."
     },
     "add": {
       "title": "Add Service",
       "stepTitle": "Add Service",
-      "description": "You can link your GIST email to your\nself-made service",
+      "description": "You can link your GIST email to your\nself-made service.",
       "name": {
         "label": "Service Name (client name)",
         "placeholder": "Enter the name of your app",
@@ -196,7 +196,11 @@
     },
     "detail": {
       "title": "Service Detail",
+      "description": "Deletion requested on {{date}}.",
       "updated": "Changes have been saved",
+      "success": "Connection has been completed",
+      "saving": "Saving changes ...",
+      "update_failed": "Failed to save changes",
       "picture": {
         "title": "Service Logo",
         "errors": {
@@ -205,6 +209,12 @@
           "image_too_large": "Image size exceeds {{max_size_mb}}MB",
           "invalid_image_type": "Invalid image type",
           "failed_to_read": "Failed to read image"
+        },
+        "delete_overlay": {
+          "title": "Delete Image?",
+          "description": "The image will be deleted permanently.",
+          "cancel": "Cancel",
+          "confirm": "Delete"
         },
         "deleted": "Image has been deleted",
         "deleting": "Deleting image ...",
@@ -221,7 +231,7 @@
           "action": "Regenerate",
           "title": "Are you sure you want to regenerate?",
           "cancel": "Cancel",
-          "description": "Changes are applied immediately,\nThe service in operation may be stopped"
+          "description": "Changes are applied immediately,\nThe service in operation may be stopped."
         }
       },
       "openid": {
@@ -249,9 +259,6 @@
           "format": "Please enter the URL"
         }
       },
-      "success": "Connection has been completed",
-      "saving": "Saving changes ...",
-      "update_failed": "Failed to save changes",
       "delete": {
         "title": "Danger Zone",
         "button": "Request to Delete Service",
@@ -261,30 +268,7 @@
           "confirm": "Continue",
           "cancel": "Cancel"
         }
-      },
-      "description": "Deletion requested on {{date}}"
-    },
-    "openid": {
-      "enable": "Enable id_token",
-      "title": "OpenID"
-    },
-    "scopes": {
-      "choices": {
-        "no": "None",
-        "optional": "Optional",
-        "required": "Required"
-      },
-      "title": "Scopes (Scopes)",
-      "type": {
-        "email": "GIST Email",
-        "phone_number": "Phone Number",
-        "profile": "Profile",
-        "student_id": "Student ID"
       }
-    },
-    "urls": {
-      "placeholder": "Enter Redirect URI",
-      "title": "URLs"
     }
   },
   "change_password": {
@@ -336,7 +320,7 @@
     "steps": {
       "email": {
         "title": "Please enter your email",
-        "description": "We will issue a temporary password",
+        "description": "We will issue a temporary password.",
         "inputs": {
           "email": {
             "label": "GIST Email",
@@ -374,8 +358,8 @@
       },
       "confirm": {
         "title": "Are you sure you want to delete your account?",
-        "description": "Deleting your account will restrict access to the following services,\nand user information will not be recoverable",
-        "description_without_services": "User information will not be recoverable after deletion",
+        "description": "Deleting your account will restrict access to the following services,\nand user information will not be recoverable.",
+        "description_without_services": "User information will not be recoverable after deletion.",
         "button": "Delete Account",
         "sub_button": "Cancel"
       },
@@ -396,7 +380,6 @@
     "failed_to_read": "Failed to read file",
     "file_too_many": "You can only upload up to {{max_files}} files"
   },
-  "language": "en",
   "profile_change": {
     "title": "Select Profile",
     "button": "Apply",
@@ -414,5 +397,6 @@
     "step_title": "An error has occurred",
     "description": "The page does not exist or is unavailable.",
     "button": "Go Back"
-  }
+  },
+  "language": "en"
 }

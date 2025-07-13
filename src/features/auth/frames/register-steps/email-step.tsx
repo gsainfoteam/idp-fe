@@ -16,7 +16,11 @@ function EmailOverlay({
   const { t } = useTranslation();
 
   return (
-    <Modal isOpen={isOpen} close={() => close(false)} className="min-w-100">
+    <Modal
+      isOpen={isOpen}
+      close={() => close(false)}
+      dialogClassName="min-w-100"
+    >
       <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
       <Modal.Body>
         <div className="mt-2 flex w-full flex-col justify-center gap-1.5">
