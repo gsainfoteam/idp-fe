@@ -29,20 +29,24 @@ function ClientPictureOverlay({
 
   return (
     <Dialog isOpen={isOpen} close={close} className="mx-10 w-auto">
-      <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
-      <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>
+      <Dialog.Header>
+        {t('services.detail.picture.delete_overlay.title')}
+      </Dialog.Header>
+      <Dialog.Body>
+        {t('services.detail.picture.delete_overlay.description')}
+      </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close>
+        <Dialog.Close className="grow">
           <Button variant="secondary" className="w-full">
-            {t('common.undo_overlay.sub_button')}
+            {t('services.detail.picture.delete_overlay.cancel')}
           </Button>
         </Dialog.Close>
         <Button
           variant="primary"
           onClick={() => onContinue().then(close)}
-          className="w-full"
+          className="grow"
         >
-          {t('common.undo_overlay.button')}
+          {t('services.detail.picture.delete_overlay.confirm')}
         </Button>
       </Dialog.Footer>
     </Dialog>

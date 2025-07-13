@@ -206,6 +206,12 @@
         "deleting": "이미지 삭제 중...",
         "uploaded": "이미지가 업로드되었어요",
         "deleted": "이미지가 삭제되었어요",
+        "delete_overlay": {
+          "title": "이미지를 삭제하시겠어요?",
+          "description": "이미지를 삭제하면 되돌릴 수 없습니다.",
+          "cancel": "취소",
+          "confirm": "삭제하기"
+        },
         "errors": {
           "failed_to_read": "이미지를 읽는데 실패했어요",
           "failed_to_upload": "이미지 업로드에 실패했어요",
@@ -257,34 +263,12 @@
         "button": "서비스 삭제 요청하기",
         "dialog": {
           "header": "계속 진행하시겠습니까?",
-          "body": "계속하면 되돌릴 수 없습니다",
+          "body": "계속하면 되돌릴 수 없습니다.",
           "confirm": "계속하기",
           "cancel": "그만두기"
         }
       },
       "description": "{{date}}에 삭제가 요청되었습니다"
-    },
-    "openid": {
-      "enable": "id_token 활성화",
-      "title": "OpenID"
-    },
-    "scopes": {
-      "choices": {
-        "no": "없음",
-        "optional": "선택",
-        "required": "필수"
-      },
-      "title": "스코프 (Scopes)",
-      "type": {
-        "email": "GIST 메일",
-        "phone_number": "전화번호",
-        "profile": "프로필",
-        "student_id": "학번"
-      }
-    },
-    "urls": {
-      "placeholder": "redirect_uri를 입력하세요",
-      "title": "URLs"
     }
   },
   "change_password": {
@@ -396,7 +380,6 @@
     "failed_to_read": "파일을 읽는데 실패했어요",
     "file_too_many": "최대 {{max_files}}개의 파일만 업로드할 수 있어요"
   },
-  "language": "ko",
   "profile_change": {
     "title": "프로필 선택",
     "sub_button": "지우기",
@@ -414,5 +397,6 @@
     "step_title": "문제가 발생했습니다",
     "description": "페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다.",
     "button": "돌아가기"
-  }
+  },
+  "language": "ko"
 }
