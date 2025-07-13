@@ -296,7 +296,18 @@ export function Button({
       {/* loading ellipse */}
       {showEllipse && (
         <div className="absolute left-1/2 -translate-x-1/2">
-          <LoadingEllipse className="bg-current" />
+          <LoadingEllipse
+            className="bg-current"
+            containerClassName={
+              size === 'large'
+                ? 'gap-2'
+                : size === 'medium'
+                  ? 'gap-1.5'
+                  : size === 'small'
+                    ? 'gap-1'
+                    : 'gap-0.5'
+            }
+          />
         </div>
       )}
     </button>
