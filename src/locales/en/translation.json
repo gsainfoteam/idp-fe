@@ -3,12 +3,6 @@
     "errors": {
       "copy_failed": "Copy failed",
       "forbidden": "Forbidden"
-    },
-    "undo_overlay": {
-      "title": "Continuing will result in data loss",
-      "content": "Continue?",
-      "button": "Continue",
-      "sub_button": "Cancel"
     }
   },
   "register": {
@@ -35,6 +29,12 @@
         },
         "button": "Agree",
         "sub_button": "Close"
+      },
+      "undo_overlay": {
+        "title": "Cancel sign-up?",
+        "content": "Data will be lost.",
+        "button": "Quit",
+        "sub_button": "Cancel"
       },
       "code": {
         "title": "Enter the 6-digit code\nsent to your email",
