@@ -12,20 +12,16 @@ export function RegisterStepUndoWarningOverlay({
 
   return (
     <Dialog isOpen={isOpen} close={() => close(false)} className="mx-10 w-auto">
-      <Dialog.Header>{t('common.undo_overlay.title')}</Dialog.Header>
-      <Dialog.Body>{t('common.undo_overlay.content')}</Dialog.Body>
+      <Dialog.Header>{t('register.steps.undo_overlay.title')}</Dialog.Header>
+      <Dialog.Body>{t('register.steps.undo_overlay.content')}</Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="w-full">
+        <Dialog.Close className="grow">
           <Button variant="secondary" className="w-full">
-            {t('common.undo_overlay.sub_button')}
+            {t('register.steps.undo_overlay.sub_button')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          onClick={() => close(true)}
-          className="w-full"
-        >
-          {t('common.undo_overlay.button')}
+        <Button variant="primary" className="grow" onClick={() => close(true)}>
+          {t('register.steps.undo_overlay.button')}
         </Button>
       </Dialog.Footer>
     </Dialog>

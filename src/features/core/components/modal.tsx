@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext } from 'react';
 import { useIsDesktop } from '../hooks/use-is-desktop';
 import { Dialog } from './dialog';
 import { BottomSheet } from './bottom-sheet';
+import { cn } from '../utils/cn';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -13,17 +14,37 @@ export const ModalContext = createContext<Pick<ModalProps, 'close'> | null>(
   null,
 );
 
-function Modal({ close, children, ...props }: PropsWithChildren<ModalProps>) {
+function Modal({
+  close,
+  children,
+  className,
+  dialogClassName,
+  bottomSheetClassName,
+  key,
+  ...props
+}: PropsWithChildren<
+  ModalProps & { dialogClassName?: string; bottomSheetClassName?: string }
+>) {
   const { isDesktop } = useIsDesktop();
 
   return (
     <ModalContext.Provider value={{ close }}>
       {isDesktop ? (
-        <Dialog key="dialog" close={close} {...props}>
+        <Dialog
+          key={key}
+          close={close}
+          className={cn(className, dialogClassName)}
+          {...props}
+        >
           {children}
         </Dialog>
       ) : (
-        <BottomSheet key="bottom-sheet" close={close} {...props}>
+        <BottomSheet
+          key={key}
+          close={close}
+          className={cn(className, bottomSheetClassName)}
+          {...props}
+        >
           {children}
         </BottomSheet>
       )}

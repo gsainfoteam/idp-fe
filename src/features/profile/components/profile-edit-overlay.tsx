@@ -44,7 +44,7 @@ export function ProfileEditOverlay({
   if (!user) return null;
 
   return (
-    <Modal isOpen={isOpen} close={handleClose} className="min-w-100">
+    <Modal isOpen={isOpen} close={handleClose} dialogClassName="min-w-100">
       <Modal.Header>{t('profile_change.title')}</Modal.Header>
       <Modal.Body className="flex justify-center">
         <div className="relative w-fit cursor-pointer">

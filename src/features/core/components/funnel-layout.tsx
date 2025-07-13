@@ -38,7 +38,7 @@ function FunnelLayout({
 
   return (
     <div className="bg-funnel-background flex h-dvh items-center justify-center">
-      <div className="relative aspect-[420/800] h-dvh w-auto max-w-full">
+      <div className="relative h-dvh w-full max-w-[420px]">
         <div className="bg-funnel-background flex h-full w-full flex-col">
           {/* Title Bar */}
           <div
