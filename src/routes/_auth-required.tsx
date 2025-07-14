@@ -7,25 +7,32 @@ import {
 
 import { useAuth } from '@/features/auth';
 
-const cleanupAllFunnel = (search: Partial<Record<string, string>>) => {
-  return Object.fromEntries(
-    Object.entries(search).filter(([key]) => !key.endsWith('-step')),
-  );
+const cleanupAllFunnel = (href: string): string => {
+  const url = new URL(href, window.location.origin);
+  const params = url.searchParams;
+
+  for (const key of params.keys()) {
+    if (key.endsWith('-step')) {
+      params.delete(key);
+    }
+  }
+
+  url.search = params.toString();
+  return url.pathname + url.search + url.hash;
 };
 
 const AuthRequiredLayout = () => {
-  const { user, isSigningOut } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
 
   if (user === undefined) return null;
   if (user === null) {
+    const redirect = cleanupAllFunnel(router.history.location.href);
+
     return (
       <Navigate
         to="/auth/login"
-        search={(prev) => ({
-          ...cleanupAllFunnel(prev),
-          ...(isSigningOut ? {} : { redirect: router.history.location.href }),
-        })}
+        search={{ redirect }}
         replace
         viewTransition={{ types: ['reload'] }}
       />
