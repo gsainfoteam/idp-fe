@@ -34,7 +34,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <label className="flex w-fit items-center">
           <input
             type="checkbox"
-            className={cn('peer appearance-none', className)}
+            className={cn(
+              'peer absolute h-0 w-0 overflow-hidden opacity-0',
+              className,
+            )}
             ref={ref}
             disabled={disabled}
             {...props}
