@@ -9,7 +9,7 @@ import { $api } from '@/features/core';
 
 export const useAuth = () => {
   const { t } = useTranslation();
-  const { token, saveToken } = useToken();
+  const { token, saveToken, isSigningOut } = useToken();
   const { data, isLoading, error, refetch } = $api.useQuery(
     'get',
     '/user',
@@ -49,5 +49,5 @@ export const useAuth = () => {
     saveToken(null);
   }, [saveToken, t]);
 
-  return { user, refetch, signOut };
+  return { user, refetch, signOut, isSigningOut };
 };
