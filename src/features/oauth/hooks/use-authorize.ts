@@ -70,7 +70,7 @@ export const useAuthorize = ({
 
     if (prompt === 'none') {
       if (!user)
-        // NOTE: never happens, but just in case
+        // never happens, but just in case
         return redirect({
           error: 'access_denied',
           error_description: 'login_required',

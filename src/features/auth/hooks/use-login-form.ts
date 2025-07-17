@@ -23,7 +23,7 @@ export const useLoginForm = () => {
   const { saveToken } = useToken();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   const { refetch } = useAuth();
   const { setRecentLogin } = useRecentLogin();

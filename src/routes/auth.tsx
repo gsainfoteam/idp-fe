@@ -6,6 +6,7 @@ import { useAuth } from '@/features/auth';
 const AuthLayout = () => {
   const { user } = useAuth();
   const { redirect } = Route.useSearch();
+
   if (user === undefined) return null;
   if (user !== null) return <Navigate to={redirect ?? '/'} />;
   return <Outlet />;

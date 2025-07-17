@@ -43,7 +43,7 @@ export const useInfoForm = ({
   const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {

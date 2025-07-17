@@ -13,8 +13,8 @@ type User = {
 
 export function WithdrawFrame() {
   const { signOut, user } = useAuth();
-  /* assert user is not null */
   if (!user) throw new Error('User not found');
+
   const funnel = useFunnel<{
     password: { password?: string } & User;
     confirm: { password: string } & User;

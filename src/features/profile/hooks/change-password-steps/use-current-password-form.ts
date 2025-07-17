@@ -39,7 +39,7 @@ export const useCurrentPasswordForm = ({
   const { saveToken } = useToken();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   // impossible case, just type guard
