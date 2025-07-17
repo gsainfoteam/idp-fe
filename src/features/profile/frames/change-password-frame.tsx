@@ -33,7 +33,6 @@ export function ChangePasswordFrame() {
     },
   });
 
-  // FIXME: 로그아웃 시 user not found toast가 다발적으로 뜨는 현상 있음
   useEffect(() => {
     if (!user) toast.error(t('toast.invalid_user'));
     if (!token) toast.error(t('toast.invalid_token'));
