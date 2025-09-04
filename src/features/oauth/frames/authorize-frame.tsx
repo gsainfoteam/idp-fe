@@ -66,7 +66,7 @@ function Inner({
                 img={client.picture ?? undefined}
                 size={13}
                 seed={uniqueKey(client.clientId)}
-                className="rounded-lg border border-neutral-200"
+                className="border-basics-tertiary-label rounded-lg border"
               />
               {t('authorize.title', { client: client.name })}
             </div>
