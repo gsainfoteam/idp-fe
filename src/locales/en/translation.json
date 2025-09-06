@@ -170,9 +170,22 @@
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
+      "passkey": "Register Passkey",
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
+    }
+  },
+  "passkey": {
+    "title": "Register Passkey",
+    "description": "Register a passkey to log in more conveniently.",
+    "button": "Register Passkey",
+    "success": "Passkey has been successfully registered",
+    "errors": {
+      "not_supported": "Browser does not support passkeys",
+      "cancelled": "Passkey registration was cancelled",
+      "failed": "Failed to register passkey",
+      "invalid_response": "Invalid response"
     }
   },
   "services": {
