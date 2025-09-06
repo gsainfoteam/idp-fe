@@ -132,10 +132,13 @@
       }
     },
     "errors": {
-      "unauthorized": "이메일 또는 비밀번호를 확인해주세요"
+      "unauthorized": "이메일 또는 비밀번호를 확인해주세요",
+      "invalid_response": "잘못된 응답입니다"
     },
     "buttons": {
       "login": "로그인",
+      "login_with_passkey": "패스키로 로그인",
+      "login_with_password": "비밀번호로 로그인",
       "register": "회원가입",
       "find_password": "비밀번호 찾기",
       "or": "혹은"

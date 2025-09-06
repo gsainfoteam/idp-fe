@@ -9,7 +9,7 @@ enum UserPasskeyVerifyStatus {
   SERVER_ERROR = 500,
 }
 
-export const postUserPasskey = async (
+export const postUserPasskeyVerify = async (
   requestBody: paths['/user/passkey/verify']['post']['requestBody']['content']['application/json'],
 ) => {
   try {
