@@ -7,6 +7,7 @@ import LockIcon from '@/assets/icons/duo/lock.svg?react';
 import LogoutIcon from '@/assets/icons/duo/logout.svg?react';
 import UserIcon from '@/assets/icons/duo/user.svg?react';
 import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
+import PasskeyIcon from '@/assets/icons/duo/passkey.svg?react';
 import { useAuth } from '@/features/auth';
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 import {
@@ -20,14 +21,14 @@ import {
 import { overlay } from 'overlay-kit';
 
 interface MenuButtonProps {
-  icon: ReactNode;
+  icon: React.ComponentType<{ className?: string }>;
   onClick?: () => void;
   variant?: 'default' | 'danger';
   children: ReactNode;
 }
 
 function MenuButton({
-  icon,
+  icon: Icon,
   onClick,
   variant = 'default',
   children,
@@ -47,7 +48,15 @@ function MenuButton({
           ? 'text-neutral-950 dark:text-neutral-50'
           : 'text-warning-900 dark:text-warning-300',
       )}
-      prefixIcon={icon}
+      prefixIcon={
+        <Icon
+          className={
+            variant === 'default'
+              ? 'fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300'
+              : 'fill-red-200 stroke-red-800 dark:fill-red-800 dark:stroke-red-200'
+          }
+        />
+      }
       onClick={onClick}
     >
       {children}
@@ -92,9 +101,7 @@ export function ProfileFrame() {
         </div>
         <div className="flex flex-col gap-3">
           <MenuButton
-            icon={
-              <UserIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
-            }
+            icon={UserIcon}
             onClick={() => {
               overlay.open(({ isOpen, close }) => (
                 <ProfileEditOverlay isOpen={isOpen} close={close} />
@@ -104,38 +111,25 @@ export function ProfileFrame() {
             {t('profile.menu.edit')}
           </MenuButton>
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
-            <MenuButton
-              icon={
-                <LockIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
-              }
-            >
+            <MenuButton icon={LockIcon}>
               {t('profile.menu.password')}
             </MenuButton>
           </Link>
+          <Link to="/passkey" search={(prev) => ({ ...prev })}>
+            <MenuButton icon={PasskeyIcon}>
+              {t('profile.menu.passkey')}
+            </MenuButton>
+          </Link>
           <Link to="/clients">
-            <MenuButton
-              icon={
-                <CodeIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
-              }
-            >
+            <MenuButton icon={CodeIcon}>
               {t('profile.menu.developer')}
             </MenuButton>
           </Link>
-          <MenuButton
-            icon={
-              <LogoutIcon className="fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300" />
-            }
-            onClick={signOut}
-          >
+          <MenuButton icon={LogoutIcon} onClick={signOut}>
             {t('profile.menu.logout')}
           </MenuButton>
           <Link to="/withdraw">
-            <MenuButton
-              variant="danger"
-              icon={
-                <WithdrawalIcon className="fill-red-200 stroke-red-800 dark:fill-red-800 dark:stroke-red-200" />
-              }
-            >
+            <MenuButton variant="danger" icon={WithdrawalIcon}>
               {t('profile.menu.withdrawal')}
             </MenuButton>
           </Link>

@@ -9,6 +9,7 @@ import { NewPasswordStep } from './change-password-steps/new-password-step';
 import { patchUserPassword } from '@/data/patch-user-password';
 import { useAuth, useToken } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
+import { useNavigate } from '@tanstack/react-router';
 
 type StepContext = Pretty<Partial<Parameters<typeof patchUserPassword>[0]>>;
 
@@ -25,6 +26,7 @@ export function ChangePasswordFrame() {
   const { user, signOut } = useAuth();
   const { token } = useToken();
   const { t } = useTranslation();
+  const navigate = useNavigate({ from: '/change-password' });
   const funnel = useFunnel<ChangePasswordSteps>({
     id: 'change_password',
     initial: {
@@ -64,6 +66,7 @@ export function ChangePasswordFrame() {
           onUndo={() => history.back()}
           onNext={async () => {
             funnel.history.cleanup();
+            await navigate({ to: '/auth/login' });
             await signOut();
           }}
         />

@@ -132,13 +132,21 @@
       }
     },
     "errors": {
-      "unauthorized": "Please check your email or password"
+      "unauthorized": "Please check your email or password",
+      "invalid_response": "Invalid Response",
+      "passkey_not_supported": "Browser does not support passkeys"
     },
     "buttons": {
       "login": "Log In",
       "register": "Register",
       "find_password": "Find Password",
-      "or": "or"
+      "or": "or",
+      "login_with_passkey": "Login with Passkey",
+      "login_with_face_id": "Login with Face ID",
+      "login_with_touch_id": "Login with Touch ID",
+      "login_with_windows_hello": "Login with Windows Hello",
+      "login_with_biometric": "Login with Biometric",
+      "login_with_password": "Login With Password"
     }
   },
   "authorize": {
@@ -170,9 +178,30 @@
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
+      "passkey": "Register Passkey",
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
+    }
+  },
+  "passkey": {
+    "title": "Register Passkey",
+    "steps": {
+      "register": {
+        "title": "Register Passkey",
+        "description": "Register a passkey to log in more conveniently.",
+        "button": "Register Passkey",
+        "errors": {
+          "not_supported": "Browser does not support passkeys",
+          "cancelled": "Passkey registration was cancelled",
+          "failed": "Failed to register passkey",
+          "invalid_response": "Invalid response"
+        }
+      },
+      "complete": {
+        "title": "Passkey has been successfully registered",
+        "button": "Back to Profile"
+      }
     }
   },
   "services": {
