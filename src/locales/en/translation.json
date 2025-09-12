@@ -141,6 +141,10 @@
       "find_password": "Find Password",
       "or": "or",
       "login_with_passkey": "Login with Passkey",
+      "login_with_face_id": "Login with Face ID",
+      "login_with_touch_id": "Login with Touch ID",
+      "login_with_windows_hello": "Login with Windows Hello",
+      "login_with_biometric": "Login with Biometric",
       "login_with_password": "Login With Password"
     }
   },

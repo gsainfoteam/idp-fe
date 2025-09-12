@@ -138,6 +138,10 @@
     "buttons": {
       "login": "로그인",
       "login_with_passkey": "패스키로 로그인",
+      "login_with_face_id": "Face ID로 로그인",
+      "login_with_touch_id": "Touch ID로 로그인",
+      "login_with_windows_hello": "Windows Hello로 로그인",
+      "login_with_biometric": "생체인증으로 로그인",
       "login_with_password": "비밀번호로 로그인",
       "register": "회원가입",
       "find_password": "비밀번호 찾기",

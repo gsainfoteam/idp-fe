@@ -5,17 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { PasskeyLoginForm, usePasskeyLoginForm } from '@/features/auth';
 
 import TextLogo from '@/assets/logos/text-logo.svg?react';
-import KeyIcon from '@/assets/icons/line/key.svg?react';
 import {
   Button,
   FunnelLayout,
   LoadingOverlay,
   ThemeSwitcher,
 } from '@/features/core';
+import { getOsVariant } from '../utils/get-os-variant';
 
 export function PasskeyLoginFrame({ changeMode }: { changeMode: () => void }) {
   const { form, onSubmit } = usePasskeyLoginForm();
   const { t } = useTranslation();
+  const { prefixIcon, buttonText } = getOsVariant();
 
   return (
     <FunnelLayout contentClassName="flex flex-col items-center justify-center">
@@ -41,9 +42,9 @@ export function PasskeyLoginFrame({ changeMode }: { changeMode: () => void }) {
                 className="w-full"
                 disabled={!form.formState.isValid}
                 loading={form.formState.isSubmitting}
-                prefixIcon={<KeyIcon />}
+                prefixIcon={prefixIcon}
               >
-                {t(`login.buttons.login_with_passkey`)}
+                {buttonText}
               </Button>
               <div className="flex w-full items-center justify-center gap-3">
                 <div className="bg-basics-tertiary-label h-0.25 w-full" />

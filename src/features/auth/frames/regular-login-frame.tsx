@@ -5,17 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { LoginForm, useLoginForm } from '@/features/auth';
 
 import TextLogo from '@/assets/logos/text-logo.svg?react';
-import KeyIcon from '@/assets/icons/line/key.svg?react';
 import {
   Button,
   FunnelLayout,
   LoadingOverlay,
   ThemeSwitcher,
 } from '@/features/core';
+import { getOsVariant } from '../utils/get-os-variant';
 
 export function RegularLoginFrame({ changeMode }: { changeMode: () => void }) {
   const { form, onSubmit } = useLoginForm();
   const { t } = useTranslation();
+  const { prefixIcon, buttonText } = getOsVariant();
 
   return (
     <FunnelLayout contentClassName="flex flex-col items-center justify-center">
@@ -53,11 +54,11 @@ export function RegularLoginFrame({ changeMode }: { changeMode: () => void }) {
                 variant="default"
                 className="w-full"
                 disabled={form.formState.isSubmitting}
-                prefixIcon={<KeyIcon />}
+                prefixIcon={prefixIcon}
                 type="button"
                 onClick={changeMode}
               >
-                {t(`login.buttons.login_with_passkey`)}
+                {buttonText}
               </Button>
               <div className="flex w-full items-center justify-center gap-1">
                 <Link to="/auth/register" search={(prev) => ({ ...prev })}>
