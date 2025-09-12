@@ -1,9 +1,10 @@
-import { useNavigate } from '@tanstack/react-router';
 import { CompleteStep } from './issue-password-steps/complete-step';
 import { EmailStep } from './issue-password-steps/email-step';
 
 import { postUserPassword } from '@/data/post-user-password';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
+import { useAuth } from '@/features/auth';
+import { useNavigate } from '@tanstack/react-router';
 
 type StepContext = Pretty<Partial<Parameters<typeof postUserPassword>[0]>>;
 
@@ -13,6 +14,7 @@ export type IssuePasswordSteps = {
 };
 
 export function IssuePasswordFrame() {
+  const { signOut } = useAuth();
   const navigate = useNavigate({ from: '/issue-password' });
   const funnel = useFunnel<IssuePasswordSteps>({
     id: 'issue_password',
@@ -36,6 +38,7 @@ export function IssuePasswordFrame() {
           onNext={async () => {
             funnel.history.cleanup();
             await navigate({ to: '/auth/login' });
+            await signOut();
           }}
         />
       )}

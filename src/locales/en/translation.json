@@ -132,13 +132,16 @@
       }
     },
     "errors": {
-      "unauthorized": "Please check your email or password"
+      "unauthorized": "Please check your email or password",
+      "invalid_response": "Invalid Response"
     },
     "buttons": {
       "login": "Log In",
       "register": "Register",
       "find_password": "Find Password",
-      "or": "or"
+      "or": "or",
+      "login_with_passkey": "Login with Passkey",
+      "login_with_password": "Login With Password"
     }
   },
   "authorize": {
@@ -178,14 +181,22 @@
   },
   "passkey": {
     "title": "Register Passkey",
-    "description": "Register a passkey to log in more conveniently.",
-    "button": "Register Passkey",
-    "success": "Passkey has been successfully registered",
-    "errors": {
-      "not_supported": "Browser does not support passkeys",
-      "cancelled": "Passkey registration was cancelled",
-      "failed": "Failed to register passkey",
-      "invalid_response": "Invalid response"
+    "steps": {
+      "register": {
+        "title": "Register Passkey",
+        "description": "Register a passkey to log in more conveniently.",
+        "button": "Register Passkey",
+        "errors": {
+          "not_supported": "Browser does not support passkeys",
+          "cancelled": "Passkey registration was cancelled",
+          "failed": "Failed to register passkey",
+          "invalid_response": "Invalid response"
+        }
+      },
+      "complete": {
+        "title": "Passkey has been successfully registered",
+        "button": "Back to Profile"
+      }
     }
   },
   "services": {
