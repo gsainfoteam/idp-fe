@@ -35,6 +35,11 @@ export const usePasskeyLoginForm = () => {
   const { setRecentLogin } = useRecentLogin();
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    if (!navigator.credentials) {
+      toast.error(t('login.errors.passkey_not_supported'));
+      return;
+    }
+
     const { data: challengeData, status: challengeStatus } =
       await postAuthPasskey({
         email: formData.email,

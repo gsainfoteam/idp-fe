@@ -133,7 +133,8 @@
     },
     "errors": {
       "unauthorized": "Please check your email or password",
-      "invalid_response": "Invalid Response"
+      "invalid_response": "Invalid Response",
+      "passkey_not_supported": "Browser does not support passkeys"
     },
     "buttons": {
       "login": "Log In",

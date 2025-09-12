@@ -11,12 +11,12 @@ import {
   LoadingOverlay,
   ThemeSwitcher,
 } from '@/features/core';
-import { getOsVariant } from '../utils/get-os-variant';
+import { useOsVariant } from '../hooks/use-os-variant';
 
 export function RegularLoginFrame({ changeMode }: { changeMode: () => void }) {
   const { form, onSubmit } = useLoginForm();
   const { t } = useTranslation();
-  const { prefixIcon, buttonText } = getOsVariant();
+  const { prefixIcon, buttonText } = useOsVariant();
 
   return (
     <FunnelLayout contentClassName="flex flex-col items-center justify-center">
@@ -53,7 +53,7 @@ export function RegularLoginFrame({ changeMode }: { changeMode: () => void }) {
               <Button
                 variant="default"
                 className="w-full"
-                disabled={form.formState.isSubmitting}
+                disabled={form.formState.isSubmitting || !navigator.credentials}
                 prefixIcon={prefixIcon}
                 type="button"
                 onClick={changeMode}

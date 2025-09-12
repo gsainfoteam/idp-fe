@@ -133,7 +133,8 @@
     },
     "errors": {
       "unauthorized": "이메일 또는 비밀번호를 확인해주세요",
-      "invalid_response": "잘못된 응답입니다"
+      "invalid_response": "잘못된 응답입니다",
+      "passkey_not_supported": "브라우저에서 패스키를 지원하지 않습니다"
     },
     "buttons": {
       "login": "로그인",
