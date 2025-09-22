@@ -178,7 +178,7 @@
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
-      "passkey": "Register Passkey",
+      "passkey": "Passkey Manager",
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
@@ -196,6 +196,14 @@
           "cancelled": "Passkey registration was cancelled",
           "failed": "Failed to register passkey",
           "invalid_response": "Invalid response"
+        },
+        "name": {
+          "placeholder": "i.e. My iPhone, 1Password",
+          "label": "Passkey Name",
+          "errors": {
+            "format": "Please enter the Passkey name",
+            "max_length": "You can enter up to 50 characters for Passkey"
+          }
         }
       },
       "complete": {

@@ -10,15 +10,31 @@ import {
   base64UrlToArrayBuffer,
   credentialTypeGuard,
 } from '@/features/core';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
+import z from 'zod';
+
+// TODO: 비밀번호 관리자 이름 자동으로 채우기 구현 시도해보기
+
+const createSchema = (t: TFunction) =>
+  z.object({
+    name: z
+      .string()
+      .min(1, { message: t('passkey.steps.register.name.errors.format') })
+      .max(50, { message: t('passkey.steps.register.name.errors.max_length') }),
+  });
+
+export type PasskeyFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const form = useForm({
+  const form = useForm<PasskeyFormSchema>({
+    resolver: zodResolver(createSchema(t)),
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async () => {
+  const onSubmit = form.handleSubmit(async (formData) => {
     if (!user) {
       toast.error(t('toast.invalid_user'));
       return;
@@ -83,7 +99,7 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
 
     const { data: verifyData, status: verifyStatus } =
       await postUserPasskeyVerify({
-        email: user.email,
+        name: formData.name,
         registrationResponse: {
           id: credential.id,
           rawId: arrayBufferToBase64Url(credential.rawId),

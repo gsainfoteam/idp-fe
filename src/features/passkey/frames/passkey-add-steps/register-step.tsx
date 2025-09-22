@@ -1,16 +1,16 @@
 import { useFormState } from 'react-hook-form';
-import { usePasskeyForm } from '../../hooks/use-passkey-form';
 import { useTranslation } from 'react-i18next';
-import { Button, FunnelLayout } from '@/features/core';
 
 import KeyIcon from '@/assets/icons/line/key.svg?react';
+import { Button, FunnelLayout, Input, Label } from '@/features/core';
+import { usePasskeyForm } from '@/features/passkey';
 
 export function RegisterStep({ onNext }: { onNext: () => void }) {
   const {
-    form: { control },
+    form: { control, register },
     onSubmit,
   } = usePasskeyForm({ onNext });
-  const { isSubmitting, isValid } = useFormState({ control });
+  const { isSubmitting, isValid, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,17 @@ export function RegisterStep({ onNext }: { onNext: () => void }) {
             {t('passkey.steps.register.button')}
           </Button>
         }
-      />
+      >
+        <Label text={t('passkey.steps.register.name.label')}>
+          <Input
+            type="text"
+            placeholder={t('passkey.steps.register.name.placeholder')}
+            error={errors.name?.message}
+            disabled={isSubmitting}
+            {...register('name')}
+          />
+        </Label>
+      </FunnelLayout>
     </form>
   );
 }
