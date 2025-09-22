@@ -1,12 +1,12 @@
-import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-
-import { useClientList } from '../hooks/use-client-list';
-import { Avatar, Button, cn, FunnelLayout, uniqueKey } from '@/features/core';
 
 import puzzleImage from '@/assets/icons/color/puzzle.png';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
+import { Avatar, Button, FunnelLayout, cn, uniqueKey } from '@/features/core';
+import { Link } from '@tanstack/react-router';
+
+import { useClientList } from '../hooks/use-client-list';
 
 export function ClientListFrame() {
   const { t } = useTranslation();
