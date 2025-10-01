@@ -1,7 +1,6 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import KeyIcon from '@/assets/icons/line/key.svg?react';
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 import { usePasskeyForm } from '@/features/passkey';
 
