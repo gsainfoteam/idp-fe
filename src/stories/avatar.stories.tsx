@@ -12,6 +12,6 @@ type Story = StoryObj<typeof meta>;
 export const 임정훈: Story = {
   args: {
     seed: uniqueKey('20255182'),
-    children: '임정훈',
+    children: '임정훈'.charAt(0),
   },
 };
