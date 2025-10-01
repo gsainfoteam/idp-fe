@@ -209,6 +209,22 @@
       "complete": {
         "title": "Passkey has been successfully registered",
         "button": "Back to Profile"
+      },
+      "list": {
+        "add": "Add Passkey",
+        "description": "You can check the passkeys you have added here.",
+        "empty": "You have no passkeys!\\nClick the button below to add a new passkey.",
+        "errors": {
+          "failed_to_delete": "Failed to delete passkey",
+          "failed_to_fetch": "Failed to load passkey list"
+        },
+        "remove_overlay": {
+          "cancel": "Cancel",
+          "confirm": "Delete",
+          "description": "The passkey will be deleted permanently.",
+          "title": "Delete Passkey?"
+        },
+        "title": "My Passkeys"
       }
     }
   },

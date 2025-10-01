@@ -46,9 +46,7 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
     }
 
     const { data: challengeData, status: challengeStatus } =
-      await postUserPasskey({
-        email: user.email,
-      });
+      await postUserPasskey();
 
     if (!challengeData || challengeStatus) {
       switch (challengeStatus) {
