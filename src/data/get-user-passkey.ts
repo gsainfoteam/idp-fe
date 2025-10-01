@@ -2,27 +2,29 @@ import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
 import type { ErrorStatus } from 'openapi-typescript-helpers';
 
-enum UserPasskeyStatus {
-  EMAIL_NOT_FOUND = 404,
+enum GetUserPasskeyStatus {
+  UNAUTHORIZED = 401,
   SERVER_ERROR = 500,
 }
 
-export const postUserPasskey = async () => {
+export const getUserPasskey = async () => {
   try {
-    const { data } = await api.POST('/user/passkey');
+    const { data } = await api.GET('/user/passkey');
 
     return { data };
   } catch (err) {
     if (err instanceof Response) {
       const status = err.status as Extract<
-        keyof paths['/user/passkey']['post']['responses'],
+        keyof paths['/user/passkey']['get']['responses'],
         ErrorStatus
       >;
 
       return {
         status:
-          status in UserPasskeyStatus
-            ? (UserPasskeyStatus[status] as keyof typeof UserPasskeyStatus)
+          status in GetUserPasskeyStatus
+            ? (GetUserPasskeyStatus[
+                status
+              ] as keyof typeof GetUserPasskeyStatus)
             : ('UNKNOWN_ERROR' as const),
       };
     }
