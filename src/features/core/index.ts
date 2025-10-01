@@ -25,7 +25,6 @@ export * from './utils/palette';
 export * from './utils/time-string';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
-export * from './utils/credential';
 export * from './hooks/use-funnel';
 export * from './hooks/use-theme';
 export * from './hooks/use-is-mounted';

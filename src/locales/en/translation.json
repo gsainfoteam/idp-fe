@@ -195,7 +195,8 @@
           "not_supported": "Browser does not support passkeys",
           "cancelled": "Passkey registration was cancelled",
           "failed": "Failed to register passkey",
-          "invalid_response": "Invalid response"
+          "invalid_response": "Invalid response",
+          "credential_id_conflict": "Passkey already exists"
         },
         "name": {
           "placeholder": "i.e. My iPhone, 1Password",

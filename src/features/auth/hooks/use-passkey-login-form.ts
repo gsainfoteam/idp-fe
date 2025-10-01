@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 
 import { postAuthPasskey } from '@/data/post-auth-passkey';
 import { postAuthPasskeyVerify } from '@/data/post-auth-passkey-verify';
+import { useRecentLogin } from '@/features/oauth';
 import {
   arrayBufferToBase64Url,
   base64UrlToArrayBuffer,
   credentialTypeGuard,
-} from '@/features/core';
-import { useRecentLogin } from '@/features/oauth';
+} from '@/features/passkey';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
 import { z } from 'zod';

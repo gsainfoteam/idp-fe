@@ -219,7 +219,8 @@
           "not_supported": "브라우저에서 패스키를 지원하지 않습니다",
           "cancelled": "패스키 등록이 취소되었습니다",
           "failed": "패스키 등록에 실패했습니다",
-          "invalid_response": "잘못된 응답입니다"
+          "invalid_response": "잘못된 응답입니다",
+          "credential_id_conflict": "이미 등록된 패스키입니다"
         }
       },
       "complete": {

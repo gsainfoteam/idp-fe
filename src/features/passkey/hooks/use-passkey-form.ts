@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -9,32 +8,15 @@ import {
   arrayBufferToBase64Url,
   base64UrlToArrayBuffer,
   credentialTypeGuard,
-} from '@/features/core';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
-import z from 'zod';
-
-// TODO: 비밀번호 관리자 이름 자동으로 채우기 구현 시도해보기
-
-const createSchema = (t: TFunction) =>
-  z.object({
-    name: z
-      .string()
-      .min(1, { message: t('passkey.steps.register.name.errors.format') })
-      .max(50, { message: t('passkey.steps.register.name.errors.max_length') }),
-  });
-
-export type PasskeyFormSchema = z.infer<ReturnType<typeof createSchema>>;
+  detectPasswordManager,
+  generatePasskeyName,
+} from '@/features/passkey';
 
 export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const form = useForm<PasskeyFormSchema>({
-    resolver: zodResolver(createSchema(t)),
-    mode: 'onChange',
-  });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
+  const onSubmit = async () => {
     if (!user) {
       toast.error(t('toast.invalid_user'));
       return;
@@ -79,12 +61,22 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
       ),
     };
 
-    const credential = (await navigator.credentials.create({
-      publicKey,
-    })) as PublicKeyCredential | null;
+    let credential: PublicKeyCredential | null = null;
+    try {
+      credential = (await navigator.credentials.create({
+        publicKey,
+      })) as PublicKeyCredential | null;
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t('passkey.steps.register.errors.failed'),
+      );
+      return;
+    }
 
     if (!credential) {
-      toast.error(t('passkey.steps.register.errors.cancelled'));
+      toast.error(t('passkey.steps.register.errors.failed'));
       return;
     }
 
@@ -95,9 +87,13 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
       return;
     }
 
+    // 패스키 이름 자동 생성
+    const passwordManager = detectPasswordManager();
+    const passkeyName = generatePasskeyName(passwordManager);
+
     const { data: verifyData, status: verifyStatus } =
       await postUserPasskeyVerify({
-        name: formData.name,
+        name: passkeyName,
         registrationResponse: {
           id: credential.id,
           rawId: arrayBufferToBase64Url(credential.rawId),
@@ -120,6 +116,11 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
         case 'EMAIL_NOT_FOUND':
           toast.error(t('toast.invalid_user'));
           break;
+        case 'CREDENTIAL_ID_CONFLICT':
+          toast.error(
+            t('passkey.steps.register.errors.credential_id_conflict'),
+          );
+          break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
           break;
@@ -131,7 +132,7 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
     }
 
     onNext();
-  });
+  };
 
-  return { form, onSubmit };
+  return { onSubmit };
 };
