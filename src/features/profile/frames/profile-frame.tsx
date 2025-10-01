@@ -83,7 +83,6 @@ export function ProfileFrame() {
       <div className="flex flex-col gap-6">
         <div className="flex h-fit w-full items-center gap-3 px-3">
           <Avatar
-            name={user.name}
             img={user.picture ?? undefined}
             seed={uniqueKey(user.studentId)}
             className="cursor-pointer"
@@ -92,7 +91,9 @@ export function ProfileFrame() {
                 <ProfileEditOverlay isOpen={isOpen} close={close} />
               ));
             }}
-          />
+          >
+            {user.name.charAt(0)}
+          </Avatar>
           <div className="flex flex-col">
             <div className="text-title-3 text-label">{user.name}</div>
             <div className="text-body-2 text-basics-secondary-label">

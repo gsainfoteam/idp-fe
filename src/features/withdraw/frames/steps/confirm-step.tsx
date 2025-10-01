@@ -1,10 +1,10 @@
-import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useConfirmWithdrawalForm } from '../../hooks/steps/use-confirm-withdrawal-form';
-
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 import { useAuth } from '@/features/auth';
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { Link } from '@tanstack/react-router';
+
+import { useConfirmWithdrawalForm } from '../../hooks/steps/use-confirm-withdrawal-form';
 
 export function ConfirmStep({
   onNext,
@@ -62,10 +62,11 @@ export function ConfirmStep({
             <div className="flex flex-col gap-6">
               <div className="flex h-fit w-full items-center gap-3 px-3">
                 <Avatar
-                  name={user.name}
                   img={user.picture ?? undefined}
                   seed={uniqueKey(user.studentId)}
-                />
+                >
+                  {user.name.charAt(0)}
+                </Avatar>
                 <div className="flex flex-col">
                   <div className="text-title-3 text-basics-primary-label">
                     {user.name}
@@ -84,10 +85,11 @@ export function ConfirmStep({
                     <Avatar
                       size={10}
                       img={client.picture ?? undefined}
-                      name={client.name}
                       seed={uniqueKey(client.clientId)}
                       className="shrink-0 rounded-lg"
-                    />
+                    >
+                      {client.name.charAt(0)}
+                    </Avatar>
                     <div className="min-w-0 flex-1">
                       <div className="text-title-3 text-basics-primary-label truncate">
                         {client.name}
@@ -105,9 +107,10 @@ export function ConfirmStep({
               <Avatar
                 size={32}
                 img={user.picture ?? undefined}
-                name={context.name}
                 seed={uniqueKey(context.studentId.toString())}
-              />
+              >
+                {context.name.charAt(0)}
+              </Avatar>
               <div className="mt-3 flex flex-col items-center">
                 <div className="text-title-1 text-basics-primary-label text-center">
                   {context.name}

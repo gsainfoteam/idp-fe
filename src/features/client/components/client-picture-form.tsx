@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { Client } from '../hooks/use-client';
 import { useTranslation } from 'react-i18next';
-import { useClientPictureForm } from '../hooks/use-client-picture-form';
-import {
-  Avatar,
-  uniqueKey,
-  FileUpload,
-  Dialog,
-  Button,
-  cn,
-} from '@/features/core';
+
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
+import {
+  Avatar,
+  Button,
+  Dialog,
+  FileUpload,
+  cn,
+  uniqueKey,
+} from '@/features/core';
 import { useLoading } from '@/features/core';
 import { IconButton } from '@/features/core/components/icon-button';
 import { overlay } from 'overlay-kit';
+
+import { Client } from '../hooks/use-client';
+import { useClientPictureForm } from '../hooks/use-client-picture-form';
 
 function ClientPictureOverlay({
   isOpen,
@@ -92,12 +94,13 @@ export function ClientPictureForm({
         >
           <div className={client.deleteRequestedAt != null ? 'grayscale' : ''}>
             <Avatar
-              name={client.name}
               img={previewImage ?? undefined}
               seed={uniqueKey(client.clientId)}
               size={25}
               className="rounded-lg"
-            />
+            >
+              {client.name.charAt(0)}
+            </Avatar>
           </div>
         </div>
         <div className="flex flex-col gap-3">

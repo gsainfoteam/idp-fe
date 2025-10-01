@@ -16,8 +16,8 @@ export function ClientListFrame() {
 
   return (
     <FunnelLayout
-      stepTitle={t('services.list.title')}
       title={t('profile.menu.developer')}
+      stepTitle={t('services.list.title')}
       description={t('services.list.description')}
       button={
         <Link to="/clients/new">
@@ -51,7 +51,6 @@ export function ClientListFrame() {
                 >
                   <Avatar
                     size={10}
-                    name={client.name}
                     img={client.picture ?? undefined}
                     seed={uniqueKey(client.clientId)}
                     className={cn(
@@ -59,7 +58,9 @@ export function ClientListFrame() {
                       client.deleteRequestedAt != null &&
                         'border border-neutral-200',
                     )}
-                  />
+                  >
+                    {client.name.charAt(0)}
+                  </Avatar>
                 </div>
                 <div className="min-w-0 flex-1">
                   <div
