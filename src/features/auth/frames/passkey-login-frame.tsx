@@ -1,16 +1,16 @@
-import { Link } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { PasskeyLoginForm, usePasskeyLoginForm } from '@/features/auth';
-
 import TextLogo from '@/assets/logos/text-logo.svg?react';
+import { PasskeyLoginForm, usePasskeyLoginForm } from '@/features/auth';
 import {
   Button,
   FunnelLayout,
   LoadingOverlay,
   ThemeSwitcher,
 } from '@/features/core';
+import { Link } from '@tanstack/react-router';
+
 import { useOsVariant } from '../hooks/use-os-variant';
 
 export function PasskeyLoginFrame({ changeMode }: { changeMode: () => void }) {

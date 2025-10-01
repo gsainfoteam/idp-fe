@@ -26,7 +26,6 @@ export function RegisterStep({ onNext }: { onNext: () => void }) {
             className="w-full"
             loading={isSubmitting}
             disabled={!isValid || isSubmitting}
-            prefixIcon={<KeyIcon />}
           >
             {t('passkey.steps.register.button')}
           </Button>
