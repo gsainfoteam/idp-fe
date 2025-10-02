@@ -25,6 +25,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "libphonenumber-js": "^1.12.9",
+    "lucide-react": "^0.544.0",
     "motion": "^12.23.3",
     "openapi-fetch": "^0.13.8",
     "openapi-react-query": "^0.3.2",

@@ -2,7 +2,13 @@ import { useTranslation } from 'react-i18next';
 
 import lockImage from '@/assets/icons/color/lock.png';
 import KeyIcon from '@/assets/icons/line/key.svg?react';
-import { Avatar, Button, Card, FunnelLayout, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  Button,
+  FunnelLayout,
+  SwipeCard,
+  uniqueKey,
+} from '@/features/core';
 import { Link } from '@tanstack/react-router';
 
 import { usePasskeyList } from '../hooks/use-passkey-list';
@@ -27,7 +33,8 @@ export function PasskeyListFrame() {
       {passkeys?.length ? (
         <div className="flex flex-col gap-3">
           {passkeys.map((passkey) => (
-            <Card
+            <SwipeCard
+              key={passkey.id}
               avatar={
                 <Avatar
                   size={10}
@@ -37,9 +44,14 @@ export function PasskeyListFrame() {
                   <KeyIcon />
                 </Avatar>
               }
-              title={passkey.name}
-              description={`Last used: ${passkey.loginAt}`}
-            />
+            >
+              <div className="text-title-3 text-basics-primary-label truncate">
+                <div className="flex items-center gap-1">{passkey.name}</div>
+              </div>
+              <div className="text-label-2 text-basics-secondary-label truncate">
+                Last used: {passkey.loginAt}
+              </div>
+            </SwipeCard>
           ))}
         </div>
       ) : (

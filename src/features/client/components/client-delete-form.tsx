@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog } from '@/features/core';
-import { Client } from '../hooks/use-client';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
-import { useClientDeleteForm } from '../hooks/use-client-delete-form';
+import { Button, Dialog } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 
-function ClientDeleteOverlay({
+import { Client } from '../hooks/use-client';
+import { useClientDeleteForm } from '../hooks/use-client-delete-form';
+
+export function ClientDeleteOverlay({
   isOpen,
   close,
 }: {

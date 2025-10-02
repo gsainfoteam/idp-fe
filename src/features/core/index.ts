@@ -19,7 +19,7 @@ export * from './components/modal';
 export * from './components/icon-button';
 export * from './components/copy-input';
 export * from './components/toast';
-export * from './components/card';
+export * from './components/swipe-card';
 
 export * from './services/api';
 
