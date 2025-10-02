@@ -87,7 +87,7 @@ export function ClientListFrame() {
                   </Avatar>
                 </div>
               }
-              action={
+              icon={
                 <ChevronRightIcon
                   className={cn(
                     'text-basics-secondary-label shrink-0',

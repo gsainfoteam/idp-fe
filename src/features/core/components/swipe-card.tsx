@@ -18,7 +18,7 @@ interface SwipeAction {
 interface SwipeCardProps extends PropsWithChildren<MotionProps> {
   avatar: React.ReactNode;
   description?: string;
-  action?: React.ReactNode;
+  icon?: React.ReactNode;
   className?: string;
 
   actionWidth?: number;
@@ -30,7 +30,7 @@ interface SwipeCardProps extends PropsWithChildren<MotionProps> {
 
 export function SwipeCard({
   avatar,
-  action,
+  icon,
   className,
   children,
 
@@ -178,7 +178,7 @@ export function SwipeCard({
       >
         <div>{avatar}</div>
         <div className="min-w-0 flex-1">{children}</div>
-        {action}
+        {icon}
       </motion.div>
     </div>
   );

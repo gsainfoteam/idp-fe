@@ -62,9 +62,7 @@ export const ClientCard: Story = {
         </div>
       </>
     ),
-    action: (
-      <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
-    ),
+    icon: <ChevronRightIcon className="text-basics-secondary-label shrink-0" />,
     className: 'max-w-md',
   },
 };
@@ -105,7 +103,7 @@ export const ClientDeleteRequestedCard: Story = {
         </div>
       </>
     ),
-    action: (
+    icon: (
       <ChevronRightIcon
         className={cn(
           'text-basics-secondary-label shrink-0',
