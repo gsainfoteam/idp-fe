@@ -1,12 +1,14 @@
-import { postClientDelete } from '@/data/post-client-delete';
-import { Client } from './use-client';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-export const useClientDeleteForm = (client: Client) => {
+import { postClientDelete } from '@/data/post-client-delete';
+
+import { Client } from './use-client';
+
+export const useClientDeleteForm = () => {
   const { t } = useTranslation();
 
-  const onSubmit = async () => {
+  const onSubmit = async (client: Client) => {
     const { status } = await postClientDelete(client.clientId);
 
     if (status) {
