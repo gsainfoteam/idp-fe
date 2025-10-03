@@ -22,14 +22,6 @@ export function PasskeyListFrame() {
   const { t } = useTranslation();
   const { passkeys, refetch } = usePasskeyList();
 
-  // FIXME: Remove mock data
-  passkeys?.push({
-    id: '1',
-    name: 'My First Passkey',
-    loginAt: '2023-10-01 12:00:00',
-    createdAt: '2023-09-01 12:00:00',
-  });
-
   return (
     <FunnelLayout
       title={t('passkey.title')}
