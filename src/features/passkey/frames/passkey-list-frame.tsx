@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 import lockImage from '@/assets/icons/color/lock.png';
 import KeyIcon from '@/assets/icons/line/key.svg?react';
+import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
+import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 import {
   Avatar,
   Button,
@@ -16,6 +18,14 @@ import { usePasskeyList } from '../hooks/use-passkey-list';
 export function PasskeyListFrame() {
   const { t } = useTranslation();
   const { passkeys } = usePasskeyList();
+
+  // FIXME: Remove mock data
+  passkeys?.push({
+    id: '1',
+    name: 'My First Passkey',
+    loginAt: '2023-10-01 12:00:00',
+    createdAt: '2023-09-01 12:00:00',
+  });
 
   return (
     <FunnelLayout
@@ -44,6 +54,20 @@ export function PasskeyListFrame() {
                   <KeyIcon />
                 </Avatar>
               }
+              leftActions={[
+                {
+                  bg: '#FFAC59',
+                  content: <EditLineIcon className="text-white" />,
+                  onClick: async () => alert('Not implemented yet.'),
+                },
+              ]}
+              rightActions={[
+                {
+                  bg: 'var(--color-red-400)',
+                  content: <TrashBinIcon className="text-white" />,
+                  onClick: async () => alert('Not implemented yet.'),
+                },
+              ]}
             >
               <div className="text-title-3 text-basics-primary-label truncate">
                 <div className="flex items-center gap-1">{passkey.name}</div>
