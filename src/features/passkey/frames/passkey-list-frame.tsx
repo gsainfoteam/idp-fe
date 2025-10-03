@@ -12,12 +12,15 @@ import {
   uniqueKey,
 } from '@/features/core';
 import { Link } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 
+import { PasskeyDeleteOverlay } from '../components/passkey-delete-overlay';
+import { PasskeyEditOverlay } from '../components/passkey-edit-overlay';
 import { usePasskeyList } from '../hooks/use-passkey-list';
 
 export function PasskeyListFrame() {
   const { t } = useTranslation();
-  const { passkeys } = usePasskeyList();
+  const { passkeys, refetch } = usePasskeyList();
 
   // FIXME: Remove mock data
   passkeys?.push({
@@ -58,14 +61,42 @@ export function PasskeyListFrame() {
                 {
                   bg: '#FFAC59',
                   content: <EditLineIcon className="text-white" />,
-                  onClick: async () => alert('Not implemented yet.'),
+                  onClick: async () => {
+                    const result = await overlay.openAsync<boolean>(
+                      ({ isOpen, close }) => (
+                        <PasskeyEditOverlay
+                          passkey={passkey}
+                          isOpen={isOpen}
+                          close={close}
+                        />
+                      ),
+                    );
+
+                    if (result) {
+                      await refetch();
+                    }
+                  },
                 },
               ]}
               rightActions={[
                 {
                   bg: 'var(--color-red-400)',
                   content: <TrashBinIcon className="text-white" />,
-                  onClick: async () => alert('Not implemented yet.'),
+                  onClick: async () => {
+                    const result = await overlay.openAsync<boolean>(
+                      ({ isOpen, close }) => (
+                        <PasskeyDeleteOverlay
+                          passkey={passkey}
+                          isOpen={isOpen}
+                          close={close}
+                        />
+                      ),
+                    );
+
+                    if (result) {
+                      await refetch();
+                    }
+                  },
                 },
               ]}
             >

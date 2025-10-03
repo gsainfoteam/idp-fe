@@ -200,7 +200,15 @@
         },
         "errors": {
           "failed_to_fetch": "패스키 목록을 불러오는데 실패했어요",
-          "failed_to_delete": "패스키를 삭제하는데 실패했어요"
+          "failed_to_delete": "패스키를 삭제하는데 실패했어요",
+          "name_required": "변경할 이름을 적어주세요",
+          "passkey_not_found": "패스키가 존재하지 않습니다"
+        },
+        "edit_overlay": {
+          "title": "패스키 이름 변경",
+          "placeholder": "변경할 이름을 적어주세요",
+          "cancel": "취소",
+          "apply": "적용하기"
         }
       },
       "register": {

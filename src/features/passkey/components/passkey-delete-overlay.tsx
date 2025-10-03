@@ -2,20 +2,20 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Dialog } from '@/features/core';
 
-import { Client } from '../hooks/use-client';
-import { useClientDeleteForm } from '../hooks/use-client-delete-form';
+import { usePasskeyDeleteForm } from '../hooks/use-passkey-delete-form';
+import { Passkey } from '../hooks/use-passkey-list';
 
-export function ClientDeleteOverlay({
-  client,
+export function PasskeyDeleteOverlay({
+  passkey,
   isOpen,
   close,
 }: {
-  client: Client;
+  passkey: Passkey;
   isOpen: boolean;
   close: (_: boolean) => void;
 }) {
   const { t } = useTranslation();
-  const { onSubmit } = useClientDeleteForm(client);
+  const { onSubmit } = usePasskeyDeleteForm(passkey);
 
   return (
     <Dialog
@@ -23,12 +23,16 @@ export function ClientDeleteOverlay({
       close={() => close(false)}
       className="mx-10 min-w-75"
     >
-      <Dialog.Header>{t('services.detail.delete.dialog.header')}</Dialog.Header>
-      <Dialog.Body>{t('services.detail.delete.dialog.body')}</Dialog.Body>
+      <Dialog.Header>
+        {t('passkey.steps.list.remove_overlay.title')}
+      </Dialog.Header>
+      <Dialog.Body>
+        {t('passkey.steps.list.remove_overlay.description')}
+      </Dialog.Body>
       <Dialog.Footer>
         <Dialog.Close className="w-full">
           <Button variant="secondary" className="w-full">
-            {t('services.detail.delete.dialog.cancel')}
+            {t('passkey.steps.list.remove_overlay.cancel')}
           </Button>
         </Dialog.Close>
         <Button
@@ -39,7 +43,7 @@ export function ClientDeleteOverlay({
             close(true);
           }}
         >
-          {t('services.detail.delete.dialog.confirm')}
+          {t('passkey.steps.list.remove_overlay.confirm')}
         </Button>
       </Dialog.Footer>
     </Dialog>

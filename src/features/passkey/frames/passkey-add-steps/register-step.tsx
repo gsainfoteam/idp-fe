@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
 import { Button, FunnelLayout, useLoading } from '@/features/core';
-import { usePasskeyForm } from '@/features/passkey';
+import { usePasskeyAddForm } from '@/features/passkey';
 
 export function RegisterStep({ onNext }: { onNext: () => void }) {
-  const { onSubmit } = usePasskeyForm({ onNext });
+  const { onSubmit } = usePasskeyAddForm({ onNext });
   const [loading, startLoading] = useLoading();
   const { t } = useTranslation();
 

@@ -13,15 +13,15 @@ import {
   uniqueKey,
 } from '@/features/core';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 
-import { onTrigger } from '../components/client-delete-overlay';
+import { ClientDeleteOverlay } from '../components/client-delete-overlay';
 import { useClientDeleteForm } from '../hooks/use-client-delete-form';
 import { useClientList } from '../hooks/use-client-list';
 
 export function ClientListFrame() {
   const { t } = useTranslation();
   const { clients, refetch } = useClientList();
-  const { onSubmit } = useClientDeleteForm();
   const navigate = useNavigate();
 
   // TODO: Error Boundary + Suspense
@@ -79,10 +79,21 @@ export function ClientListFrame() {
                         {
                           bg: 'var(--color-red-400)',
                           content: <TrashBinIcon className="text-white" />,
-                          onClick: onTrigger(async () => {
-                            await onSubmit(client);
-                            await refetch();
-                          }),
+                          onClick: async () => {
+                            const result = await overlay.openAsync<boolean>(
+                              ({ isOpen, close }) => (
+                                <ClientDeleteOverlay
+                                  client={client}
+                                  isOpen={isOpen}
+                                  close={close}
+                                />
+                              ),
+                            );
+
+                            if (result) {
+                              await refetch();
+                            }
+                          },
                         },
                       ]
                     : undefined

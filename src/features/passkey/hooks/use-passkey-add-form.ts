@@ -12,7 +12,7 @@ import {
   generatePasskeyName,
 } from '@/features/passkey';
 
-export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
+export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
 

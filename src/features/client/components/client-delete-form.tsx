@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 import { Button } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 
 import { Client } from '../hooks/use-client';
-import { useClientDeleteForm } from '../hooks/use-client-delete-form';
-import { onTrigger } from './client-delete-overlay';
+import { ClientDeleteOverlay } from './client-delete-overlay';
 
 export function ClientDeleteForm({ client }: { client: Client }) {
   const { t } = useTranslation();
-  const { onSubmit } = useClientDeleteForm();
   const navigate = useNavigate({ from: '/clients/$id' });
 
   return (
@@ -24,10 +23,21 @@ export function ClientDeleteForm({ client }: { client: Client }) {
             variant="warning"
             disabled={client.deleteRequestedAt != null}
             prefixIcon={<TrashBinIcon />}
-            onClick={onTrigger(async () => {
-              await onSubmit(client);
-              await navigate({ to: '/clients' });
-            })}
+            onClick={async () => {
+              const result = await overlay.openAsync<boolean>(
+                ({ isOpen, close }) => (
+                  <ClientDeleteOverlay
+                    client={client}
+                    isOpen={isOpen}
+                    close={close}
+                  />
+                ),
+              );
+
+              if (result) {
+                navigate({ to: '/clients' });
+              }
+            }}
           >
             {t('services.detail.delete.button')}
           </Button>

@@ -4,7 +4,7 @@ import type { ErrorStatus } from 'openapi-typescript-helpers';
 
 enum DeleteUserPasskeyStatus {
   INVALID_TOKEN = 401,
-  INVALID_PASSWORD = 403,
+  INVALID_USER = 403,
   INVALID_ID = 404,
   SERVER_ERROR = 500,
 }

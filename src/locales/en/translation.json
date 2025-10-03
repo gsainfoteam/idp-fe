@@ -217,7 +217,9 @@
         "empty": "You have no passkeys!\\nClick the button below to add a new passkey.",
         "errors": {
           "failed_to_delete": "Failed to delete passkey",
-          "failed_to_fetch": "Failed to load passkey list"
+          "failed_to_fetch": "Failed to load passkey list",
+          "name_required": "Please write down the name to change",
+          "passkey_not_found": "There is no passkey"
         },
         "remove_overlay": {
           "cancel": "Cancel",
@@ -225,7 +227,13 @@
           "description": "The passkey will be deleted permanently.",
           "title": "Delete Passkey?"
         },
-        "title": "My Passkeys"
+        "title": "My Passkeys",
+        "edit_overlay": {
+          "title": "Change Passkey Name",
+          "placeholder": "Please write down the name to change",
+          "cancel": "Cancel",
+          "apply": "Apply"
+        }
       }
     }
   },
