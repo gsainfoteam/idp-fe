@@ -1,7 +1,6 @@
-import type { ErrorStatus } from 'openapi-typescript-helpers';
-
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
+import type { ErrorStatus } from 'openapi-typescript-helpers';
 
 enum AuthPasskeyVerifyStatus {
   INVALID_RESPONSE = 401,
