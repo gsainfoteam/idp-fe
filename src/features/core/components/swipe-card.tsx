@@ -47,7 +47,7 @@ export function SwipeCard({
 
   const leftWidth = leftActions.length * actionWidth;
   const rightWidth = rightActions.length * actionWidth;
-  const bonusWidth = 5; // border radius 커버용 여유 공간
+  const bonusWidth = 8; // rounded-lg 커버용 여유 공간
 
   const [dragStarted, setDragStarted] = useState(false);
 
@@ -132,8 +132,7 @@ export function SwipeCard({
                 await close();
               }}
               style={{
-                width:
-                  actionWidth + (i == rightActions.length - 1 ? bonusWidth : 0),
+                width: actionWidth + (i == 0 ? bonusWidth : 0),
                 background: action.bg,
               }}
             >
@@ -155,7 +154,7 @@ export function SwipeCard({
         onDragEnd={(_, info) => {
           setDragStarted(false);
 
-          // 작은 드래그는 클릭으로 처리 (모바일 고려)
+          // 모바일을 고려해 작은 드래그는 클릭으로 처리
           if (Math.abs(info.offset.x) < 5 && !dragStarted) {
             onClick?.();
           }
