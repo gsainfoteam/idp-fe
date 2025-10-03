@@ -16,7 +16,6 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 
 import { ClientDeleteOverlay } from '../components/client-delete-overlay';
-import { useClientDeleteForm } from '../hooks/use-client-delete-form';
 import { useClientList } from '../hooks/use-client-list';
 
 export function ClientListFrame() {
