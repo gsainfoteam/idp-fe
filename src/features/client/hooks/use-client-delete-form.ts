@@ -15,18 +15,20 @@ export const useClientDeleteForm = (client: Client) => {
       switch (status) {
         case 'INVALID_TOKEN':
           toast.error(t('toast.invalid_token'));
-          break;
+          return false;
         case 'INACCESSIBLE':
           toast.error(t('toast.invalid_token'));
-          break;
+          return false;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
-          break;
+          return false;
         case 'UNKNOWN_ERROR':
           toast.error(t('toast.unknown_error'));
-          break;
+          return false;
       }
     }
+
+    return true;
   };
 
   return { onSubmit };

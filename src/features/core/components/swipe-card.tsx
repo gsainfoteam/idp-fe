@@ -152,10 +152,10 @@ export function SwipeCard({
           onDragStart?.(e, info);
         }}
         onDragEnd={(_, info) => {
+          const isSmallDrag = Math.abs(info.offset.x) < 5;
           setDragStarted(false);
 
-          // 모바일을 고려해 작은 드래그는 클릭으로 처리
-          if (Math.abs(info.offset.x) < 5 && !dragStarted) {
+          if (isSmallDrag) {
             onClick?.();
           }
 

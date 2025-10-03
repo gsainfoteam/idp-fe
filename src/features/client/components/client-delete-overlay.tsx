@@ -35,8 +35,7 @@ export function ClientDeleteOverlay({
           variant="primary"
           className="w-full"
           onClick={async () => {
-            await onSubmit();
-            close(true);
+            if (await onSubmit()) close(true);
           }}
         >
           {t('services.detail.delete.dialog.confirm')}

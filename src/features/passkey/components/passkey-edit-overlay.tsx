@@ -47,8 +47,7 @@ export function PasskeyEditOverlay({
           className="w-full"
           disabled={!formState.isValid || formState.isSubmitting}
           onClick={async () => {
-            await onSubmit();
-            close(true);
+            if (await onSubmit()) close(true);
           }}
         >
           {t('passkey.steps.list.edit_overlay.apply')}

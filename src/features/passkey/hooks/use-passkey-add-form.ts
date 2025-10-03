@@ -87,7 +87,7 @@ export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
       return;
     }
 
-    // 패스키 이름 자동 생성
+    // TODO: password manager detection
     const passwordManager = detectPasswordManager();
     const passkeyName = generatePasskeyName(passwordManager);
 

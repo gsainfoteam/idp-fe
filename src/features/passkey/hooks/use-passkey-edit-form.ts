@@ -21,29 +21,42 @@ export function usePasskeyEditForm(passkey: Passkey) {
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (data) => {
+  const submitHandler = async (
+    data: z.infer<ReturnType<typeof createSchema>>,
+  ) => {
     const { status } = await patchUserPasskey(passkey.id, data);
 
     if (status) {
       switch (status) {
         case 'INVALID_TOKEN':
           toast.error(t('toast.invalid_token'));
-          break;
+          return false;
         case 'INVALID_USER':
           toast.error(t('toast.invalid_user'));
-          break;
+          return false;
         case 'INVALID_ID':
           toast.error(t('passkey.steps.list.errors.passkey_not_found'));
-          break;
+          return false;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
-          break;
+          return false;
         case 'UNKNOWN_ERROR':
           toast.error(t('toast.unknown_error'));
-          break;
+          return false;
       }
     }
-  });
+
+    return true;
+  };
+
+  const onSubmit = async (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      form.handleSubmit(async (data) => {
+        const result = await submitHandler(data);
+        resolve(result);
+      })();
+    });
+  };
 
   return { form, onSubmit };
 }

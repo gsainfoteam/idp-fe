@@ -39,8 +39,7 @@ export function PasskeyDeleteOverlay({
           variant="primary"
           className="w-full"
           onClick={async () => {
-            await onSubmit();
-            close(true);
+            if (await onSubmit()) close(true);
           }}
         >
           {t('passkey.steps.list.remove_overlay.confirm')}

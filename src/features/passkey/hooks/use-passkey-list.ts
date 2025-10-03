@@ -11,7 +11,9 @@ export const usePasskeyList = () => {
   );
 
   return {
-    passkeys: data?.sort((a, b) => (a.name < b.name ? -1 : 1)),
+    passkeys: data
+      ? [...data].sort((a, b) => (a.name < b.name ? -1 : 1))
+      : data,
     isLoading,
     error,
     refetch,

@@ -214,7 +214,7 @@
       "list": {
         "add": "Add Passkey",
         "description": "You can check the passkeys you have added here.",
-        "empty": "You have no passkeys!\\nClick the button below to add a new passkey.",
+        "empty": "You have no passkeys!\nClick the button below to add a new passkey.",
         "errors": {
           "failed_to_delete": "Failed to delete passkey",
           "failed_to_fetch": "Failed to load passkey list",

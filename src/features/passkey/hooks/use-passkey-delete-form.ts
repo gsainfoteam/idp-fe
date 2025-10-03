@@ -15,21 +15,23 @@ export function usePasskeyDeleteForm(passkey: Passkey) {
       switch (status) {
         case 'INVALID_TOKEN':
           toast.error(t('toast.invalid_token'));
-          break;
+          return false;
         case 'INVALID_USER':
           toast.error(t('toast.invalid_user'));
-          break;
+          return false;
         case 'INVALID_ID':
           toast.error(t('passkey.steps.list.errors.passkey_not_found'));
-          break;
+          return false;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
-          break;
+          return false;
         case 'UNKNOWN_ERROR':
           toast.error(t('toast.unknown_error'));
-          break;
+          return false;
       }
     }
+
+    return true;
   };
 
   return { onSubmit };

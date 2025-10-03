@@ -1,3 +1,5 @@
+import { UAParser } from 'ua-parser-js';
+
 export const detectPasswordManager = (): string => {
   const userAgent = navigator.userAgent;
 
@@ -17,6 +19,8 @@ export const detectPasswordManager = (): string => {
 };
 
 export const generatePasskeyName = (managerName: string): string => {
-  const deviceInfo = navigator.platform || 'Unknown Device';
+  const parser = new UAParser(navigator.userAgent);
+  const os = parser.getOS();
+  const deviceInfo = os.name || 'Unknown Device';
   return `${managerName} - ${deviceInfo}`;
 };
