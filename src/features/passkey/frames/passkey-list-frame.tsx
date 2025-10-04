@@ -119,7 +119,7 @@ export function PasskeyListFrame() {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <img src={lockImage} className="size-[100px] opacity-40" />
           <div className="text-body-1 text-basics-secondary-label text-center whitespace-pre-wrap">
-            {t('services.list.empty')}
+            {t('passkey.steps.list.empty')}
           </div>
         </div>
       )}
