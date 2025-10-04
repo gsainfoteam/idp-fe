@@ -178,7 +178,7 @@
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
-      "passkey": "Passkey Manager",
+      "passkey": "Manage Passkey",
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
