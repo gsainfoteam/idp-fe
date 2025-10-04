@@ -1,6 +1,10 @@
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import FaceIDIcon from '@/assets/icons/line/face-id.svg?react';
+import FingerprintIcon from '@/assets/icons/line/fingerprint.svg?react';
+import KeyIcon from '@/assets/icons/line/key.svg?react';
+import WindowsHelloIcon from '@/assets/icons/line/windows-hello.svg?react';
 import TextLogo from '@/assets/logos/text-logo.svg?react';
 import { LoginForm, useLoginForm, usePasskeyLoginForm } from '@/features/auth';
 import {
@@ -10,14 +14,47 @@ import {
   ThemeSwitcher,
 } from '@/features/core';
 import { Link } from '@tanstack/react-router';
+import { TFunction } from 'i18next';
+import { UAParser } from 'ua-parser-js';
 
-import { useOsVariant } from '../hooks/use-os-variant';
+function getPasskeyButtonInfo(t: TFunction) {
+  const { os, device } = UAParser(navigator.userAgent);
+  const osName = os.name?.toLowerCase() ?? '';
+  const deviceType = device.type ?? '';
+
+  if (osName.startsWith('windows')) {
+    return {
+      prefixIcon: <WindowsHelloIcon />,
+      buttonText: t('login.buttons.login_with_windows_hello'),
+    };
+  } else if (osName.startsWith('ios')) {
+    return {
+      prefixIcon: <FaceIDIcon />,
+      buttonText: t('login.buttons.login_with_face_id'),
+    };
+  } else if (osName.startsWith('macos')) {
+    return {
+      prefixIcon: <FingerprintIcon />,
+      buttonText: t('login.buttons.login_with_touch_id'),
+    };
+  } else if (deviceType === 'mobile') {
+    return {
+      prefixIcon: <FingerprintIcon />,
+      buttonText: t('login.buttons.login_with_biometric'),
+    };
+  } else {
+    return {
+      prefixIcon: <KeyIcon />,
+      buttonText: t('login.buttons.login_with_passkey'),
+    };
+  }
+}
 
 export function LoginFrame() {
   const { form, onSubmit: onLogin } = useLoginForm();
   const { onSubmit: onPasskeyLogin } = usePasskeyLoginForm();
   const { t } = useTranslation();
-  const { prefixIcon, buttonText } = useOsVariant();
+  const { prefixIcon, buttonText } = getPasskeyButtonInfo(t);
 
   return (
     <FunnelLayout contentClassName="flex flex-col items-center justify-center">
