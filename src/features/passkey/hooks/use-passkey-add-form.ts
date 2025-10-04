@@ -89,9 +89,7 @@ export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
 
     const aaguid = getAAGUID(response.attestationObject);
     if (!aaguid) {
-      toast.error(
-        t('passkey.steps.register.errors.unknown_aaguid', { aaguid }),
-      );
+      toast.error(t('passkey.steps.register.errors.unknown_aaguid'));
       return;
     }
 

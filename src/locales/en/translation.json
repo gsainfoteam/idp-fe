@@ -198,7 +198,7 @@
           "invalid_response": "Invalid response",
           "credential_id_conflict": "Passkey already exists",
           "invalid_aaguid": "Wrong AAGUID({{aaguid}})",
-          "unknown_aaguid": "AAGUID({{aaguid}}) does not exist"
+          "unknown_aaguid": "AAGUID does not exist"
         },
         "name": {
           "placeholder": "i.e. My iPhone, 1Password",

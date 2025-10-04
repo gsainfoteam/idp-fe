@@ -232,7 +232,7 @@
           "invalid_response": "잘못된 응답입니다",
           "credential_id_conflict": "이미 등록된 패스키입니다",
           "invalid_aaguid": "잘못된 AAGUID({{aaguid}})입니다",
-          "unknown_aaguid": "존재하지 않는 AAGUID({{aaguid}})입니다"
+          "unknown_aaguid": "존재하지 않는 AAGUID입니다"
         }
       },
       "complete": {
