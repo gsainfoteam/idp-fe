@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { CompleteStep } from './change-password-steps/complete-step';
-import { CurrentPasswordStep } from './change-password-steps/current-password-step';
-import { NewPasswordStep } from './change-password-steps/new-password-step';
-
 import { patchUserPassword } from '@/data/patch-user-password';
 import { useAuth, useToken } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
+
+import { CompleteStep } from './change-password-steps/complete-step';
+import { CurrentPasswordStep } from './change-password-steps/current-password-step';
+import { NewPasswordStep } from './change-password-steps/new-password-step';
 
 type StepContext = Pretty<Partial<Parameters<typeof patchUserPassword>[0]>>;
 

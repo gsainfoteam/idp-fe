@@ -1,7 +1,8 @@
+import { PropsWithChildren } from 'react';
+
 import { cn } from '../utils/cn';
 
 interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  name?: string;
   seed?: number;
   img?: string;
   size?: number;
@@ -29,13 +30,13 @@ const colorMap = [
 ];
 
 export function Avatar({
-  name,
   img,
   size = 16,
   seed = 0,
   className,
+  children,
   ...props
-}: AvatarProps) {
+}: PropsWithChildren<AvatarProps>) {
   if (img) {
     return (
       <div className="h-fit w-fit" {...props}>
@@ -50,7 +51,7 @@ export function Avatar({
         />
       </div>
     );
-  } else if (name) {
+  } else if (children) {
     const { background } = colorMap[seed % colorMap.length]!;
 
     return (
@@ -67,7 +68,7 @@ export function Avatar({
         }}
         {...props}
       >
-        {name.charAt(0)}
+        {children}
       </div>
     );
   } else {

@@ -1,15 +1,15 @@
-import { useLoaderData } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
+
+import { components } from '@/@types/api-schema';
+import { useAuth } from '@/features/auth';
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { useLoaderData } from '@tanstack/react-router';
 
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
 import { useClient } from '../hooks/use-client';
 import { useRecentLogin } from '../hooks/use-recent-login';
-
-import { components } from '@/@types/api-schema';
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
-import { useAuth } from '@/features/auth';
 
 export function AuthorizeFrame() {
   const { clientId, prompt } = useLoaderData({
@@ -62,12 +62,13 @@ function Inner({
           stepTitle={
             <div className="flex flex-col gap-5">
               <Avatar
-                name={client.name}
                 img={client.picture ?? undefined}
                 size={13}
                 seed={uniqueKey(client.clientId)}
                 className="border-basics-tertiary-label rounded-lg border"
-              />
+              >
+                {client.name.charAt(0)}
+              </Avatar>
               {t('authorize.title', { client: client.name })}
             </div>
           }

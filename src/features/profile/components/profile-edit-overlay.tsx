@@ -1,19 +1,20 @@
+import { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+
+import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useAuth } from '@/features/auth';
 import {
   Avatar,
   Button,
-  Modal,
   FileUpload,
-  uniqueKey,
   IconButton,
+  Modal,
+  uniqueKey,
 } from '@/features/core';
-import { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
-import { useProfileEditForm } from '../hooks/use-profile-edit-form';
-
-import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useLoading } from '@/features/core';
+
+import { useProfileEditForm } from '../hooks/use-profile-edit-form';
 
 export function ProfileEditOverlay({
   isOpen,
@@ -49,12 +50,13 @@ export function ProfileEditOverlay({
       <Modal.Body className="flex justify-center">
         <div className="relative w-fit cursor-pointer">
           <Avatar
-            name={user.name}
             img={previewFile ?? undefined}
             seed={uniqueKey(user.studentId)}
             size={30}
             onClick={() => fileInputRef.current?.click()}
-          />
+          >
+            {user.name.charAt(0)}
+          </Avatar>
           <FileUpload
             ref={fileInputRef}
             accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"

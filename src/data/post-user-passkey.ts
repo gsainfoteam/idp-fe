@@ -1,20 +1,15 @@
-import type { ErrorStatus } from 'openapi-typescript-helpers';
-
 import { paths } from '@/@types/api-schema';
 import { api } from '@/features/core';
+import type { ErrorStatus } from 'openapi-typescript-helpers';
 
 enum UserPasskeyStatus {
   EMAIL_NOT_FOUND = 404,
   SERVER_ERROR = 500,
 }
 
-export const postUserPasskey = async (
-  requestBody: paths['/user/passkey']['post']['requestBody']['content']['application/json'],
-) => {
+export const postUserPasskey = async () => {
   try {
-    const { data } = await api.POST('/user/passkey', {
-      body: requestBody,
-    });
+    const { data } = await api.POST('/user/passkey');
 
     return { data };
   } catch (err) {

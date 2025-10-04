@@ -178,14 +178,14 @@
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
-      "passkey": "Register Passkey",
+      "passkey": "Manage Passkey",
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
     }
   },
   "passkey": {
-    "title": "Register Passkey",
+    "title": "Manage Passkey",
     "steps": {
       "register": {
         "title": "Register Passkey",
@@ -195,19 +195,56 @@
           "not_supported": "Browser does not support passkeys",
           "cancelled": "Passkey registration was cancelled",
           "failed": "Failed to register passkey",
-          "invalid_response": "Invalid response"
+          "invalid_response": "Invalid response",
+          "credential_id_conflict": "Passkey already exists",
+          "invalid_aaguid": "Wrong AAGUID({{aaguid}})",
+          "unknown_aaguid": "AAGUID does not exist"
+        },
+        "name": {
+          "placeholder": "i.e. My iPhone, 1Password",
+          "label": "Passkey Name",
+          "errors": {
+            "format": "Please enter the Passkey name",
+            "max_length": "You can enter up to 50 characters for Passkey"
+          }
         }
       },
       "complete": {
         "title": "Passkey has been successfully registered",
         "button": "Back to Profile"
+      },
+      "list": {
+        "add": "Add Passkey",
+        "description": "Swipe to rename or delete.",
+        "empty": "You have no passkeys!\nClick the button below to add a new passkey.",
+        "errors": {
+          "failed_to_delete": "Failed to delete passkey",
+          "failed_to_fetch": "Failed to load passkey list",
+          "name_required": "Please write down the name to change",
+          "passkey_not_found": "There is no passkey"
+        },
+        "remove_overlay": {
+          "cancel": "Cancel",
+          "confirm": "Delete",
+          "description": "The passkey will be deleted permanently.",
+          "title": "Delete Passkey?"
+        },
+        "title": "My Passkeys",
+        "edit_overlay": {
+          "title": "Change Passkey Name",
+          "placeholder": "Please write down the name to change",
+          "cancel": "Cancel",
+          "apply": "Apply"
+        },
+        "loginAt": "Last used: {{dt}}",
+        "createdAt": "Added: {{dt}}"
       }
     }
   },
   "services": {
     "list": {
       "title": "My Services",
-      "description": "You can check the services you have registered here.",
+      "description": "Swipe or click to edit or delete.",
       "add": "Add Service",
       "empty": "You have no registered services!\nClick the button below to register a new service."
     },

@@ -1,15 +1,16 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+
+import { postAuthLogin } from '@/data/post-auth-login';
+import { useRecentLogin } from '@/features/oauth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { z } from 'zod';
 
 import { useAuth } from './use-auth';
 import { useToken } from './use-token';
 
-import { postAuthLogin } from '@/data/post-auth-login';
-import { useRecentLogin } from '@/features/oauth';
 const createSchema = (t: TFunction) =>
   z.object({
     email: z.string().email(t('login.inputs.email.errors.format')),

@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -9,16 +8,15 @@ import {
   arrayBufferToBase64Url,
   base64UrlToArrayBuffer,
   credentialTypeGuard,
-} from '@/features/core';
+  getAAGUID,
+  getAAGUIDInfo,
+} from '@/features/passkey';
 
-export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
+export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const form = useForm({
-    mode: 'onChange',
-  });
 
-  const onSubmit = form.handleSubmit(async () => {
+  const onSubmit = async () => {
     if (!user) {
       toast.error(t('toast.invalid_user'));
       return;
@@ -30,9 +28,7 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
     }
 
     const { data: challengeData, status: challengeStatus } =
-      await postUserPasskey({
-        email: user.email,
-      });
+      await postUserPasskey();
 
     if (!challengeData || challengeStatus) {
       switch (challengeStatus) {
@@ -65,12 +61,22 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
       ),
     };
 
-    const credential = (await navigator.credentials.create({
-      publicKey,
-    })) as PublicKeyCredential | null;
+    let credential: PublicKeyCredential | null = null;
+    try {
+      credential = (await navigator.credentials.create({
+        publicKey,
+      })) as PublicKeyCredential | null;
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t('passkey.steps.register.errors.failed'),
+      );
+      return;
+    }
 
     if (!credential) {
-      toast.error(t('passkey.steps.register.errors.cancelled'));
+      toast.error(t('passkey.steps.register.errors.failed'));
       return;
     }
 
@@ -81,9 +87,24 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
       return;
     }
 
+    const aaguid = getAAGUID(response.attestationObject);
+    if (!aaguid) {
+      toast.error(t('passkey.steps.register.errors.unknown_aaguid'));
+      return;
+    }
+
+    const aaguidInfo = getAAGUIDInfo(aaguid);
+    if (!aaguidInfo) {
+      toast.error(
+        t('passkey.steps.register.errors.invalid_aaguid', { aaguid }),
+      );
+      return;
+    }
+
     const { data: verifyData, status: verifyStatus } =
       await postUserPasskeyVerify({
-        email: user.email,
+        name: aaguidInfo.name,
+        icon: aaguidInfo.icon_dark,
         registrationResponse: {
           id: credential.id,
           rawId: arrayBufferToBase64Url(credential.rawId),
@@ -106,6 +127,11 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
         case 'EMAIL_NOT_FOUND':
           toast.error(t('toast.invalid_user'));
           break;
+        case 'CREDENTIAL_ID_CONFLICT':
+          toast.error(
+            t('passkey.steps.register.errors.credential_id_conflict'),
+          );
+          break;
         case 'SERVER_ERROR':
           toast.error(t('toast.server_error'));
           break;
@@ -117,7 +143,7 @@ export const usePasskeyForm = ({ onNext }: { onNext: () => void }) => {
     }
 
     onNext();
-  });
+  };
 
-  return { form, onSubmit };
+  return { onSubmit };
 };

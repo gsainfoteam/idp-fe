@@ -1,24 +1,25 @@
-import { Link } from '@tanstack/react-router';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import CodeIcon from '@/assets/icons/duo/code.svg?react';
 import LockIcon from '@/assets/icons/duo/lock.svg?react';
 import LogoutIcon from '@/assets/icons/duo/logout.svg?react';
+import PasskeyIcon from '@/assets/icons/duo/passkey.svg?react';
 import UserIcon from '@/assets/icons/duo/user.svg?react';
 import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
-import PasskeyIcon from '@/assets/icons/duo/passkey.svg?react';
 import { useAuth } from '@/features/auth';
-import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 import {
+  Avatar,
   Button,
   FunnelLayout,
-  Avatar,
-  uniqueKey,
   ThemeSwitcher,
   cn,
+  uniqueKey,
 } from '@/features/core';
+import { Link } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
+
+import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
 interface MenuButtonProps {
   icon: React.ComponentType<{ className?: string }>;
@@ -82,7 +83,6 @@ export function ProfileFrame() {
       <div className="flex flex-col gap-6">
         <div className="flex h-fit w-full items-center gap-3 px-3">
           <Avatar
-            name={user.name}
             img={user.picture ?? undefined}
             seed={uniqueKey(user.studentId)}
             className="cursor-pointer"
@@ -91,7 +91,9 @@ export function ProfileFrame() {
                 <ProfileEditOverlay isOpen={isOpen} close={close} />
               ));
             }}
-          />
+          >
+            {user.name.charAt(0)}
+          </Avatar>
           <div className="flex flex-col">
             <div className="text-title-3 text-label">{user.name}</div>
             <div className="text-body-2 text-basics-secondary-label">
@@ -115,7 +117,7 @@ export function ProfileFrame() {
               {t('profile.menu.password')}
             </MenuButton>
           </Link>
-          <Link to="/passkey" search={(prev) => ({ ...prev })}>
+          <Link to="/passkeys" search={(prev) => ({ ...prev })}>
             <MenuButton icon={PasskeyIcon}>
               {t('profile.menu.passkey')}
             </MenuButton>

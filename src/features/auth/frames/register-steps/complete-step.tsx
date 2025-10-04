@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { RegisterSteps } from '../register-frame';
-
 import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+
+import { RegisterSteps } from '../register-frame';
 
 export function CompleteStep({
   context,
@@ -25,11 +25,9 @@ export function CompleteStep({
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <Avatar
-          size={32}
-          name={context.name}
-          seed={uniqueKey(context.studentId)}
-        />
+        <Avatar size={32} seed={uniqueKey(context.studentId)}>
+          {context.name.charAt(0)}
+        </Avatar>
         <div className="mt-3 flex flex-col items-center">
           <div className="text-title-1 text-basics-primary-label text-center">
             {context.name}

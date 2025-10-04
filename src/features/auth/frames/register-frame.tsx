@@ -1,14 +1,14 @@
+import { postUser } from '@/data/post-user';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
+
+import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';
 import { CodeStep } from './register-steps/code-step';
 import { CompleteStep } from './register-steps/complete-step';
 import { EmailStep } from './register-steps/email-step';
 import { InfoStep } from './register-steps/info-step';
 import { PasswordStep } from './register-steps/password-step';
-
-import { postUser } from '@/data/post-user';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
-import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';
 
 type StepContext = Pretty<
   Partial<Parameters<typeof postUser>[0]> & {

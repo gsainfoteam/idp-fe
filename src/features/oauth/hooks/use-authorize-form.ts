@@ -1,14 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
 
 import { postOauthConsent } from '@/data/post-oauth-consent';
 import {
   ClientScopeEnum,
   ClientScopeType,
 } from '@/routes/_auth-required/authorize';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 export const createSchema = () =>
   z.object({ scopes: z.record(ClientScopeEnum, z.boolean()) });

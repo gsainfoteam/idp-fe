@@ -1,10 +1,10 @@
+import { postUserPassword } from '@/data/post-user-password';
+import { useAuth } from '@/features/auth';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
+import { useNavigate } from '@tanstack/react-router';
+
 import { CompleteStep } from './issue-password-steps/complete-step';
 import { EmailStep } from './issue-password-steps/email-step';
-
-import { postUserPassword } from '@/data/post-user-password';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
-import { useAuth } from '@/features/auth';
-import { useNavigate } from '@tanstack/react-router';
 
 type StepContext = Pretty<Partial<Parameters<typeof postUserPassword>[0]>>;
 

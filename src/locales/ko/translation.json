@@ -178,24 +178,61 @@
     "menu": {
       "edit": "프로필 수정",
       "password": "비밀번호 변경",
-      "passkey": "패스키 등록",
+      "passkey": "패스키 관리",
       "developer": "개발자 센터",
       "logout": "로그아웃",
       "withdrawal": "계정 탈퇴"
     }
   },
   "passkey": {
-    "title": "패스키 등록",
+    "title": "패스키 관리",
     "steps": {
+      "list": {
+        "title": "내 패스키 목록",
+        "description": "스와이프해서 이름을 변경하거나 삭제할 수 있어요.",
+        "add": "패스키 추가하기",
+        "empty": "아직 등록된 패스키가 없어요!\n아래의 버튼을 눌러 새 패스키를 등록하세요.",
+        "remove_overlay": {
+          "title": "정말로 패스키를 삭제하시겠어요?",
+          "description": "삭제하면 되돌릴 수 없습니다.",
+          "cancel": "취소",
+          "confirm": "삭제하기"
+        },
+        "errors": {
+          "failed_to_fetch": "패스키 목록을 불러오는데 실패했어요",
+          "failed_to_delete": "패스키를 삭제하는데 실패했어요",
+          "name_required": "변경할 이름을 적어주세요",
+          "passkey_not_found": "패스키가 존재하지 않습니다"
+        },
+        "edit_overlay": {
+          "title": "패스키 이름 변경",
+          "placeholder": "변경할 이름을 적어주세요",
+          "cancel": "취소",
+          "apply": "적용하기"
+        },
+        "loginAt": "마지막으로 사용됨: {{dt}}",
+        "createdAt": "추가됨: {{dt}}"
+      },
       "register": {
         "title": "패스키 등록하기",
         "description": "패스키를 등록하면 더 편리하게 로그인할 수 있습니다.",
         "button": "패스키 등록하기",
+        "name": {
+          "label": "패스키 이름",
+          "placeholder": "예: 내 아이폰, 1Password",
+          "errors": {
+            "format": "패스키 이름을 입력해주세요",
+            "max_length": "패스키 이름은 최대 50자까지 입력할 수 있습니다"
+          }
+        },
         "errors": {
           "not_supported": "브라우저에서 패스키를 지원하지 않습니다",
           "cancelled": "패스키 등록이 취소되었습니다",
           "failed": "패스키 등록에 실패했습니다",
-          "invalid_response": "잘못된 응답입니다"
+          "invalid_response": "잘못된 응답입니다",
+          "credential_id_conflict": "이미 등록된 패스키입니다",
+          "invalid_aaguid": "잘못된 AAGUID({{aaguid}})입니다",
+          "unknown_aaguid": "존재하지 않는 AAGUID입니다"
         }
       },
       "complete": {
@@ -207,7 +244,7 @@
   "services": {
     "list": {
       "title": "내 서비스 목록",
-      "description": "내가 등록한 서비스를 여기에서 확인할 수 있어요.",
+      "description": "스와이프하거나 클릭해서 수정하거나 삭제할 수 있어요.",
       "add": "서비스 추가하기",
       "empty": "아직 등록한 서비스가 없어요!\n아래의 버튼을 눌러 새 서비스를 등록하세요."
     },

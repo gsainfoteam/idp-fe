@@ -1,9 +1,8 @@
-import createFetchClient, { Middleware } from 'openapi-fetch';
-import createClient from 'openapi-react-query';
-
 import type { paths } from '@/@types/api-schema';
 import { postAuthRefresh } from '@/data/post-auth-refresh';
 import { useToken } from '@/features/auth';
+import createFetchClient, { Middleware } from 'openapi-fetch';
+import createClient from 'openapi-react-query';
 
 interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
