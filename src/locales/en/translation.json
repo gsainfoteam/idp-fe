@@ -213,7 +213,7 @@
       },
       "list": {
         "add": "Add Passkey",
-        "description": "You can check the passkeys you have added here.",
+        "description": "Swipe to rename or delete.",
         "empty": "You have no passkeys!\nClick the button below to add a new passkey.",
         "errors": {
           "failed_to_delete": "Failed to delete passkey",
@@ -240,7 +240,7 @@
   "services": {
     "list": {
       "title": "My Services",
-      "description": "You can check the services you have registered here.",
+      "description": "Swipe or click to edit or delete.",
       "add": "Add Service",
       "empty": "You have no registered services!\nClick the button below to register a new service."
     },
