@@ -1,13 +1,15 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { Dispatch, SetStateAction } from 'react';
-import { z } from 'zod';
-import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { patchClientPicture } from '@/data/patch-client-picture';
-import { Client } from './use-client';
-import imageCompression from 'browser-image-compression';
+import { useTranslation } from 'react-i18next';
+
 import { deleteClientPicture } from '@/data/delete-client-picture';
+import { patchClientPicture } from '@/data/patch-client-picture';
+import { zodResolver } from '@hookform/resolvers/zod';
+import imageCompression from 'browser-image-compression';
+import { z } from 'zod';
+
+import { Client } from './use-client';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),

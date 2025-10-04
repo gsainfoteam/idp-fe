@@ -1,8 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { z } from 'zod';
-
 import { getUserConsent } from '@/data/get-user-consent';
 import { AuthorizeFrame } from '@/features/oauth';
+import { createFileRoute } from '@tanstack/react-router';
+import { z } from 'zod';
 
 export const ClientScopeEnum = z.enum([
   'profile',

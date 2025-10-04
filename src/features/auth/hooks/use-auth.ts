@@ -2,10 +2,10 @@ import { useCallback, useEffect, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { useToken } from './use-token';
-
 import { deleteAuthLogout } from '@/data/delete-auth-logout';
 import { $api } from '@/features/core';
+
+import { useToken } from './use-token';
 
 export const useAuth = () => {
   const { t } = useTranslation();

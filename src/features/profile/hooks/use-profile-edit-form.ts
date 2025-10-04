@@ -1,13 +1,14 @@
-import { deleteUserPicture } from '@/data/delete-user-picture';
-import { patchUserPicture } from '@/data/patch-user-picture';
-import { useAuth } from '@/features/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
+
+import { deleteUserPicture } from '@/data/delete-user-picture';
+import { patchUserPicture } from '@/data/patch-user-picture';
+import { useAuth } from '@/features/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import imageCompression from 'browser-image-compression';
+import { z } from 'zod';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),

@@ -1,11 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { patchClientSecret } from '@/data/patch-client-secret';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { Client } from './use-client';
-
-import { patchClientSecret } from '@/data/patch-client-secret';
 
 const schema = z.object({
   clientId: z.string().min(1),

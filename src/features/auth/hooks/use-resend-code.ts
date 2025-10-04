@@ -2,9 +2,9 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { RegisterSteps } from '../frames/register-frame';
-
 import { postVerifyEmail } from '@/data/post-verify-email';
+
+import { RegisterSteps } from '../frames/register-frame';
 
 export const useResendCode = ({
   context,
