@@ -101,6 +101,7 @@ export function SwipeCard({
           {leftActions.map((action, i) => (
             <button
               key={`left-${i}`}
+              type="button"
               className="flex justify-center items-center cursor-pointer"
               onClick={async () => {
                 await action.onClick();
@@ -126,6 +127,7 @@ export function SwipeCard({
           {rightActions.map((action, i) => (
             <button
               key={`right-${i}`}
+              type="button"
               className="flex justify-center items-center cursor-pointer"
               onClick={async () => {
                 await action.onClick();
