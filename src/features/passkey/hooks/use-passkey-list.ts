@@ -1,4 +1,4 @@
-import { $api } from '@/features/core';
+import { $api, sortBy } from '@/features/core';
 
 export type Passkey = NonNullable<
   ReturnType<typeof usePasskeyList>['passkeys']
@@ -11,9 +11,7 @@ export const usePasskeyList = () => {
   );
 
   return {
-    passkeys: data
-      ? [...data].sort((a, b) => (a.name < b.name ? -1 : 1))
-      : data,
+    passkeys: data ? sortBy(data, (e) => e.name) : data,
     isLoading,
     error,
     refetch,
