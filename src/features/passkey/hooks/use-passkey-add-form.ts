@@ -8,7 +8,8 @@ import {
   arrayBufferToBase64Url,
   base64UrlToArrayBuffer,
   credentialTypeGuard,
-  generatePasskeyName,
+  getAAGUID,
+  getAAGUIDInfo,
 } from '@/features/passkey';
 
 export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
@@ -86,9 +87,26 @@ export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
       return;
     }
 
+    const aaguid = getAAGUID(response.attestationObject);
+    if (!aaguid) {
+      toast.error(
+        t('passkey.steps.register.errors.unknown_aaguid', { aaguid }),
+      );
+      return;
+    }
+
+    const aaguidInfo = getAAGUIDInfo(aaguid);
+    if (!aaguidInfo) {
+      toast.error(
+        t('passkey.steps.register.errors.invalid_aaguid', { aaguid }),
+      );
+      return;
+    }
+
     const { data: verifyData, status: verifyStatus } =
       await postUserPasskeyVerify({
-        name: generatePasskeyName(),
+        name: aaguidInfo.name,
+        icon: aaguidInfo.icon_dark,
         registrationResponse: {
           id: credential.id,
           rawId: arrayBufferToBase64Url(credential.rawId),

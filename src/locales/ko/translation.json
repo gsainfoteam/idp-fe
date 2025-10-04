@@ -185,7 +185,7 @@
     }
   },
   "passkey": {
-    "title": "패스키 등록",
+    "title": "패스키 관리",
     "steps": {
       "list": {
         "title": "내 패스키 목록",
@@ -209,7 +209,9 @@
           "placeholder": "변경할 이름을 적어주세요",
           "cancel": "취소",
           "apply": "적용하기"
-        }
+        },
+        "loginAt": "마지막으로 사용됨: {{dt}}",
+        "createdAt": "추가됨: {{dt}}"
       },
       "register": {
         "title": "패스키 등록하기",
@@ -228,7 +230,9 @@
           "cancelled": "패스키 등록이 취소되었습니다",
           "failed": "패스키 등록에 실패했습니다",
           "invalid_response": "잘못된 응답입니다",
-          "credential_id_conflict": "이미 등록된 패스키입니다"
+          "credential_id_conflict": "이미 등록된 패스키입니다",
+          "invalid_aaguid": "잘못된 AAGUID({{aaguid}})입니다",
+          "unknown_aaguid": "존재하지 않는 AAGUID({{aaguid}})입니다"
         }
       },
       "complete": {

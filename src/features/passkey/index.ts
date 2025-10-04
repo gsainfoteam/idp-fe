@@ -8,5 +8,5 @@ export * from './hooks/use-passkey-list';
 export * from './hooks/use-passkey-edit-form';
 export * from './hooks/use-passkey-delete-form';
 
-export * from './utils/generate-passkey-name';
-export * from './utils/credential';
+export * from './utils/buffer-base64';
+export * from './utils/aaguid';

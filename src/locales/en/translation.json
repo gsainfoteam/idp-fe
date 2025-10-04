@@ -185,7 +185,7 @@
     }
   },
   "passkey": {
-    "title": "Register Passkey",
+    "title": "Manage Passkey",
     "steps": {
       "register": {
         "title": "Register Passkey",
@@ -196,7 +196,9 @@
           "cancelled": "Passkey registration was cancelled",
           "failed": "Failed to register passkey",
           "invalid_response": "Invalid response",
-          "credential_id_conflict": "Passkey already exists"
+          "credential_id_conflict": "Passkey already exists",
+          "invalid_aaguid": "Wrong AAGUID({{aaguid}})",
+          "unknown_aaguid": "AAGUID({{aaguid}}) does not exist"
         },
         "name": {
           "placeholder": "i.e. My iPhone, 1Password",
@@ -233,7 +235,9 @@
           "placeholder": "Please write down the name to change",
           "cancel": "Cancel",
           "apply": "Apply"
-        }
+        },
+        "loginAt": "Last used: {{dt}}",
+        "createdAt": "Added: {{dt}}"
       }
     }
   },

@@ -44,9 +44,17 @@ export function PasskeyListFrame() {
                 <Avatar
                   size={10}
                   seed={uniqueKey(passkey.id)}
-                  className="shrink-0 rounded-lg"
+                  className="shrink-0 rounded-lg bg-none"
                 >
-                  <KeyIcon />
+                  {passkey.icon ? (
+                    <img
+                      src={passkey.icon}
+                      alt={passkey.name}
+                      className="size-6"
+                    />
+                  ) : (
+                    <KeyIcon />
+                  )}
                 </Avatar>
               }
               leftActions={[
@@ -96,7 +104,13 @@ export function PasskeyListFrame() {
                 <div className="flex items-center gap-1">{passkey.name}</div>
               </div>
               <div className="text-label-2 text-basics-secondary-label truncate">
-                Last used: {passkey.loginAt}
+                {passkey.loginAt
+                  ? t('passkey.steps.list.loginAt', {
+                      dt: new Date(passkey.loginAt).toLocaleString(),
+                    })
+                  : t('passkey.steps.list.createdAt', {
+                      dt: new Date(passkey.createdAt).toLocaleString(),
+                    })}
               </div>
             </SwipeCard>
           ))}
