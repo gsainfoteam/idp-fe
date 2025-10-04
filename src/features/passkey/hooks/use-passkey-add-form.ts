@@ -8,7 +8,6 @@ import {
   arrayBufferToBase64Url,
   base64UrlToArrayBuffer,
   credentialTypeGuard,
-  detectPasswordManager,
   generatePasskeyName,
 } from '@/features/passkey';
 
@@ -87,13 +86,9 @@ export const usePasskeyAddForm = ({ onNext }: { onNext: () => void }) => {
       return;
     }
 
-    // TODO: password manager detection
-    const passwordManager = detectPasswordManager();
-    const passkeyName = generatePasskeyName(passwordManager);
-
     const { data: verifyData, status: verifyStatus } =
       await postUserPasskeyVerify({
-        name: passkeyName,
+        name: generatePasskeyName(),
         registrationResponse: {
           id: credential.id,
           rawId: arrayBufferToBase64Url(credential.rawId),
