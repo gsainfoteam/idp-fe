@@ -52,7 +52,7 @@ src/
 │   └── auth/               # 인증 페이지들
 ├── stories/                # Storybook 스토리
 ├── styles/                 # CSS 스타일 파일들
-├── app.ts x                # 루트, 라우터 생성 등
+├── app.tsx                # 루트, 라우터 생성 등
 └── main.tsx                # 애플리케이션 진입점
 ```
 
