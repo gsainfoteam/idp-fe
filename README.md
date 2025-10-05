@@ -8,7 +8,7 @@ GIST 메일로 로그인 서비스의 프론트엔드 애플리케이션입니�
 - **Build Tool**: Vite 6.3.5
 - **Language**: TypeScript 5.7.3
 - **Routing**: TanStack Router 1.127.3
-- **State Management**: **Zustand** 5.0.6
+- **State Management**: Zustand 5.0.6
 - **Data Fetching**: TanStack React Query 5.83.0
 - **Styling**: Tailwind CSS 4.1.11
 - **UI Components**: Custom components
