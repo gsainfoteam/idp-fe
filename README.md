@@ -11,7 +11,7 @@ GIST 메일로 로그인 서비스의 프론트엔드 애플리케이션입니�
 - **State Management**: **Zustand** 5.0.6
 - **Data Fetching**: TanStack React Query 5.83.0
 - **Styling**: Tailwind CSS 4.1.11
-- **UI Components**: Custom components with Radix UI primitives
+- **UI Components**: Custom components
 - **Form Handling**: React Hook Form 7.60.0 + Zod 3.25.76
 - **Animation**: Motion 12.23.3
 - **Internationalization**: React i18next 15.6.0
