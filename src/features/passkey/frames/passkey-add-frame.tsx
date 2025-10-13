@@ -22,13 +22,13 @@ export function PasskeyAddFrame() {
   return (
     <funnel.Render
       register={({ history }) => (
-        <RegisterStep onNext={() => history.push('complete')} />
+        <RegisterStep onNext={() => history.replace('complete')} />
       )}
       complete={() => (
         <CompleteStep
           onNext={async () => {
             funnel.history.cleanup();
-            await navigate({ to: '/passkeys' });
+            await navigate({ to: '/passkeys', replace: true });
           }}
         />
       )}

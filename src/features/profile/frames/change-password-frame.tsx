@@ -56,17 +56,16 @@ export function ChangePasswordFrame() {
         <NewPasswordStep
           step={step}
           context={context}
-          onNext={(data) => history.push('complete', data)}
+          onNext={(data) => history.replace('complete', data)}
           onUndo={() => history.back()}
         />
       )}
-      complete={({ history, step }) => (
+      complete={({ step }) => (
         <CompleteStep
           step={step}
-          onUndo={() => history.back()}
           onNext={async () => {
             funnel.history.cleanup();
-            await navigate({ to: '/auth/login' });
+            await navigate({ to: '/auth/login', replace: true });
             await signOut();
           }}
         />

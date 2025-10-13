@@ -79,7 +79,7 @@ export function RegisterFrame() {
           context={context}
           onNext={async () => {
             funnel.history.cleanup();
-            await navigate({ to: '/auth/login' });
+            await navigate({ to: '/auth/login', replace: true });
           }}
         />
       )}

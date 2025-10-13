@@ -1,9 +1,9 @@
+import { useAuth } from '@/features/auth';
+import { useFunnel } from '@/features/core';
+
 import { ConfirmStep } from './steps/confirm-step';
 import { DoneStep } from './steps/done-step';
 import { PasswordStep } from './steps/password-step';
-
-import { useAuth } from '@/features/auth';
-import { useFunnel } from '@/features/core';
 
 type User = {
   name: string;
@@ -37,7 +37,7 @@ export function WithdrawFrame() {
         <ConfirmStep
           context={context}
           onNext={() =>
-            history.push('done', (prev) => ({
+            history.replace('done', (prev) => ({
               ...prev,
               password: context.password,
             }))

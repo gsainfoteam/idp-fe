@@ -29,15 +29,15 @@ export function IssuePasswordFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('complete', data)}
+          onNext={(data) => history.replace('complete', data)}
         />
       )}
-      // TODO: 추후에 history.cleanup 으로 변경하기, 현재 코드 오류 발생
+      // TODO: 추후에 history.cleanup 으로 변경하기
       complete={() => (
         <CompleteStep
           onNext={async () => {
             funnel.history.cleanup();
-            await navigate({ to: '/auth/login' });
+            await navigate({ to: '/auth/login', replace: true });
             await signOut();
           }}
         />
