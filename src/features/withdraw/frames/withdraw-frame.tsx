@@ -44,7 +44,14 @@ export function WithdrawFrame() {
           }
         />
       )}
-      done={() => <DoneStep onNext={() => signOut()} />}
+      done={() => (
+        <DoneStep
+          onNext={async () => {
+            funnel.history.cleanup();
+            await signOut();
+          }}
+        />
+      )}
     />
   );
 }

@@ -36,8 +36,8 @@ export function IssuePasswordFrame() {
       complete={() => (
         <CompleteStep
           onNext={async () => {
-            funnel.history.cleanup();
             await navigate({ to: '/auth/login', replace: true });
+            funnel.history.cleanup();
             await signOut();
           }}
         />

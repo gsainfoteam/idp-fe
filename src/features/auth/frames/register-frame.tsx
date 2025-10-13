@@ -56,14 +56,14 @@ export function RegisterFrame() {
       code={({ history, context }) => (
         <CodeStep
           context={context}
-          onNext={(data) => history.replace('password', data)}
+          onNext={(data) => history.push('password', data)}
           onUndo={undoWarning}
         />
       )}
       password={({ history, context }) => (
         <PasswordStep
           context={context}
-          onNext={(data) => history.replace('info', data)}
+          onNext={(data) => history.push('info', data)}
           onUndo={undoWarning}
         />
       )}
@@ -78,8 +78,8 @@ export function RegisterFrame() {
         <CompleteStep
           context={context}
           onNext={async () => {
-            funnel.history.cleanup();
             await navigate({ to: '/auth/login', replace: true });
+            funnel.history.cleanup();
           }}
         />
       )}

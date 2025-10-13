@@ -50,7 +50,12 @@ export function ConfirmStep({
                 {t('withdraw.steps.confirm.sub_button')}
               </Button>
             </Link>
-            <Button variant="warning" disabled={!clients} loading={isLoading}>
+            <Button
+              className="w-full"
+              variant="warning"
+              disabled={!clients}
+              loading={isLoading}
+            >
               {t('withdraw.steps.confirm.button')}
             </Button>
           </div>
