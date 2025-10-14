@@ -30,24 +30,27 @@ export const useAuth = () => {
     }
   }, [refetch, token]);
 
-  const signOut = useCallback(async () => {
-    const { status } = await deleteAuthLogout();
+  const signOut = useCallback(
+    async (shouldRedirect: boolean = true) => {
+      const { status } = await deleteAuthLogout();
 
-    if (status) {
-      switch (status) {
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+      if (status) {
+        switch (status) {
+          case 'SERVER_ERROR':
+            toast.error(t('toast.server_error'));
+            break;
+          case 'UNKNOWN_ERROR':
+            toast.error(t('toast.unknown_error'));
+            break;
+        }
+
+        return;
       }
 
-      return;
-    }
-
-    saveToken(null);
-  }, [saveToken, t]);
+      saveToken(shouldRedirect ? null : undefined);
+    },
+    [saveToken, t],
+  );
 
   return { user, refetch, signOut };
 };
