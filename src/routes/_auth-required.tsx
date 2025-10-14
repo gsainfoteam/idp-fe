@@ -1,4 +1,6 @@
-import { useAuth } from '@/features/auth';
+import { useMemo } from 'react';
+
+import { useAuth, useToken } from '@/features/auth';
 import {
   Navigate,
   Outlet,
@@ -22,16 +24,22 @@ const cleanupAllFunnel = (href: string): string => {
 
 const AuthRequiredLayout = () => {
   const { user } = useAuth();
+  const { token } = useToken();
   const router = useRouter();
+
+  const searchParams = useMemo(() => {
+    const shouldRedirect = token === null;
+    return shouldRedirect
+      ? { redirect: cleanupAllFunnel(router.history.location.href) }
+      : {};
+  }, [token, router.history.location.href]);
 
   if (user === undefined) return null;
   if (user === null) {
-    const redirect = cleanupAllFunnel(router.history.location.href);
-
     return (
       <Navigate
         to="/auth/login"
-        search={{ redirect }}
+        search={searchParams}
         replace
         viewTransition={{ types: ['reload'] }}
       />
