@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { patchUserPassword } from '@/data/patch-user-password';
 import { useAuth, useToken } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
-import { useNavigate } from '@tanstack/react-router';
 
 import { CompleteStep } from './change-password-steps/complete-step';
 import { CurrentPasswordStep } from './change-password-steps/current-password-step';
@@ -26,7 +25,6 @@ export function ChangePasswordFrame() {
   const { user, signOut } = useAuth();
   const { token } = useToken();
   const { t } = useTranslation();
-  const navigate = useNavigate({ from: '/change-password' });
   const funnel = useFunnel<ChangePasswordSteps>({
     id: 'change_password',
     initial: {
@@ -64,9 +62,8 @@ export function ChangePasswordFrame() {
         <CompleteStep
           step={step}
           onNext={async () => {
-            await navigate({ to: '/auth/login', replace: true });
-            funnel.history.cleanup();
-            await signOut();
+            await funnel.history.cleanup();
+            await signOut(false);
           }}
         />
       )}

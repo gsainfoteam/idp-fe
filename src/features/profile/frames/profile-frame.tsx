@@ -127,7 +127,10 @@ export function ProfileFrame() {
               {t('profile.menu.developer')}
             </MenuButton>
           </Link>
-          <MenuButton icon={LogoutIcon} onClick={signOut}>
+          <MenuButton
+            icon={LogoutIcon}
+            onClick={async () => await signOut(false)}
+          >
             {t('profile.menu.logout')}
           </MenuButton>
           <Link to="/withdraw">

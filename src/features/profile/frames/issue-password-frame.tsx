@@ -1,5 +1,4 @@
 import { postUserPassword } from '@/data/post-user-password';
-import { useAuth } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
 
@@ -14,8 +13,7 @@ export type IssuePasswordSteps = {
 };
 
 export function IssuePasswordFrame() {
-  const { signOut } = useAuth();
-  const navigate = useNavigate({ from: '/issue-password' });
+  const navigate = useNavigate();
   const funnel = useFunnel<IssuePasswordSteps>({
     id: 'issue_password',
     initial: {
@@ -32,13 +30,16 @@ export function IssuePasswordFrame() {
           onNext={(data) => history.replace('complete', data)}
         />
       )}
-      // TODO: 추후에 history.cleanup 으로 변경하기
       complete={() => (
         <CompleteStep
           onNext={async () => {
-            await navigate({ to: '/auth/login', replace: true });
-            funnel.history.cleanup();
-            await signOut();
+            await funnel.history.cleanup();
+            await navigate({
+              to: '/auth/login',
+              replace: true,
+              viewTransition: { types: ['reload'] },
+              search: (prev) => ({ ...prev }),
+            });
           }}
         />
       )}

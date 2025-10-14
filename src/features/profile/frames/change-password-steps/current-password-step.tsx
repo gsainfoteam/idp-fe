@@ -1,9 +1,9 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useCurrentPasswordForm } from '../../hooks/change-password-steps/use-current-password-form';
-
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
+
+import { useCurrentPasswordForm } from '../../hooks/change-password-steps/use-current-password-form';
 
 export function CurrentPasswordStep({
   step,

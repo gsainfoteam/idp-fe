@@ -13,6 +13,7 @@ type User = {
 
 export function WithdrawFrame() {
   const { signOut, user } = useAuth();
+
   if (!user) throw new Error('User not found');
 
   const funnel = useFunnel<{
@@ -47,8 +48,8 @@ export function WithdrawFrame() {
       done={() => (
         <DoneStep
           onNext={async () => {
-            funnel.history.cleanup();
-            await signOut();
+            await funnel.history.cleanup();
+            await signOut(false);
           }}
         />
       )}

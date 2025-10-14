@@ -27,8 +27,13 @@ export function PasskeyAddFrame() {
       complete={() => (
         <CompleteStep
           onNext={async () => {
-            await navigate({ to: '/passkeys', replace: true });
-            funnel.history.cleanup();
+            await funnel.history.cleanup();
+            await navigate({
+              to: '/passkeys',
+              replace: true,
+              viewTransition: { types: ['reload'] },
+              search: (prev) => ({ ...prev }),
+            });
           }}
         />
       )}
