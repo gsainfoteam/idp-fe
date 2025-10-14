@@ -1,5 +1,5 @@
 import { useFunnel } from '@/features/core';
-import { useNavigate } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 
 import { CompleteStep } from './passkey-add-steps/complete-step';
 import { RegisterStep } from './passkey-add-steps/register-step';
@@ -10,7 +10,7 @@ export type PasskeySteps = {
 };
 
 export function PasskeyAddFrame() {
-  const navigate = useNavigate({ from: '/passkeys/new' });
+  const router = useRouter();
   const funnel = useFunnel<PasskeySteps>({
     id: 'passkey',
     initial: {
@@ -28,12 +28,7 @@ export function PasskeyAddFrame() {
         <CompleteStep
           onNext={async () => {
             await funnel.history.cleanup();
-            await navigate({
-              to: '/passkeys',
-              replace: true,
-              viewTransition: { types: ['reload'] },
-              search: (prev) => ({ ...prev }),
-            });
+            router.history.back();
           }}
         />
       )}
