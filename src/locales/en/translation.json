@@ -120,7 +120,7 @@
         "label": "GIST Email",
         "placeholder": "m@gm.gist.ac.kr",
         "errors": {
-          "format": "Please enter your email"
+          "format": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)"
         }
       },
       "password": {

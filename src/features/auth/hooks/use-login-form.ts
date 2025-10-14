@@ -13,7 +13,12 @@ import { useToken } from './use-token';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    email: z.string().email(t('login.inputs.email.errors.format')),
+    email: z
+      .string()
+      .regex(
+        /^\S+@(?:gm\.)?gist\.ac\.kr$/,
+        t('login.inputs.email.errors.format'),
+      ),
     password: z.string().min(1, t('login.inputs.password.errors.format')),
   });
 
