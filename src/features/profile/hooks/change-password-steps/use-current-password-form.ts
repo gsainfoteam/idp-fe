@@ -16,7 +16,7 @@ const createSchema = (t: TFunction) =>
     password: z
       .string()
       .min(
-        12,
+        1,
         t(
           'change_password.steps.current_password.inputs.password.errors.format',
         ),
