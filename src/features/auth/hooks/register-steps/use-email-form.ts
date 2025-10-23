@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
+import { getUserEmail } from '@/data/get-user-email';
 import { postVerifyEmail } from '@/data/post-verify-email';
 import { DifferenceNonNullable } from '@/features/core';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,6 +38,28 @@ export const useEmailForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    const { data, status: emailStatus } = await getUserEmail(formData.email);
+
+    if (data == undefined || emailStatus) {
+      switch (emailStatus) {
+        case 'SERVER_ERROR':
+          toast.error(t('toast.server_error'));
+          break;
+        case 'UNKNOWN_ERROR':
+          toast.error(t('toast.unknown_error'));
+          break;
+      }
+
+      return;
+    }
+
+    if (data == true) {
+      form.setError('email', {
+        message: t('register.steps.email.inputs.email.errors.already_exists'),
+      });
+      return;
+    }
+
     const result = await overlay();
     if (result === false) return;
 
