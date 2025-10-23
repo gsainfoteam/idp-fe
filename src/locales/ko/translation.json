@@ -16,7 +16,8 @@
             "label": "GIST 이메일",
             "placeholder": "m@gm.gist.ac.kr",
             "errors": {
-              "format": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요"
+              "format": "지스트 메일(@gm.gist.ac.kr, @gist.ac.kr)을 사용해주세요",
+              "already_exists": "이미 가입된 메일입니다"
             }
           }
         }

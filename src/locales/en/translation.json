@@ -16,7 +16,8 @@
             "label": "GIST Email",
             "placeholder": "m@gm.gist.ac.kr",
             "errors": {
-              "format": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)"
+              "format": "Please use a GIST email (@gm.gist.ac.kr, @gist.ac.kr)",
+              "already_exists": "This email has already been signed up."
             }
           }
         }
