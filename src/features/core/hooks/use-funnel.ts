@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   useLocation,
   useNavigate,
@@ -5,7 +7,6 @@ import {
   useSearch,
 } from '@tanstack/react-router';
 import { AnyFunnelState, createUseFunnel } from '@use-funnel/core';
-import { useMemo } from 'react';
 
 type AnyContext = Record<string, any>;
 type AnyStepContextMap = Record<string, AnyContext>;
@@ -118,7 +119,7 @@ const useFunnelRouter = ({
       go(index: number) {
         router.history.go(index);
       },
-      cleanup() {
+      async cleanup() {
         const currentSearchParams = new URLSearchParams(window.location.search);
         const newLocationState = { ...location.state };
         const id = stepName.split('-')[0]!;
@@ -141,7 +142,7 @@ const useFunnelRouter = ({
           ),
         ]);
 
-        navigate({
+        await navigate({
           replace: true,
           to: `${location.pathname}?${searchParams.toString()}`,
           state: newLocationState,

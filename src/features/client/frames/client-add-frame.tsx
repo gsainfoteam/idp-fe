@@ -1,18 +1,18 @@
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { Button, FunnelLayout } from '@/features/core';
+import { useRouter } from '@tanstack/react-router';
+
 import { ClientAddForm } from '../components/client-add-form';
 import { useAddClientForm } from '../hooks/use-add-client-form';
 
-import { Button, FunnelLayout } from '@/features/core';
-
-export function ClientAddFrame({
-  onSuccess,
-}: {
-  onSuccess: (client: { clientId: string; clientSecret: string }) => void;
-}) {
+export function ClientAddFrame() {
+  const router = useRouter();
   const { t } = useTranslation();
-  const { form, onSubmit } = useAddClientForm({ onSuccess });
+  const { form, onSubmit } = useAddClientForm({
+    onSuccess: () => router.history.back(),
+  });
 
   return (
     <FormProvider {...form}>

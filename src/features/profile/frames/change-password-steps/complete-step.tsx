@@ -6,11 +6,9 @@ import { Button, FunnelLayout } from '@/features/core';
 
 export function CompleteStep({
   step,
-  onUndo,
   onNext,
 }: {
   step: string;
-  onUndo: () => void;
   onNext: () => void;
 }) {
   const { t } = useTranslation();
@@ -21,10 +19,9 @@ export function CompleteStep({
   return (
     <FunnelLayout
       key={step}
-      onUndo={onUndo}
+      hideUndo
       title={t('change_password.title')}
       stepTitle={t('change_password.steps.complete.title')}
-      hideUndo
       button={
         // signOut이 되면 자동으로 /auth/login으로 이동하도록 라우팅 되어있음
         <Button variant="primary" className="w-full" onClick={onNext}>

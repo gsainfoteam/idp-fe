@@ -28,7 +28,7 @@ export type RegisterSteps = {
 };
 
 export function RegisterFrame() {
-  const navigate = useNavigate({ from: '/auth/register' });
+  const navigate = useNavigate();
   const funnel = useFunnel<RegisterSteps>({
     id: 'register',
     initial: {
@@ -50,7 +50,7 @@ export function RegisterFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('code', data)}
+          onNext={(data) => history.replace('code', data)}
         />
       )}
       code={({ history, context }) => (
@@ -78,8 +78,13 @@ export function RegisterFrame() {
         <CompleteStep
           context={context}
           onNext={async () => {
-            funnel.history.cleanup();
-            await navigate({ to: '/auth/login' });
+            await funnel.history.cleanup();
+            await navigate({
+              to: '/auth/login',
+              replace: true,
+              viewTransition: { types: ['reload'] },
+              search: (prev) => ({ ...prev }),
+            });
           }}
         />
       )}

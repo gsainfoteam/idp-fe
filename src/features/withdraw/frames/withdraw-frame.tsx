@@ -1,9 +1,9 @@
+import { useAuth } from '@/features/auth';
+import { useFunnel } from '@/features/core';
+
 import { ConfirmStep } from './steps/confirm-step';
 import { DoneStep } from './steps/done-step';
 import { PasswordStep } from './steps/password-step';
-
-import { useAuth } from '@/features/auth';
-import { useFunnel } from '@/features/core';
 
 type User = {
   name: string;
@@ -13,6 +13,7 @@ type User = {
 
 export function WithdrawFrame() {
   const { signOut, user } = useAuth();
+
   if (!user) throw new Error('User not found');
 
   const funnel = useFunnel<{
@@ -37,14 +38,21 @@ export function WithdrawFrame() {
         <ConfirmStep
           context={context}
           onNext={() =>
-            history.push('done', (prev) => ({
+            history.replace('done', (prev) => ({
               ...prev,
               password: context.password,
             }))
           }
         />
       )}
-      done={() => <DoneStep onNext={() => signOut()} />}
+      done={() => (
+        <DoneStep
+          onNext={async () => {
+            await funnel.history.cleanup();
+            await signOut(false);
+          }}
+        />
+      )}
     />
   );
 }
