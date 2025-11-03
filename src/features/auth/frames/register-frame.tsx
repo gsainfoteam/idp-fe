@@ -50,20 +50,20 @@ export function RegisterFrame() {
       email={({ history, context }) => (
         <EmailStep
           context={context}
-          onNext={(data) => history.push('code', data)}
+          onNext={(data) => history.replace('code', data)}
         />
       )}
       code={({ history, context }) => (
         <CodeStep
           context={context}
-          onNext={(data) => history.push('password', data)}
+          onNext={(data) => history.replace('password', data)}
           onUndo={undoWarning}
         />
       )}
       password={({ history, context }) => (
         <PasswordStep
           context={context}
-          onNext={(data) => history.push('info', data)}
+          onNext={(data) => history.replace('info', data)}
           onUndo={undoWarning}
         />
       )}
