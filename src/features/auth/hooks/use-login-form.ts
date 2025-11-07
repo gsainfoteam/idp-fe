@@ -54,9 +54,9 @@ export const useLoginForm = () => {
       return;
     }
 
+    setRecentLogin(new Date());
     saveToken(data.accessToken);
     await refetch();
-    setRecentLogin(new Date());
   });
 
   return { form, onSubmit };
