@@ -23,6 +23,7 @@ export function LoginForm() {
         disabled={formState.isSubmitting}
         type="email"
         placeholder={t('login.inputs.email.placeholder')}
+        autoComplete="email"
         {...register('email', { onChange })}
       />
       <div className="h-4" />
@@ -33,6 +34,7 @@ export function LoginForm() {
         }
         disabled={formState.isSubmitting}
         placeholder={t('login.inputs.password.placeholder')}
+        autoComplete="current-password"
         {...register('password', { onChange })}
       />
     </div>
