@@ -174,8 +174,8 @@
       "continue": "Continue"
     }
   },
-  "profile": {
-    "title": "Profile",
+  "home": {
+    "title": "Home",
     "menu": {
       "edit": "Edit Profile",
       "password": "Change Password",
@@ -183,6 +183,28 @@
       "developer": "Developer Center",
       "logout": "Log Out",
       "withdrawal": "Delete Account"
+    }
+  },
+  "profile": {
+    "title": "Profile Info",
+    "verify": "Verify",
+    "sections": {
+      "basic_info": {
+        "title": "Basic Info",
+        "fields": {
+          "name_and_id": "Name and ID",
+          "email": "Email",
+          "phone_number": "Phone Number"
+        }
+      },
+      "detail_info": {
+        "title": "Detail Info",
+        "fields": {
+          "uuid": "UUID",
+          "created_at": "Created At",
+          "updated_at": "Updated At"
+        }
+      }
     }
   },
   "passkey": {

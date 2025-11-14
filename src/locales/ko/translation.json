@@ -174,8 +174,8 @@
       "continue": "계속하기"
     }
   },
-  "profile": {
-    "title": "프로필",
+  "home": {
+    "title": "홈",
     "menu": {
       "edit": "프로필 수정",
       "password": "비밀번호 변경",
@@ -183,6 +183,28 @@
       "developer": "개발자 센터",
       "logout": "로그아웃",
       "withdrawal": "계정 탈퇴"
+    }
+  },
+  "profile": {
+    "title": "프로필 정보",
+    "verify": "인증하기",
+    "sections": {
+      "basic_info": {
+        "title": "기본 정보",
+        "fields": {
+          "name_and_id": "이름 및 학번",
+          "email": "이메일",
+          "phone_number": "전화번호"
+        }
+      },
+      "detail_info": {
+        "title": "세부 정보",
+        "fields": {
+          "uuid": "UUID",
+          "created_at": "생성 날짜 및 시각",
+          "updated_at": "갱신 날짜 및 시각"
+        }
+      }
     }
   },
   "passkey": {

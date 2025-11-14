@@ -2,18 +2,12 @@
   "singleQuote": true,
   "trailingComma": "all",
   "plugins": [
-    "prettier-plugin-tailwindcss",
-    "@trivago/prettier-plugin-sort-imports"
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
   ],
-  "tailwindFunctions": ["cn", "cva", "palette"],
-  "importOrder": [
-    "^@mui/(.*)$",
-    "^@untitled-ui/(.*)$",
-    "^react",
-    "^src/(.*)$",
-    "<THIRD_PARTY_MODULES>",
-    "^[./]"
-  ],
+  "tailwindFunctions": ["cn", "cva", "tv"],
+  "tailwindPreserveWhitespace": false,
+  "importOrder": ["^react$", "^react/(.*)$", "^@?\\w", "^@/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
