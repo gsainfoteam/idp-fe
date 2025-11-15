@@ -121,7 +121,7 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
               <VerifiedBadge
-                verified={true}
+                verified={user.isIdVerified}
                 onClick={async () =>
                   await navigate({ to: '/profile/verify-student-id' })
                 }
@@ -140,7 +140,10 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.phone_number')}
               {/* TODO: 인증 퍼널 구현 */}
-              <VerifiedBadge verified={false} onClick={() => {}} />
+              <VerifiedBadge
+                verified={user.isPhoneNumberVerified}
+                onClick={() => {}}
+              />
             </div>
             <div className="text-basics-secondary-label">
               {user.phoneNumber}
