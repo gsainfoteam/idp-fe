@@ -20,11 +20,11 @@ type StepContext = Pretty<
 export type RegisterSteps = {
   email: StepContext;
   code: RequireKeys<RegisterSteps['email'], 'email' | 'emailAgree'>;
-  password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
+  password: RequireKeys<RegisterSteps['code'], 'emailVerificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
     RegisterSteps['info'],
-    'name' | 'studentId' | 'phoneNumber'
+    'name' | 'studentId' | 'phoneNumber' | 'studentIdVerificationJwtToken'
   >;
 };
 

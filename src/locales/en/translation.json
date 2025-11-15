@@ -86,18 +86,20 @@
               "format": "Please enter your name"
             }
           },
-          "student_id": {
-            "label": "Student ID",
-            "placeholder": "{{format}}",
-            "errors": {
-              "format": "Please enter in the {{format}} format"
-            }
-          },
           "phone_number": {
             "label": "Phone Number",
             "placeholder": "010-0000-0000",
             "errors": {
               "format": "Please enter a valid phone number"
+            }
+          },
+          "birth_date": {
+            "label": "Birth Date",
+            "placeholder": "YYYYMMDD",
+            "description": "※ The entered birth date is not saved, and is only used for verifying student status.",
+            "errors": {
+              "invalid": "No student found with the matching name and birth date",
+              "format": "Please enter a valid date"
             }
           }
         },
@@ -218,7 +220,7 @@
             "label": "Birth Date",
             "placeholder": "YYYYMMDD",
             "errors": {
-              "format": "Please enter in the YYYYMMDD format"
+              "format": "Please enter a valid date"
             },
             "description": "※ The entered birth date is not saved, and is only used for verifying student status."
           }
@@ -254,7 +256,7 @@
             "label": "Birth Date",
             "placeholder": "YYYYMMDD",
             "errors": {
-              "format": "Please enter in the YYYYMMDD format",
+              "format": "Please enter a valid date",
               "invalid": "No student found with the matching name and birth date"
             },
             "description": "※ The entered birth date is not saved, and is only used for verifying student status."

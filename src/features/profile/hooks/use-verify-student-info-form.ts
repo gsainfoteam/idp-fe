@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +11,14 @@ import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
 
 import { VerifyStudentIdSteps } from '../frames/verify-student-id-frame';
 
-const schema = z.object({
-  birthDate: z.date(),
-});
+const createSchema = (t: TFunction) =>
+  z.object({
+    birthDate: z.date({
+      required_error: t(
+        'verify_student_id.steps.info.inputs.birth_date.errors.format',
+      ),
+    }),
+  });
 
 export function useVerifyStudentInfoForm({
   onSuccess,
@@ -33,7 +39,7 @@ export function useVerifyStudentInfoForm({
 }) {
   const { t } = useTranslation();
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createSchema(t)),
     mode: 'onChange',
   });
   const { user } = useAuth();

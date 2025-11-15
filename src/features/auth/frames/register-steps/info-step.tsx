@@ -1,9 +1,9 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useInfoForm } from '../../hooks/register-steps/use-info-form';
-
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
+
+import { useInfoForm } from '../../hooks/register-steps/use-info-form';
 
 export function InfoStep({
   context,
@@ -45,29 +45,28 @@ export function InfoStep({
               {...register('name')}
             />
           </Label>
-          <Label text={t('register.steps.info.inputs.student_id.label')}>
-            <Input
-              type="text"
-              placeholder={t(
-                'register.steps.info.inputs.student_id.placeholder',
-                {
-                  format: `${new Date().getFullYear()}0000`,
-                },
-              )}
-              error={errors.studentId?.message || !!errors.root}
-              disabled={isSubmitting}
-              {...register('studentId')}
-            />
-          </Label>
           <Label text={t('register.steps.info.inputs.phone_number.label')}>
             <Input
               type="tel"
               placeholder={t(
                 'register.steps.info.inputs.phone_number.placeholder',
               )}
-              error={errors.phoneNumber?.message || errors.root?.message}
+              error={errors.phoneNumber?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('phoneNumber')}
+            />
+          </Label>
+          <Label text={t('register.steps.info.inputs.birth_date.label')}>
+            <Input
+              type="date"
+              placeholder={t(
+                'register.steps.info.inputs.birth_date.placeholder',
+              )}
+              error={errors.birthDate?.message || errors.root?.message}
+              disabled={isSubmitting}
+              {...register('birthDate', {
+                valueAsDate: true,
+              })}
             />
           </Label>
         </div>
