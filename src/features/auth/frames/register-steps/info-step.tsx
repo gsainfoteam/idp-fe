@@ -49,7 +49,7 @@ export function InfoStep({
                     </div>
                   </Dialog.Header>
                   <Dialog.Body>
-                    <div className="text-title-1 w-full text-center">
+                    <div className="text-title-1 text-label w-full text-center">
                       {getValues('studentId')}
                     </div>
                   </Dialog.Body>
