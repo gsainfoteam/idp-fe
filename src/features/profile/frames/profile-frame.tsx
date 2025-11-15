@@ -69,6 +69,8 @@ export function ProfileFrame() {
 
   if (!user) return null;
 
+  const isStudent = user.email.endsWith('@gm.gist.ac.kr');
+
   return (
     <FunnelLayout
       title={t('profile.title')}
@@ -120,12 +122,14 @@ export function ProfileFrame() {
           <div className="text-label-1 flex w-full items-center justify-between">
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
-              <VerifiedBadge
-                verified={user.isIdVerified}
-                onClick={async () =>
-                  await navigate({ to: '/profile/verify-student-id' })
-                }
-              />
+              {isStudent && (
+                <VerifiedBadge
+                  verified={user.isIdVerified}
+                  onClick={async () =>
+                    await navigate({ to: '/profile/verify-student-id' })
+                  }
+                />
+              )}
             </div>
             <div className="text-basics-secondary-label">{`${user.studentId} ${user.name}`}</div>
           </div>
