@@ -17,11 +17,9 @@ import {
 
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
-function formatDateTime(dateString: string) {
-  const { i18n } = useTranslation();
-
+function formatDateTime(dateString: string, locale: string) {
   return new Date(dateString).toLocaleString(
-    i18n.language === 'ko' ? 'ko-KR' : 'en-US',
+    locale === 'ko' ? 'ko-KR' : 'en-US',
     {
       year: 'numeric',
       month: 'long',
@@ -65,7 +63,7 @@ function VerifiedBadge({
 }
 
 export function ProfileFrame() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -122,7 +120,6 @@ export function ProfileFrame() {
           <div className="text-label-1 flex w-full items-center justify-between">
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
-              {/* TODO: 인증 퍼널 구현 in IDF-141 */}
               <VerifiedBadge
                 verified={true}
                 onClick={async () =>
@@ -162,13 +159,13 @@ export function ProfileFrame() {
           <div className="text-label-1 flex w-full justify-between">
             <div>{t('profile.sections.detail_info.fields.created_at')}</div>
             <div className="text-basics-secondary-label">
-              {formatDateTime(user.createdAt)}
+              {formatDateTime(user.createdAt, i18n.language)}
             </div>
           </div>
           <div className="text-label-1 flex w-full justify-between">
             <div>{t('profile.sections.detail_info.fields.updated_at')}</div>
             <div className="text-basics-secondary-label">
-              {formatDateTime(user.updatedAt)}
+              {formatDateTime(user.updatedAt, i18n.language)}
             </div>
           </div>
         </div>
