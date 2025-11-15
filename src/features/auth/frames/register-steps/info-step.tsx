@@ -62,7 +62,10 @@ export function InfoStep({
                     <Button
                       variant="primary"
                       className="grow"
-                      onClick={onSubmit}
+                      onClick={async (e) => {
+                        await onSubmit(e);
+                        close();
+                      }}
                     >
                       {t('register.steps.info.dialog.buttons.continue')}
                     </Button>

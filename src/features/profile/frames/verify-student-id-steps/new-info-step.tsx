@@ -73,7 +73,10 @@ export function NewInfoStep({
                     <Button
                       variant="primary"
                       className="grow"
-                      onClick={() => onNext(getValues())}
+                      onClick={async () => {
+                        await onNext(getValues());
+                        close();
+                      }}
                     >
                       {t('register.steps.info.dialog.buttons.continue')}
                     </Button>
