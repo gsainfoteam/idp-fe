@@ -6,7 +6,9 @@ import { VerifyStudentIdFrame } from '@/features/profile';
 function VerifyStudentIdPage() {
   const { user } = useAuth();
 
-  if (user && user.isIdVerified) {
+  if (!user) {
+    return null;
+  } else if (user.isIdVerified) {
     return (
       <Navigate to="/profile" replace viewTransition={{ types: ['reload'] }} />
     );
