@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +15,7 @@ import {
 } from '@/features/core';
 import { useLoading } from '@/features/core';
 
-import { useProfileEditForm } from '../hooks/use-profile-edit-form';
+import { useProfileEditForm } from '../../core/hooks/use-profile-edit-form';
 
 export function ProfileEditOverlay({
   isOpen,

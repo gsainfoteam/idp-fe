@@ -1,143 +1,180 @@
-import { ReactNode } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
-import CodeIcon from '@/assets/icons/duo/code.svg?react';
-import LockIcon from '@/assets/icons/duo/lock.svg?react';
-import LogoutIcon from '@/assets/icons/duo/logout.svg?react';
-import PasskeyIcon from '@/assets/icons/duo/passkey.svg?react';
-import UserIcon from '@/assets/icons/duo/user.svg?react';
-import WithdrawalIcon from '@/assets/icons/duo/withdrawal.svg?react';
+import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
+import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
+import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
+import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useAuth } from '@/features/auth';
 import {
   Avatar,
-  Button,
   FunnelLayout,
-  ThemeSwitcher,
+  IconButton,
   cn,
   uniqueKey,
 } from '@/features/core';
-import { Link } from '@tanstack/react-router';
-import { overlay } from 'overlay-kit';
 
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
-interface MenuButtonProps {
-  icon: React.ComponentType<{ className?: string }>;
-  onClick?: () => void;
-  variant?: 'default' | 'danger';
-  children: ReactNode;
+function formatDateTime(dateString: string, locale: string) {
+  return new Date(dateString).toLocaleString(
+    locale === 'ko' ? 'ko-KR' : 'en-US',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    },
+  );
 }
 
-function MenuButton({
-  icon: Icon,
+function VerifiedBadge({
+  verified,
   onClick,
-  variant = 'default',
-  children,
-}: MenuButtonProps) {
+}: {
+  verified: boolean;
+  onClick?: () => void;
+}) {
+  const { t } = useTranslation();
+
+  const Badge = verified ? CheckVerifiedIcon : AlertOctagonIcon;
+
   return (
-    <Button
-      variant="primary"
+    <div
       className={cn(
-        'w-full justify-start px-4 py-3',
-        variant === 'default'
-          ? 'hover:bg-neutral-75 dark:hover:bg-neutral-920 dark:bg-neutral-940 bg-neutral-50 active:bg-neutral-100 dark:active:bg-neutral-900'
-          : 'bg-warning-50 dark:hover:bg-neutral-920 dark:bg-neutral-940 hover:bg-warning-75 active:bg-warning-100 dark:active:bg-neutral-900',
+        'flex items-center gap-1',
+        verified ? 'text-[#47B3ED]' : 'text-[#FC9B3A]',
       )}
-      labelClassName={cn(
-        'text-body-1 gap-3',
-        variant === 'default'
-          ? 'text-neutral-950 dark:text-neutral-50'
-          : 'text-warning-900 dark:text-warning-300',
-      )}
-      prefixIcon={
-        <Icon
-          className={
-            variant === 'default'
-              ? 'fill-neutral-200 stroke-neutral-700 dark:fill-neutral-800 dark:stroke-neutral-300'
-              : 'fill-red-200 stroke-red-800 dark:fill-red-800 dark:stroke-red-200'
-          }
-        />
-      }
-      onClick={onClick}
     >
-      {children}
-    </Button>
+      <Badge className="size-4" />
+      {!verified && (
+        <button
+          className="text-label-1 text-label ml-1 flex cursor-pointer items-center gap-1 font-bold"
+          onClick={onClick}
+        >
+          {t('profile.verify')}
+          <ChevronRightIcon className="text-basics-secondary-label size-4" />
+        </button>
+      )}
+    </div>
   );
 }
 
 export function ProfileFrame() {
-  const { t } = useTranslation();
-  const { user, signOut } = useAuth();
+  const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) return null;
 
+  const isStudent = user.email.endsWith('@gm.gist.ac.kr');
+
   return (
     <FunnelLayout
-      stepTitle={
-        <div className="flex items-center justify-between">
-          {t('profile.title')}
-          <ThemeSwitcher />
-        </div>
-      }
+      title={t('profile.title')}
+      onUndo={async () => {
+        await navigate({
+          to: '/',
+          viewTransition: { types: ['reload'] },
+          search: (prev) => ({ ...prev }),
+        });
+      }}
     >
-      <div className="flex flex-col gap-6">
-        <div className="flex h-fit w-full items-center gap-3 px-3">
-          <Avatar
-            img={user.picture ?? undefined}
-            seed={uniqueKey(user.studentId)}
-            className="cursor-pointer"
-            onClick={() => {
-              overlay.open(({ isOpen, close }) => (
-                <ProfileEditOverlay isOpen={isOpen} close={close} />
-              ));
-            }}
-          >
-            {user.name.charAt(0)}
-          </Avatar>
-          <div className="flex flex-col">
-            <div className="text-title-3 text-label">{user.name}</div>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <Avatar
+              img={user.picture ?? undefined}
+              seed={uniqueKey(user.studentId)}
+              size={24}
+              className="cursor-pointer"
+              onClick={() => {
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileEditOverlay isOpen={isOpen} close={close} />
+                ));
+              }}
+            >
+              {user.name.charAt(0)}
+            </Avatar>
+            <div className="absolute right-0 bottom-0">
+              <IconButton
+                variant="primary"
+                size="none"
+                icon={<EditIcon className="size-4" />}
+                className="border-funnel-background size-8 rounded-full border-3"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-title-2 text-label">{user.name}</div>
             <div className="text-body-2 text-basics-secondary-label">
               {user.email}
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <MenuButton
-            icon={UserIcon}
-            onClick={() => {
-              overlay.open(({ isOpen, close }) => (
-                <ProfileEditOverlay isOpen={isOpen} close={close} />
-              ));
-            }}
-          >
-            {t('profile.menu.edit')}
-          </MenuButton>
-          <Link to="/change-password" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={LockIcon}>
-              {t('profile.menu.password')}
-            </MenuButton>
-          </Link>
-          <Link to="/passkeys" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={PasskeyIcon}>
-              {t('profile.menu.passkey')}
-            </MenuButton>
-          </Link>
-          <Link to="/clients">
-            <MenuButton icon={CodeIcon}>
-              {t('profile.menu.developer')}
-            </MenuButton>
-          </Link>
-          <MenuButton
-            icon={LogoutIcon}
-            onClick={async () => await signOut(false)}
-          >
-            {t('profile.menu.logout')}
-          </MenuButton>
-          <Link to="/withdraw">
-            <MenuButton variant="danger" icon={WithdrawalIcon}>
-              {t('profile.menu.withdrawal')}
-            </MenuButton>
-          </Link>
+        <FunnelLayout.Separator />
+        <div className="text-label flex flex-col gap-5">
+          <div className="text-title-3">
+            {t('profile.sections.basic_info.title')}
+          </div>
+          <div className="text-label-1 flex w-full items-center justify-between">
+            <div className="flex items-center gap-1">
+              {t('profile.sections.basic_info.fields.name_and_id')}
+              {isStudent && (
+                <VerifiedBadge
+                  verified={user.isIdVerified}
+                  onClick={async () =>
+                    await navigate({ to: '/profile/verify-student-id' })
+                  }
+                />
+              )}
+            </div>
+            <div className="text-basics-secondary-label">{`${user.studentId} ${user.name}`}</div>
+          </div>
+          <div className="text-label-1 flex w-full items-center justify-between">
+            <div className="flex items-center gap-1">
+              {t('profile.sections.basic_info.fields.email')}
+              <VerifiedBadge verified={true} />
+            </div>
+            <div className="text-basics-secondary-label">{user.email}</div>
+          </div>
+          <div className="text-label-1 flex w-full items-center justify-between">
+            <div className="flex items-center gap-1">
+              {t('profile.sections.basic_info.fields.phone_number')}
+              {/* TODO: 인증 퍼널 구현 */}
+              <VerifiedBadge
+                verified={user.isPhoneNumberVerified}
+                onClick={() => {}}
+              />
+            </div>
+            <div className="text-basics-secondary-label">
+              {user.phoneNumber}
+            </div>
+          </div>
+        </div>
+        <FunnelLayout.Separator />
+        <div className="text-label flex flex-col gap-5">
+          <div className="text-title-3">
+            {t('profile.sections.detail_info.title')}
+          </div>
+          <div className="text-label-1 flex w-full justify-between">
+            <div>{t('profile.sections.detail_info.fields.uuid')}</div>
+            <div className="text-basics-secondary-label">{user.uuid}</div>
+          </div>
+          <div className="text-label-1 flex w-full justify-between">
+            <div>{t('profile.sections.detail_info.fields.created_at')}</div>
+            <div className="text-basics-secondary-label">
+              {formatDateTime(user.createdAt, i18n.language)}
+            </div>
+          </div>
+          <div className="text-label-1 flex w-full justify-between">
+            <div>{t('profile.sections.detail_info.fields.updated_at')}</div>
+            <div className="text-basics-secondary-label">
+              {formatDateTime(user.updatedAt, i18n.language)}
+            </div>
+          </div>
         </div>
       </div>
     </FunnelLayout>

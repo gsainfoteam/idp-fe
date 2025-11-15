@@ -1,3 +1,5 @@
+import { Link, useNavigate } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import puzzleImage from '@/assets/icons/color/puzzle.png';
@@ -12,8 +14,6 @@ import {
   cn,
   uniqueKey,
 } from '@/features/core';
-import { Link, useNavigate } from '@tanstack/react-router';
-import { overlay } from 'overlay-kit';
 
 import { ClientDeleteOverlay } from '../components/client-delete-overlay';
 import { useClientList } from '../hooks/use-client-list';
@@ -27,7 +27,7 @@ export function ClientListFrame() {
 
   return (
     <FunnelLayout
-      title={t('profile.menu.developer')}
+      title={t('home.menu.developer')}
       stepTitle={t('services.list.title')}
       description={t('services.list.description')}
       button={

@@ -1,7 +1,8 @@
-import { postUser } from '@/data/post-user';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
+
+import { postUser } from '@/data/post-user';
+import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';
 import { CodeStep } from './register-steps/code-step';
@@ -19,11 +20,11 @@ type StepContext = Pretty<
 export type RegisterSteps = {
   email: StepContext;
   code: RequireKeys<RegisterSteps['email'], 'email' | 'emailAgree'>;
-  password: RequireKeys<RegisterSteps['code'], 'verificationJwtToken'>;
+  password: RequireKeys<RegisterSteps['code'], 'emailVerificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
     RegisterSteps['info'],
-    'name' | 'studentId' | 'phoneNumber'
+    'name' | 'studentId' | 'phoneNumber' | 'studentIdVerificationJwtToken'
   >;
 };
 

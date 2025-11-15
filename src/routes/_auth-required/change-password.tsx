@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ChangePasswordFrame } from '@/features/profile';
+import { ChangePasswordFrame } from '@/features/core';
 
 const ChangePasswordPage = () => {
   return <ChangePasswordFrame />;

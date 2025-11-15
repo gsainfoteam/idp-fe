@@ -1,10 +1,10 @@
+import { useLoaderData } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
 import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
-import { useLoaderData } from '@tanstack/react-router';
 
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
@@ -25,7 +25,6 @@ export function AuthorizeFrame() {
     return null;
   }
 
-  // TODO: Error Boundary + Suspense
   if (client === undefined) {
     return null;
   } else if (client === null) {
