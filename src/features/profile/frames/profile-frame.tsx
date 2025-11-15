@@ -4,8 +4,15 @@ import { useTranslation } from 'react-i18next';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
+import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useAuth } from '@/features/auth';
-import { Avatar, FunnelLayout, cn, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  FunnelLayout,
+  IconButton,
+  cn,
+  uniqueKey,
+} from '@/features/core';
 
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
@@ -66,20 +73,29 @@ export function ProfileFrame() {
     <FunnelLayout title={t('profile.title')}>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-4">
-          {/* TODO: 프로필 이미지 클릭 시 프로필 수정 */}
-          <Avatar
-            img={user.picture ?? undefined}
-            seed={uniqueKey(user.studentId)}
-            size={24}
-            className="cursor-pointer"
-            onClick={() => {
-              overlay.open(({ isOpen, close }) => (
-                <ProfileEditOverlay isOpen={isOpen} close={close} />
-              ));
-            }}
-          >
-            {user.name.charAt(0)}
-          </Avatar>
+          <div className="relative">
+            <Avatar
+              img={user.picture ?? undefined}
+              seed={uniqueKey(user.studentId)}
+              size={24}
+              className="cursor-pointer"
+              onClick={() => {
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileEditOverlay isOpen={isOpen} close={close} />
+                ));
+              }}
+            >
+              {user.name.charAt(0)}
+            </Avatar>
+            <div className="absolute right-0 bottom-0">
+              <IconButton
+                variant="primary"
+                size="none"
+                icon={<EditIcon className="size-4" />}
+                className="border-funnel-background size-8 rounded-full border-3"
+              />
+            </div>
+          </div>
           <div className="flex flex-col items-center">
             <div className="text-title-2 text-label">{user.name}</div>
             <div className="text-body-2 text-basics-secondary-label">
