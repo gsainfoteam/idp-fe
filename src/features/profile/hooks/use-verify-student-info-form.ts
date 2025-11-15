@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
 
-import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { postUserVerifyStudentId } from '@/data/post-user-verify-student-id';
 import { useAuth } from '@/features/auth';
 import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
 
@@ -47,12 +47,12 @@ export function useVerifyStudentInfoForm({
   if (!user) throw new Error('User not found');
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status } = await postVerifyStudentId({
+    const { status } = await postUserVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: user.name,
     });
 
-    if (!data || status) {
+    if (status) {
       switch (status) {
         case 'USER_NOT_FOUND':
           onFailure({
@@ -70,16 +70,10 @@ export function useVerifyStudentInfoForm({
       return;
     }
 
-    if (data.studentId === user.studentId) {
-      onSuccess({
-        birthDate: formData.birthDate,
-        name: user.name,
-      });
-    } else {
-      onFailure({
-        birthDate: formData.birthDate,
-      });
-    }
+    onSuccess({
+      birthDate: formData.birthDate,
+      name: user.name,
+    });
   });
 
   return { form, onSubmit };

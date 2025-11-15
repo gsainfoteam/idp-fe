@@ -5,10 +5,8 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
 
-import { postUserVerifyStudentId } from '@/data/post-user-verify-student-id';
-import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
-
-import { VerifyStudentIdSteps } from '../frames/verify-student-id-frame';
+import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { formatDateToYYYYMMDD } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -20,18 +18,10 @@ const createSchema = (t: TFunction) =>
     name: z
       .string()
       .min(1, t('verify_student_id.steps.new_info.inputs.name.errors.format')),
+    studentId: z.string().nullable().default(null),
   });
 
-export function useVerifyStudentNewInfoForm({
-  onNext,
-}: {
-  onNext: (
-    data: DifferenceNonNullable<
-      VerifyStudentIdSteps['complete'],
-      VerifyStudentIdSteps['newInfo']
-    >,
-  ) => void;
-}) {
+export function useVerifyStudentNewInfoForm() {
   const { t } = useTranslation();
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
@@ -39,12 +29,12 @@ export function useVerifyStudentNewInfoForm({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { status } = await postUserVerifyStudentId({
+    const { data, status } = await postVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: formData.name,
     });
 
-    if (status) {
+    if (!data || status) {
       switch (status) {
         case 'USER_NOT_FOUND':
           form.setError('root', {
@@ -64,7 +54,7 @@ export function useVerifyStudentNewInfoForm({
       return;
     }
 
-    onNext(formData);
+    form.setValue('studentId', data.studentId);
   });
 
   return { form, onSubmit };

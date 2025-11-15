@@ -78,6 +78,14 @@
       "info": {
         "title": "Please enter your basic information",
         "button": "Register",
+        "dialog": {
+          "title": "Is this student ID correct?",
+          "description": "If you continue, registration will be completed.",
+          "buttons": {
+            "cancel": "Cancel",
+            "continue": "Continue"
+          }
+        },
         "inputs": {
           "name": {
             "label": "Name",

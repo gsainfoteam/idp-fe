@@ -24,6 +24,8 @@ const createSchema = (t: TFunction) =>
     birthDate: z.date({
       required_error: t('register.steps.info.inputs.birth_date.errors.format'),
     }),
+    studentId: z.string().nullable().default(null),
+    studentIdVerificationJwtToken: z.string().nullable().default(null),
   });
 
 export const useInfoForm = ({
@@ -44,7 +46,7 @@ export const useInfoForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
+  const onVerify = form.handleSubmit(async (formData) => {
     const { data: verifyData, status: verifyStatus } =
       await postVerifyStudentId({
         birthDate: formatDateToYYYYMMDD(formData.birthDate),
@@ -69,11 +71,24 @@ export const useInfoForm = ({
       return;
     }
 
+    form.setValue('studentId', verifyData.studentId);
+    form.setValue(
+      'studentIdVerificationJwtToken',
+      verifyData.verificationJwtToken,
+    );
+  });
+
+  const onSubmit = form.handleSubmit(async (formData) => {
+    if (!formData.studentId || !formData.studentIdVerificationJwtToken) {
+      await onVerify();
+      return;
+    }
+
     const body = {
       ...context,
       ...formData,
-      studentId: verifyData.studentId,
-      studentIdVerificationJwtToken: verifyData.verificationJwtToken,
+      studentId: formData.studentId,
+      studentIdVerificationJwtToken: formData.studentIdVerificationJwtToken,
     };
 
     const { status } = await postUser(body);
@@ -104,5 +119,5 @@ export const useInfoForm = ({
     onNext(body);
   });
 
-  return { form, onSubmit };
+  return { form, onVerify, onSubmit };
 };
