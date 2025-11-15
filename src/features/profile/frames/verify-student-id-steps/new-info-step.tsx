@@ -1,0 +1,84 @@
+import { useFormState } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
+import {
+  Button,
+  DifferenceNonNullable,
+  FunnelLayout,
+  Input,
+  Label,
+} from '@/features/core';
+
+import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
+import { VerifyStudentIdSteps } from '../verify-student-id-frame';
+
+export function NewInfoStep({
+  onNext,
+}: {
+  onNext: (
+    data: DifferenceNonNullable<
+      VerifyStudentIdSteps['complete'],
+      VerifyStudentIdSteps['newInfo']
+    >,
+  ) => void;
+}) {
+  const {
+    form: { register, control },
+    onSubmit,
+  } = useVerifyStudentNewInfoForm({ onNext });
+  const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
+  const { t } = useTranslation();
+
+  // TODO: dialog to confirm the new information
+
+  return (
+    <form onSubmit={onSubmit}>
+      <FunnelLayout
+        title={t('verify_student_id.title')}
+        stepTitle={t('verify_student_id.steps.new_info.title')}
+        button={
+          <Button
+            variant="primary"
+            className="w-full"
+            loading={isSubmitting}
+            disabled={!(isValid && isDirty)}
+          >
+            {t('verify_student_id.steps.new_info.button')}
+          </Button>
+        }
+      >
+        <div className="flex flex-col gap-5">
+          <Label text={t('verify_student_id.steps.new_info.inputs.name.label')}>
+            <Input
+              type="text"
+              placeholder={t(
+                'verify_student_id.steps.new_info.inputs.name.placeholder',
+              )}
+              error={errors.name?.message}
+              disabled={isSubmitting}
+              {...register('name')}
+            />
+          </Label>
+          <Label
+            text={t('verify_student_id.steps.new_info.inputs.birth_date.label')}
+          >
+            <Input
+              type="date"
+              placeholder={t(
+                'verify_student_id.steps.new_info.inputs.birth_date.placeholder',
+              )}
+              error={errors.birthDate?.message}
+              disabled={isSubmitting}
+              {...register('birthDate', {
+                valueAsDate: true,
+              })}
+            />
+          </Label>
+          <div className="text-label-2 text-basics-secondary-label">
+            {t('verify_student_id.steps.info.inputs.birth_date.description')}
+          </div>
+        </div>
+      </FunnelLayout>
+    </form>
+  );
+}

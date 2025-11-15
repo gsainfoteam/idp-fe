@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
@@ -66,11 +67,21 @@ function VerifiedBadge({
 export function ProfileFrame() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) return null;
 
   return (
-    <FunnelLayout title={t('profile.title')}>
+    <FunnelLayout
+      title={t('profile.title')}
+      onUndo={async () => {
+        await navigate({
+          to: '/',
+          viewTransition: { types: ['reload'] },
+          search: (prev) => ({ ...prev }),
+        });
+      }}
+    >
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
@@ -112,7 +123,12 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
               {/* TODO: 인증 퍼널 구현 in IDF-141 */}
-              <VerifiedBadge verified={true} onClick={() => {}} />
+              <VerifiedBadge
+                verified={true}
+                onClick={async () =>
+                  await navigate({ to: '/profile/verify-student-id' })
+                }
+              />
             </div>
             <div className="text-basics-secondary-label">{`${user.studentId} ${user.name}`}</div>
           </div>

@@ -207,6 +207,66 @@
       }
     }
   },
+  "verify_student_id": {
+    "title": "Verify Name and Student ID",
+    "steps": {
+      "info": {
+        "title": "Let's check if the currently registered\ninformation is correct",
+        "button": "Check",
+        "inputs": {
+          "birth_date": {
+            "label": "Birth Date",
+            "placeholder": "YYYYMMDD",
+            "errors": {
+              "format": "Please enter in the YYYYMMDD format"
+            },
+            "description": "※ The entered birth date is not saved, and is only used for verifying student status."
+          }
+        }
+      },
+      "failure": {
+        "title": "No student found\nwith the matching information",
+        "buttons": {
+          "cancel": "Cancel",
+          "confirm": "Check with new information"
+        }
+      },
+      "new_info": {
+        "title": "Let's check with new information",
+        "button": "Check",
+        "dialog": {
+          "title": "Is this student ID correct?",
+          "description": "Continuing will change the name and student ID.",
+          "buttons": {
+            "cancel": "Cancel",
+            "continue": "Continue"
+          }
+        },
+        "inputs": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Kim Jin-i",
+            "errors": {
+              "format": "Please enter your name"
+            }
+          },
+          "birth_date": {
+            "label": "Birth Date",
+            "placeholder": "YYYYMMDD",
+            "errors": {
+              "format": "Please enter in the YYYYMMDD format",
+              "invalid": "No student found with the matching name and birth date"
+            },
+            "description": "※ The entered birth date is not saved, and is only used for verifying student status."
+          }
+        }
+      },
+      "complete": {
+        "title": "Verification has been completed",
+        "button": "Go to Profile"
+      }
+    }
+  },
   "passkey": {
     "title": "Manage Passkey",
     "steps": {
