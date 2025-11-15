@@ -97,7 +97,7 @@ export function NewInfoStep({
             placeholder={t(
               'verify_student_id.steps.new_info.inputs.name.placeholder',
             )}
-            error={errors.name?.message}
+            error={errors.name?.message || !!errors.root}
             disabled={isSubmitting}
             {...register('name')}
           />
@@ -110,7 +110,7 @@ export function NewInfoStep({
             placeholder={t(
               'verify_student_id.steps.new_info.inputs.birth_date.placeholder',
             )}
-            error={errors.birthDate?.message}
+            error={errors.birthDate?.message || errors.root?.message}
             disabled={isSubmitting}
             {...register('birthDate', {
               valueAsDate: true,

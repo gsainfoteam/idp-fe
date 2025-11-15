@@ -48,7 +48,7 @@ export function InfoStep({
               placeholder={t(
                 'verify_student_id.steps.info.inputs.birth_date.placeholder',
               )}
-              error={errors.birthDate?.message}
+              error={errors.birthDate?.message || errors.root?.message}
               disabled={isSubmitting}
               {...register('birthDate', {
                 valueAsDate: true,
