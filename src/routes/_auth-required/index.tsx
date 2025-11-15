@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { HomeFrame } from '@/features/profile';
+import { HomeFrame } from '@/features/core';
 
 const HomePage = () => {
   return <HomeFrame />;

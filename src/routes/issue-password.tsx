@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { IssuePasswordFrame } from '@/features/profile';
+import { IssuePasswordFrame } from '@/features/core';
 
 const IssuePasswordPage = () => {
   return <IssuePasswordFrame />;

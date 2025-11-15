@@ -38,3 +38,6 @@ export * from './hooks/use-copy';
 export * from './hooks/use-is-desktop';
 
 export * from './frames/not-found-frame';
+export * from './frames/change-password-frame';
+export * from './frames/issue-password-frame';
+export * from './frames/home-frame';

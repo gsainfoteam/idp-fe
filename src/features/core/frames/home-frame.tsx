@@ -21,7 +21,7 @@ import {
   uniqueKey,
 } from '@/features/core';
 
-import { ProfileEditOverlay } from '../components/profile-edit-overlay';
+import { ProfileEditOverlay } from '../../profile/components/profile-edit-overlay';
 
 interface MenuButtonProps {
   icon: React.ComponentType<{ className?: string }>;

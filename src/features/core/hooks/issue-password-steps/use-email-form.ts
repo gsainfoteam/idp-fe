@@ -1,12 +1,12 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 import { postUserPassword } from '@/data/post-user-password';
 import { DifferenceNonNullable } from '@/features/core';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
-import { z } from 'zod';
 
 import { IssuePasswordSteps } from '../../frames/issue-password-frame';
 
