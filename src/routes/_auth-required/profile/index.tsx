@@ -6,6 +6,6 @@ const ProfilePage = () => {
   return <ProfileFrame />;
 };
 
-export const Route = createFileRoute('/_auth-required/profile')({
+export const Route = createFileRoute('/_auth-required/profile/')({
   component: ProfilePage,
 });
