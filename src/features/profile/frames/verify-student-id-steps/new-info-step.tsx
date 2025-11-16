@@ -15,8 +15,10 @@ import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-
 import { VerifyStudentIdSteps } from '../verify-student-id-frame';
 
 export function NewInfoStep({
+  context,
   onNext,
 }: {
+  context: VerifyStudentIdSteps['failure'];
   onNext: (
     data: DifferenceNonNullable<
       VerifyStudentIdSteps['complete'],
@@ -67,7 +69,9 @@ export function NewInfoStep({
                   <Dialog.Footer>
                     <Dialog.Close className="grow">
                       <Button variant="secondary" className="w-full">
-                        {t('register.steps.info.dialog.buttons.cancel')}
+                        {t(
+                          'verify_student_id.steps.new_info.dialog.buttons.cancel',
+                        )}
                       </Button>
                     </Dialog.Close>
                     <Button
@@ -78,7 +82,9 @@ export function NewInfoStep({
                         close();
                       }}
                     >
-                      {t('register.steps.info.dialog.buttons.continue')}
+                      {t(
+                        'verify_student_id.steps.new_info.dialog.buttons.continue',
+                      )}
                     </Button>
                   </Dialog.Footer>
                 </Dialog>
@@ -112,13 +118,14 @@ export function NewInfoStep({
             )}
             error={errors.birthDate?.message || errors.root?.message}
             disabled={isSubmitting}
+            defaultValue={context.birthDate.toISOString().split('T')[0]}
             {...register('birthDate', {
               valueAsDate: true,
             })}
           />
         </Label>
         <div className="text-label-2 text-basics-secondary-label">
-          {t('verify_student_id.steps.info.inputs.birth_date.description')}
+          {t('verify_student_id.steps.new_info.inputs.birth_date.description')}
         </div>
       </div>
     </FunnelLayout>
