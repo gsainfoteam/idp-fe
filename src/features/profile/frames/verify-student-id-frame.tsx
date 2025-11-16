@@ -21,7 +21,7 @@ export type VerifyStudentIdSteps = {
   info: StepContext;
   failure: RequireKeys<StepContext, 'birthDate'>;
   newInfo: RequireKeys<StepContext, 'birthDate'>;
-  complete: StepContext;
+  complete: RequireKeys<StepContext, 'birthDate'>;
 };
 
 export function VerifyStudentIdFrame() {
@@ -50,7 +50,7 @@ export function VerifyStudentIdFrame() {
     <funnel.Render
       info={({ history }) => (
         <InfoStep
-          onSuccess={() => history.replace('complete')}
+          onSuccess={(data) => history.replace('complete', data)}
           onFailure={(data) => history.replace('failure', data)}
         />
       )}
