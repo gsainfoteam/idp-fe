@@ -1,6 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 
 import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { useAuth } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 import { CompleteStep } from './verify-student-id-steps/complete-step';
@@ -25,6 +26,7 @@ export type VerifyStudentIdSteps = {
 
 export function VerifyStudentIdFrame() {
   const navigate = useNavigate();
+  const { refetch } = useAuth();
   const funnel = useFunnel<VerifyStudentIdSteps>({
     id: 'verify-student-id',
     initial: {
@@ -34,6 +36,7 @@ export function VerifyStudentIdFrame() {
   });
 
   const undo = async () => {
+    await refetch();
     await funnel.history.cleanup();
     await navigate({
       to: '/profile',
