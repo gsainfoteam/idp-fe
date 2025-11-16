@@ -1,8 +1,8 @@
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '@/features/auth';
 import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
-import { Link } from '@tanstack/react-router';
 
 import { useConfirmWithdrawalForm } from '../../hooks/steps/use-confirm-withdrawal-form';
 
@@ -62,7 +62,6 @@ export function ConfirmStep({
         }
       >
         <div className="flex flex-col gap-3">
-          {/* TODO: Error Boundary + Suspense */}
           {clients.length ? (
             <div className="flex flex-col gap-6">
               <div className="flex h-fit w-full items-center gap-3 px-3">

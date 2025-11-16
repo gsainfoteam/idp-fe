@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 
-import { useAuth, useToken } from '@/features/auth';
 import {
   Navigate,
   Outlet,
   createFileRoute,
   useRouter,
 } from '@tanstack/react-router';
+
+import { useAuth, useToken } from '@/features/auth';
 
 const cleanupAllFunnel = (href: string): string => {
   const url = new URL(href, window.location.origin);

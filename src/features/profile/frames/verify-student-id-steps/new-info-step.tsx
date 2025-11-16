@@ -4,29 +4,31 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Dialog, FunnelLayout, Input, Label } from '@/features/core';
 
-import { useInfoForm } from '../../hooks/register-steps/use-info-form';
+import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
+import { VerifyStudentIdSteps } from '../verify-student-id-frame';
 
-export function InfoStep({
+export function NewInfoStep({
   context,
   onNext,
-  onUndo,
-}: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
+}: {
+  context: VerifyStudentIdSteps['failure'];
+  onNext: () => void;
+}) {
   const {
     form: { register, control, getValues },
     onVerify,
     onSubmit,
-  } = useInfoForm({ context, onNext });
+  } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
     <FunnelLayout
-      onUndo={onUndo}
-      loading={isSubmitting}
-      title={t('register.title')}
-      stepTitle={t('register.steps.info.title')}
+      title={t('verify_student_id.title')}
+      stepTitle={t('verify_student_id.steps.new_info.title')}
       button={
         <Button
+          type="button"
           variant="primary"
           className="w-full"
           loading={isSubmitting}
@@ -42,10 +44,10 @@ export function InfoStep({
                 >
                   <Dialog.Header className="flex flex-col gap-1">
                     <div className="text-title-1">
-                      {t('register.steps.info.dialog.title')}
+                      {t('verify_student_id.steps.new_info.dialog.title')}
                     </div>
                     <div className="text-body-1">
-                      {t('register.steps.info.dialog.description')}
+                      {t('verify_student_id.steps.new_info.dialog.description')}
                     </div>
                   </Dialog.Header>
                   <Dialog.Body>
@@ -56,18 +58,22 @@ export function InfoStep({
                   <Dialog.Footer>
                     <Dialog.Close className="grow">
                       <Button variant="secondary" className="w-full">
-                        {t('register.steps.info.dialog.buttons.cancel')}
+                        {t(
+                          'verify_student_id.steps.new_info.dialog.buttons.cancel',
+                        )}
                       </Button>
                     </Dialog.Close>
                     <Button
                       variant="primary"
                       className="grow"
-                      onClick={async (e) => {
-                        await onSubmit(e);
+                      onClick={async () => {
                         close();
+                        await onSubmit();
                       }}
                     >
-                      {t('register.steps.info.dialog.buttons.continue')}
+                      {t(
+                        'verify_student_id.steps.new_info.dialog.buttons.continue',
+                      )}
                     </Button>
                   </Dialog.Footer>
                 </Dialog>
@@ -75,44 +81,40 @@ export function InfoStep({
             }
           }}
         >
-          {t('register.steps.info.button')}
+          {t('verify_student_id.steps.new_info.button')}
         </Button>
       }
     >
       <div className="flex flex-col gap-5">
-        <Label text={t('register.steps.info.inputs.name.label')}>
+        <Label text={t('verify_student_id.steps.new_info.inputs.name.label')}>
           <Input
             type="text"
-            placeholder={t('register.steps.info.inputs.name.placeholder')}
+            placeholder={t(
+              'verify_student_id.steps.new_info.inputs.name.placeholder',
+            )}
             error={errors.name?.message || !!errors.root}
             disabled={isSubmitting}
             {...register('name')}
           />
         </Label>
-        <Label text={t('register.steps.info.inputs.phone_number.label')}>
-          <Input
-            type="tel"
-            placeholder={t(
-              'register.steps.info.inputs.phone_number.placeholder',
-            )}
-            error={errors.phoneNumber?.message || !!errors.root}
-            disabled={isSubmitting}
-            {...register('phoneNumber')}
-          />
-        </Label>
-        <Label text={t('register.steps.info.inputs.birth_date.label')}>
+        <Label
+          text={t('verify_student_id.steps.new_info.inputs.birth_date.label')}
+        >
           <Input
             type="date"
-            placeholder={t('register.steps.info.inputs.birth_date.placeholder')}
+            placeholder={t(
+              'verify_student_id.steps.new_info.inputs.birth_date.placeholder',
+            )}
             error={errors.birthDate?.message || errors.root?.message}
             disabled={isSubmitting}
+            defaultValue={context.birthDate.toISOString().split('T')[0]}
             {...register('birthDate', {
               valueAsDate: true,
             })}
           />
         </Label>
         <div className="text-label-2 text-basics-secondary-label">
-          {t('register.steps.info.inputs.birth_date.description')}
+          {t('verify_student_id.steps.new_info.inputs.birth_date.description')}
         </div>
       </div>
     </FunnelLayout>

@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ProfileFrame } from '@/features/profile';
+import { HomeFrame } from '@/features/core';
 
-const ProfilePage = () => {
-  return <ProfileFrame />;
+const HomePage = () => {
+  return <HomeFrame />;
 };
 
 export const Route = createFileRoute('/_auth-required/')({
-  component: ProfilePage,
+  component: HomePage,
 });
