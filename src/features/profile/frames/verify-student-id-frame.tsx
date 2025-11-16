@@ -18,9 +18,9 @@ type StepContext = Pretty<
 
 export type VerifyStudentIdSteps = {
   info: StepContext;
-  failure: StepContext;
-  newInfo: StepContext;
-  complete: RequireKeys<VerifyStudentIdSteps['newInfo'], 'birthDate' | 'name'>;
+  failure: RequireKeys<StepContext, 'birthDate'>;
+  newInfo: RequireKeys<StepContext, 'birthDate'>;
+  complete: StepContext;
 };
 
 export function VerifyStudentIdFrame() {
@@ -37,6 +37,7 @@ export function VerifyStudentIdFrame() {
     await funnel.history.cleanup();
     await navigate({
       to: '/profile',
+      replace: true,
       viewTransition: { types: ['backwards'] },
       search: (prev) => ({ ...prev }),
     });
@@ -46,15 +47,21 @@ export function VerifyStudentIdFrame() {
     <funnel.Render
       info={({ history }) => (
         <InfoStep
-          onSuccess={() => history.replace('newInfo')}
-          onFailure={() => history.replace('failure')}
+          onSuccess={() => history.replace('complete')}
+          onFailure={(data) => history.replace('failure', data)}
         />
       )}
       failure={({ history }) => (
-        <FailureStep onCancel={undo} onNext={() => history.replace('info')} />
+        <FailureStep
+          onCancel={undo}
+          onNext={() => history.replace('newInfo')}
+        />
       )}
-      newInfo={({ history }) => (
-        <NewInfoStep onNext={(data) => history.replace('complete', data)} />
+      newInfo={({ history, context }) => (
+        <NewInfoStep
+          context={context}
+          onNext={() => history.replace('complete')}
+        />
       )}
       complete={() => <CompleteStep onNext={undo} />}
     />

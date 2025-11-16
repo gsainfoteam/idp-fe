@@ -9,10 +9,7 @@ import { useVerifyStudentInfoForm } from '../../hooks/use-verify-student-info-fo
 export function InfoStep({
   onSuccess,
   onFailure,
-}: {
-  onSuccess: () => void;
-  onFailure: () => void;
-}) {
+}: Parameters<typeof useVerifyStudentInfoForm>[0]) {
   const {
     form: { register, control },
     onSubmit,
