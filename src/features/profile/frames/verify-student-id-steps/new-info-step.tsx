@@ -2,14 +2,7 @@ import { overlay } from 'overlay-kit';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Button,
-  Dialog,
-  DifferenceNonNullable,
-  FunnelLayout,
-  Input,
-  Label,
-} from '@/features/core';
+import { Button, Dialog, FunnelLayout, Input, Label } from '@/features/core';
 
 import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
 import { VerifyStudentIdSteps } from '../verify-student-id-frame';
@@ -19,17 +12,13 @@ export function NewInfoStep({
   onNext,
 }: {
   context: VerifyStudentIdSteps['failure'];
-  onNext: (
-    data: DifferenceNonNullable<
-      VerifyStudentIdSteps['complete'],
-      VerifyStudentIdSteps['newInfo']
-    >,
-  ) => void;
+  onNext: () => void;
 }) {
   const {
     form: { register, control, getValues },
+    onVerify,
     onSubmit,
-  } = useVerifyStudentNewInfoForm();
+  } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
@@ -45,7 +34,7 @@ export function NewInfoStep({
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
           onClick={async (e) => {
-            await onSubmit(e);
+            await onVerify(e);
             if (getValues('studentId') != null) {
               overlay.open(({ isOpen, close }) => (
                 <Dialog
@@ -78,8 +67,8 @@ export function NewInfoStep({
                       variant="primary"
                       className="grow"
                       onClick={async () => {
-                        await onNext(getValues());
                         close();
+                        await onSubmit();
                       }}
                     >
                       {t(

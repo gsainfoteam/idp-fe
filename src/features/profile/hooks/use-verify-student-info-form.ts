@@ -72,7 +72,6 @@ export function useVerifyStudentInfoForm({
 
     onSuccess({
       birthDate: formData.birthDate,
-      name: user.name,
     });
   });
 
