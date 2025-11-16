@@ -103,7 +103,7 @@
           },
           "birth_date": {
             "label": "Birth Date",
-            "placeholder": "YYYYMMDD",
+            "placeholder": "YYYY-MM-DD",
             "description": "※ The entered birth date is not saved, and is only used for verifying student status.",
             "errors": {
               "invalid": "No student found with the matching name and birth date",
@@ -226,7 +226,7 @@
         "inputs": {
           "birth_date": {
             "label": "Birth Date",
-            "placeholder": "YYYYMMDD",
+            "placeholder": "YYYY-MM-DD",
             "errors": {
               "format": "Please enter a valid date"
             },
