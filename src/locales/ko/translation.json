@@ -262,7 +262,7 @@
           },
           "birth_date": {
             "label": "생년월일",
-            "placeholder": "YYYYMMDD",
+            "placeholder": "YYYY-MM-DD",
             "errors": {
               "format": "날짜를 입력해주세요",
               "invalid": "해당 이름과 생년월일의 학생을 찾을 수 없습니다"

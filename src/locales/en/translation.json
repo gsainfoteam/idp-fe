@@ -262,7 +262,7 @@
           },
           "birth_date": {
             "label": "Birth Date",
-            "placeholder": "YYYYMMDD",
+            "placeholder": "YYYY-MM-DD",
             "errors": {
               "format": "Please enter a valid date",
               "invalid": "No student found with the matching name and birth date"
