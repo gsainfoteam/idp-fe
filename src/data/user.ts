@@ -1,5 +1,3 @@
-import parsePhoneNumber from 'libphonenumber-js';
-
 import {
   ApiPathParams,
   ApiQueryParams,
@@ -115,20 +113,9 @@ export const patchUserPicture = async (
 export const postUser = async (
   requestBody: ApiRequestBody<'/user', 'post'>,
 ): Promise<ApiResult<'/user', 'post', 201>> => {
-  const parsedPhoneNumber = parsePhoneNumber(requestBody.phoneNumber, 'KR');
-
-  if (!parsedPhoneNumber) {
-    throw new Error('Invalid phone number');
-  }
-
-  const modifiedRequestBody = {
-    ...requestBody,
-    phoneNumber: parsedPhoneNumber.number,
-  };
-
   return api
     .POST('/user', {
-      body: modifiedRequestBody,
+      body: requestBody,
     })
     .then(handleApiResult<'/user', 'post', 201>)
     .catch(handleApiError<'/user', 'post'>);
