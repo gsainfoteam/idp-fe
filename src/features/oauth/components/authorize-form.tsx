@@ -1,12 +1,13 @@
-import { useLoaderData } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
+
+import { useLoaderData } from '@tanstack/react-router';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ConsentFormSchema } from '../hooks/use-authorize-form';
-
 import { components } from '@/@types/api-schema';
 import { Checkbox } from '@/features/core';
+
+import { ConsentFormSchema } from '../hooks/use-authorize-form';
 
 export function AuthorizeForm({
   client,
@@ -19,9 +20,7 @@ export function AuthorizeForm({
   const { clientScopes, consents } = useLoaderData({
     from: '/_auth-required/authorize',
   });
-  const consent = consents?.data?.list.find(
-    (c) => c.clientUuid === client.clientId,
-  );
+  const consent = consents?.list.find((c) => c.clientUuid === client.clientId);
 
   const requiredScopes = useMemo(
     () => clientScopes.filter((v) => client.scopes.includes(v)),

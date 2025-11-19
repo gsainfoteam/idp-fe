@@ -1,12 +1,12 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { postAuthLogin } from '@/data/post-auth-login';
-import { useAuth } from '@/features/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
 import { z } from 'zod';
+
+import { postAuthLogin } from '@/data/auth';
+import { useAuth } from '@/features/auth';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -32,30 +32,28 @@ export function usePasswordForm({
 
   const onSubmit = handleSubmit(async (data) => {
     if (!user?.email) return;
-    const { status } = await postAuthLogin({
+    const res = await postAuthLogin({
       email: user.email,
       password: data.password,
     });
 
-    if (status) {
-      switch (status) {
-        case 'LOGIN_FAILURE':
-          resetField('password', { keepError: true });
-          setError('root', {
-            message: t(
-              'withdraw.steps.password.inputs.password.errors.unauthorized',
-            ),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 401) {
+        resetField('password', { keepError: true });
+        setError('root', {
+          message: t(
+            'withdraw.steps.password.inputs.password.errors.unauthorized',
+          ),
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
+
       return;
     }
+
     onNext(data.password);
   });
   return { register, onSubmit, formState };

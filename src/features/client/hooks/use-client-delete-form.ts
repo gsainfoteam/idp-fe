@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { postClientDelete } from '@/data/post-client-delete';
+import { postClientDelete } from '@/data/client';
 
 import { Client } from './use-client';
 
@@ -9,23 +9,20 @@ export const useClientDeleteForm = (client: Client) => {
   const { t } = useTranslation();
 
   const onSubmit = async () => {
-    const { status } = await postClientDelete(client.clientId);
+    const res = await postClientDelete({ clientId: client.clientId });
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          return false;
-        case 'INACCESSIBLE':
-          toast.error(t('toast.invalid_token'));
-          return false;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          return false;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          return false;
+    if (!res.ok) {
+      if (res.status === 401) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 403) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
+
+      return false;
     }
 
     return true;

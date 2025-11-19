@@ -1,14 +1,14 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
-import { postOauthConsent } from '@/data/post-oauth-consent';
+import { postOauthConsent } from '@/data/oauth';
 import {
   ClientScopeEnum,
   ClientScopeType,
 } from '@/routes/_auth-required/authorize';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
 export const createSchema = () =>
   z.object({ scopes: z.record(ClientScopeEnum, z.boolean()) });
@@ -34,19 +34,16 @@ export const useAuthorizeForm = ({
       .filter(([, value]) => value === true)
       .map(([key]) => key as ClientScopeType);
 
-    const { status } = await postOauthConsent({
+    const res = await postOauthConsent({
       client_id: clientId,
       scope: scopes.join(' '),
     });
 
-    if (status) {
-      switch (status) {
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;

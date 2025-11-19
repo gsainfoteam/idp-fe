@@ -1,12 +1,13 @@
-import { useLoaderData, useSearch } from '@tanstack/react-router';
 import { useCallback, useEffect } from 'react';
 
-import { useAuthorizeForm } from './use-authorize-form';
-import { useRecentLogin } from './use-recent-login';
+import { useLoaderData, useSearch } from '@tanstack/react-router';
 
 import { components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
 import { ClientScopeType } from '@/routes/_auth-required/authorize';
+
+import { useAuthorizeForm } from './use-authorize-form';
+import { useRecentLogin } from './use-recent-login';
 
 export const useAuthorize = ({
   client,
@@ -55,7 +56,7 @@ export const useAuthorize = ({
   );
 
   useEffect(() => {
-    const consentedClient = consents.data?.list.find(
+    const consentedClient = consents?.list.find(
       (c) => c.clientUuid === clientId,
     );
     const requiredScopes = clientScopes.filter((v) =>
@@ -99,7 +100,7 @@ export const useAuthorize = ({
     client.scopes,
     clientId,
     clientScopes,
-    consents.data?.list,
+    consents?.list,
     prompt,
     recentLogin,
     redirect,

@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import imageCompression from 'browser-image-compression';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { deleteClientPicture } from '@/data/delete-client-picture';
-import { patchClientPicture } from '@/data/patch-client-picture';
-import { zodResolver } from '@hookform/resolvers/zod';
-import imageCompression from 'browser-image-compression';
 import { z } from 'zod';
+
+import { deleteClientPicture, patchClientPicture } from '@/data/client';
 
 import { Client } from './use-client';
 
@@ -33,18 +33,17 @@ export const useClientPictureForm = (
   };
 
   const deleteImage = async () => {
-    const { status } = await deleteClientPicture(client.clientId);
+    const res = await deleteClientPicture({ clientId: client.clientId });
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          throw t('toast.invalid_token');
-        case 'FORBIDDEN':
-          throw t('toast.invalid_user');
-        case 'SERVER_ERROR':
-          throw t('toast.server_error');
-        case 'UNKNOWN_ERROR':
-          throw t('toast.unknown_error');
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw t('toast.invalid_token');
+      } else if (res.status === 403) {
+        throw t('toast.invalid_user');
+      } else if (res.status === 500) {
+        throw t('toast.server_error');
+      } else {
+        throw t('toast.unknown_error');
       }
     }
 
@@ -75,28 +74,25 @@ export const useClientPictureForm = (
 
     const compressedImage = await compressImage(image);
 
-    const { data, status } = await patchClientPicture(
-      client.clientId,
-      compressedImage.size,
+    const res = await patchClientPicture(
+      { clientId: client.clientId },
+      { length: compressedImage.size },
     );
 
-    if (!data || status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          throw t('toast.invalid_token');
-        case 'FORBIDDEN':
-          throw t('toast.invalid_user');
-        case 'SERVER_ERROR':
-          throw t('toast.server_error');
-        case 'UNKNOWN_ERROR':
-          throw t('toast.unknown_error');
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw t('toast.invalid_token');
+      } else if (res.status === 403) {
+        throw t('toast.invalid_user');
+      } else if (res.status === 500) {
+        throw t('toast.server_error');
+      } else {
+        throw t('toast.unknown_error');
       }
-
-      return;
     }
 
     try {
-      const uploadResponse = await fetch(data.presignedUrl, {
+      const uploadResponse = await fetch(res.data.presignedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'image/webp' },
         body: compressedImage,

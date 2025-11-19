@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { postVerify } from '@/data/post-verify';
+import { postVerify } from '@/data/verify';
 import { DifferenceNonNullable } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
@@ -39,37 +39,33 @@ export const useCodeForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status } = await postVerify({
+    const res = await postVerify({
       subject: context.email,
       code: formData.code,
       hint: 'email',
     });
 
-    if (!data || status) {
-      switch (status) {
-        case 'INVALID_CERTIFICATE':
-          if (count < CODE_MAX_COUNT) {
-            form.setError('code', {
-              message: t('register.steps.code.inputs.code.errors.invalid', {
-                count: count + 1,
-                max: CODE_MAX_COUNT,
-              }),
-              type: 'value',
-            });
-          }
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 400) {
+        if (count < CODE_MAX_COUNT) {
+          form.setError('code', {
+            message: t('register.steps.code.inputs.code.errors.invalid', {
+              count: count + 1,
+              max: CODE_MAX_COUNT,
+            }),
+            type: 'value',
+          });
+        }
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;
     }
 
-    onNext({ emailVerificationJwtToken: data.verificationJwtToken });
+    onNext({ emailVerificationJwtToken: res.data.verificationJwtToken });
   });
 
   return { form, onSubmit };

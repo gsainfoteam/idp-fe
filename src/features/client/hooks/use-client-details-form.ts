@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { patchClient } from '@/data/patch-client';
-import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+
+import { patchClient } from '@/data/client';
+import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
 
 import { Client } from './use-client';
 
@@ -59,32 +60,30 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
             .filter((v) => v != null)
             .filter((v) => v !== '');
 
-          const { data, status } = await patchClient(client.clientId, {
-            name: values.name,
-            scopes: Object.entries(values.scopes ?? {})
-              .filter(([, value]) => value === 'required')
-              .map(([key]) => key),
-            optionalScopes: Object.entries(values.scopes ?? {})
-              .filter(([, value]) => value === 'optional')
-              .map(([key]) => key),
-            idTokenAllowed: values.idTokenAllowed,
-            urls,
-          });
+          const res = await patchClient(
+            { clientId: client.clientId },
+            {
+              name: values.name,
+              scopes: Object.entries(values.scopes ?? {})
+                .filter(([, value]) => value === 'required')
+                .map(([key]) => key),
+              optionalScopes: Object.entries(values.scopes ?? {})
+                .filter(([, value]) => value === 'optional')
+                .map(([key]) => key),
+              idTokenAllowed: values.idTokenAllowed,
+              urls,
+            },
+          );
 
-          if (!data || status) {
-            switch (status) {
-              case 'UNAUTHORIZED':
-                toast.error(t('toast.invalid_user'));
-                break;
-              case 'FORBIDDEN':
-                toast.error(t('common.errors.forbidden'));
-                break;
-              case 'SERVER_ERROR':
-                toast.error(t('toast.server_error'));
-                break;
-              case 'UNKNOWN_ERROR':
-                toast.error(t('toast.unknown_error'));
-                break;
+          if (!res.ok) {
+            if (res.status === 401) {
+              toast.error(t('toast.invalid_user'));
+            } else if (res.status === 403) {
+              toast.error(t('common.errors.forbidden'));
+            } else if (res.status === 500) {
+              toast.error(t('toast.server_error'));
+            } else {
+              toast.error(t('toast.unknown_error'));
             }
 
             return;
@@ -94,13 +93,13 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
           onUpdated();
 
           form.reset({
-            name: data.name,
-            idTokenAllowed: data.idTokenAllowed,
+            name: res.data.name,
+            idTokenAllowed: res.data.idTokenAllowed,
             scopes: Object.fromEntries([
-              ...data.scopes.map((v) => [v, 'required']),
-              ...data.optionalScopes.map((v) => [v, 'optional']),
+              ...res.data.scopes.map((v) => [v, 'required']),
+              ...res.data.optionalScopes.map((v) => [v, 'optional']),
             ]),
-            urls: data.urls,
+            urls: res.data.urls,
           });
         },
         {

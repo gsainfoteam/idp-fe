@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 
-import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { postVerifyStudentId } from '@/data/verify';
 import { useAuth } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 

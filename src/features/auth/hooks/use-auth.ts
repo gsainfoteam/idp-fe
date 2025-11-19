@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo } from 'react';
+
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { deleteAuthLogout } from '@/data/delete-auth-logout';
+import { deleteAuthLogout } from '@/data/auth';
 import { $api } from '@/features/core';
 
 import { useToken } from './use-token';
@@ -32,18 +33,14 @@ export const useAuth = () => {
 
   const signOut = useCallback(
     async (shouldRedirect: boolean = true) => {
-      const { status } = await deleteAuthLogout();
+      const res = await deleteAuthLogout();
 
-      if (status) {
-        switch (status) {
-          case 'SERVER_ERROR':
-            toast.error(t('toast.server_error'));
-            break;
-          case 'UNKNOWN_ERROR':
-            toast.error(t('toast.unknown_error'));
-            break;
+      if (!res.ok) {
+        if (res.status === 500) {
+          toast.error(t('toast.server_error'));
+        } else {
+          toast.error(t('toast.unknown_error'));
         }
-
         return;
       }
 
