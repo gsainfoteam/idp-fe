@@ -18,9 +18,12 @@ jobs:
         run: |
           bun install
           bun run build -- --mode production
-      - name: Upload
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
       - name: Deploy to production
-        uses: actions/deploy-pages@v4
+        uses: cloudflare/pages-action@v1.5.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: idp-fe-prod
+          directory: dist
+          gitHubToken: ${{ github.token }}
+          branch: main
