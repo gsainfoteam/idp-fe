@@ -15,6 +15,7 @@ const schema = z.object({
 export type ClientInfoFormSchema = z.infer<typeof schema>;
 
 export const useClientInfoForm = (client: Client) => {
+  const { t } = useTranslation();
   const form = useForm<ClientInfoFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -22,14 +23,18 @@ export const useClientInfoForm = (client: Client) => {
       clientSecret: null,
     },
   });
-  const { t } = useTranslation();
 
   const onSubmit = form.handleSubmit(async () => {
     const res = await patchClientSecret({ clientId: client.clientId });
     if (!res.ok) {
       if (res.status === 403) {
         form.setError('root', { message: t('common.errors.forbidden') });
+      } else if (res.status === 500) {
+        form.setError('root', { message: t('toast.server_error') });
+      } else {
+        form.setError('root', { message: t('toast.unknown_error') });
       }
+
       return;
     }
 
