@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "gen-oas": "npx openapi-typescript https://api.stg.idp.gistory.me/api-json -o ./src/@types/api-schema.d.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "mail": "email dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
