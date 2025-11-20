@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { patchUserPassword } from '@/data/patch-user-password';
+import { patchUserPassword } from '@/data/user';
 import { useAuth, useToken } from '@/features/auth';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 

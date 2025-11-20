@@ -1,13 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { getUserEmail } from '@/data/get-user-email';
-import { postVerifyEmail } from '@/data/post-verify-email';
-import { DifferenceNonNullable } from '@/features/core';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
 import { z } from 'zod';
+
+import { getUserEmail } from '@/data/user';
+import { postVerifyEmail } from '@/data/verify';
+import { DifferenceNonNullable } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
 
@@ -38,41 +38,36 @@ export const useEmailForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status: emailStatus } = await getUserEmail(formData.email);
+    const emailRes = await getUserEmail({ email: formData.email });
 
-    if (data == undefined || emailStatus) {
-      switch (emailStatus) {
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!emailRes.ok) {
+      if (emailRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;
     }
 
-    if (data == true) {
+    if (emailRes.data === true) {
       form.setError('email', {
         message: t('register.steps.email.inputs.email.errors.already_exists'),
       });
+
       return;
     }
 
     const result = await overlay();
     if (result === false) return;
 
-    const { status } = await postVerifyEmail({ email: formData.email });
+    const verifyRes = await postVerifyEmail({ email: formData.email });
 
-    if (status) {
-      switch (status) {
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;

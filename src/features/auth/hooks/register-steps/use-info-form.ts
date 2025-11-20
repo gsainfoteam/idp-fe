@@ -1,13 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
-import { isValidPhoneNumber } from 'libphonenumber-js';
+import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { postUser } from '@/data/post-user';
-import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { postUser } from '@/data/user';
+import { postVerifyStudentId } from '@/data/verify';
 import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
@@ -47,34 +47,29 @@ export const useInfoForm = ({
   });
 
   const onVerify = form.handleSubmit(async (formData) => {
-    const { data: verifyData, status: verifyStatus } =
-      await postVerifyStudentId({
-        birthDate: formatDateToYYYYMMDD(formData.birthDate),
-        name: formData.name,
-      });
+    const verifyRes = await postVerifyStudentId({
+      birthDate: formatDateToYYYYMMDD(formData.birthDate),
+      name: formData.name,
+    });
 
-    if (!verifyData || verifyStatus) {
-      switch (verifyStatus) {
-        case 'USER_NOT_FOUND':
-          form.setError('root', {
-            message: t('register.steps.info.inputs.birth_date.errors.invalid'),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 404) {
+        form.setError('root', {
+          message: t('register.steps.info.inputs.birth_date.errors.invalid'),
+        });
+      } else if (verifyRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;
     }
 
-    form.setValue('studentId', verifyData.studentId);
+    form.setValue('studentId', verifyRes.data.studentId);
     form.setValue(
       'studentIdVerificationJwtToken',
-      verifyData.verificationJwtToken,
+      verifyRes.data.verificationJwtToken,
     );
   });
 
@@ -87,30 +82,26 @@ export const useInfoForm = ({
     const body = {
       ...context,
       ...formData,
+      phoneNumber: parsePhoneNumber(formData.phoneNumber, 'KR')!.number,
       studentId: formData.studentId,
       studentIdVerificationJwtToken: formData.studentIdVerificationJwtToken,
     };
 
-    const { status } = await postUser(body);
+    const res = await postUser(body);
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          form.setError('root', {
-            message: t('register.errors.invalid_token'),
-          });
-          break;
-        case 'USER_ALREADY_EXISTS':
-          form.setError('root', {
-            message: t('register.errors.email_already_exists'),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 403) {
+        form.setError('root', {
+          message: t('register.errors.invalid_token'),
+        });
+      } else if (res.status === 409) {
+        form.setError('root', {
+          message: t('register.errors.email_already_exists'),
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;

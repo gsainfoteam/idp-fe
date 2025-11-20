@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { postUserPassword } from '@/data/post-user-password';
+import { postUserPassword } from '@/data/user';
 import { DifferenceNonNullable } from '@/features/core';
 
 import { IssuePasswordSteps } from '../../frames/issue-password-frame';
@@ -38,27 +38,20 @@ export const useEmailForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { status } = await postUserPassword(formData);
+    const res = await postUserPassword(formData);
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_BODY':
-          toast.error(t('toast.invalid_body'));
-          break;
-        case 'INVALID_EMAIL':
-          form.setError('email', {
-            message: t(
-              'issue_password.steps.email.inputs.email.errors.invalid',
-            ),
-            type: 'value',
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 400) {
+        toast.error(t('toast.invalid_body'));
+      } else if (res.status === 403) {
+        form.setError('email', {
+          message: t('issue_password.steps.email.inputs.email.errors.invalid'),
+          type: 'value',
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;

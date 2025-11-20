@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 
-import { postUser } from '@/data/post-user';
+import { postUser } from '@/data/user';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';

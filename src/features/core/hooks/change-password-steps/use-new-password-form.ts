@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { patchUserPassword } from '@/data/patch-user-password';
+import { patchUserPassword } from '@/data/user';
 import { DifferenceNonNullable } from '@/features/core';
 
 import { ChangePasswordSteps } from '../../frames/change-password-frame';
@@ -54,26 +54,20 @@ export const useNewPasswordForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { status } = await patchUserPassword({
+    const res = await patchUserPassword({
       oldPassword: context.oldPassword,
       password: formData.password,
     });
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_BODY':
-          toast.error(t('toast.invalid_body'));
-          break;
-        case 'INVALID_PASSWORD':
-        case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 400) {
+        toast.error(t('toast.invalid_body'));
+      } else if (res.status === 401 || res.status === 403) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;

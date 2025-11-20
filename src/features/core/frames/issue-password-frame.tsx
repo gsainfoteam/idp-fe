@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 
-import { postUserPassword } from '@/data/post-user-password';
+import { postUserPassword } from '@/data/user';
 import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 import { CompleteStep } from './issue-password-steps/complete-step';

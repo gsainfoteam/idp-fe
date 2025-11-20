@@ -5,8 +5,8 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
 
-import { postUserVerifyStudentId } from '@/data/post-user-verify-student-id';
-import { postVerifyStudentId } from '@/data/post-verify-student-id';
+import { postUserVerifyStudentId } from '@/data/user';
+import { postVerifyStudentId } from '@/data/verify';
 import { useAuth } from '@/features/auth';
 import { formatDateToYYYYMMDD } from '@/features/core';
 
@@ -39,57 +39,47 @@ export function useVerifyStudentNewInfoForm({
   if (!user) throw new Error('User not found');
 
   const onVerify = form.handleSubmit(async (formData) => {
-    const { data, status } = await postVerifyStudentId({
+    const res = await postVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: formData.name,
     });
 
-    if (!data || status) {
-      switch (status) {
-        case 'USER_NOT_FOUND':
-          form.setError('root', {
-            message: t(
-              'verify_student_id.steps.new_info.inputs.birth_date.errors.invalid',
-            ),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 404) {
+        form.setError('root', {
+          message: t(
+            'verify_student_id.steps.new_info.inputs.birth_date.errors.invalid',
+          ),
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
-
       return;
     }
 
-    form.setValue('studentId', data.studentId);
+    form.setValue('studentId', res.data.studentId);
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { status } = await postUserVerifyStudentId({
+    const res = await postUserVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: user.name,
     });
 
-    if (status) {
-      switch (status) {
-        case 'USER_NOT_FOUND':
-          form.setError('root', {
-            message: t(
-              'verify_student_id.steps.new_info.inputs.birth_date.errors.invalid',
-            ),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 404) {
+        form.setError('root', {
+          message: t(
+            'verify_student_id.steps.new_info.inputs.birth_date.errors.invalid',
+          ),
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
-
       return;
     }
 

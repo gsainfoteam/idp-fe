@@ -1,8 +1,7 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { postAuthPasskey } from '@/data/post-auth-passkey';
-import { postAuthPasskeyVerify } from '@/data/post-auth-passkey-verify';
+import { postAuthPasskey, postAuthPasskeyVerify } from '@/data/auth';
 import { useRecentLogin } from '@/features/oauth';
 import {
   arrayBufferToBase64Url,
@@ -25,23 +24,21 @@ export const usePasskeyLoginForm = () => {
       return;
     }
 
-    const { data: challengeData, status: challengeStatus } =
-      await postAuthPasskey();
+    const challengeRes = await postAuthPasskey();
 
-    if (!challengeData || challengeStatus) {
-      switch (challengeStatus) {
-        case 'EMAIL_NOT_FOUND':
-          toast.error(t('login.errors.unauthorized'));
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!challengeRes.ok) {
+      if (challengeRes.status === 404) {
+        toast.error(t('login.errors.unauthorized'));
+      } else if (challengeRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
+
       return;
     }
+
+    const challengeData = challengeRes.data;
 
     const publicKey: PublicKeyCredentialRequestOptions = {
       ...challengeData,
@@ -71,46 +68,39 @@ export const usePasskeyLoginForm = () => {
       return;
     }
 
-    const { data: verifyData, status: verifyStatus } =
-      await postAuthPasskeyVerify({
-        key: challengeData.key,
-        authenticationResponse: {
-          id: credential.id,
-          rawId: arrayBufferToBase64Url(credential.rawId),
-          type: type,
-          response: {
-            clientDataJSON: arrayBufferToBase64Url(response.clientDataJSON),
-            authenticatorData: arrayBufferToBase64Url(
-              response.authenticatorData,
-            ),
-            signature: arrayBufferToBase64Url(response.signature),
-            userHandle: response.userHandle
-              ? arrayBufferToBase64Url(response.userHandle)
-              : undefined,
-          },
-          clientExtensionResults: credential.getClientExtensionResults(),
+    const verifyRes = await postAuthPasskeyVerify({
+      key: challengeData.key,
+      authenticationResponse: {
+        id: credential.id,
+        rawId: arrayBufferToBase64Url(credential.rawId),
+        type: type,
+        response: {
+          clientDataJSON: arrayBufferToBase64Url(response.clientDataJSON),
+          authenticatorData: arrayBufferToBase64Url(response.authenticatorData),
+          signature: arrayBufferToBase64Url(response.signature),
+          userHandle: response.userHandle
+            ? arrayBufferToBase64Url(response.userHandle)
+            : undefined,
         },
-      });
+        clientExtensionResults: credential.getClientExtensionResults(),
+      },
+    });
 
-    if (!verifyData || verifyStatus) {
-      switch (verifyStatus) {
-        case 'INVALID_RESPONSE':
-          toast.error(t('login.errors.unauthorized'));
-          break;
-        case 'EMAIL_NOT_FOUND':
-          toast.error(t('toast.invalid_user'));
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 401) {
+        toast.error(t('login.errors.unauthorized'));
+      } else if (verifyRes.status === 404) {
+        toast.error(t('toast.invalid_user'));
+      } else if (verifyRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
+
       return;
     }
 
-    saveToken(verifyData.accessToken);
+    saveToken(verifyRes.data.accessToken);
     await refetch();
     setRecentLogin(new Date());
   };

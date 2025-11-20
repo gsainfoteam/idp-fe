@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import imageCompression from 'browser-image-compression';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { deleteUserPicture } from '@/data/delete-user-picture';
-import { patchUserPicture } from '@/data/patch-user-picture';
-import { useAuth } from '@/features/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
-import imageCompression from 'browser-image-compression';
 import { z } from 'zod';
+
+import { deleteUserPicture, patchUserPicture } from '@/data/user';
+import { useAuth } from '@/features/auth';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -32,19 +32,15 @@ export const useProfileEditForm = (
   };
 
   const deleteImage = async () => {
-    const { status } = await deleteUserPicture();
+    const res = await deleteUserPicture();
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 401) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return false;
@@ -53,6 +49,7 @@ export const useProfileEditForm = (
     setPreviewImage(null);
     setValue('image', undefined, { shouldDirty: true });
     await refetch();
+
     return true;
   };
 
@@ -83,26 +80,22 @@ export const useProfileEditForm = (
     const compressedImage = await compressImage(image);
     if (!compressedImage) return false;
 
-    const { data, status } = await patchUserPicture(compressedImage.size);
+    const res = await patchUserPicture({ length: compressedImage.size });
 
-    if (!data || status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 401) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return false;
     }
 
     try {
-      const uploadResponse = await fetch(data.presignedUrl, {
+      const uploadResponse = await fetch(res.data.presignedUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'image/webp' },
         body: compressedImage,

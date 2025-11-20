@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { postAuthLogin } from '@/data/post-auth-login';
+import { postAuthLogin } from '@/data/auth';
 import { useAuth, useToken } from '@/features/auth';
 import { DifferenceNonNullable } from '@/features/core';
 
@@ -46,32 +46,28 @@ export const useCurrentPasswordForm = ({
   if (!user) throw new Error('User not found');
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const { data, status } = await postAuthLogin({
+    const res = await postAuthLogin({
       email: user.email,
       password: formData.password,
     });
 
-    if (!data || status) {
-      switch (status) {
-        case 'LOGIN_FAILURE':
-          form.setError('password', {
-            message: t(
-              'change_password.steps.current_password.inputs.password.errors.invalid',
-            ),
-          });
-          break;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 401) {
+        form.setError('password', {
+          message: t(
+            'change_password.steps.current_password.inputs.password.errors.invalid',
+          ),
+        });
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       return;
     }
 
-    saveToken(data.accessToken);
+    saveToken(res.data.accessToken);
     onNext({ oldPassword: formData.password });
   });
 

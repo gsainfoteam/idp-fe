@@ -1,11 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { patchUserPasskey } from '@/data/patch-user-passkey';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
 import z from 'zod';
+
+import { patchUserPasskey } from '@/data/user';
 
 import { Passkey } from './use-passkey-list';
 
@@ -24,26 +24,22 @@ export function usePasskeyEditForm(passkey: Passkey) {
   const submitHandler = async (
     data: z.infer<ReturnType<typeof createSchema>>,
   ) => {
-    const { status } = await patchUserPasskey(passkey.id, data);
+    const res = await patchUserPasskey({ id: passkey.id }, { name: data.name });
 
-    if (status) {
-      switch (status) {
-        case 'INVALID_TOKEN':
-          toast.error(t('toast.invalid_token'));
-          return false;
-        case 'INVALID_USER':
-          toast.error(t('toast.invalid_user'));
-          return false;
-        case 'INVALID_ID':
-          toast.error(t('passkey.steps.list.errors.passkey_not_found'));
-          return false;
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          return false;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          return false;
+    if (!res.ok) {
+      if (res.status === 401) {
+        toast.error(t('toast.invalid_token'));
+      } else if (res.status === 403) {
+        toast.error(t('toast.invalid_user'));
+      } else if (res.status === 404) {
+        toast.error(t('passkey.steps.list.errors.passkey_not_found'));
+      } else if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
+
+      return false;
     }
 
     return true;

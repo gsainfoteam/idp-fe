@@ -1,8 +1,9 @@
 import { useState } from 'react';
+
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { postVerifyEmail } from '@/data/post-verify-email';
+import { postVerifyEmail } from '@/data/verify';
 
 import { RegisterSteps } from '../frames/register-frame';
 
@@ -18,16 +19,13 @@ export const useResendCode = ({
 
   const onResetTimer = async () => {
     setIsLoading(true);
-    const { status } = await postVerifyEmail(context);
+    const res = await postVerifyEmail(context);
 
-    if (status) {
-      switch (status) {
-        case 'SERVER_ERROR':
-          toast.error(t('toast.server_error'));
-          break;
-        case 'UNKNOWN_ERROR':
-          toast.error(t('toast.unknown_error'));
-          break;
+    if (!res.ok) {
+      if (res.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
       }
 
       setIsLoading(false);
