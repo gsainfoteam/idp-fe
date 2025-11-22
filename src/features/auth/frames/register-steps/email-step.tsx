@@ -1,8 +1,8 @@
+import { overlay } from 'overlay-kit';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Button, FunnelLayout, Input, Label, Modal } from '@/features/core';
-import { overlay } from 'overlay-kit';
 
 import { useEmailForm } from '../../hooks/register-steps/use-email-form';
 
