@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
-import { isValidPhoneNumber } from 'libphonenumber-js';
+import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -49,6 +49,7 @@ export const useInfoStaffForm = ({
     const body = {
       ...context,
       ...formData,
+      phoneNumber: parsePhoneNumber(formData.phoneNumber, 'KR')!.number,
     };
 
     const res = await postUser(body);
