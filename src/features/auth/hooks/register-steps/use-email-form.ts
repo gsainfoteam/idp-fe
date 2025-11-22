@@ -19,7 +19,6 @@ const createSchema = (t: TFunction) =>
         /^\S+@(?:gm\.)?gist\.ac\.kr$/,
         t('register.steps.email.inputs.email.errors.format'),
       ),
-    emailAgree: z.boolean().default(false),
   });
 
 export const useEmailForm = ({
@@ -36,8 +35,11 @@ export const useEmailForm = ({
     mode: 'onChange',
   });
 
-  const onCheckEmail = form.handleSubmit(async (formData) => {
-    const emailRes = await getUserEmail({ email: formData.email });
+  const onCheckEmail = async () => {
+    const isValid = await form.trigger('email');
+    if (!isValid) return false;
+
+    const emailRes = await getUserEmail({ email: form.getValues('email') });
 
     if (!emailRes.ok) {
       if (emailRes.status === 500) {
@@ -46,7 +48,7 @@ export const useEmailForm = ({
         toast.error(t('toast.unknown_error'));
       }
 
-      return;
+      return false;
     }
 
     if (emailRes.data === true) {
@@ -54,18 +56,13 @@ export const useEmailForm = ({
         message: t('register.steps.email.inputs.email.errors.already_exists'),
       });
 
-      return;
+      return false;
     }
 
-    form.setValue('emailAgree', true);
-  });
+    return true;
+  };
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    if (!formData.emailAgree) {
-      await onCheckEmail();
-      return;
-    }
-
     const verifyRes = await postVerifyEmail({ email: formData.email });
 
     if (!verifyRes.ok) {

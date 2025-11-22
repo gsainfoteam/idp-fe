@@ -12,15 +12,11 @@ import { InfoStaffStep } from './register-steps/info-staff-step';
 import { InfoStep } from './register-steps/info-step';
 import { PasswordStep } from './register-steps/password-step';
 
-type StepContext = Pretty<
-  Partial<Parameters<typeof postUser>[0]> & {
-    emailAgree?: boolean;
-  }
->;
+type StepContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
 
 export type RegisterSteps = {
   email: StepContext;
-  code: RequireKeys<RegisterSteps['email'], 'email' | 'emailAgree'>;
+  code: RequireKeys<RegisterSteps['email'], 'email'>;
   password: RequireKeys<RegisterSteps['code'], 'emailVerificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   infoStaff: RequireKeys<RegisterSteps['password'], 'password'>;

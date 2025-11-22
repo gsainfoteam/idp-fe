@@ -9,9 +9,11 @@ import { useEmailForm } from '../../hooks/register-steps/use-email-form';
 function EmailOverlay({
   isOpen,
   close,
+  onSubmit,
 }: {
   isOpen: boolean;
   close: (agree: boolean) => void;
+  onSubmit: () => Promise<void>;
 }) {
   const { t } = useTranslation();
 
@@ -50,7 +52,14 @@ function EmailOverlay({
             {t('register.steps.email_overlay.sub_button')}
           </Button>
         </Modal.Close>
-        <Button variant="primary" onClick={() => close(true)} className="grow">
+        <Button
+          variant="primary"
+          onClick={async () => {
+            close(true);
+            await onSubmit();
+          }}
+          className="grow"
+        >
           {t('register.steps.email_overlay.button')}
         </Button>
       </Modal.Footer>
@@ -63,7 +72,7 @@ export function EmailStep({
   onNext,
 }: Parameters<typeof useEmailForm>[0]) {
   const {
-    form: { register, control, getValues },
+    form: { register, control },
     onCheckEmail,
     onSubmit,
   } = useEmailForm({
@@ -85,17 +94,15 @@ export function EmailStep({
           className="w-full"
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
-          onClick={async (e) => {
-            await onCheckEmail(e);
-            if (getValues('emailAgree')) {
-              const result = await overlay.openAsync<boolean>(
-                ({ isOpen, close }) => (
-                  <EmailOverlay isOpen={isOpen} close={close} />
-                ),
-              );
-              if (result === true) {
-                await onSubmit(e);
-              }
+          onClick={async () => {
+            if (await onCheckEmail()) {
+              overlay.open(({ isOpen, close }) => (
+                <EmailOverlay
+                  isOpen={isOpen}
+                  close={close}
+                  onSubmit={onSubmit}
+                />
+              ));
             }
           }}
         >
