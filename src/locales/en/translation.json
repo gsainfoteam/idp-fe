@@ -115,6 +115,36 @@
           "invalid_token": "The token is invalid"
         }
       },
+      "info_staff": {
+        "title": "Please enter your basic information",
+        "button": "Register",
+        "inputs": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Kim Jin-i",
+            "errors": {
+              "format": "Please enter your name"
+            }
+          },
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          },
+          "id": {
+            "label": "Staff ID",
+            "placeholder": "12345",
+            "errors": {
+              "format": "Please enter a 5-digit number"
+            }
+          }
+        },
+        "errors": {
+          "invalid_token": "The token is invalid"
+        }
+      },
       "complete": {
         "title": "Registration is complete",
         "button": "Log In"

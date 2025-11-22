@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { RegisterSteps } from '../../frames/register-frame';
-
 import { DifferenceNonNullable } from '@/features/core';
+
+import { RegisterSteps } from '../../frames/register-frame';
 
 const createSchema = (t: TFunction) =>
   z
@@ -29,12 +29,20 @@ const createSchema = (t: TFunction) =>
     });
 
 export const usePasswordForm = ({
-  onNext,
+  context,
+  onStudentNext,
+  onStaffNext,
 }: {
   context: RegisterSteps['password'];
-  onNext: (
+  onStudentNext: (
     data: DifferenceNonNullable<
       RegisterSteps['info'],
+      RegisterSteps['password']
+    >,
+  ) => void;
+  onStaffNext: (
+    data: DifferenceNonNullable<
+      RegisterSteps['infoStaff'],
       RegisterSteps['password']
     >,
   ) => void;
@@ -46,7 +54,11 @@ export const usePasswordForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    onNext(formData);
+    if (context.email.endsWith('@gm.gist.ac.kr')) {
+      onStudentNext(formData);
+    } else {
+      onStaffNext(formData);
+    }
   });
 
   return { form, onSubmit };

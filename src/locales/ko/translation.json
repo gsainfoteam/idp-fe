@@ -115,6 +115,36 @@
           "invalid_token": "토큰이 잘못되었습니다"
         }
       },
+      "info_staff": {
+        "title": "기본정보를 입력해주세요",
+        "button": "회원가입",
+        "inputs": {
+          "name": {
+            "label": "이름",
+            "placeholder": "김지니",
+            "errors": {
+              "format": "이름을 입력해주세요"
+            }
+          },
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          },
+          "id": {
+            "label": "사번",
+            "placeholder": "12345",
+            "errors": {
+              "format": "5자리 숫자를 입력해주세요"
+            }
+          }
+        },
+        "errors": {
+          "invalid_token": "토큰이 잘못되었습니다"
+        }
+      },
       "complete": {
         "title": "회원가입이 완료되었습니다",
         "button": "로그인하기"

@@ -12,9 +12,10 @@ export function InfoStep({
   onUndo,
 }: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
   const {
-    form: { register, control, getValues },
+    form: { register, control },
     onVerify,
     onSubmit,
+    studentId,
   } = useInfoForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
@@ -31,9 +32,8 @@ export function InfoStep({
           className="w-full"
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
-          onClick={async (e) => {
-            await onVerify(e);
-            if (getValues('studentId') != null) {
+          onClick={async () => {
+            if (await onVerify()) {
               overlay.open(({ isOpen, close }) => (
                 <Dialog
                   isOpen={isOpen}
@@ -50,7 +50,7 @@ export function InfoStep({
                   </Dialog.Header>
                   <Dialog.Body>
                     <div className="text-title-1 text-label w-full text-center">
-                      {getValues('studentId')}
+                      {studentId}
                     </div>
                   </Dialog.Body>
                   <Dialog.Footer>
@@ -62,9 +62,9 @@ export function InfoStep({
                     <Button
                       variant="primary"
                       className="grow"
-                      onClick={async (e) => {
-                        await onSubmit(e);
+                      onClick={async () => {
                         close();
+                        await onSubmit();
                       }}
                     >
                       {t('register.steps.info.dialog.buttons.continue')}

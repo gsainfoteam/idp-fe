@@ -8,23 +8,21 @@ import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo
 import { CodeStep } from './register-steps/code-step';
 import { CompleteStep } from './register-steps/complete-step';
 import { EmailStep } from './register-steps/email-step';
+import { InfoStaffStep } from './register-steps/info-staff-step';
 import { InfoStep } from './register-steps/info-step';
 import { PasswordStep } from './register-steps/password-step';
 
-type StepContext = Pretty<
-  Partial<Parameters<typeof postUser>[0]> & {
-    emailAgree?: boolean;
-  }
->;
+type StepContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
 
 export type RegisterSteps = {
   email: StepContext;
-  code: RequireKeys<RegisterSteps['email'], 'email' | 'emailAgree'>;
+  code: RequireKeys<RegisterSteps['email'], 'email'>;
   password: RequireKeys<RegisterSteps['code'], 'emailVerificationJwtToken'>;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
+  infoStaff: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
     RegisterSteps['info'],
-    'name' | 'studentId' | 'phoneNumber' | 'studentIdVerificationJwtToken'
+    'name' | 'studentId' | 'phoneNumber'
   >;
 };
 
@@ -64,12 +62,20 @@ export function RegisterFrame() {
       password={({ history, context }) => (
         <PasswordStep
           context={context}
-          onNext={(data) => history.replace('info', data)}
+          onStudentNext={(data) => history.replace('info', data)}
+          onStaffNext={(data) => history.replace('infoStaff', data)}
           onUndo={undoWarning}
         />
       )}
       info={({ history, context }) => (
         <InfoStep
+          context={context}
+          onNext={(data) => history.replace('complete', data)}
+          onUndo={undoWarning}
+        />
+      )}
+      infoStaff={({ history, context }) => (
+        <InfoStaffStep
           context={context}
           onNext={(data) => history.replace('complete', data)}
           onUndo={undoWarning}

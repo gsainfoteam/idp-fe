@@ -23,13 +23,11 @@ const createSchema = (t: TFunction) =>
 
 export const useEmailForm = ({
   onNext,
-  overlay,
 }: {
   context: RegisterSteps['email'];
   onNext: (
     data: DifferenceNonNullable<RegisterSteps['code'], RegisterSteps['email']>,
   ) => void;
-  overlay: () => Promise<boolean>;
 }) => {
   const { t } = useTranslation();
   const form = useForm({
@@ -37,8 +35,11 @@ export const useEmailForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
-    const emailRes = await getUserEmail({ email: formData.email });
+  const onCheckEmail = async () => {
+    const isValid = await form.trigger('email');
+    if (!isValid) return false;
+
+    const emailRes = await getUserEmail({ email: form.getValues('email') });
 
     if (!emailRes.ok) {
       if (emailRes.status === 500) {
@@ -47,7 +48,7 @@ export const useEmailForm = ({
         toast.error(t('toast.unknown_error'));
       }
 
-      return;
+      return false;
     }
 
     if (emailRes.data === true) {
@@ -55,12 +56,13 @@ export const useEmailForm = ({
         message: t('register.steps.email.inputs.email.errors.already_exists'),
       });
 
-      return;
+      return false;
     }
 
-    const result = await overlay();
-    if (result === false) return;
+    return true;
+  };
 
+  const onSubmit = form.handleSubmit(async (formData) => {
     const verifyRes = await postVerifyEmail({ email: formData.email });
 
     if (!verifyRes.ok) {
@@ -73,8 +75,8 @@ export const useEmailForm = ({
       return;
     }
 
-    onNext({ emailAgree: true, ...formData });
+    onNext(formData);
   });
 
-  return { form, onSubmit };
+  return { form, onCheckEmail, onSubmit };
 };

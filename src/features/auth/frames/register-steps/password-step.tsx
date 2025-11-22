@@ -1,19 +1,20 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { usePasswordForm } from '../../hooks/register-steps/use-password-form';
-
 import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
+
+import { usePasswordForm } from '../../hooks/register-steps/use-password-form';
 
 export function PasswordStep({
   context,
-  onNext,
+  onStudentNext,
+  onStaffNext,
   onUndo,
 }: Parameters<typeof usePasswordForm>[0] & { onUndo: () => void }) {
   const {
     form: { register, control },
     onSubmit,
-  } = usePasswordForm({ context, onNext });
+  } = usePasswordForm({ context, onStudentNext, onStaffNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
