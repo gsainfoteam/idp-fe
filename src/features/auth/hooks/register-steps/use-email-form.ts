@@ -19,17 +19,16 @@ const createSchema = (t: TFunction) =>
         /^\S+@(?:gm\.)?gist\.ac\.kr$/,
         t('register.steps.email.inputs.email.errors.format'),
       ),
+    emailChecked: z.boolean().default(false),
   });
 
 export const useEmailForm = ({
   onNext,
-  overlay,
 }: {
   context: RegisterSteps['email'];
   onNext: (
     data: DifferenceNonNullable<RegisterSteps['code'], RegisterSteps['email']>,
   ) => void;
-  overlay: () => Promise<boolean>;
 }) => {
   const { t } = useTranslation();
   const form = useForm({
@@ -37,7 +36,7 @@ export const useEmailForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
+  const onCheckEmail = form.handleSubmit(async (formData) => {
     const emailRes = await getUserEmail({ email: formData.email });
 
     if (!emailRes.ok) {
@@ -58,8 +57,14 @@ export const useEmailForm = ({
       return;
     }
 
-    const result = await overlay();
-    if (result === false) return;
+    form.setValue('emailChecked', true);
+  });
+
+  const onSubmit = form.handleSubmit(async (formData) => {
+    if (!formData.emailChecked) {
+      await onCheckEmail();
+      return;
+    }
 
     const verifyRes = await postVerifyEmail({ email: formData.email });
 
@@ -76,5 +81,5 @@ export const useEmailForm = ({
     onNext({ emailAgree: true, ...formData });
   });
 
-  return { form, onSubmit };
+  return { form, onCheckEmail, onSubmit };
 };

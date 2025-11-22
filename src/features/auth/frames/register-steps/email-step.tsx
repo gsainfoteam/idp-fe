@@ -61,50 +61,57 @@ function EmailOverlay({
 export function EmailStep({
   context,
   onNext,
-}: Omit<Parameters<typeof useEmailForm>[0], 'overlay'>) {
+}: Parameters<typeof useEmailForm>[0]) {
   const {
-    form: { register, control },
+    form: { register, control, getValues },
+    onCheckEmail,
     onSubmit,
   } = useEmailForm({
     context,
     onNext,
-    overlay: async () => {
-      return await overlay.openAsync<boolean>(({ isOpen, close }) => (
-        <EmailOverlay isOpen={isOpen} close={close} />
-      ));
-    },
   });
 
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
   return (
-    <form onSubmit={onSubmit}>
-      <FunnelLayout
-        loading={isSubmitting}
-        title={t('register.title')}
-        stepTitle={t('register.steps.email.title')}
-        button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
-          >
-            {t('register.steps.email.button')}
-          </Button>
-        }
-      >
-        <Label text={t('register.steps.email.inputs.email.label')}>
-          <Input
-            type="email"
-            placeholder={t('register.steps.email.inputs.email.placeholder')}
-            error={errors.email?.message}
-            disabled={isSubmitting}
-            {...register('email')}
-          />
-        </Label>
-      </FunnelLayout>
-    </form>
+    <FunnelLayout
+      loading={isSubmitting}
+      title={t('register.title')}
+      stepTitle={t('register.steps.email.title')}
+      button={
+        <Button
+          variant="primary"
+          className="w-full"
+          loading={isSubmitting}
+          disabled={!(isValid && isDirty)}
+          onClick={async (e) => {
+            await onCheckEmail(e);
+            if (getValues('emailChecked')) {
+              const result = await overlay.openAsync<boolean>(
+                ({ isOpen, close }) => (
+                  <EmailOverlay isOpen={isOpen} close={close} />
+                ),
+              );
+              if (result === true) {
+                await onSubmit(e);
+              }
+            }
+          }}
+        >
+          {t('register.steps.email.button')}
+        </Button>
+      }
+    >
+      <Label text={t('register.steps.email.inputs.email.label')}>
+        <Input
+          type="email"
+          placeholder={t('register.steps.email.inputs.email.placeholder')}
+          error={errors.email?.message}
+          disabled={isSubmitting}
+          {...register('email')}
+        />
+      </Label>
+    </FunnelLayout>
   );
 }
