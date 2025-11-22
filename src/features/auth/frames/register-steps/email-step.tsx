@@ -87,7 +87,7 @@ export function EmailStep({
           disabled={!(isValid && isDirty)}
           onClick={async (e) => {
             await onCheckEmail(e);
-            if (getValues('emailChecked')) {
+            if (getValues('emailAgree')) {
               const result = await overlay.openAsync<boolean>(
                 ({ isOpen, close }) => (
                   <EmailOverlay isOpen={isOpen} close={close} />

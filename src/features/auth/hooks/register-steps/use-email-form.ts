@@ -19,7 +19,7 @@ const createSchema = (t: TFunction) =>
         /^\S+@(?:gm\.)?gist\.ac\.kr$/,
         t('register.steps.email.inputs.email.errors.format'),
       ),
-    emailChecked: z.boolean().default(false),
+    emailAgree: z.boolean().default(false),
   });
 
 export const useEmailForm = ({
@@ -57,11 +57,11 @@ export const useEmailForm = ({
       return;
     }
 
-    form.setValue('emailChecked', true);
+    form.setValue('emailAgree', true);
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    if (!formData.emailChecked) {
+    if (!formData.emailAgree) {
       await onCheckEmail();
       return;
     }
@@ -78,7 +78,7 @@ export const useEmailForm = ({
       return;
     }
 
-    onNext({ emailAgree: true, ...formData });
+    onNext(formData);
   });
 
   return { form, onCheckEmail, onSubmit };
