@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useClientInfoForm } from '../hooks/use-client-info-form';
 
 import { Button, Label } from '@/features/core';
-import { CopyInput } from '@/features/core/components/copy-input';
+import { CopyInput } from '@/features/core';
 import { Client } from '../hooks/use-client';
 
 export function ClientInfoForm({ client }: { client: Client }) {

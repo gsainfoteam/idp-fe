@@ -16,6 +16,7 @@ import {
   Avatar,
   Button,
   FunnelLayout,
+  LogClick,
   ThemeSwitcher,
   cn,
   uniqueKey,
@@ -131,12 +132,14 @@ export function HomeFrame() {
           <Link to="/clients">
             <MenuButton icon={CodeIcon}>{t('home.menu.developer')}</MenuButton>
           </Link>
-          <MenuButton
-            icon={LogoutIcon}
-            onClick={async () => await signOut(false)}
-          >
-            {t('home.menu.logout')}
-          </MenuButton>
+          <LogClick event="auth_logout_button">
+            <MenuButton
+              icon={LogoutIcon}
+              onClick={async () => await signOut(false)}
+            >
+              {t('home.menu.logout')}
+            </MenuButton>
+          </LogClick>
           <Link to="/withdraw">
             <MenuButton variant="danger" icon={WithdrawalIcon}>
               {t('home.menu.withdrawal')}

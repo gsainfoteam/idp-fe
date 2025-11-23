@@ -12,7 +12,7 @@ import {
   uniqueKey,
 } from '@/features/core';
 import { useLoading } from '@/features/core';
-import { IconButton } from '@/features/core/components/icon-button';
+import { IconButton } from '@/features/core';
 import { overlay } from 'overlay-kit';
 
 import { Client } from '../hooks/use-client';

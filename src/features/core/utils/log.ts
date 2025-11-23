@@ -1,7 +1,9 @@
 import * as amplitude from '@amplitude/analytics-browser';
+import { NavigateOptions, ValidateLinkOptions } from '@tanstack/react-router';
 import type { HttpMethod } from 'openapi-typescript-helpers';
 
 import { paths } from '@/@types/api-schema';
+import { router } from '@/app';
 
 export type ClickEventMap = {
   // Auth
@@ -79,21 +81,7 @@ export type FunnelEventMap = {
   verify_student_complete: Record<string, never>;
 };
 
-export type PageViewEventMap = {
-  login: Record<string, never>;
-  register_email: Record<string, never>;
-  register_code: Record<string, never>;
-  register_info: Record<string, never>;
-  register_complete: Record<string, never>;
-  home: Record<string, never>;
-  profile: Record<string, never>;
-  profile_edit: Record<string, never>;
-  client_list: Record<string, never>;
-  client_detail: { clientId: string };
-  client_create: Record<string, never>;
-  oauth_authorize: { clientId: string };
-  not_found: { path: string };
-};
+export type PageViewEventMap = Record<string, Record<string, unknown>>;
 
 export type ModalEventMap = {
   email_verification_overlay_open: Record<string, never>;
@@ -126,13 +114,8 @@ export type SuccessEventMap = {
 };
 
 export class Log {
-  // 현재 router path를 저장하는 변수
   private static currentPath = '';
 
-  /**
-   * 현재 router path를 업데이트합니다.
-   * __root.tsx에서 location 변경 시 호출됩니다.
-   */
   static setCurrentPath = (path: string) => {
     Log.currentPath = path;
   };
@@ -203,15 +186,18 @@ export class Log {
 
   /**
    * 페이지 뷰 로깅
-   * @example Log.pageview('login')
-   * @example Log.pageview('client_detail', { clientId: 'abc123' })
+   * @example Log.pageview('/auth/login')
+   * @example Log.pageview('/clients/123', { clientId: '123' })
    */
-  static pageview = <T extends keyof PageViewEventMap>(
-    page: T,
-    properties: PageViewEventMap[T] = {} as PageViewEventMap[T],
+  static pageview = <TPath extends ValidateLinkOptions<typeof router>['to']>(
+    path: TPath,
+    properties: NavigateOptions<
+      typeof router,
+      TPath
+    >['search'] = {} as NavigateOptions<typeof router, TPath>['search'],
   ) => {
-    amplitude.track(`pageview_${page}`, {
-      ...properties,
+    amplitude.track(`pageview_${path}`, {
+      ...(properties || {}),
       from: Log.currentPath,
     });
   };
