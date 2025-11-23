@@ -126,6 +126,17 @@ type SuccessEventMap = {
 };
 
 export class Log {
+  // 현재 router path를 저장하는 변수
+  private static currentPath = '';
+
+  /**
+   * 현재 router path를 업데이트합니다.
+   * __root.tsx에서 location 변경 시 호출됩니다.
+   */
+  static setCurrentPath = (path: string) => {
+    Log.currentPath = path;
+  };
+
   static setUserId = (userId: string) => {
     amplitude.setUserId(userId);
   };
@@ -156,7 +167,10 @@ export class Log {
       ? []
       : [ClickEventMap[T]]
   ) => {
-    amplitude.track(`click_${event}`, args[0]);
+    amplitude.track(`click_${event}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 
   /**
@@ -170,7 +184,10 @@ export class Log {
       ? []
       : [SubmitEventMap[T]]
   ) => {
-    amplitude.track(`submit_${event}`, args[0]);
+    amplitude.track(`submit_${event}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 
   /**
@@ -184,7 +201,10 @@ export class Log {
       ? []
       : [FunnelEventMap[T]]
   ) => {
-    amplitude.track(`funnel_${step}`, args[0]);
+    amplitude.track(`funnel_${step}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 
   /**
@@ -198,7 +218,10 @@ export class Log {
       ? []
       : [PageViewEventMap[T]]
   ) => {
-    amplitude.track(`pageview_${page}`, args[0]);
+    amplitude.track(`pageview_${page}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 
   /**
@@ -212,7 +235,10 @@ export class Log {
       ? []
       : [ModalEventMap[T]]
   ) => {
-    amplitude.track(`modal_${event}`, args[0]);
+    amplitude.track(`modal_${event}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 
   /**
@@ -223,7 +249,7 @@ export class Log {
     type: T,
     properties: ErrorEventMap[T],
   ) => {
-    amplitude.track(`error_${type}`, properties);
+    amplitude.track(`error_${type}`, { ...properties, from: Log.currentPath });
   };
 
   /**
@@ -237,6 +263,9 @@ export class Log {
       ? []
       : [SuccessEventMap[T]]
   ) => {
-    amplitude.track(`success_${event}`, args[0]);
+    amplitude.track(`success_${event}`, {
+      ...(args[0] || {}),
+      from: Log.currentPath,
+    });
   };
 }
