@@ -3,8 +3,7 @@ import { useCallback } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '../components/button';
-import { FunnelLayout } from '../components/funnel-layout';
+import { Button, FunnelLayout } from '@/features/core';
 
 export function NotFoundFrame() {
   const { t } = useTranslation();

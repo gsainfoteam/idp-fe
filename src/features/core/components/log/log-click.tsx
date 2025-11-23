@@ -6,7 +6,7 @@ import {
   isValidElement,
 } from 'react';
 
-import { type ClickEventMap, Log } from '../utils/log';
+import { type ClickEventMap, Log } from '@/features/core';
 
 interface LogClickProps<T extends keyof ClickEventMap> {
   event: T;
