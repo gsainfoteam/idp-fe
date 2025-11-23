@@ -17,11 +17,11 @@ function RootComponent() {
   const search = useSearch({ strict: false });
 
   useEffect(() => {
-    Log.setCurrentPath(location.pathname);
     Log.pageview(
       location.pathname as ValidateLinkOptions<typeof router>['to'],
       search as NavigateOptions<typeof router>['search'],
     );
+    Log.setCurrentPath(location.pathname);
   }, [location.pathname, search]);
 
   return <Outlet />;
