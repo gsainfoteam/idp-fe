@@ -3,7 +3,7 @@ import { NavigateOptions, ValidateLinkOptions } from '@tanstack/react-router';
 import type { HttpMethod } from 'openapi-typescript-helpers';
 
 import { paths } from '@/@types/api-schema';
-import { router } from '@/app';
+import { router } from '@/router';
 
 export type ClickEventMap = {
   // Auth

@@ -9,8 +9,8 @@ import {
   useSearch,
 } from '@tanstack/react-router';
 
-import { router } from '@/app';
 import { Log } from '@/features/core/utils/log';
+import { router } from '@/router';
 
 function RootComponent() {
   const location = useLocation();
