@@ -129,14 +129,12 @@ export function ProfileFrame() {
               {t('profile.sections.basic_info.fields.name_and_id')}
               {isStudent && (
                 <LogClick event="profile_student_id_verify_button">
-                  <div>
-                    <VerifiedBadge
-                      verified={user.isIdVerified}
-                      onClick={async () =>
-                        await navigate({ to: '/profile/verify-student-id' })
-                      }
-                    />
-                  </div>
+                  <VerifiedBadge
+                    verified={user.isIdVerified}
+                    onClick={async () =>
+                      await navigate({ to: '/profile/verify-student-id' })
+                    }
+                  />
                 </LogClick>
               )}
             </div>

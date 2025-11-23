@@ -39,6 +39,7 @@ export type ClickEventMap = {
   client_create_button: Record<string, never>;
   client_edit_button: { clientId: string };
   client_delete_button: { clientId: string };
+  client_picture_delete: { clientId: string };
   client_secret_rotate_button: { clientId: string };
   client_member_add_button: { clientId: string };
   client_member_remove_button: { clientId: string; userId: string };
