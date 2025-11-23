@@ -1,8 +1,15 @@
-import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { OverlayProvider } from 'overlay-kit';
-import { routeTree } from './routeTree.gen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { NotFoundFrame, ThemeProvider, ToastProvider } from '@/features/core';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { OverlayProvider } from 'overlay-kit';
+
+import {
+  AmplitudeProvider,
+  NotFoundFrame,
+  ThemeProvider,
+  ToastProvider,
+} from '@/features/core';
+
+import { routeTree } from './routeTree.gen';
 
 const queryClient = new QueryClient();
 const router = createRouter({
@@ -33,14 +40,16 @@ declare module '@tanstack/react-router' {
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <OverlayProvider>
-          <RouterProvider router={router} />
-          <ToastProvider />
-        </OverlayProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <AmplitudeProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <OverlayProvider>
+            <RouterProvider router={router} />
+            <ToastProvider />
+          </OverlayProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </AmplitudeProvider>
   );
 };
 
