@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog } from '@/features/core';
+import { Button, Dialog, LogClick } from '@/features/core';
 
 import { usePasskeyDeleteForm } from '../hooks/use-passkey-delete-form';
 import { Passkey } from '../hooks/use-passkey-list';
@@ -35,15 +35,20 @@ export function PasskeyDeleteOverlay({
             {t('passkey.steps.list.remove_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={async () => {
-            if (await onSubmit()) close(true);
-          }}
+        <LogClick
+          event="passkey_delete_button"
+          properties={{ passkeyId: passkey.id }}
         >
-          {t('passkey.steps.list.remove_overlay.confirm')}
-        </Button>
+          <Button
+            variant="primary"
+            className="w-full"
+            onClick={async () => {
+              if (await onSubmit()) close(true);
+            }}
+          >
+            {t('passkey.steps.list.remove_overlay.confirm')}
+          </Button>
+        </LogClick>
       </Dialog.Footer>
     </Dialog>
   );

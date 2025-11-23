@@ -10,6 +10,7 @@ import {
   Avatar,
   Button,
   FunnelLayout,
+  LogClick,
   SwipeCard,
   cn,
   uniqueKey,
@@ -32,9 +33,11 @@ export function ClientListFrame() {
       description={t('services.list.description')}
       button={
         <Link to="/clients/new">
-          <Button variant="primary" className="w-full">
-            {t('services.list.add')}
-          </Button>
+          <LogClick event="client_create_button">
+            <Button variant="primary" className="w-full">
+              {t('services.list.add')}
+            </Button>
+          </LogClick>
         </Link>
       }
     >
@@ -77,7 +80,14 @@ export function ClientListFrame() {
                     ? [
                         {
                           bg: 'var(--color-red-400)',
-                          content: <TrashBinIcon className="text-white" />,
+                          content: (
+                            <LogClick
+                              event="client_delete_button"
+                              properties={{ clientId: client.clientId }}
+                            >
+                              <TrashBinIcon className="text-white" />
+                            </LogClick>
+                          ),
                           onClick: async () => {
                             const result = await overlay.openAsync<boolean>(
                               ({ isOpen, close }) => (

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
@@ -8,12 +10,12 @@ import {
   Button,
   Dialog,
   FileUpload,
+  LogClick,
   cn,
   uniqueKey,
 } from '@/features/core';
 import { useLoading } from '@/features/core';
 import { IconButton } from '@/features/core';
-import { overlay } from 'overlay-kit';
 
 import { Client } from '../hooks/use-client';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
@@ -113,32 +115,42 @@ export function ClientPictureForm({
               startUploadLoading(onSave(files, previewUrls).then(uploadImage))
             }
           >
-            <IconButton
-              variant="primary"
-              loading={uploadLoading}
-              disabled={deleteLoading || client.deleteRequestedAt != null}
-              className="p-2.5"
-              icon={<EditIcon />}
-            />
+            <LogClick
+              event="client_edit_button"
+              properties={{ clientId: client.clientId }}
+            >
+              <IconButton
+                variant="primary"
+                loading={uploadLoading}
+                disabled={deleteLoading || client.deleteRequestedAt != null}
+                className="p-2.5"
+                icon={<EditIcon />}
+              />
+            </LogClick>
           </FileUpload>
-          <IconButton
-            variant="secondary"
-            loading={deleteLoading}
-            disabled={!previewImage || client.deleteRequestedAt != null}
-            className="p-2.5"
-            icon={<TrashBinIcon />}
-            onClick={async () => {
-              overlay.open(({ isOpen, close }) => (
-                <ClientPictureOverlay
-                  isOpen={isOpen}
-                  close={close}
-                  onContinue={async () => {
-                    await startDeleteLoading(deleteImage());
-                  }}
-                />
-              ));
-            }}
-          />
+          <LogClick
+            event="client_edit_button"
+            properties={{ clientId: client.clientId }}
+          >
+            <IconButton
+              variant="secondary"
+              loading={deleteLoading}
+              disabled={!previewImage || client.deleteRequestedAt != null}
+              className="p-2.5"
+              icon={<TrashBinIcon />}
+              onClick={async () => {
+                overlay.open(({ isOpen, close }) => (
+                  <ClientPictureOverlay
+                    isOpen={isOpen}
+                    close={close}
+                    onContinue={async () => {
+                      await startDeleteLoading(deleteImage());
+                    }}
+                  />
+                ));
+              }}
+            />
+          </LogClick>
         </div>
       </div>
     </div>

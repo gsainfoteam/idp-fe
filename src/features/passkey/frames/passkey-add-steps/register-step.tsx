@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, useLoading } from '@/features/core';
+import { Button, FunnelLayout, LogClick, useLoading } from '@/features/core';
 import { usePasskeyAddForm } from '@/features/passkey';
 
 export function RegisterStep({ onNext }: { onNext: () => void }) {
@@ -15,15 +15,17 @@ export function RegisterStep({ onNext }: { onNext: () => void }) {
       stepTitle={t('passkey.steps.register.title')}
       description={t('passkey.steps.register.description')}
       button={
-        <Button
-          variant="primary"
-          className="w-full"
-          loading={loading}
-          disabled={loading}
-          onClick={() => startLoading(onSubmit)}
-        >
-          {t('passkey.steps.register.button')}
-        </Button>
+        <LogClick event="passkey_register_button">
+          <Button
+            variant="primary"
+            className="w-full"
+            loading={loading}
+            disabled={loading}
+            onClick={() => startLoading(onSubmit)}
+          >
+            {t('passkey.steps.register.button')}
+          </Button>
+        </LogClick>
       }
     />
   );

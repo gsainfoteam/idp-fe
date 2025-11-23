@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog } from '@/features/core';
+import { Button, Dialog, LogClick } from '@/features/core';
 
 import { Client } from '../hooks/use-client';
 import { useClientDeleteForm } from '../hooks/use-client-delete-form';
@@ -31,15 +31,20 @@ export function ClientDeleteOverlay({
             {t('services.detail.delete.dialog.cancel')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={async () => {
-            if (await onSubmit()) close(true);
-          }}
+        <LogClick
+          event="client_delete_button"
+          properties={{ clientId: client.clientId }}
         >
-          {t('services.detail.delete.dialog.confirm')}
-        </Button>
+          <Button
+            variant="primary"
+            className="w-full"
+            onClick={async () => {
+              if (await onSubmit()) close(true);
+            }}
+          >
+            {t('services.detail.delete.dialog.confirm')}
+          </Button>
+        </LogClick>
       </Dialog.Footer>
     </Dialog>
   );

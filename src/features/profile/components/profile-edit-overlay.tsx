@@ -10,6 +10,7 @@ import {
   Button,
   FileUpload,
   IconButton,
+  LogClick,
   Modal,
   uniqueKey,
 } from '@/features/core';
@@ -65,33 +66,39 @@ export function ProfileEditOverlay({
             onSave={onSave}
           >
             <div className="absolute right-0 bottom-0">
-              <IconButton
-                variant="primary"
-                icon={<EditIcon width={20} height={20} />}
-                className="border-funnel-background rounded-full border-4 p-2"
-              />
+              <LogClick event="profile_picture_upload">
+                <IconButton
+                  variant="primary"
+                  icon={<EditIcon width={20} height={20} />}
+                  className="border-funnel-background rounded-full border-4 p-2"
+                />
+              </LogClick>
             </div>
           </FileUpload>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => setPreviewImage(null)}
-          disabled={previewFile == null}
-          className="grow"
-        >
-          {t('profile_change.sub_button')}
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => startLoading(onSubmit().then(handleClose))}
-          disabled={previewFile === user.picture}
-          loading={loading}
-          className="grow"
-        >
-          {t('profile_change.button')}
-        </Button>
+        <LogClick event="profile_picture_delete">
+          <Button
+            variant="secondary"
+            onClick={() => setPreviewImage(null)}
+            disabled={previewFile == null}
+            className="grow"
+          >
+            {t('profile_change.sub_button')}
+          </Button>
+        </LogClick>
+        <LogClick event="profile_save_button">
+          <Button
+            variant="primary"
+            onClick={() => startLoading(onSubmit().then(handleClose))}
+            disabled={previewFile === user.picture}
+            loading={loading}
+            className="grow"
+          >
+            {t('profile_change.button')}
+          </Button>
+        </LogClick>
       </Modal.Footer>
     </Modal>
   );

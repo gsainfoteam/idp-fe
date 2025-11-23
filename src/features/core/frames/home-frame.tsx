@@ -113,18 +113,22 @@ export function HomeFrame() {
           </Link>
         </div>
         <div className="flex flex-col gap-3">
-          <MenuButton
-            icon={UserIcon}
-            onClick={() => {
-              overlay.open(({ isOpen, close }) => (
-                <ProfileEditOverlay isOpen={isOpen} close={close} />
-              ));
-            }}
-          >
-            {t('home.menu.edit')}
-          </MenuButton>
+          <LogClick event="profile_edit_button">
+            <MenuButton
+              icon={UserIcon}
+              onClick={() => {
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileEditOverlay isOpen={isOpen} close={close} />
+                ));
+              }}
+            >
+              {t('home.menu.edit')}
+            </MenuButton>
+          </LogClick>
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={LockIcon}>{t('home.menu.password')}</MenuButton>
+            <LogClick event="profile_password_change_button">
+              <MenuButton icon={LockIcon}>{t('home.menu.password')}</MenuButton>
+            </LogClick>
           </Link>
           <Link to="/passkeys" search={(prev) => ({ ...prev })}>
             <MenuButton icon={PasskeyIcon}>{t('home.menu.passkey')}</MenuButton>

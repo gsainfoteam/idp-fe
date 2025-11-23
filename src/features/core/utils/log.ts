@@ -5,6 +5,8 @@ import type { HttpMethod } from 'openapi-typescript-helpers';
 import { paths } from '@/@types/api-schema';
 import { router } from '@/router';
 
+import { Theme } from '../hooks/use-theme';
+
 export type ClickEventMap = {
   // Auth
   auth_login_email_button: Record<string, never>;
@@ -46,9 +48,9 @@ export type ClickEventMap = {
   oauth_authorize_deny: { clientId: string };
 
   // Common
-  back_button: { from: string };
+  back_button: Record<string, never>;
   link: { href: string };
-  theme_toggle: { to: 'light' | 'dark' };
+  theme_toggle: { to: Theme };
 };
 
 export type SubmitEventMap = {

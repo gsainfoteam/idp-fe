@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
-import { useCodeForm } from '../../hooks/register-steps/use-code-form';
-import { useResendCode } from '../../hooks/use-resend-code';
 
 import {
   Button,
   FunnelLayout,
   Input,
   Label,
+  LogClick,
   timeString,
 } from '@/features/core';
+
+import { useCodeForm } from '../../hooks/register-steps/use-code-form';
+import { useResendCode } from '../../hooks/use-resend-code';
 
 const CODE_EXPIRED_TIME = 300;
 export const CODE_MAX_COUNT = 5;
@@ -102,15 +104,17 @@ export function CodeStep({
             />
           </Label>
           <div className="mt-1 flex w-full justify-end">
-            <Button
-              variant="link"
-              size="none"
-              onClick={onResetTimer}
-              loading={isResending}
-              type="button"
-            >
-              {t('register.steps.code.resend')}
-            </Button>
+            <LogClick event="register_code_resend">
+              <Button
+                variant="link"
+                size="none"
+                onClick={onResetTimer}
+                loading={isResending}
+                type="button"
+              >
+                {t('register.steps.code.resend')}
+              </Button>
+            </LogClick>
           </div>
         </div>
       </FunnelLayout>
