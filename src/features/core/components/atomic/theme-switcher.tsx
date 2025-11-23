@@ -1,9 +1,9 @@
-import { Theme, useTheme } from '../hooks/use-theme';
+import { Theme, useTheme } from '../../hooks/use-theme';
 
 import AutoModeIcon from '@/assets/icons/solid/auto-mode.svg?react';
 import LightModeIcon from '@/assets/icons/line/light-mode.svg?react';
 import DarkModeIcon from '@/assets/icons/line/dark-mode.svg?react';
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 import { useCallback } from 'react';
 
 export function ThemeSwitcher({ className }: { className?: string }) {

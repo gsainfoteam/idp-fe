@@ -1,8 +1,8 @@
 import { PropsWithChildren, createContext } from 'react';
-import { useIsDesktop } from '../hooks/use-is-desktop';
+import { useIsDesktop } from '../../hooks/use-is-desktop';
 import { Dialog } from './dialog';
 import { BottomSheet } from './bottom-sheet';
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;

@@ -7,7 +7,7 @@ import {
   useMotionValue,
 } from 'framer-motion';
 
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 interface SwipeAction {
   bg: string;

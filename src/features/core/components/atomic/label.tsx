@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   text: string;

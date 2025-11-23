@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
 import { motion, PanInfo, useAnimationControls } from 'framer-motion';
-import { cn } from '../utils/cn';
-import { Backdrop } from './backdrop';
+import { cn } from '../../utils/cn';
+import { Backdrop } from '../atomic/backdrop';
 import { ModalProps } from './modal';
 import { ModalContext } from './modal';
 

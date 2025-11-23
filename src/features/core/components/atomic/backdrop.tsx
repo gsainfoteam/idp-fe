@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useRef } from 'react';
 import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion';
 
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 interface BackdropProps extends Omit<HTMLMotionProps<'div'>, 'ref'> {
   isOpen: boolean;

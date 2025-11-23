@@ -1,10 +1,10 @@
-import { RouterHistory } from '@tanstack/react-router';
 import { PropsWithChildren, useCallback, useState } from 'react';
 
-import { cn } from '../utils/cn';
+import { RouterHistory } from '@tanstack/react-router';
 
-import { BackButton } from './back-button';
-import { LoadingOverlay } from './loading-overlay';
+import { cn } from '../../utils/cn';
+import { BackButton } from '../atomic/back-button';
+import { LoadingOverlay } from '../atomic/loading-overlay';
 
 export interface FunnelLayoutProps extends React.Attributes {
   title?: string;
