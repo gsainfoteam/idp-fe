@@ -51,7 +51,7 @@ export type ClickEventMap = {
   theme_toggle: { to: 'light' | 'dark' };
 };
 
-type SubmitEventMap = {
+export type SubmitEventMap = {
   auth_login: { method: 'email' | 'passkey' };
   auth_register_email: Record<string, never>;
   auth_register_code: Record<string, never>;
@@ -62,26 +62,6 @@ type SubmitEventMap = {
   client_create: Record<string, never>;
   client_edit: { clientId: string };
 };
-
-export type FunnelEventMap = {
-  // Register funnel
-  register_email: Record<string, never>;
-  register_code: Record<string, never>;
-  register_info: { type: 'student' | 'staff' };
-  register_complete: Record<string, never>;
-
-  // Password change funnel
-  change_password_current: Record<string, never>;
-  change_password_new: Record<string, never>;
-  change_password_complete: Record<string, never>;
-
-  // Student ID verification funnel
-  verify_student_info: Record<string, never>;
-  verify_student_new_info: Record<string, never>;
-  verify_student_complete: Record<string, never>;
-};
-
-export type PageViewEventMap = Record<string, Record<string, unknown>>;
 
 export type ModalEventMap = {
   email_verification_overlay_open: Record<string, never>;
@@ -170,39 +150,6 @@ export class Log {
   };
 
   /**
-   * 퍼널 단계 이동 로깅
-   * @example Log.funnel('register_email')
-   * @example Log.funnel('register_info', { type: 'student' })
-   */
-  static funnel = <T extends keyof FunnelEventMap>(
-    step: T,
-    properties: FunnelEventMap[T] = {} as FunnelEventMap[T],
-  ) => {
-    amplitude.track(`funnel_${step}`, {
-      ...properties,
-      from: Log.currentPath,
-    });
-  };
-
-  /**
-   * 페이지 뷰 로깅
-   * @example Log.pageview('/auth/login')
-   * @example Log.pageview('/clients/123', { clientId: '123' })
-   */
-  static pageview = <TPath extends ValidateLinkOptions<typeof router>['to']>(
-    path: TPath,
-    properties: NavigateOptions<
-      typeof router,
-      TPath
-    >['search'] = {} as NavigateOptions<typeof router, TPath>['search'],
-  ) => {
-    amplitude.track(`pageview_${path}`, {
-      ...(properties || {}),
-      from: Log.currentPath,
-    });
-  };
-
-  /**
    * 모달 이벤트 로깅
    * @example Log.modal('email_verification_overlay_open')
    * @example Log.modal('email_verification_overlay_close', { result: 'accept' })
@@ -239,6 +186,40 @@ export class Log {
   ) => {
     amplitude.track(`success_${event}`, {
       ...properties,
+      from: Log.currentPath,
+    });
+  };
+
+  /**
+   * 퍼널 단계 이동 로깅
+   * @example Log.funnel('register', 'email')
+   * @example Log.funnel('register', 'info', { type: 'student' })
+   */
+  static funnel = (
+    funnelId: string,
+    step: string,
+    properties: Record<string, unknown> = {},
+  ) => {
+    amplitude.track(`funnel_${funnelId}_${step}`, {
+      ...properties,
+      from: Log.currentPath,
+    });
+  };
+
+  /**
+   * 페이지 뷰 로깅
+   * @example Log.pageview('/auth/login')
+   * @example Log.pageview('/clients/123', { clientId: '123' })
+   */
+  static pageview = <TPath extends ValidateLinkOptions<typeof router>['to']>(
+    path: TPath,
+    properties: NavigateOptions<
+      typeof router,
+      TPath
+    >['search'] = {} as NavigateOptions<typeof router, TPath>['search'],
+  ) => {
+    amplitude.track(`pageview_${path}`, {
+      ...(properties || {}),
       from: Log.currentPath,
     });
   };
