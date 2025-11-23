@@ -129,7 +129,7 @@ export function ClientPictureForm({
             </LogClick>
           </FileUpload>
           <LogClick
-            event="client_edit_button"
+            event="client_picture_delete"
             properties={{ clientId: client.clientId }}
           >
             <IconButton
