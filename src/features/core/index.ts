@@ -20,6 +20,7 @@ export * from './components/icon-button';
 export * from './components/copy-input';
 export * from './components/toast';
 export * from './components/swipe-card';
+export * from './components/log-click';
 
 export * from './services/api';
 export * from './services/amplitude';
