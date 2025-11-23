@@ -38,7 +38,12 @@ export function useVerifyStudentNewInfoForm({
   // impossible
   if (!user) throw new Error('User not found');
 
-  const onVerify = form.handleSubmit(async (formData) => {
+  const onVerify = async () => {
+    const isValid = await form.trigger();
+    if (!isValid) return false;
+
+    const formData = form.getValues();
+
     const res = await postVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: formData.name,
@@ -56,11 +61,13 @@ export function useVerifyStudentNewInfoForm({
       } else {
         toast.error(t('toast.unknown_error'));
       }
-      return;
+      return false;
     }
 
     form.setValue('studentId', res.data.studentId);
-  });
+
+    return true;
+  };
 
   const onSubmit = form.handleSubmit(async (formData) => {
     const res = await postUserVerifyStudentId({
@@ -86,5 +93,7 @@ export function useVerifyStudentNewInfoForm({
     onNext();
   });
 
-  return { form, onVerify, onSubmit };
+  const studentId = form.watch('studentId');
+
+  return { form, onVerify, onSubmit, studentId };
 }

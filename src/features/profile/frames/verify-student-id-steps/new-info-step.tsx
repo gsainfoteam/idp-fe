@@ -15,9 +15,10 @@ export function NewInfoStep({
   onNext: () => void;
 }) {
   const {
-    form: { register, control, getValues },
+    form: { register, control },
     onVerify,
     onSubmit,
+    studentId,
   } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
@@ -33,9 +34,8 @@ export function NewInfoStep({
           className="w-full"
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
-          onClick={async (e) => {
-            await onVerify(e);
-            if (getValues('studentId') != null) {
+          onClick={async () => {
+            if (await onVerify()) {
               overlay.open(({ isOpen, close }) => (
                 <Dialog
                   isOpen={isOpen}
@@ -52,7 +52,7 @@ export function NewInfoStep({
                   </Dialog.Header>
                   <Dialog.Body>
                     <div className="text-title-1 text-label w-full text-center">
-                      {getValues('studentId')}
+                      {studentId}
                     </div>
                   </Dialog.Body>
                   <Dialog.Footer>
