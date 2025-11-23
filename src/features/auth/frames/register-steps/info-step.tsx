@@ -31,9 +31,8 @@ export function InfoStep({
           className="w-full"
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
-          onClick={async (e) => {
-            await onVerify(e);
-            if (getValues('studentId') != null) {
+          onClick={async () => {
+            if (await onVerify()) {
               overlay.open(({ isOpen, close }) => (
                 <Dialog
                   isOpen={isOpen}
@@ -62,9 +61,9 @@ export function InfoStep({
                     <Button
                       variant="primary"
                       className="grow"
-                      onClick={async (e) => {
-                        await onSubmit(e);
+                      onClick={async () => {
                         close();
+                        await onSubmit();
                       }}
                     >
                       {t('register.steps.info.dialog.buttons.continue')}

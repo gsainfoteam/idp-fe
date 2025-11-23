@@ -46,7 +46,12 @@ export const useInfoForm = ({
     mode: 'onChange',
   });
 
-  const onVerify = form.handleSubmit(async (formData) => {
+  const onVerify = async () => {
+    const isValid = await form.trigger();
+    if (!isValid) return false;
+
+    const formData = form.getValues();
+
     const verifyRes = await postVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
       name: formData.name,
@@ -63,7 +68,7 @@ export const useInfoForm = ({
         toast.error(t('toast.unknown_error'));
       }
 
-      return;
+      return false;
     }
 
     form.setValue('studentId', verifyRes.data.studentId);
@@ -71,7 +76,9 @@ export const useInfoForm = ({
       'studentIdVerificationJwtToken',
       verifyRes.data.verificationJwtToken,
     );
-  });
+
+    return true;
+  };
 
   const onSubmit = form.handleSubmit(async (formData) => {
     if (!formData.studentId || !formData.studentIdVerificationJwtToken) {

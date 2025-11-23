@@ -33,9 +33,8 @@ export function NewInfoStep({
           className="w-full"
           loading={isSubmitting}
           disabled={!(isValid && isDirty)}
-          onClick={async (e) => {
-            await onVerify(e);
-            if (getValues('studentId') != null) {
+          onClick={async () => {
+            if (await onVerify()) {
               overlay.open(({ isOpen, close }) => (
                 <Dialog
                   isOpen={isOpen}
