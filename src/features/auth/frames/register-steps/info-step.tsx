@@ -12,10 +12,9 @@ export function InfoStep({
   onUndo,
 }: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
   const {
-    form: { register, control },
+    form: { register, control, getValues },
     onVerify,
     onSubmit,
-    studentId,
   } = useInfoForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
@@ -50,7 +49,7 @@ export function InfoStep({
                   </Dialog.Header>
                   <Dialog.Body>
                     <div className="text-title-1 text-label w-full text-center">
-                      {studentId}
+                      {getValues('studentId')}
                     </div>
                   </Dialog.Body>
                   <Dialog.Footer>

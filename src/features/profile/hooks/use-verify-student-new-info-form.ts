@@ -93,7 +93,5 @@ export function useVerifyStudentNewInfoForm({
     onNext();
   });
 
-  const studentId = form.watch('studentId');
-
-  return { form, onVerify, onSubmit, studentId };
+  return { form, onVerify, onSubmit };
 }
