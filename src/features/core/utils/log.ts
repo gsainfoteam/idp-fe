@@ -3,7 +3,7 @@ import type { HttpMethod } from 'openapi-typescript-helpers';
 
 import { paths } from '@/@types/api-schema';
 
-type ClickEventMap = {
+export type ClickEventMap = {
   // Auth
   auth_login_email_button: Record<string, never>;
   auth_login_passkey_button: Record<string, never>;
@@ -61,7 +61,7 @@ type SubmitEventMap = {
   client_edit: { clientId: string };
 };
 
-type FunnelEventMap = {
+export type FunnelEventMap = {
   // Register funnel
   register_email: Record<string, never>;
   register_code: Record<string, never>;
@@ -79,7 +79,7 @@ type FunnelEventMap = {
   verify_student_complete: Record<string, never>;
 };
 
-type PageViewEventMap = {
+export type PageViewEventMap = {
   login: Record<string, never>;
   register_email: Record<string, never>;
   register_code: Record<string, never>;
@@ -95,7 +95,7 @@ type PageViewEventMap = {
   not_found: { path: string };
 };
 
-type ModalEventMap = {
+export type ModalEventMap = {
   email_verification_overlay_open: Record<string, never>;
   email_verification_overlay_close: { result: 'accept' | 'cancel' };
   student_id_dialog_open: Record<string, never>;
@@ -104,14 +104,14 @@ type ModalEventMap = {
   delete_confirmation_close: { resource: string; result: 'confirm' | 'cancel' };
 };
 
-type ErrorEventMap = {
+export type ErrorEventMap = {
   api: { endpoint: keyof paths; status: number; method: HttpMethod };
   runtime: { message: string; context?: string };
   network: { type: 'timeout' | 'offline' | 'failed' };
   validation: { form: string; field: string };
 };
 
-type SuccessEventMap = {
+export type SuccessEventMap = {
   auth_login: { method: 'email' | 'passkey' };
   auth_register: { type: 'student' | 'staff' };
   profile_update: Record<string, never>;
@@ -163,12 +163,10 @@ export class Log {
    */
   static click = <T extends keyof ClickEventMap>(
     event: T,
-    ...args: ClickEventMap[T] extends Record<string, never>
-      ? []
-      : [ClickEventMap[T]]
+    properties: ClickEventMap[T] = {} as ClickEventMap[T],
   ) => {
     amplitude.track(`click_${event}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
@@ -180,12 +178,10 @@ export class Log {
    */
   static submit = <T extends keyof SubmitEventMap>(
     event: T,
-    ...args: SubmitEventMap[T] extends Record<string, never>
-      ? []
-      : [SubmitEventMap[T]]
+    properties: SubmitEventMap[T] = {} as SubmitEventMap[T],
   ) => {
     amplitude.track(`submit_${event}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
@@ -197,12 +193,10 @@ export class Log {
    */
   static funnel = <T extends keyof FunnelEventMap>(
     step: T,
-    ...args: FunnelEventMap[T] extends Record<string, never>
-      ? []
-      : [FunnelEventMap[T]]
+    properties: FunnelEventMap[T] = {} as FunnelEventMap[T],
   ) => {
     amplitude.track(`funnel_${step}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
@@ -214,12 +208,10 @@ export class Log {
    */
   static pageview = <T extends keyof PageViewEventMap>(
     page: T,
-    ...args: PageViewEventMap[T] extends Record<string, never>
-      ? []
-      : [PageViewEventMap[T]]
+    properties: PageViewEventMap[T] = {} as PageViewEventMap[T],
   ) => {
     amplitude.track(`pageview_${page}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
@@ -231,12 +223,10 @@ export class Log {
    */
   static modal = <T extends keyof ModalEventMap>(
     event: T,
-    ...args: ModalEventMap[T] extends Record<string, never>
-      ? []
-      : [ModalEventMap[T]]
+    properties: ModalEventMap[T] = {} as ModalEventMap[T],
   ) => {
     amplitude.track(`modal_${event}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
@@ -259,12 +249,10 @@ export class Log {
    */
   static success = <T extends keyof SuccessEventMap>(
     event: T,
-    ...args: SuccessEventMap[T] extends Record<string, never>
-      ? []
-      : [SuccessEventMap[T]]
+    properties: SuccessEventMap[T] = {} as SuccessEventMap[T],
   ) => {
     amplitude.track(`success_${event}`, {
-      ...(args[0] || {}),
+      ...properties,
       from: Log.currentPath,
     });
   };
