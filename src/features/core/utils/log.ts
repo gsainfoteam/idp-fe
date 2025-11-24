@@ -121,6 +121,14 @@ export type SuccessEventMap = {
 export class Log {
   private static currentPath = '';
 
+  private static track(event: string, payload: Record<string, unknown>) {
+    if (import.meta.env.DEV) {
+      console.info(`[amplitude] ${event}`, payload);
+    } else {
+      amplitude.track(event, payload);
+    }
+  }
+
   static setCurrentPath = (path: string) => {
     Log.currentPath = path;
   };
@@ -153,7 +161,7 @@ export class Log {
     event: T,
     properties: ClickEventMap[T] = {} as ClickEventMap[T],
   ) => {
-    amplitude.track(`click_${event}`, {
+    Log.track(`click_${event}`, {
       ...properties,
       from: Log.currentPath,
     });
@@ -168,7 +176,7 @@ export class Log {
     event: T,
     properties: SubmitEventMap[T] = {} as SubmitEventMap[T],
   ) => {
-    amplitude.track(`submit_${event}`, {
+    Log.track(`submit_${event}`, {
       ...properties,
       from: Log.currentPath,
     });
@@ -183,7 +191,7 @@ export class Log {
     event: `${T}_${TSub}`,
     properties: ModalEventMap[T][TSub],
   ) => {
-    amplitude.track(`modal_${event}`, {
+    Log.track(`modal_${event}`, {
       ...properties,
       from: Log.currentPath,
     });
@@ -197,7 +205,7 @@ export class Log {
     type: T,
     properties: ErrorEventMap[T],
   ) => {
-    amplitude.track(`error_${type}`, { ...properties, from: Log.currentPath });
+    Log.track(`error_${type}`, { ...properties, from: Log.currentPath });
   };
 
   /**
@@ -209,7 +217,7 @@ export class Log {
     event: T,
     properties: SuccessEventMap[T] = {} as SuccessEventMap[T],
   ) => {
-    amplitude.track(`success_${event}`, {
+    Log.track(`success_${event}`, {
       ...properties,
       from: Log.currentPath,
     });
@@ -225,7 +233,7 @@ export class Log {
     step: string,
     properties: Record<string, unknown> = {},
   ) => {
-    amplitude.track(`funnel_${funnelId}_${step}`, {
+    Log.track(`funnel_${funnelId}_${step}`, {
       ...properties,
       from: Log.currentPath,
     });
@@ -243,7 +251,7 @@ export class Log {
       TPath
     >['search'] = {} as NavigateOptions<typeof router, TPath>['search'],
   ) => {
-    amplitude.track(`pageview_${path}`, {
+    Log.track(`pageview_${path}`, {
       ...(properties || {}),
       from: Log.currentPath,
     });
