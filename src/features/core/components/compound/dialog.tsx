@@ -87,7 +87,7 @@ function DialogFooter({
 }: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
-      className={cn('flex w-full gap-3 px-5 pt-3 pb-5', className)}
+      className={cn('flex w-full gap-3 px-6 pt-3 pb-6', className)}
       {...props}
     >
       {children}
