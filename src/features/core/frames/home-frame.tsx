@@ -86,18 +86,20 @@ export function HomeFrame() {
       <div className="flex flex-col gap-6">
         <div className="flex w-full flex-1 items-center px-3">
           <div className="flex w-full items-center gap-3">
-            <Avatar
-              img={user.picture ?? undefined}
-              seed={uniqueKey(user.studentId)}
-              className="cursor-pointer"
-              onClick={() => {
-                overlay.open(({ isOpen, close }) => (
-                  <ProfileEditOverlay isOpen={isOpen} close={close} />
-                ));
-              }}
-            >
-              {user.name.charAt(0)}
-            </Avatar>
+            <LogClick event="home_profile_edit_button">
+              <Avatar
+                img={user.picture ?? undefined}
+                seed={uniqueKey(user.studentId)}
+                className="cursor-pointer"
+                onClick={() => {
+                  overlay.open(({ isOpen, close }) => (
+                    <ProfileEditOverlay isOpen={isOpen} close={close} />
+                  ));
+                }}
+              >
+                {user.name.charAt(0)}
+              </Avatar>
+            </LogClick>
             <div className="flex flex-col">
               <div className="text-title-3 text-label">{user.name}</div>
               <div className="text-body-2 text-basics-secondary-label">
@@ -105,15 +107,17 @@ export function HomeFrame() {
               </div>
             </div>
           </div>
-          <Link
-            to="/profile"
-            className="flex cursor-pointer items-center self-stretch px-2"
-          >
-            <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
-          </Link>
+          <LogClick event="home_profile_link">
+            <Link
+              to="/profile"
+              className="flex cursor-pointer items-center self-stretch px-2"
+            >
+              <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
+            </Link>
+          </LogClick>
         </div>
         <div className="flex flex-col gap-3">
-          <LogClick event="profile_edit_button">
+          <LogClick event="home_profile_edit_button">
             <MenuButton
               icon={UserIcon}
               onClick={() => {
@@ -126,15 +130,23 @@ export function HomeFrame() {
             </MenuButton>
           </LogClick>
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
-            <LogClick event="profile_password_change_button">
+            <LogClick event="home_profile_password_change_button">
               <MenuButton icon={LockIcon}>{t('home.menu.password')}</MenuButton>
             </LogClick>
           </Link>
           <Link to="/passkeys" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={PasskeyIcon}>{t('home.menu.passkey')}</MenuButton>
+            <LogClick event="home_passkeys_link">
+              <MenuButton icon={PasskeyIcon}>
+                {t('home.menu.passkey')}
+              </MenuButton>
+            </LogClick>
           </Link>
           <Link to="/clients">
-            <MenuButton icon={CodeIcon}>{t('home.menu.developer')}</MenuButton>
+            <LogClick event="home_clients_link">
+              <MenuButton icon={CodeIcon}>
+                {t('home.menu.developer')}
+              </MenuButton>
+            </LogClick>
           </Link>
           <LogClick event="auth_logout_button">
             <MenuButton
@@ -145,9 +157,11 @@ export function HomeFrame() {
             </MenuButton>
           </LogClick>
           <Link to="/withdraw">
-            <MenuButton variant="danger" icon={WithdrawalIcon}>
-              {t('home.menu.withdrawal')}
-            </MenuButton>
+            <LogClick event="home_withdraw_link">
+              <MenuButton variant="danger" icon={WithdrawalIcon}>
+                {t('home.menu.withdrawal')}
+              </MenuButton>
+            </LogClick>
           </Link>
         </div>
       </div>

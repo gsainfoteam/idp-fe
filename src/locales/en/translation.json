@@ -579,5 +579,12 @@
     "description": "The page does not exist or is unavailable.",
     "button": "Go Back"
   },
+  "error_fallback": {
+    "title": "Something went wrong",
+    "step_title": "An unexpected error occurred",
+    "description": "Please try again in a moment. If the problem persists, contact support.",
+    "button": "Retry",
+    "details_label": "Details"
+  },
   "language": "en"
 }

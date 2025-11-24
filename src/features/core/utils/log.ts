@@ -2,7 +2,6 @@ import * as amplitude from '@amplitude/analytics-browser';
 import { NavigateOptions, ValidateLinkOptions } from '@tanstack/react-router';
 import type { HttpMethod } from 'openapi-typescript-helpers';
 
-import { paths } from '@/@types/api-schema';
 import { router } from '@/router';
 
 import { Theme } from '../hooks/use-theme';
@@ -20,14 +19,6 @@ export type ClickEventMap = {
   register_email_overlay_cancel: Record<string, never>;
   register_code_resend: Record<string, never>;
   register_info_verify: Record<string, never>;
-
-  // Profile
-  profile_edit_button: Record<string, never>;
-  profile_save_button: Record<string, never>;
-  profile_picture_upload: Record<string, never>;
-  profile_picture_delete: Record<string, never>;
-  profile_password_change_button: Record<string, never>;
-  profile_student_id_verify_button: Record<string, never>;
 
   // Passkey
   passkey_register_button: Record<string, never>;
@@ -52,6 +43,18 @@ export type ClickEventMap = {
   theme_toggle: { to: Theme };
   student_id_verification_dialog_confirm: { studentId: string };
   student_id_verification_dialog_cancel: Record<string, never>;
+
+  // Home
+  home_profile_edit_button: Record<string, never>;
+  home_profile_save_button: Record<string, never>;
+  home_profile_picture_upload: Record<string, never>;
+  home_profile_picture_delete: Record<string, never>;
+  home_profile_password_change_button: Record<string, never>;
+  home_profile_student_id_verify_button: Record<string, never>;
+  home_profile_link: Record<string, never>;
+  home_passkeys_link: Record<string, never>;
+  home_clients_link: Record<string, never>;
+  home_withdraw_link: Record<string, never>;
 };
 
 export type SubmitEventMap = {
@@ -98,10 +101,12 @@ export type ModalEventMap = {
 };
 
 export type ErrorEventMap = {
-  api: { endpoint: keyof paths; status: number; method: HttpMethod };
-  runtime: { message: string; context?: string };
-  network: { type: 'timeout' | 'offline' | 'failed' };
-  validation: { form: string; field: string };
+  api: { endpoint: string; status: number; method: HttpMethod };
+  runtime: {
+    message: string;
+    context?: string | null | undefined;
+    stack?: string;
+  };
 };
 
 export type SuccessEventMap = {
