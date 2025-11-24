@@ -186,9 +186,8 @@ export const useFunnel = <TStepContextMap extends AnyStepContextMap>(
     const step = router.currentState.step;
     if (!step) return;
 
-    const context = router.currentState.context;
-    Log.funnel(id, step, context);
-  }, [id, router.currentState.step, router.currentState.context]);
+    Log.funnel(id, step);
+  }, [id, router.currentState.step]);
 
   return {
     ...funnel,
