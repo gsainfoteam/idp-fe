@@ -3,31 +3,30 @@ import { useTranslation } from 'react-i18next';
 import { Button, LogClick, LogDialog } from '@/features/core';
 import { ModalProps } from '@/features/core/components/compound/modal';
 
-type StudentIdVerificationDialogProps<TCloseValue = void> = {
+type StudentIdVerificationDialogProps = {
   isOpen: boolean;
-  close: ModalProps<TCloseValue>['close'];
-  defaultCloseValue: [TCloseValue] extends [void] ? never : TCloseValue;
+  close: ModalProps<void>['close'];
+  defaultCloseValue: void;
   studentId: string;
   onConfirm: () => void | Promise<void>;
 };
 
-export function StudentIdVerificationDialog<TCloseValue = void>({
+export function StudentIdVerificationDialog({
   isOpen,
   close,
-  defaultCloseValue,
   studentId,
   onConfirm,
-}: StudentIdVerificationDialogProps<TCloseValue>) {
+}: StudentIdVerificationDialogProps) {
   const { t } = useTranslation();
 
   return (
-    <LogDialog<'student_id_dialog', TCloseValue>
+    <LogDialog<'student_id_dialog', boolean>
       isOpen={isOpen}
-      close={close}
-      defaultCloseValue={defaultCloseValue}
+      close={(_) => close()}
+      defaultCloseValue={undefined as never}
       className="mx-10 min-w-[300px]"
       event="student_id_dialog"
-      closeProperties={() => ({ result: 'confirm' })}
+      closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
     >
       <LogDialog.Header className="flex flex-col gap-1">
         <div className="text-title-1">
@@ -43,14 +42,14 @@ export function StudentIdVerificationDialog<TCloseValue = void>({
         </div>
       </LogDialog.Body>
       <LogDialog.Footer>
-        <LogDialog.Close className="grow">
+        <LogDialog.Close className="grow" closeValue={false}>
           <LogClick event="student_id_verification_dialog_cancel">
             <Button variant="secondary" className="w-full">
               {t('student_id_verification_dialog.buttons.cancel')}
             </Button>
           </LogClick>
         </LogDialog.Close>
-        <LogDialog.Close className="grow">
+        <LogDialog.Close className="grow" closeValue={true}>
           <LogClick
             event="student_id_verification_dialog_confirm"
             properties={{ studentId }}
