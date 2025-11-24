@@ -56,12 +56,6 @@ const middleware: Middleware = {
     return response;
   },
   async onError({ error, request }) {
-    Log.error('api', {
-      endpoint: new URL(request.url).pathname,
-      status: error instanceof Response ? error.status : NaN,
-      method: request.method as HttpMethod,
-    });
-
     if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
     }
