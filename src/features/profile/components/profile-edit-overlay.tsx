@@ -102,7 +102,7 @@ export function ProfileEditOverlay({
           <LogClick event="home_profile_save_button">
             <Button
               variant="primary"
-              onClick={() => startLoading(onSubmit().then(handleClose))}
+              onClick={() => startLoading(onSubmit)}
               disabled={previewFile === user.picture}
               loading={loading}
               className="w-full"
