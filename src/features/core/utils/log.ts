@@ -109,20 +109,6 @@ export type ErrorEventMap = {
   };
 };
 
-export type SuccessEventMap = {
-  auth_login: { method: 'email' | 'passkey' };
-  auth_register: { type: 'student' | 'staff' };
-  profile_update: Record<string, never>;
-  password_change: Record<string, never>;
-  student_id_verified: Record<string, never>;
-  passkey_registered: Record<string, never>;
-  passkey_deleted: { passkeyId: string };
-  client_created: { clientId: string };
-  client_updated: { clientId: string };
-  client_deleted: { clientId: string };
-  oauth_authorized: { clientId: string };
-};
-
 export class Log {
   private static currentPath = '';
 
@@ -211,21 +197,6 @@ export class Log {
     properties: ErrorEventMap[T],
   ) => {
     Log.track(`error_${type}`, { ...properties, from: Log.currentPath });
-  };
-
-  /**
-   * 성공 이벤트 로깅
-   * @example Log.success('password_change')
-   * @example Log.success('auth_login', { method: 'email' })
-   */
-  static success = <T extends keyof SuccessEventMap>(
-    event: T,
-    properties: SuccessEventMap[T] = {} as SuccessEventMap[T],
-  ) => {
-    Log.track(`success_${event}`, {
-      ...properties,
-      from: Log.currentPath,
-    });
   };
 
   /**
