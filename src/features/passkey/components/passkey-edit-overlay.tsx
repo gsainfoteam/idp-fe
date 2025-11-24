@@ -27,6 +27,7 @@ export function PasskeyEditOverlay({
       defaultCloseValue={false}
       event="passkey_edit_modal"
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
+      className="min-w-100"
     >
       <LogModal.Header>
         {t('passkey.steps.list.edit_overlay.title')}
