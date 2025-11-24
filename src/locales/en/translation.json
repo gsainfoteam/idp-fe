@@ -78,14 +78,6 @@
       "info": {
         "title": "Please enter your basic information",
         "button": "Register",
-        "dialog": {
-          "title": "Is this student ID correct?",
-          "description": "If you continue, registration will be completed.",
-          "buttons": {
-            "cancel": "Cancel",
-            "continue": "Continue"
-          }
-        },
         "inputs": {
           "name": {
             "label": "Name",
@@ -247,6 +239,14 @@
       }
     }
   },
+  "student_id_verification_dialog": {
+    "title": "Is this student ID correct?",
+    "description": "Continuing will change the name and student ID.",
+    "buttons": {
+      "cancel": "Cancel",
+      "continue": "Continue"
+    }
+  },
   "verify_student_id": {
     "title": "Verify Name and Student ID",
     "steps": {
@@ -274,14 +274,6 @@
       "new_info": {
         "title": "Let's check with new information",
         "button": "Check",
-        "dialog": {
-          "title": "Is this student ID correct?",
-          "description": "Continuing will change the name and student ID.",
-          "buttons": {
-            "cancel": "Cancel",
-            "continue": "Continue"
-          }
-        },
         "inputs": {
           "name": {
             "label": "Name",
