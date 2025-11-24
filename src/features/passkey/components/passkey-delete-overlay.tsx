@@ -37,12 +37,12 @@ export function PasskeyDeleteOverlay({
         {t('passkey.steps.list.remove_overlay.description')}
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="w-full" closeValue={false}>
+        <Dialog.Close className="grow" closeValue={false}>
           <Button variant="secondary" className="w-full">
             {t('passkey.steps.list.remove_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Dialog.Close closeValue={true}>
+        <Dialog.Close className="grow" closeValue={true}>
           <LogClick
             event="passkey_delete_button"
             properties={{ passkeyId: passkey.id }}
