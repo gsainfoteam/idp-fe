@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postAuthLogin } from '@/data/auth';
+import { Log } from '@/features/core';
 import { useRecentLogin } from '@/features/oauth';
 
 import { useAuth } from './use-auth';
@@ -52,6 +53,7 @@ export const useLoginForm = () => {
 
     setRecentLogin(new Date());
     saveToken(res.data.accessToken);
+    Log.submit('auth_login', { method: 'email' });
     await refetch();
   });
 

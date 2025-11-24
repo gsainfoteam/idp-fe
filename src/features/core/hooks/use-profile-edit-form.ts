@@ -9,6 +9,7 @@ import { z } from 'zod';
 
 import { deleteUserPicture, patchUserPicture } from '@/data/user';
 import { useAuth } from '@/features/auth';
+import { Log } from '@/features/core';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -102,6 +103,7 @@ export const useProfileEditForm = (
       });
 
       if (!uploadResponse.ok) throw uploadResponse;
+      Log.submit('profile_edit');
       await refetch();
     } catch (error) {
       toast.error(t('profile_change.errors.failed_to_upload'));
@@ -112,8 +114,13 @@ export const useProfileEditForm = (
   };
 
   const onSubmit = async () => {
-    if (!previewFile) return await deleteImage();
-    else return await changeImage();
+    if (!previewFile) {
+      const result = await deleteImage();
+      if (result) Log.submit('profile_edit');
+      return result;
+    } else {
+      return await changeImage();
+    }
   };
 
   return { form, onSubmit, onSave };

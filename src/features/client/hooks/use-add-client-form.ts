@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postClient } from '@/data/client';
+import { Log } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -40,6 +41,7 @@ export const useAddClientForm = ({
       return;
     }
 
+    Log.submit('client_create');
     onSuccess(res.data);
   });
 

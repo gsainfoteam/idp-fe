@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { getUserEmail } from '@/data/user';
 import { postVerifyEmail } from '@/data/verify';
-import { DifferenceNonNullable } from '@/features/core';
+import { DifferenceNonNullable, Log } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
 
@@ -75,6 +75,7 @@ export const useEmailForm = ({
       return;
     }
 
+    Log.submit('auth_register_email');
     onNext(formData);
   });
 
