@@ -126,12 +126,12 @@ export class Log {
 
   static setUserId = (userId: string) => {
     amplitude.setUserId(userId);
-    Log.track('set_user_id', { userId });
+    // Log.track('set_user_id', { userId });
   };
 
   static clearUserId = () => {
     amplitude.reset();
-    Log.track('clear_user_id', { userId: null });
+    // Log.track('clear_user_id', { userId: null });
   };
 
   static setUserProperties = (
@@ -143,7 +143,7 @@ export class Log {
     });
 
     amplitude.identify(identify);
-    Log.track('set_user_properties', { properties });
+    // Log.track('set_user_properties', { properties });
   };
 
   /**
