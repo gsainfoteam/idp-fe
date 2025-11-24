@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { overlay } from 'overlay-kit';
+import { OverlayProvider, overlay } from 'overlay-kit';
 
 import { Button, Dialog } from '@/features/core';
 
 const meta = {
   component: Button,
   argTypes: {},
+  decorators: [
+    (Story) => (
+      <OverlayProvider>
+        <Story />
+      </OverlayProvider>
+    ),
+  ],
 } satisfies Meta<typeof Button>;
 
 export default meta;
