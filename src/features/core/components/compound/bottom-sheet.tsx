@@ -1,31 +1,36 @@
-import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
-import { motion, PanInfo, useAnimationControls } from 'framer-motion';
+import { PropsWithChildren, createContext, useContext, useEffect } from 'react';
+
+import { PanInfo, motion, useAnimationControls } from 'framer-motion';
+
 import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
-import { ModalProps } from './modal';
-import { ModalContext } from './modal';
+import { ModalContext, ModalContextValue, ModalProps } from './modal';
 
-const BottomSheetContext = createContext<Pick<ModalProps, 'close'> | null>(
-  null,
-);
+export type BottomSheetContextValue<TCloseValue = void> = Pick<
+  ModalProps<TCloseValue>,
+  'close'
+> | null;
 
-const BottomSheet = ({
-  isOpen,
-  close,
-  children,
-  className,
-  key,
-}: PropsWithChildren<ModalProps>) => {
+const BottomSheetContext = createContext<BottomSheetContextValue<any>>(null);
+
+function BottomSheetComponent<TCloseValue = void>(
+  props: PropsWithChildren<ModalProps<TCloseValue>>,
+) {
+  const { isOpen, close, defaultCloseValue, children, className, key } = props;
   const controls = useAnimationControls();
+
+  const handleDefaultClose = () => close(defaultCloseValue);
 
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) close();
+      if (event.key === 'Escape' && isOpen) {
+        handleDefaultClose();
+      }
     };
 
     window.addEventListener('keydown', handleEscKey);
     return () => window.removeEventListener('keydown', handleEscKey);
-  }, [isOpen, close]);
+  }, [isOpen, close, defaultCloseValue]);
 
   useEffect(() => {
     if (isOpen) {
@@ -50,7 +55,7 @@ const BottomSheet = ({
     const threshold = 120;
 
     if (info.offset.y > threshold) {
-      close();
+      handleDefaultClose();
     } else {
       controls.start({
         y: 0,
@@ -60,8 +65,10 @@ const BottomSheet = ({
   };
 
   return (
-    <BottomSheetContext.Provider value={{ close }}>
-      <Backdrop isOpen={isOpen} close={close}>
+    <BottomSheetContext.Provider
+      value={{ close } as BottomSheetContextValue<any>}
+    >
+      <Backdrop isOpen={isOpen} close={handleDefaultClose}>
         <motion.div
           key={key}
           animate={controls}
@@ -85,13 +92,13 @@ const BottomSheet = ({
       </Backdrop>
     </BottomSheetContext.Provider>
   );
-};
+}
 
-BottomSheet.Header = ({
+function BottomSheetHeader({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn(
@@ -103,13 +110,13 @@ BottomSheet.Header = ({
       {children}
     </div>
   );
-};
+}
 
-BottomSheet.Body = ({
+function BottomSheetBody({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn(
@@ -121,13 +128,13 @@ BottomSheet.Body = ({
       {children}
     </div>
   );
-};
+}
 
-BottomSheet.Footer = ({
+function BottomSheetFooter({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn('flex w-full justify-end gap-3 px-5 pt-5 pb-5', className)}
@@ -136,16 +143,25 @@ BottomSheet.Footer = ({
       {children}
     </div>
   );
-};
+}
 
-BottomSheet.Close = ({
+function BottomSheetClose<TCloseValue = void>({
   children,
   className,
   onClick,
+  closeValue,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const bottomSheetContext = useContext(BottomSheetContext);
-  const modalContext = useContext(ModalContext);
+}: PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement> & {
+    closeValue?: TCloseValue;
+  }
+>) {
+  const bottomSheetContext = useContext(
+    BottomSheetContext,
+  ) as BottomSheetContextValue<TCloseValue>;
+  const modalContext = useContext(
+    ModalContext,
+  ) as ModalContextValue<TCloseValue>;
   const contexts = [bottomSheetContext, modalContext].filter((v) => v !== null);
 
   if (contexts.length === 0)
@@ -157,7 +173,9 @@ BottomSheet.Close = ({
     <div
       onClick={(e) => {
         onClick?.(e);
-        contexts.forEach((context) => context.close());
+        contexts.forEach((context) => {
+          context.close(closeValue as TCloseValue);
+        });
       }}
       className={cn('w-fit cursor-pointer', className)}
       {...props}
@@ -165,6 +183,11 @@ BottomSheet.Close = ({
       {children}
     </div>
   );
-};
+}
 
-export { BottomSheet };
+export const BottomSheet = Object.assign(BottomSheetComponent, {
+  Header: BottomSheetHeader,
+  Body: BottomSheetBody,
+  Footer: BottomSheetFooter,
+  Close: BottomSheetClose,
+});

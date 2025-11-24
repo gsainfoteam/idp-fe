@@ -1,22 +1,26 @@
-import { createContext, PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, createContext, useContext } from 'react';
+
 import { motion } from 'framer-motion';
+
 import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
-import { ModalProps } from './modal';
-import { ModalContext } from './modal';
+import { ModalContext, ModalContextValue, ModalProps } from './modal';
 
-const DialogContext = createContext<Pick<ModalProps, 'close'> | null>(null);
+export type DialogContextValue<TCloseValue = void> = Pick<
+  ModalProps<TCloseValue>,
+  'close'
+> | null;
 
-const Dialog = ({
-  isOpen,
-  close,
-  children,
-  className,
-  key,
-}: PropsWithChildren<ModalProps>) => {
+const DialogContext = createContext<DialogContextValue<any>>(null);
+
+function DialogComponent<TCloseValue = void>(
+  props: PropsWithChildren<ModalProps<TCloseValue>>,
+) {
+  const { isOpen, close, defaultCloseValue, children, className, key } = props;
+
   return (
-    <DialogContext.Provider value={{ close }}>
-      <Backdrop isOpen={isOpen} close={close}>
+    <DialogContext.Provider value={{ close } as DialogContextValue<any>}>
+      <Backdrop isOpen={isOpen} close={() => close(defaultCloseValue)}>
         <motion.div
           key={key}
           initial={{ scale: 0.8, opacity: 0 }}
@@ -38,13 +42,13 @@ const Dialog = ({
       </Backdrop>
     </DialogContext.Provider>
   );
-};
+}
 
-Dialog.Header = ({
+function DialogHeader({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn(
@@ -56,13 +60,13 @@ Dialog.Header = ({
       {children}
     </div>
   );
-};
+}
 
-Dialog.Body = ({
+function DialogBody({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn(
@@ -74,13 +78,13 @@ Dialog.Body = ({
       {children}
     </div>
   );
-};
+}
 
-Dialog.Footer = ({
+function DialogFooter({
   children,
   className,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
   return (
     <div
       className={cn('flex w-full gap-3 px-5 pt-3 pb-5', className)}
@@ -89,16 +93,25 @@ Dialog.Footer = ({
       {children}
     </div>
   );
-};
+}
 
-Dialog.Close = ({
+function DialogClose<TCloseValue = void>({
   children,
   className,
   onClick,
+  closeValue,
   ...props
-}: PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
-  const dialogContext = useContext(DialogContext);
-  const modalContext = useContext(ModalContext);
+}: PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement> & {
+    closeValue?: TCloseValue;
+  }
+>) {
+  const dialogContext = useContext(
+    DialogContext,
+  ) as DialogContextValue<TCloseValue>;
+  const modalContext = useContext(
+    ModalContext,
+  ) as ModalContextValue<TCloseValue>;
   const contexts = [dialogContext, modalContext].filter((v) => v !== null);
 
   if (contexts.length === 0)
@@ -108,7 +121,9 @@ Dialog.Close = ({
     <div
       onClick={(e) => {
         onClick?.(e);
-        contexts.forEach((context) => context.close());
+        contexts.forEach((context) => {
+          context.close(closeValue as TCloseValue);
+        });
       }}
       className={cn('w-fit cursor-pointer', className)}
       {...props}
@@ -116,6 +131,11 @@ Dialog.Close = ({
       {children}
     </div>
   );
-};
+}
 
-export { Dialog };
+export const Dialog = Object.assign(DialogComponent, {
+  Header: DialogHeader,
+  Body: DialogBody,
+  Footer: DialogFooter,
+  Close: DialogClose,
+});
