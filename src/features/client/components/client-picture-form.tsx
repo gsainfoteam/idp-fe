@@ -11,6 +11,7 @@ import {
   Dialog,
   FileUpload,
   LogClick,
+  LogDialog,
   cn,
   uniqueKey,
 } from '@/features/core';
@@ -32,7 +33,14 @@ function ClientPictureOverlay({
   const { t } = useTranslation();
 
   return (
-    <Dialog isOpen={isOpen} close={close} className="mx-10 w-auto">
+    <LogDialog
+      isOpen={isOpen}
+      close={close}
+      defaultCloseValue={undefined as never}
+      className="mx-10 w-auto"
+      event="client_picture_delete_dialog"
+      closeProperties={() => ({ result: 'confirm' })}
+    >
       <Dialog.Header>
         {t('services.detail.picture.delete_overlay.title')}
       </Dialog.Header>
@@ -45,15 +53,17 @@ function ClientPictureOverlay({
             {t('services.detail.picture.delete_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          onClick={() => onContinue().then(close)}
-          className="grow"
-        >
-          {t('services.detail.picture.delete_overlay.confirm')}
-        </Button>
+        <Dialog.Close>
+          <Button
+            variant="primary"
+            onClick={() => onContinue().then(close)}
+            className="grow"
+          >
+            {t('services.detail.picture.delete_overlay.confirm')}
+          </Button>
+        </Dialog.Close>
       </Dialog.Footer>
-    </Dialog>
+    </LogDialog>
   );
 }
 

@@ -20,8 +20,6 @@ export type ClickEventMap = {
   register_email_overlay_cancel: Record<string, never>;
   register_code_resend: Record<string, never>;
   register_info_verify: Record<string, never>;
-  register_info_dialog_confirm: { studentId: string };
-  register_info_dialog_cancel: Record<string, never>;
 
   // Profile
   profile_edit_button: Record<string, never>;
@@ -52,6 +50,8 @@ export type ClickEventMap = {
   back_button: Record<string, never>;
   link: { href: string };
   theme_toggle: { to: Theme };
+  student_id_verification_dialog_confirm: { studentId: string };
+  student_id_verification_dialog_cancel: Record<string, never>;
 };
 
 export type SubmitEventMap = {

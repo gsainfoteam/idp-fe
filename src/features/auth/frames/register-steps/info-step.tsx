@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 
 import {
   Button,
-  Dialog,
   FunnelLayout,
   Input,
   Label,
   LogClick,
+  StudentIdVerificationDialog,
 } from '@/features/core';
 
 import { useInfoForm } from '../../hooks/register-steps/use-info-form';
@@ -42,49 +42,13 @@ export function InfoStep({
             onClick={async () => {
               if (await onVerify()) {
                 overlay.open(({ isOpen, close }) => (
-                  <Dialog
+                  <StudentIdVerificationDialog
                     isOpen={isOpen}
                     close={close}
-                    className="mx-10 min-w-[300px]"
-                  >
-                    <Dialog.Header className="flex flex-col gap-1">
-                      <div className="text-title-1">
-                        {t('register.steps.info.dialog.title')}
-                      </div>
-                      <div className="text-body-1">
-                        {t('register.steps.info.dialog.description')}
-                      </div>
-                    </Dialog.Header>
-                    <Dialog.Body>
-                      <div className="text-title-1 text-label w-full text-center">
-                        {getValues('studentId')}
-                      </div>
-                    </Dialog.Body>
-                    <Dialog.Footer>
-                      <Dialog.Close className="grow">
-                        <LogClick event="register_info_dialog_cancel">
-                          <Button variant="secondary" className="w-full">
-                            {t('register.steps.info.dialog.buttons.cancel')}
-                          </Button>
-                        </LogClick>
-                      </Dialog.Close>
-                      <LogClick
-                        event="register_info_dialog_confirm"
-                        properties={{ studentId: getValues('studentId')! }}
-                      >
-                        <Button
-                          variant="primary"
-                          className="grow"
-                          onClick={async () => {
-                            close();
-                            await onSubmit();
-                          }}
-                        >
-                          {t('register.steps.info.dialog.buttons.continue')}
-                        </Button>
-                      </LogClick>
-                    </Dialog.Footer>
-                  </Dialog>
+                    defaultCloseValue={undefined as never}
+                    studentId={getValues('studentId')!}
+                    onConfirm={onSubmit}
+                  />
                 ));
               }
             }}

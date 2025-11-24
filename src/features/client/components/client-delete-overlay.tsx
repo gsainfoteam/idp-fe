@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog, LogClick } from '@/features/core';
+import { Button, LogClick, LogDialog } from '@/features/core';
 
 import { Client } from '../hooks/use-client';
 import { useClientDeleteForm } from '../hooks/use-client-delete-form';
@@ -18,34 +18,39 @@ export function ClientDeleteOverlay({
   const { onSubmit } = useClientDeleteForm(client);
 
   return (
-    <Dialog
+    <LogDialog
       isOpen={isOpen}
-      close={() => close(false)}
+      close={close}
+      defaultCloseValue={false}
       className="mx-10 min-w-75"
+      event="delete_confirmation"
+      openProperties={{ resource: 'client' }}
+      closeProperties={(value) => ({
+        resource: 'client',
+        result: value ? 'confirm' : 'cancel',
+      })}
     >
-      <Dialog.Header>{t('services.detail.delete.dialog.header')}</Dialog.Header>
-      <Dialog.Body>{t('services.detail.delete.dialog.body')}</Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close className="w-full">
+      <LogDialog.Header>
+        {t('services.detail.delete.dialog.header')}
+      </LogDialog.Header>
+      <LogDialog.Body>{t('services.detail.delete.dialog.body')}</LogDialog.Body>
+      <LogDialog.Footer>
+        <LogDialog.Close closeValue={false} className="w-full">
           <Button variant="secondary" className="w-full">
             {t('services.detail.delete.dialog.cancel')}
           </Button>
-        </Dialog.Close>
-        <LogClick
-          event="client_delete_button"
-          properties={{ clientId: client.clientId }}
-        >
-          <Button
-            variant="primary"
-            className="w-full"
-            onClick={async () => {
-              if (await onSubmit()) close(true);
-            }}
+        </LogDialog.Close>
+        <LogDialog.Close closeValue={true}>
+          <LogClick
+            event="client_delete_button"
+            properties={{ clientId: client.clientId }}
           >
-            {t('services.detail.delete.dialog.confirm')}
-          </Button>
-        </LogClick>
-      </Dialog.Footer>
-    </Dialog>
+            <Button variant="primary" className="w-full" onClick={onSubmit}>
+              {t('services.detail.delete.dialog.confirm')}
+            </Button>
+          </LogClick>
+        </LogDialog.Close>
+      </LogDialog.Footer>
+    </LogDialog>
   );
 }

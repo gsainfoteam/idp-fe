@@ -1,5 +1,6 @@
-import { Button, Dialog } from '@/features/core';
 import { useTranslation } from 'react-i18next';
+
+import { Button, LogDialog } from '@/features/core';
 
 export function RegisterStepUndoWarningOverlay({
   isOpen,
@@ -11,19 +12,32 @@ export function RegisterStepUndoWarningOverlay({
   const { t } = useTranslation();
 
   return (
-    <Dialog isOpen={isOpen} close={() => close(false)} className="mx-10 w-auto">
-      <Dialog.Header>{t('register.steps.undo_overlay.title')}</Dialog.Header>
-      <Dialog.Body>{t('register.steps.undo_overlay.content')}</Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close className="grow">
+    <LogDialog
+      isOpen={isOpen}
+      close={close}
+      defaultCloseValue={false}
+      className="mx-10 w-auto"
+      event="register_undo_warning_dialog"
+      closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
+    >
+      <LogDialog.Header>
+        {t('register.steps.undo_overlay.title')}
+      </LogDialog.Header>
+      <LogDialog.Body>
+        {t('register.steps.undo_overlay.content')}
+      </LogDialog.Body>
+      <LogDialog.Footer>
+        <LogDialog.Close closeValue={false} className="grow">
           <Button variant="secondary" className="w-full">
             {t('register.steps.undo_overlay.sub_button')}
           </Button>
-        </Dialog.Close>
-        <Button variant="primary" className="grow" onClick={() => close(true)}>
-          {t('register.steps.undo_overlay.button')}
-        </Button>
-      </Dialog.Footer>
-    </Dialog>
+        </LogDialog.Close>
+        <LogDialog.Close closeValue={true} className="grow">
+          <Button variant="primary">
+            {t('register.steps.undo_overlay.button')}
+          </Button>
+        </LogDialog.Close>
+      </LogDialog.Footer>
+    </LogDialog>
   );
 }

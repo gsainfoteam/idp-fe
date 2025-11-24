@@ -21,11 +21,15 @@ export * from './components/compound/file-upload';
 export * from './components/compound/funnel-layout';
 export * from './components/compound/modal';
 export * from './components/compound/multi-state-switch';
+export * from './components/compound/student-id-verification-dialog';
 export * from './components/compound/swipe-card';
 export * from './components/compound/toast';
 
 // Log components
 export * from './components/log/log-click';
+export * from './components/log/log-modal';
+export * from './components/log/log-dialog';
+export * from './components/log/log-bottom-sheet';
 
 export * from './services/api';
 export * from './services/amplitude';
