@@ -67,12 +67,34 @@ export type SubmitEventMap = {
 };
 
 export type ModalEventMap = {
-  email_verification_overlay_open: Record<string, never>;
-  email_verification_overlay_close: { result: 'accept' | 'cancel' };
-  student_id_dialog_open: Record<string, never>;
-  student_id_dialog_close: { result: 'confirm' | 'cancel' };
-  delete_confirmation_open: { resource: string };
-  delete_confirmation_close: { resource: string; result: 'confirm' | 'cancel' };
+  email_verification_overlay: {
+    open: Record<string, never>;
+    close: { result: 'accept' | 'cancel' };
+  };
+  student_id_dialog: {
+    open: Record<string, never>;
+    close: { result: 'confirm' | 'cancel' };
+  };
+  delete_confirmation: {
+    open: { resource: string };
+    close: { resource: string; result: 'confirm' | 'cancel' };
+  };
+  client_picture_delete_dialog: {
+    open: Record<string, never>;
+    close: { result: 'confirm' | 'cancel' };
+  };
+  profile_edit_modal: {
+    open: Record<string, never>;
+    close: Record<string, never>;
+  };
+  passkey_edit_modal: {
+    open: Record<string, never>;
+    close: { result: 'confirm' | 'cancel' };
+  };
+  register_undo_warning_dialog: {
+    open: Record<string, never>;
+    close: { result: 'confirm' | 'cancel' };
+  };
 };
 
 export type ErrorEventMap = {
@@ -157,9 +179,9 @@ export class Log {
    * @example Log.modal('email_verification_overlay_open')
    * @example Log.modal('email_verification_overlay_close', { result: 'accept' })
    */
-  static modal = <T extends keyof ModalEventMap>(
-    event: T,
-    properties: ModalEventMap[T] = {} as ModalEventMap[T],
+  static modal = <T extends keyof ModalEventMap, TSub extends 'open' | 'close'>(
+    event: `${T}_${TSub}`,
+    properties: ModalEventMap[T][TSub],
   ) => {
     amplitude.track(`modal_${event}`, {
       ...properties,
