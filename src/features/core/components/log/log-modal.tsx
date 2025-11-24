@@ -5,23 +5,18 @@ import { Log, type ModalEventMap } from '@/features/core';
 import { Modal } from '../compound/modal';
 import { ModalProps } from '../compound/modal';
 
-type LogModalProps<T extends keyof ModalEventMap, TCloseValue = void> = Omit<
-  ModalProps<TCloseValue>,
-  'isOpen' | 'close'
-> & {
-  event: T;
-  openProperties?: ModalEventMap[T]['open'];
-  closeProperties: (closeValue: TCloseValue) => ModalEventMap[T]['close'];
-  isOpen: boolean;
-  close: ModalProps<TCloseValue>['close'];
-  defaultCloseValue: [TCloseValue] extends [void] ? never : TCloseValue;
-  dialogClassName?: string;
-  bottomSheetClassName?: string;
+type LogModalProps<
+  TCloseValue,
+  TEvent extends keyof ModalEventMap,
+> = ModalProps<TCloseValue> & {
+  event: TEvent;
+  openProperties?: ModalEventMap[TEvent]['open'];
+  closeProperties: (closeValue: TCloseValue) => ModalEventMap[TEvent]['close'];
 };
 
-export function LogModal<T extends keyof ModalEventMap, TCloseValue = void>({
+export function LogModal<TCloseValue, TEvent extends keyof ModalEventMap>({
   event,
-  openProperties = {} as ModalEventMap[T]['open'],
+  openProperties = {} as ModalEventMap[TEvent]['open'],
   closeProperties,
   isOpen,
   close,
@@ -30,7 +25,7 @@ export function LogModal<T extends keyof ModalEventMap, TCloseValue = void>({
   dialogClassName,
   bottomSheetClassName,
   ...props
-}: LogModalProps<T, TCloseValue>) {
+}: LogModalProps<TCloseValue, TEvent>) {
   useEffect(() => {
     if (isOpen) {
       Log.modal(`${event}_open`, openProperties);

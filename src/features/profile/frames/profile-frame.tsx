@@ -86,7 +86,7 @@ export function ProfileFrame() {
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
-            <LogClick event="profile_edit_button">
+            <LogClick event="home_profile_edit_button">
               <Avatar
                 img={user.picture ?? undefined}
                 seed={uniqueKey(user.studentId)}
@@ -102,7 +102,7 @@ export function ProfileFrame() {
               </Avatar>
             </LogClick>
             <div className="absolute right-0 bottom-0">
-              <LogClick event="profile_edit_button">
+              <LogClick event="home_profile_edit_button">
                 <IconButton
                   variant="primary"
                   size="none"
@@ -128,7 +128,7 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
               {isStudent && (
-                <LogClick event="profile_student_id_verify_button">
+                <LogClick event="home_profile_student_id_verify_button">
                   <VerifiedBadge
                     verified={user.isIdVerified}
                     onClick={async () =>

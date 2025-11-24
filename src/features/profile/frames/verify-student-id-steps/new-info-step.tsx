@@ -45,7 +45,7 @@ export function NewInfoStep({
                 <StudentIdVerificationDialog
                   isOpen={isOpen}
                   close={close}
-                  defaultCloseValue={undefined as never}
+                  defaultCloseValue={false}
                   studentId={getValues('studentId')!}
                   onConfirm={onSubmit}
                 />

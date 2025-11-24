@@ -33,7 +33,7 @@ export function RegisterStepUndoWarningOverlay({
           </Button>
         </LogDialog.Close>
         <LogDialog.Close closeValue={true} className="grow">
-          <Button variant="primary">
+          <Button variant="primary" className="w-full">
             {t('register.steps.undo_overlay.button')}
           </Button>
         </LogDialog.Close>

@@ -39,7 +39,7 @@ export function ProfileEditOverlay({
     } else setPreviewImage(user.picture ?? null);
   }, [user]);
 
-  const handleClose = () => {
+  const handleClose = (_: boolean) => {
     setPreviewImage(user?.picture ?? null);
     close();
   };
@@ -50,7 +50,7 @@ export function ProfileEditOverlay({
     <LogModal
       isOpen={isOpen}
       close={handleClose}
-      defaultCloseValue={undefined as never}
+      defaultCloseValue={false}
       dialogClassName="min-w-100"
       event="profile_edit_modal"
       openProperties={{}}
@@ -74,7 +74,7 @@ export function ProfileEditOverlay({
             onSave={onSave}
           >
             <div className="absolute right-0 bottom-0">
-              <LogClick event="profile_picture_upload">
+              <LogClick event="home_profile_picture_upload">
                 <IconButton
                   variant="primary"
                   icon={<EditIcon width={20} height={20} />}
@@ -86,8 +86,8 @@ export function ProfileEditOverlay({
         </div>
       </LogModal.Body>
       <LogModal.Footer>
-        <LogModal.Close className="grow">
-          <LogClick event="profile_picture_delete">
+        <LogModal.Close className="grow" closeValue={false}>
+          <LogClick event="home_profile_picture_delete">
             <Button
               variant="secondary"
               onClick={() => setPreviewImage(null)}
@@ -98,8 +98,8 @@ export function ProfileEditOverlay({
             </Button>
           </LogClick>
         </LogModal.Close>
-        <LogModal.Close className="grow">
-          <LogClick event="profile_save_button">
+        <LogModal.Close className="grow" closeValue={true}>
+          <LogClick event="home_profile_save_button">
             <Button
               variant="primary"
               onClick={() => startLoading(onSubmit().then(handleClose))}

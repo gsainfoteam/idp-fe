@@ -6,14 +6,14 @@ import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
 import { ModalContext, ModalContextValue, ModalProps } from './modal';
 
-export type DialogContextValue<TCloseValue = void> = Pick<
+export type DialogContextValue<TCloseValue> = Pick<
   ModalProps<TCloseValue>,
   'close'
 > | null;
 
 const DialogContext = createContext<DialogContextValue<any>>(null);
 
-function DialogComponent<TCloseValue = void>(
+function DialogComponent<TCloseValue>(
   props: PropsWithChildren<ModalProps<TCloseValue>>,
 ) {
   const { isOpen, close, defaultCloseValue, children, className, key } = props;
@@ -95,7 +95,7 @@ function DialogFooter({
   );
 }
 
-function DialogClose<TCloseValue = void>({
+function DialogClose<TCloseValue>({
   children,
   className,
   onClick,
@@ -103,7 +103,7 @@ function DialogClose<TCloseValue = void>({
   ...props
 }: PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement> & {
-    closeValue?: TCloseValue;
+    closeValue: TCloseValue;
   }
 >) {
   const dialogContext = useContext(
@@ -112,8 +112,8 @@ function DialogClose<TCloseValue = void>({
   const modalContext = useContext(
     ModalContext,
   ) as ModalContextValue<TCloseValue>;
-  const contexts = [dialogContext, modalContext].filter((v) => v !== null);
 
+  const contexts = [dialogContext, modalContext].filter((v) => v !== null);
   if (contexts.length === 0)
     throw new Error('Dialog.Close must be used within a Dialog or Modal');
 

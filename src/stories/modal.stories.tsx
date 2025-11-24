@@ -44,8 +44,8 @@ export const ZeroCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Modal
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Modal.Header>Body Only Modal</Modal.Header>
               <Modal.Body>
@@ -72,13 +72,13 @@ export const OneCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Modal
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Modal.Header>Single CTA Modal</Modal.Header>
               <Modal.Body>This modal has a single confirm button.</Modal.Body>
               <Modal.Footer>
-                <Modal.Close className="w-full">
+                <Modal.Close className="w-full" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -109,20 +109,20 @@ export const TwoCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Modal
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Modal.Header>Two CTA Modal</Modal.Header>
               <Modal.Body>
                 This modal has cancel and confirm buttons.
               </Modal.Body>
               <Modal.Footer>
-                <Modal.Close className="grow">
+                <Modal.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </Modal.Close>
-                <Modal.Close className="grow">
+                <Modal.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -153,25 +153,25 @@ export const ThreeCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Modal
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Modal.Header>Three CTA Modal</Modal.Header>
               <Modal.Body>
                 This modal has cancel, maybe, and confirm buttons.
               </Modal.Body>
               <Modal.Footer>
-                <Modal.Close className="grow">
+                <Modal.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </Modal.Close>
-                <Modal.Close className="grow">
+                <Modal.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Maybe
                   </Button>
                 </Modal.Close>
-                <Modal.Close className="grow">
+                <Modal.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -202,12 +202,12 @@ export const NoBody: Story = {
           overlay.open(({ isOpen, close }) => (
             <Modal
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Modal.Header>No Body Modal</Modal.Header>
               <Modal.Footer>
-                <Modal.Close className="flex justify-end">
+                <Modal.Close className="flex justify-end" closeValue={false}>
                   <Button variant="text">Close</Button>
                 </Modal.Close>
               </Modal.Footer>

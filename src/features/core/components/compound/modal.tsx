@@ -5,24 +5,23 @@ import { cn } from '../../utils/cn';
 import { BottomSheet } from './bottom-sheet';
 import { Dialog } from './dialog';
 
-export type ModalProps<TCloseValue = void> =
-  React.HTMLAttributes<HTMLDivElement> & {
-    isOpen: boolean;
-    close: [TCloseValue] extends [void]
-      ? () => void
-      : (value: TCloseValue) => void;
-    defaultCloseValue: [TCloseValue] extends [void] ? never : TCloseValue;
-    key?: string;
-  };
+export type ModalProps<TCloseValue> = React.HTMLAttributes<HTMLDivElement> & {
+  isOpen: boolean;
+  close: (value: TCloseValue) => void;
+  defaultCloseValue: TCloseValue;
+  key?: string;
+  dialogClassName?: string;
+  bottomSheetClassName?: string;
+};
 
-export type ModalContextValue<TCloseValue = void> = Pick<
+export type ModalContextValue<TCloseValue> = Pick<
   ModalProps<TCloseValue>,
   'close'
 > | null;
 
 export const ModalContext = createContext<ModalContextValue<any>>(null);
 
-function ModalComponent<TCloseValue = void>({
+function ModalComponent<TCloseValue>({
   close,
   defaultCloseValue,
   children,
@@ -31,12 +30,7 @@ function ModalComponent<TCloseValue = void>({
   bottomSheetClassName,
   key,
   ...props
-}: PropsWithChildren<
-  ModalProps<TCloseValue> & {
-    dialogClassName?: string;
-    bottomSheetClassName?: string;
-  }
->) {
+}: PropsWithChildren<ModalProps<TCloseValue>>) {
   const { isDesktop } = useIsDesktop();
 
   return (
@@ -96,13 +90,13 @@ function ModalFooter({
   return <Wrapper {...props}>{children}</Wrapper>;
 }
 
-function ModalClose<TCloseValue = void>({
+function ModalClose<TCloseValue>({
   children,
   closeValue,
   ...props
 }: PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement> & {
-    closeValue?: TCloseValue;
+    closeValue: TCloseValue;
   }
 >) {
   const { isDesktop } = useIsDesktop();

@@ -44,8 +44,8 @@ export const ZeroCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Dialog
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Dialog.Header>Body Only Dialog</Dialog.Header>
               <Dialog.Body>
@@ -72,15 +72,15 @@ export const OneCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Dialog
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Dialog.Header>Single CTA Dialog</Dialog.Header>
               <Dialog.Body>
                 This dialog has a single confirm button.
               </Dialog.Body>
               <Dialog.Footer>
-                <Dialog.Close className="w-full">
+                <Dialog.Close className="w-full" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -111,20 +111,20 @@ export const TwoCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Dialog
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Dialog.Header>Two CTA Dialog</Dialog.Header>
               <Dialog.Body>
                 This dialog has cancel and confirm buttons.
               </Dialog.Body>
               <Dialog.Footer>
-                <Dialog.Close className="grow">
+                <Dialog.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </Dialog.Close>
-                <Dialog.Close className="grow">
+                <Dialog.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -155,25 +155,25 @@ export const ThreeCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <Dialog
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Dialog.Header>Three CTA Dialog</Dialog.Header>
               <Dialog.Body>
                 This dialog has cancel, maybe, and confirm buttons.
               </Dialog.Body>
               <Dialog.Footer>
-                <Dialog.Close className="grow">
+                <Dialog.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </Dialog.Close>
-                <Dialog.Close className="grow">
+                <Dialog.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Maybe
                   </Button>
                 </Dialog.Close>
-                <Dialog.Close className="grow">
+                <Dialog.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -204,12 +204,12 @@ export const NoBody: Story = {
           overlay.open(({ isOpen, close }) => (
             <Dialog
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <Dialog.Header>No Body Dialog</Dialog.Header>
               <Dialog.Footer>
-                <Dialog.Close className="flex justify-end">
+                <Dialog.Close className="flex justify-end" closeValue={false}>
                   <Button variant="text">Close</Button>
                 </Dialog.Close>
               </Dialog.Footer>

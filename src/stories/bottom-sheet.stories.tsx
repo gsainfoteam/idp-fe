@@ -44,8 +44,8 @@ export const ZeroCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <BottomSheet
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <BottomSheet.Header>Body Only Bottom Sheet</BottomSheet.Header>
               <BottomSheet.Body>
@@ -72,15 +72,15 @@ export const OneCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <BottomSheet
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <BottomSheet.Header>Single CTA Bottom Sheet</BottomSheet.Header>
               <BottomSheet.Body>
                 This bottom sheet has a confirm button.
               </BottomSheet.Body>
               <BottomSheet.Footer>
-                <BottomSheet.Close className="w-full">
+                <BottomSheet.Close className="w-full" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -111,20 +111,20 @@ export const TwoCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <BottomSheet
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <BottomSheet.Header>Two CTA Bottom Sheet</BottomSheet.Header>
               <BottomSheet.Body>
                 This bottom sheet has cancel and confirm buttons.
               </BottomSheet.Body>
               <BottomSheet.Footer>
-                <BottomSheet.Close className="grow">
+                <BottomSheet.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </BottomSheet.Close>
-                <BottomSheet.Close className="grow">
+                <BottomSheet.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -155,25 +155,25 @@ export const ThreeCTA: Story = {
           overlay.open(({ isOpen, close }) => (
             <BottomSheet
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <BottomSheet.Header>Three CTA Bottom Sheet</BottomSheet.Header>
               <BottomSheet.Body>
                 This bottom sheet has cancel, maybe, and confirm buttons.
               </BottomSheet.Body>
               <BottomSheet.Footer>
-                <BottomSheet.Close className="grow">
+                <BottomSheet.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Cancel
                   </Button>
                 </BottomSheet.Close>
-                <BottomSheet.Close className="grow">
+                <BottomSheet.Close className="grow" closeValue={false}>
                   <Button variant="secondary" className="w-full">
                     Maybe
                   </Button>
                 </BottomSheet.Close>
-                <BottomSheet.Close className="grow">
+                <BottomSheet.Close className="grow" closeValue={true}>
                   <Button
                     variant="primary"
                     onClick={() => alert('Confirmed!')}
@@ -204,12 +204,15 @@ export const NoBody: Story = {
           overlay.open(({ isOpen, close }) => (
             <BottomSheet
               isOpen={isOpen}
-              close={close}
-              defaultCloseValue={undefined as never}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
             >
               <BottomSheet.Header>No Body Bottom Sheet</BottomSheet.Header>
               <BottomSheet.Footer>
-                <BottomSheet.Close className="flex justify-end">
+                <BottomSheet.Close
+                  className="flex justify-end"
+                  closeValue={false}
+                >
                   <Button variant="text">Close</Button>
                 </BottomSheet.Close>
               </BottomSheet.Footer>

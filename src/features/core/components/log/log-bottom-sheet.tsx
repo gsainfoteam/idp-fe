@@ -6,30 +6,27 @@ import { BottomSheet } from '../compound/bottom-sheet';
 import { ModalProps } from '../compound/modal';
 
 type LogBottomSheetProps<
-  T extends keyof ModalEventMap,
-  TCloseValue = void,
-> = Omit<ModalProps<TCloseValue>, 'isOpen' | 'close'> & {
-  event: T;
-  openProperties?: ModalEventMap[T]['open'];
-  closeProperties: (closeValue: TCloseValue) => ModalEventMap[T]['close'];
-  isOpen: boolean;
-  close: ModalProps<TCloseValue>['close'];
-  defaultCloseValue: [TCloseValue] extends [void] ? never : TCloseValue;
+  TCloseValue,
+  TEvent extends keyof ModalEventMap,
+> = ModalProps<TCloseValue> & {
+  event: TEvent;
+  openProperties?: ModalEventMap[TEvent]['open'];
+  closeProperties: (closeValue: TCloseValue) => ModalEventMap[TEvent]['close'];
 };
 
 export function LogBottomSheet<
-  T extends keyof ModalEventMap,
-  TCloseValue = void,
+  TCloseValue,
+  TEvent extends keyof ModalEventMap,
 >({
   event,
-  openProperties = {} as ModalEventMap[T]['open'],
+  openProperties = {} as ModalEventMap[TEvent]['open'],
   closeProperties,
   isOpen,
   close,
   defaultCloseValue,
   children,
   ...props
-}: LogBottomSheetProps<T, TCloseValue>) {
+}: LogBottomSheetProps<TCloseValue, TEvent>) {
   useEffect(() => {
     if (isOpen) {
       Log.modal(`${event}_open`, openProperties);

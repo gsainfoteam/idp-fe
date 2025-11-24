@@ -19,7 +19,7 @@ function EmailOverlay({
   onSubmit,
 }: {
   isOpen: boolean;
-  close: (agree: boolean) => void;
+  close: () => void;
   onSubmit: () => Promise<void>;
 }) {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ function EmailOverlay({
   return (
     <LogModal
       isOpen={isOpen}
-      close={close}
+      close={(_: boolean) => close()}
       defaultCloseValue={false}
       dialogClassName="min-w-100"
       event="email_verification_overlay"
@@ -59,16 +59,16 @@ function EmailOverlay({
         </div>
       </LogModal.Body>
       <LogModal.Footer>
-        <LogModal.Close className="grow">
+        <LogModal.Close className="grow" closeValue={false}>
           <LogClick event="register_email_overlay_cancel">
             <Button variant="secondary" className="w-full">
               {t('register.steps.email_overlay.sub_button')}
             </Button>
           </LogClick>
         </LogModal.Close>
-        <LogModal.Close closeValue={true} className="grow">
+        <LogModal.Close className="grow" closeValue={true}>
           <LogClick event="register_email_overlay_accept">
-            <Button variant="primary" onClick={onSubmit}>
+            <Button variant="primary" className="w-full" onClick={onSubmit}>
               {t('register.steps.email_overlay.button')}
             </Button>
           </LogClick>
@@ -108,7 +108,7 @@ export function EmailStep({
             disabled={!(isValid && isDirty)}
             onClick={async () => {
               if (await onCheckEmail()) {
-                overlay.openAsync<boolean>(({ isOpen, close }) => (
+                overlay.open(({ isOpen, close }) => (
                   <EmailOverlay
                     isOpen={isOpen}
                     close={close}

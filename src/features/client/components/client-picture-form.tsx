@@ -35,8 +35,8 @@ function ClientPictureOverlay({
   return (
     <LogDialog
       isOpen={isOpen}
-      close={close}
-      defaultCloseValue={undefined as never}
+      close={(_: boolean) => close()}
+      defaultCloseValue={false}
       className="mx-10 w-auto"
       event="client_picture_delete_dialog"
       closeProperties={() => ({ result: 'confirm' })}
@@ -48,17 +48,13 @@ function ClientPictureOverlay({
         {t('services.detail.picture.delete_overlay.description')}
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="grow">
+        <Dialog.Close className="grow" closeValue={false}>
           <Button variant="secondary" className="w-full">
             {t('services.detail.picture.delete_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Dialog.Close>
-          <Button
-            variant="primary"
-            onClick={() => onContinue().then(close)}
-            className="grow"
-          >
+        <Dialog.Close className="grow" closeValue={true}>
+          <Button variant="primary" onClick={onContinue}>
             {t('services.detail.picture.delete_overlay.confirm')}
           </Button>
         </Dialog.Close>

@@ -41,7 +41,7 @@ export function PasskeyEditOverlay({
         />
       </LogModal.Body>
       <LogModal.Footer>
-        <LogModal.Close closeValue={false} className="w-full">
+        <LogModal.Close closeValue={false} className="grow">
           <Button
             variant="secondary"
             className="w-full"
@@ -50,16 +50,12 @@ export function PasskeyEditOverlay({
             {t('passkey.steps.list.edit_overlay.cancel')}
           </Button>
         </LogModal.Close>
-        <LogModal.Close closeValue={true}>
+        <LogModal.Close closeValue={true} className="grow">
           <Button
             variant="primary"
             className="w-full"
             disabled={!formState.isValid || formState.isSubmitting}
-            onClick={async () => {
-              if (await onSubmit()) {
-                // onSubmit 성공 시 close는 LogModal.Close에서 자동으로 처리됨
-              }
-            }}
+            onClick={onSubmit}
           >
             {t('passkey.steps.list.edit_overlay.apply')}
           </Button>

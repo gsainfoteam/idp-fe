@@ -6,7 +6,7 @@ import { ModalProps } from '@/features/core/components/compound/modal';
 type StudentIdVerificationDialogProps = {
   isOpen: boolean;
   close: ModalProps<void>['close'];
-  defaultCloseValue: void;
+  defaultCloseValue: boolean;
   studentId: string;
   onConfirm: () => void | Promise<void>;
 };
@@ -14,16 +14,17 @@ type StudentIdVerificationDialogProps = {
 export function StudentIdVerificationDialog({
   isOpen,
   close,
+  defaultCloseValue,
   studentId,
   onConfirm,
 }: StudentIdVerificationDialogProps) {
   const { t } = useTranslation();
 
   return (
-    <LogDialog<'student_id_dialog', boolean>
+    <LogDialog
       isOpen={isOpen}
-      close={(_) => close()}
-      defaultCloseValue={undefined as never}
+      close={(_: boolean) => close()}
+      defaultCloseValue={defaultCloseValue}
       className="mx-10 min-w-[300px]"
       event="student_id_dialog"
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}

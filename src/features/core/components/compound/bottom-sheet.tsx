@@ -6,14 +6,14 @@ import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
 import { ModalContext, ModalContextValue, ModalProps } from './modal';
 
-export type BottomSheetContextValue<TCloseValue = void> = Pick<
+export type BottomSheetContextValue<TCloseValue> = Pick<
   ModalProps<TCloseValue>,
   'close'
 > | null;
 
 const BottomSheetContext = createContext<BottomSheetContextValue<any>>(null);
 
-function BottomSheetComponent<TCloseValue = void>(
+function BottomSheetComponent<TCloseValue>(
   props: PropsWithChildren<ModalProps<TCloseValue>>,
 ) {
   const { isOpen, close, defaultCloseValue, children, className, key } = props;
@@ -145,7 +145,7 @@ function BottomSheetFooter({
   );
 }
 
-function BottomSheetClose<TCloseValue = void>({
+function BottomSheetClose<TCloseValue>({
   children,
   className,
   onClick,
@@ -153,7 +153,7 @@ function BottomSheetClose<TCloseValue = void>({
   ...props
 }: PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement> & {
-    closeValue?: TCloseValue;
+    closeValue: TCloseValue;
   }
 >) {
   const bottomSheetContext = useContext(

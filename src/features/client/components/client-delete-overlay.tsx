@@ -35,12 +35,12 @@ export function ClientDeleteOverlay({
       </LogDialog.Header>
       <LogDialog.Body>{t('services.detail.delete.dialog.body')}</LogDialog.Body>
       <LogDialog.Footer>
-        <LogDialog.Close closeValue={false} className="w-full">
+        <LogDialog.Close closeValue={false} className="grow">
           <Button variant="secondary" className="w-full">
             {t('services.detail.delete.dialog.cancel')}
           </Button>
         </LogDialog.Close>
-        <LogDialog.Close closeValue={true}>
+        <LogDialog.Close closeValue={true} className="grow">
           <LogClick
             event="client_delete_button"
             properties={{ clientId: client.clientId }}

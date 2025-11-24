@@ -37,7 +37,7 @@ export function PasskeyDeleteOverlay({
         {t('passkey.steps.list.remove_overlay.description')}
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="w-full">
+        <Dialog.Close className="w-full" closeValue={false}>
           <Button variant="secondary" className="w-full">
             {t('passkey.steps.list.remove_overlay.cancel')}
           </Button>
