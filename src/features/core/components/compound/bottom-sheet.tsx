@@ -22,17 +22,6 @@ function BottomSheetComponent<TCloseValue>(
   const handleDefaultClose = () => close(defaultCloseValue);
 
   useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) {
-        handleDefaultClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscKey);
-    return () => window.removeEventListener('keydown', handleEscKey);
-  }, [isOpen, close, defaultCloseValue]);
-
-  useEffect(() => {
     if (isOpen) {
       const vh = typeof window !== 'undefined' ? window.innerHeight : 0;
       controls.set({ y: vh });
