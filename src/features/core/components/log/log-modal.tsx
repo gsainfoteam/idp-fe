@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { Log, type ModalEventMap } from '@/features/core';
+
 import { Modal, ModalProps } from '../compound/modal';
 
 type LogModalProps<
@@ -12,10 +13,7 @@ type LogModalProps<
   closeProperties: (closeValue: TCloseValue) => ModalEventMap[TEvent]['close'];
 };
 
-function LogModalComponent<
-  TCloseValue,
-  TEvent extends keyof ModalEventMap,
->({
+function LogModalComponent<TCloseValue, TEvent extends keyof ModalEventMap>({
   event,
   openProperties = {} as ModalEventMap[TEvent]['open'],
   closeProperties,
