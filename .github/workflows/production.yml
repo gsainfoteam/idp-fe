@@ -16,7 +16,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: build
         env:
-          VITE_API_URL: https://api.idp.gistory.me
           VITE_AMPLITUDE_API_KEY: ${{ secrets.VITE_AMPLITUDE_API_KEY }}
         run: |
           bun install
