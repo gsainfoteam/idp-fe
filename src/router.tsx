@@ -8,7 +8,20 @@ export const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   defaultNotFoundComponent: () => <NotFoundFrame />,
-  defaultErrorComponent: () => <ErrorFallbackFrame />,
+  defaultErrorComponent: ({ error, info, reset }) => {
+    const description = import.meta.env.DEV ? info?.componentStack : undefined;
+    const errorStatus = (error as { status?: unknown }).status;
+    const status = typeof errorStatus === 'number' ? errorStatus : undefined;
+
+    return (
+      <ErrorFallbackFrame
+        message={error.message}
+        description={description}
+        status={status}
+        onRetry={reset}
+      />
+    );
+  },
   defaultViewTransition: {
     types: ({ fromLocation, toLocation, hrefChanged }) => {
       // 시작 페이지이거나, 경로와 쿼리 등이 모두 동일한 (=새로고침)의 경우

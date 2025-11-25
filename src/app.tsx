@@ -18,14 +18,18 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <ErrorBoundary
-      fallbackRender={({ error, resetErrorBoundary }) => (
-        <ErrorFallbackFrame
-          status={error.status}
-          message={error.message}
-          description={error.stack}
-          onRetry={resetErrorBoundary}
-        />
-      )}
+      fallbackRender={({ error, resetErrorBoundary }) => {
+        const description = import.meta.env.DEV ? error.stack : undefined;
+
+        return (
+          <ErrorFallbackFrame
+            status={error.status}
+            message={error.message}
+            description={description}
+            onRetry={resetErrorBoundary}
+          />
+        );
+      }}
       onError={(error, info) =>
         Log.error('runtime', {
           message: error.message,

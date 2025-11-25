@@ -40,7 +40,7 @@ export function ErrorFallbackFrame({
     >
       <div className="flex flex-col items-center gap-3 text-center">
         <div className="text-funnel-steptitle text-6xl font-black">
-          {status ?? 500}
+          {status ?? 'Unknown'}
         </div>
         {message && (
           <div className="text-body-2 text-basics-secondary-label whitespace-pre-line">
