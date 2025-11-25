@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
 import { Button, LogClick, LogDialog } from '@/features/core';
-import { ModalProps } from '@/features/core/components/compound/modal';
 
 type StudentIdVerificationDialogProps = {
   isOpen: boolean;
-  close: ModalProps<void>['close'];
+  close: () => void;
   defaultCloseValue: boolean;
   studentId: string;
   onConfirm: () => void | Promise<void>;
