@@ -86,18 +86,16 @@ export function ProfileEditOverlay({
         </div>
       </LogModal.Body>
       <LogModal.Footer>
-        <LogModal.Close className="grow" closeValue={false}>
-          <LogClick event="home_profile_picture_delete">
-            <Button
-              variant="secondary"
-              onClick={() => setPreviewImage(null)}
-              disabled={previewFile == null}
-              className="w-full"
-            >
-              {t('profile_change.sub_button')}
-            </Button>
-          </LogClick>
-        </LogModal.Close>
+        <LogClick event="home_profile_picture_delete">
+          <Button
+            variant="secondary"
+            onClick={() => setPreviewImage(null)}
+            disabled={previewFile == null}
+            className="grow"
+          >
+            {t('profile_change.sub_button')}
+          </Button>
+        </LogClick>
         <LogModal.Close className="grow" closeValue={true}>
           <LogClick event="home_profile_save_button">
             <Button
