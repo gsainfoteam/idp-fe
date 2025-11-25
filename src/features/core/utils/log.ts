@@ -199,7 +199,10 @@ export class Log {
     type: T,
     properties: ErrorEventMap[T],
   ) => {
-    Log.track(`error_${type}`, { ...properties, from: Log.currentPath });
+    // Log.track(`error_${type}`, { ...properties, from: Log.currentPath });
+    if (import.meta.env.DEV)
+      console.error(`[sentry] error_${type}`, properties);
+    // TODO: sentry 연동 in https://github.com/gsainfoteam/idp-fe/issues/235
   };
 
   /**
