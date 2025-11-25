@@ -39,7 +39,7 @@ function ClientPictureOverlay({
       defaultCloseValue={false}
       className="mx-10 w-auto"
       event="client_picture_delete_dialog"
-      closeProperties={() => ({ result: 'confirm' })}
+      closeProperties={(v) => ({ result: v ? 'confirm' : 'cancel' })}
     >
       <Dialog.Header>
         {t('services.detail.picture.delete_overlay.title')}
