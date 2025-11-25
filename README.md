@@ -103,6 +103,21 @@ bun run storybook
 bun run lint
 ```
 
+### 환경 변수 설정
+
+프로젝트 루트에 `.env.development`, `.env.staging`, `.env.production` 파일을 생성하고 서비스에 필요한 환경 변수를 설정하세요. 기본 템플릿은 `.env.example`에서 복사할 수 있습니다.
+
+```bash
+cp .env.example .env.{mode}
+```
+
+| 변수                     | 설명                    | 예시                                                                                              |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| `VITE_API_URL`           | 백엔드 API의 베이스 URL | `https://api.stg.idp.gistory.me` (development/staging), `https://api.idp.gistory.me` (production) |
+| `VITE_AMPLITUDE_API_KEY` | Amplitude 웹 SDK API 키 | `xxxxxxxxxxxxxxxx`                                                                                |
+
+> **참고:** `VITE_AMPLITUDE_API_KEY`가 비어 있으면 Amplitude 분석 기능이 비활성화됩니다.
+
 ## 🏗️ 아키텍처
 
 ### Feature-Based 구조
