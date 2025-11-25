@@ -20,10 +20,13 @@ export default function App() {
     <ErrorBoundary
       fallbackRender={({ error, resetErrorBoundary }) => {
         const description = import.meta.env.DEV ? error.stack : undefined;
+        const errorStatus = (error as { status?: unknown }).status;
+        const status =
+          typeof errorStatus === 'number' ? errorStatus : undefined;
 
         return (
           <ErrorFallbackFrame
-            status={error.status}
+            status={status}
             message={error.message}
             description={description}
             onRetry={resetErrorBoundary}
