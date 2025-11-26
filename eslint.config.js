@@ -14,7 +14,6 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.recommended,
       prettierPlugin,
-      ...storybook.configs['flat/recommended'],
     ],
     files: ['**/*.{ts,tsx}'],
     ignores: ['src/gql/*.ts'],
@@ -57,5 +56,8 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
     },
+  },
+  {
+    extends: [...storybook.configs['flat/recommended']],
   },
 );
