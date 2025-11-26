@@ -28,6 +28,10 @@ export const useAuth = () => {
   useEffect(() => {
     if (user) {
       Log.setUserId(user.uuid);
+      Log.setUserProperties({
+        email: user.email,
+        name: user.name,
+      });
     } else {
       Log.clearUserId();
     }
