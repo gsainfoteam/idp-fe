@@ -12,6 +12,7 @@ import {
   IconButton,
   LogClick,
   LogModal,
+  Modal,
   uniqueKey,
 } from '@/features/core';
 import { useLoading } from '@/features/core';

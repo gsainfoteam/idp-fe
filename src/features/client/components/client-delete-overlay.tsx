@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, LogClick, LogDialog } from '@/features/core';
+import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
 
 import { Client } from '../hooks/use-client';
 import { useClientDeleteForm } from '../hooks/use-client-delete-form';

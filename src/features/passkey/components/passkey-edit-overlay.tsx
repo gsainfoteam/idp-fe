@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, LogModal } from '@/features/core';
+import { Button, Input, LogModal, Modal } from '@/features/core';
 
 import { usePasskeyEditForm } from '../hooks/use-passkey-edit-form';
 import { Passkey } from '../hooks/use-passkey-list';

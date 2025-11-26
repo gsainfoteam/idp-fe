@@ -9,6 +9,7 @@ import {
   Label,
   LogClick,
   LogModal,
+  Modal,
 } from '@/features/core';
 
 import { useEmailForm } from '../../hooks/register-steps/use-email-form';

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, LogDialog } from '@/features/core';
+import { Button, Dialog, LogDialog } from '@/features/core';
 
 export function RegisterStepUndoWarningOverlay({
   isOpen,
