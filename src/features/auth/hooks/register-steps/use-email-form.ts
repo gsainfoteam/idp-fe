@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { type RegisterSteps } from '../../frames/register-frame';
+
 import { getUserEmail } from '@/data/user';
 import { postVerifyEmail } from '@/data/verify';
-import { DifferenceNonNullable, Log } from '@/features/core';
-
-import { RegisterSteps } from '../../frames/register-frame';
+import { type DifferenceNonNullable, Log } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({

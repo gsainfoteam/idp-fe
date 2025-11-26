@@ -1,8 +1,9 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import KeyIcon from '@/assets/icons/line/key.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import { Avatar, SwipeCard, cn, uniqueKey } from '@/features/core';
-import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
   component: SwipeCard,
@@ -121,7 +122,7 @@ export const CardList: Story = {
     avatar: <div />,
   },
   render: () => (
-    <div className="flex flex-col gap-3 max-w-md">
+    <div className="flex max-w-md flex-col gap-3">
       <SwipeCard
         avatar={
           <Avatar
@@ -227,12 +228,12 @@ export const SwipeActionCard: Story = {
 
   render: (args) => (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3 w-md">
+      <div className="flex w-md flex-col gap-3">
         <SwipeCard {...args} />
         <SwipeCard {...args} />
         <SwipeCard {...args} />
       </div>
-      <div className="flex flex-col gap-3 w-[500px]">
+      <div className="flex w-[500px] flex-col gap-3">
         <SwipeCard {...args} />
         <SwipeCard {...args} />
         <SwipeCard {...args} />
@@ -265,7 +266,7 @@ export const MultipleActionsCard: Story = {
   },
 
   render: (args) => (
-    <div className="flex flex-col gap-6 max-w-lg">
+    <div className="flex max-w-lg flex-col gap-6">
       <div className="text-sm font-medium text-gray-600">
         2 Left + 2 Right Actions
       </div>

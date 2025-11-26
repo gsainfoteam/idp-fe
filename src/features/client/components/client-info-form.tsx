@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
+import { type Client } from '../hooks/use-client';
+import { useClientInfoForm } from '../hooks/use-client-info-form';
+
 import { Button, Label, LogClick } from '@/features/core';
 import { CopyInput } from '@/features/core';
-
-import { Client } from '../hooks/use-client';
-import { useClientInfoForm } from '../hooks/use-client-info-form';
 
 export function ClientInfoForm({ client }: { client: Client }) {
   const { t } = useTranslation();

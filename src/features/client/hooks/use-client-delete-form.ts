@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { postClientDelete } from '@/data/client';
+import { type Client } from './use-client';
 
-import { Client } from './use-client';
+import { postClientDelete } from '@/data/client';
 
 export const useClientDeleteForm = (client: Client) => {
   const { t } = useTranslation();

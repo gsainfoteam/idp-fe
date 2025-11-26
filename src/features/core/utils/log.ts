@@ -1,10 +1,13 @@
 import * as amplitude from '@amplitude/analytics-browser';
-import { NavigateOptions, ValidateLinkOptions } from '@tanstack/react-router';
+import {
+  type NavigateOptions,
+  type ValidateLinkOptions,
+} from '@tanstack/react-router';
 import type { HttpMethod } from 'openapi-typescript-helpers';
 
-import { router } from '@/router';
+import { type Theme } from '../context/theme-context';
 
-import { Theme } from '../hooks/use-theme';
+import { type router } from '@/router';
 
 export type ClickEventMap = {
   // Auth

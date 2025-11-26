@@ -2,11 +2,12 @@ import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
+import { type Client } from '../hooks/use-client';
+
+import { ClientDeleteOverlay } from './client-delete-overlay';
+
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
 import { Button, LogClick } from '@/features/core';
-
-import { Client } from '../hooks/use-client';
-import { ClientDeleteOverlay } from './client-delete-overlay';
 
 export function ClientDeleteForm({ client }: { client: Client }) {
   const { t } = useTranslation();

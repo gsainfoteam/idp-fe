@@ -1,22 +1,11 @@
 import {
-  PropsWithChildren,
-  createContext,
+  type PropsWithChildren,
   useCallback,
-  useContext,
   useLayoutEffect,
-  useMemo,
   useState,
 } from 'react';
 
-export type Theme = 'light' | 'dark' | 'system';
-
-interface ThemeContextType {
-  theme: Theme;
-  systemTheme: 'light' | 'dark';
-  setTheme: (newTheme: Theme) => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import { type Theme, ThemeContext } from './theme-context';
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   const [theme, setTheme] = useState<Theme>(
@@ -83,20 +72,4 @@ export function ThemeProvider({ children }: PropsWithChildren) {
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-
-  const { theme, systemTheme } = context;
-
-  const isDark = useMemo(
-    () => theme === 'dark' || (theme === 'system' && systemTheme === 'dark'),
-    [theme, systemTheme],
-  );
-
-  return { isDark, ...context };
 }

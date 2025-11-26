@@ -1,15 +1,14 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import imageCompression from 'browser-image-compression';
+import { type Dispatch, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { deleteClientPicture, patchClientPicture } from '@/data/client';
+import { type Client } from './use-client';
 
-import { Client } from './use-client';
+import { deleteClientPicture, patchClientPicture } from '@/data/client';
 
 const schema = z.object({
   image: z.instanceof(File).optional(),
@@ -60,7 +59,7 @@ export const useClientPictureForm = (
         useWebWorker: true,
         fileType: 'image/webp',
       });
-    } catch (error) {
+    } catch {
       throw t('services.detail.picture.errors.failed_to_compress');
     }
   };
@@ -99,7 +98,7 @@ export const useClientPictureForm = (
       });
 
       if (!uploadResponse.ok) throw uploadResponse;
-    } catch (error) {
+    } catch {
       throw t('services.detail.picture.errors.failed_to_upload');
     }
 

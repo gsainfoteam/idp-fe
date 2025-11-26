@@ -1,9 +1,9 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { type Client } from '../hooks/use-client';
+import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
-import { Client } from '../hooks/use-client';
 import { Label, MultiStateSwitch } from '@/features/core';
 
 const choices = ['no', 'optional', 'required'] as const;

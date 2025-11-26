@@ -2,6 +2,9 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
+import { ClientDeleteOverlay } from '../components/client-delete-overlay';
+import { useClientList } from '../hooks/use-client-list';
+
 import puzzleImage from '@/assets/icons/color/puzzle.png';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
@@ -15,9 +18,6 @@ import {
   cn,
   uniqueKey,
 } from '@/features/core';
-
-import { ClientDeleteOverlay } from '../components/client-delete-overlay';
-import { useClientList } from '../hooks/use-client-list';
 
 export function ClientListFrame() {
   const { t } = useTranslation();

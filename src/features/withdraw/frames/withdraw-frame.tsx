@@ -1,9 +1,9 @@
-import { useAuth } from '@/features/auth';
-import { useFunnel } from '@/features/core';
-
 import { ConfirmStep } from './steps/confirm-step';
 import { DoneStep } from './steps/done-step';
 import { PasswordStep } from './steps/password-step';
+
+import { useAuth } from '@/features/auth';
+import { useFunnel } from '@/features/core';
 
 type User = {
   name: string;

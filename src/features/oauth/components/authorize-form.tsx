@@ -1,13 +1,12 @@
-import { useEffect, useMemo } from 'react';
-
 import { useLoaderData } from '@tanstack/react-router';
+import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { components } from '@/@types/api-schema';
-import { Checkbox } from '@/features/core';
+import { type ConsentFormSchema } from '../hooks/use-authorize-form';
 
-import { ConsentFormSchema } from '../hooks/use-authorize-form';
+import { type components } from '@/@types/api-schema';
+import { Checkbox } from '@/features/core';
 
 export function AuthorizeForm({
   client,
@@ -66,7 +65,7 @@ export function AuthorizeForm({
     } else {
       clearErrors('root');
     }
-  }, [requiredScopeValues, setError, t]);
+  }, [clearErrors, requiredScopeValues, setError, t]);
 
   useEffect(() => {
     requiredScopes.forEach((scope) => {

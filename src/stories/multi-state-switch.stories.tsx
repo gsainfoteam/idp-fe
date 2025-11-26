@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MultiStateSwitch, MultiStateSwitchProps } from '@/features/core';
+import { MultiStateSwitch, type MultiStateSwitchProps } from '@/features/core';
 
 function MultiStateSwitchTestFrame({ ...props }: MultiStateSwitchProps) {
   return (

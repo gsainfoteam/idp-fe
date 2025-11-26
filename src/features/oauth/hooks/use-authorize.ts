@@ -1,13 +1,12 @@
-import { useCallback, useEffect } from 'react';
-
 import { useLoaderData, useSearch } from '@tanstack/react-router';
-
-import { components } from '@/@types/api-schema';
-import { useAuth } from '@/features/auth';
-import { ClientScopeType } from '@/routes/_auth-required/authorize';
+import { useCallback, useEffect } from 'react';
 
 import { useAuthorizeForm } from './use-authorize-form';
 import { useRecentLogin } from './use-recent-login';
+
+import { type components } from '@/@types/api-schema';
+import { useAuth } from '@/features/auth';
+import { type ClientScopeType } from '@/routes/_auth-required/authorize';
 
 export const useAuthorize = ({
   client,

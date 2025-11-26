@@ -1,5 +1,6 @@
-import { ClientAddFrame } from '@/features/client';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { ClientAddFrame } from '@/features/client';
 
 const ClientAddPage = () => {
   return <ClientAddFrame />;

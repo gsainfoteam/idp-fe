@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { type Client } from './use-client';
+
 import { patchClientSecret } from '@/data/client';
 import { Log } from '@/features/core';
-
-import { Client } from './use-client';
 
 const schema = z.object({
   clientId: z.string().min(1),

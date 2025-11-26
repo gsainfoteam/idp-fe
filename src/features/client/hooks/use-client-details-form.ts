@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { type Client } from './use-client';
+
 import { patchClient } from '@/data/client';
 import { ClientScopeEnum } from '@/routes/_auth-required/authorize';
-
-import { Client } from './use-client';
 
 const schema = z.object({
   name: z.string().refine((v) => v.trim() !== ''),

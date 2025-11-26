@@ -1,9 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Input, PasswordInput } from '@/features/core';
+import { type LoginFormSchema } from '../hooks/use-login-form';
 
-import { LoginFormSchema } from '../hooks/use-login-form';
+import { Input, PasswordInput } from '@/features/core';
 
 export function LoginForm() {
   const { register, formState, clearErrors } =

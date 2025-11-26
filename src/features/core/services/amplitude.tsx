@@ -1,6 +1,5 @@
-import { PropsWithChildren, useEffect } from 'react';
-
 import * as amplitude from '@amplitude/analytics-browser';
+import { type PropsWithChildren, useEffect } from 'react';
 
 import { Log } from '../utils/log';
 

@@ -1,13 +1,13 @@
 import { useNavigate } from '@tanstack/react-router';
 
-import { postVerifyStudentId } from '@/data/verify';
-import { useAuth } from '@/features/auth';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
-
 import { CompleteStep } from './verify-student-id-steps/complete-step';
 import { FailureStep } from './verify-student-id-steps/failure-step';
 import { InfoStep } from './verify-student-id-steps/info-step';
 import { NewInfoStep } from './verify-student-id-steps/new-info-step';
+
+import { type postVerifyStudentId } from '@/data/verify';
+import { useAuth } from '@/features/auth';
+import { type Pretty, type RequireKeys, useFunnel } from '@/features/core';
 
 type StepContext = Pretty<
   Partial<

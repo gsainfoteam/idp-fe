@@ -2,6 +2,8 @@ import { useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
+import { ProfileEditOverlay } from '../components/profile-edit-overlay';
+
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
@@ -15,8 +17,6 @@ import {
   cn,
   uniqueKey,
 } from '@/features/core';
-
-import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
 function formatDateTime(dateString: string, locale: string) {
   return new Date(dateString).toLocaleString(

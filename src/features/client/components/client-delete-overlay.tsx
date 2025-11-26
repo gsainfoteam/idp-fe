@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
-
-import { Client } from '../hooks/use-client';
+import { type Client } from '../hooks/use-client';
 import { useClientDeleteForm } from '../hooks/use-client-delete-form';
+
+import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
 
 export function ClientDeleteOverlay({
   client,

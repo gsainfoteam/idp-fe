@@ -1,5 +1,4 @@
-import { ChangeEvent, PropsWithChildren, useRef } from 'react';
-
+import { type ChangeEvent, type PropsWithChildren, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 

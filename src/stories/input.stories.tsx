@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { useEffect, useState } from 'react';
 
 import WithdrawIcon from '@/assets/icons/duo/withdrawal.svg?react';
+import AddIcon from '@/assets/icons/line/add.svg?react';
+import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import {
   PasswordInput,
   Label,
@@ -10,9 +11,6 @@ import {
   Input,
   CopyInput,
 } from '@/features/core';
-
-import AddIcon from '@/assets/icons/line/add.svg?react';
-import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 
 const meta = {
   component: Input,

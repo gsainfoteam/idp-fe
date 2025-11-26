@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
-
 import {
-  NavigateOptions,
+  type NavigateOptions,
   Outlet,
-  ValidateLinkOptions,
+  type ValidateLinkOptions,
   createRootRoute,
   useLocation,
   useSearch,
 } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
-import { Log } from '@/features/core/utils/log';
-import { router } from '@/router';
+import { Log } from '@/features/core';
+import { type router } from '@/router';
 
 function RootComponent() {
   const location = useLocation();

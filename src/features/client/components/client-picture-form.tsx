@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-
 import { overlay } from 'overlay-kit';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { type Client } from '../hooks/use-client';
+import { useClientPictureForm } from '../hooks/use-client-picture-form';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
@@ -17,9 +19,6 @@ import {
 } from '@/features/core';
 import { useLoading } from '@/features/core';
 import { IconButton } from '@/features/core';
-
-import { Client } from '../hooks/use-client';
-import { useClientPictureForm } from '../hooks/use-client-picture-form';
 
 function ClientPictureOverlay({
   isOpen,

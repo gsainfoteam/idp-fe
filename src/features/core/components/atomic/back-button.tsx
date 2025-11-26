@@ -1,4 +1,4 @@
-import { RouterHistory, useRouter } from '@tanstack/react-router';
+import { type RouterHistory, useRouter } from '@tanstack/react-router';
 
 import UndoIcon from '@/assets/icons/line/arrow-left.svg?react';
 import { LogClick, cn } from '@/features/core';
