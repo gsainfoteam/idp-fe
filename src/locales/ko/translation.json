@@ -78,14 +78,6 @@
       "info": {
         "title": "기본정보를 입력해주세요",
         "button": "회원가입",
-        "dialog": {
-          "title": "이 학번이 맞나요?",
-          "description": "계속하면 회원가입이 완료됩니다.",
-          "buttons": {
-            "cancel": "취소하기",
-            "continue": "계속하기"
-          }
-        },
         "inputs": {
           "name": {
             "label": "이름",
@@ -247,6 +239,14 @@
       }
     }
   },
+  "student_id_verification_dialog": {
+    "title": "이 학번이 맞나요?",
+    "description": "계속하면 이름 및 학번이 변경됩니다.",
+    "buttons": {
+      "cancel": "취소하기",
+      "continue": "계속하기"
+    }
+  },
   "verify_student_id": {
     "title": "이름 및 학번 인증",
     "steps": {
@@ -274,14 +274,6 @@
       "new_info": {
         "title": "새로운 정보로 다시 확인해볼게요",
         "button": "확인하기",
-        "dialog": {
-          "title": "이 학번이 맞나요?",
-          "description": "계속하면 이름 및 학번이 변경됩니다.",
-          "buttons": {
-            "cancel": "취소하기",
-            "continue": "계속하기"
-          }
-        },
         "inputs": {
           "name": {
             "label": "이름",
@@ -586,6 +578,13 @@
     "step_title": "문제가 발생했습니다",
     "description": "페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다.",
     "button": "돌아가기"
+  },
+  "error_fallback": {
+    "title": "문제가 발생했습니다",
+    "step_title": "예상치 못한 오류가 발생했어요",
+    "description": "잠시 후 다시 시도하거나, 문제가 계속된다면 관리자에게 문의해주세요.",
+    "button": "다시 시도하기",
+    "details_label": "오류 정보"
   },
   "language": "ko"
 }

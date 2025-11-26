@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postUser } from '@/data/user';
-import { DifferenceNonNullable } from '@/features/core';
+import { DifferenceNonNullable, Log } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
 
@@ -72,6 +72,7 @@ export const useInfoStaffForm = ({
       return;
     }
 
+    Log.submit('auth_register_info');
     onNext(body);
   });
 

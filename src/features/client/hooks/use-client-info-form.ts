@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { patchClientSecret } from '@/data/client';
+import { Log } from '@/features/core';
 
 import { Client } from './use-client';
 
@@ -38,6 +39,7 @@ export const useClientInfoForm = (client: Client) => {
       return;
     }
 
+    Log.submit('client_edit', { clientId: client.clientId });
     form.setValue('clientSecret', res.data.clientSecret);
   });
 

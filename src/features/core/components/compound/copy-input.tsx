@@ -1,5 +1,5 @@
-import { useCopy } from '../hooks/use-copy';
-import { Input, InputProps } from './input';
+import { useCopy } from '../../hooks/use-copy';
+import { Input, InputProps } from '../atomic/input';
 
 import ClipboardAddIcon from '@/assets/icons/line/clipboard-add.svg?react';
 import ClipboardCheckIcon from '@/assets/icons/line/clipboard-check.svg?react';

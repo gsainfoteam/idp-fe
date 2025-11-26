@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { deleteAuthLogout } from '@/data/auth';
-import { $api } from '@/features/core';
+import { $api, Log } from '@/features/core';
 
 import { useToken } from './use-token';
 
@@ -24,6 +24,18 @@ export const useAuth = () => {
     if (error) return null;
     return data;
   }, [token, isLoading, error, data]);
+
+  useEffect(() => {
+    if (user) {
+      Log.setUserId(user.uuid);
+      Log.setUserProperties({
+        email: user.email,
+        name: user.name,
+      });
+    } else {
+      Log.clearUserId();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (token) {

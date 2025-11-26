@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import lockImage from '@/assets/icons/color/lock.png';
@@ -8,11 +10,10 @@ import {
   Avatar,
   Button,
   FunnelLayout,
+  LogClick,
   SwipeCard,
   uniqueKey,
 } from '@/features/core';
-import { Link } from '@tanstack/react-router';
-import { overlay } from 'overlay-kit';
 
 import { PasskeyDeleteOverlay } from '../components/passkey-delete-overlay';
 import { PasskeyEditOverlay } from '../components/passkey-edit-overlay';
@@ -29,9 +30,11 @@ export function PasskeyListFrame() {
       description={t('passkey.steps.list.description')}
       button={
         <Link to="/passkeys/new">
-          <Button variant="primary" className="w-full">
-            {t('passkey.steps.list.add')}
-          </Button>
+          <LogClick event="passkey_register_button">
+            <Button variant="primary" className="w-full">
+              {t('passkey.steps.list.add')}
+            </Button>
+          </LogClick>
         </Link>
       }
     >

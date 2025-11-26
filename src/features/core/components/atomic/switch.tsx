@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
-import { cn } from '../utils/cn';
-import { palette } from '../utils/palette';
+import { cn } from '../../utils/cn';
+import { palette } from '../../utils/palette';
 
 const trackColors = palette(() => ({
   default: {

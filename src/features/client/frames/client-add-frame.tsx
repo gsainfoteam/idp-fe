@@ -1,8 +1,8 @@
+import { useRouter } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout } from '@/features/core';
-import { useRouter } from '@tanstack/react-router';
+import { Button, FunnelLayout, LogClick } from '@/features/core';
 
 import { ClientAddForm } from '../components/client-add-form';
 import { useAddClientForm } from '../hooks/use-add-client-form';
@@ -33,13 +33,15 @@ export function ClientAddFrame() {
                   {t('services.add.help')}
                 </Button>
               </a>
-              <Button
-                variant="primary"
-                className="w-full"
-                loading={form.formState.isSubmitting}
-              >
-                {t('services.add.create')}
-              </Button>
+              <LogClick event="client_create_button">
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  loading={form.formState.isSubmitting}
+                >
+                  {t('services.add.create')}
+                </Button>
+              </LogClick>
             </div>
           }
         >

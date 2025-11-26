@@ -7,7 +7,11 @@ import z from 'zod';
 
 import { postUserVerifyStudentId } from '@/data/user';
 import { useAuth } from '@/features/auth';
-import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
+import {
+  DifferenceNonNullable,
+  Log,
+  formatDateToYYYYMMDD,
+} from '@/features/core';
 
 import { VerifyStudentIdSteps } from '../frames/verify-student-id-frame';
 
@@ -66,6 +70,7 @@ export function useVerifyStudentInfoForm({
       return;
     }
 
+    Log.submit('student_id_verify');
     onSuccess({
       birthDate: formData.birthDate,
     });

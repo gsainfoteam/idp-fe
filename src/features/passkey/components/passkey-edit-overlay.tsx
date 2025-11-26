@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, Modal } from '@/features/core';
+import { Button, Input, LogModal, Modal } from '@/features/core';
 
 import { usePasskeyEditForm } from '../hooks/use-passkey-edit-form';
 import { Passkey } from '../hooks/use-passkey-list';
@@ -21,7 +21,14 @@ export function PasskeyEditOverlay({
   } = usePasskeyEditForm(passkey);
 
   return (
-    <Modal isOpen={isOpen} close={() => close(false)}>
+    <LogModal
+      isOpen={isOpen}
+      close={close}
+      defaultCloseValue={false}
+      event="passkey_edit_modal"
+      closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
+      className="min-w-100"
+    >
       <Modal.Header>{t('passkey.steps.list.edit_overlay.title')}</Modal.Header>
       <Modal.Body>
         <Input
@@ -33,7 +40,7 @@ export function PasskeyEditOverlay({
         />
       </Modal.Body>
       <Modal.Footer>
-        <Modal.Close className="w-full">
+        <Modal.Close closeValue={false} className="grow">
           <Button
             variant="secondary"
             className="w-full"
@@ -42,17 +49,17 @@ export function PasskeyEditOverlay({
             {t('passkey.steps.list.edit_overlay.cancel')}
           </Button>
         </Modal.Close>
-        <Button
-          variant="primary"
-          className="w-full"
-          disabled={!formState.isValid || formState.isSubmitting}
-          onClick={async () => {
-            if (await onSubmit()) close(true);
-          }}
-        >
-          {t('passkey.steps.list.edit_overlay.apply')}
-        </Button>
+        <Modal.Close closeValue={true} className="grow">
+          <Button
+            variant="primary"
+            className="w-full"
+            disabled={!formState.isValid || formState.isSubmitting}
+            onClick={onSubmit}
+          >
+            {t('passkey.steps.list.edit_overlay.apply')}
+          </Button>
+        </Modal.Close>
       </Modal.Footer>
-    </Modal>
+    </LogModal>
   );
 }

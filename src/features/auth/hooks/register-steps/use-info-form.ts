@@ -8,7 +8,11 @@ import { z } from 'zod';
 
 import { postUser } from '@/data/user';
 import { postVerifyStudentId } from '@/data/verify';
-import { DifferenceNonNullable, formatDateToYYYYMMDD } from '@/features/core';
+import {
+  DifferenceNonNullable,
+  Log,
+  formatDateToYYYYMMDD,
+} from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
 
@@ -114,6 +118,7 @@ export const useInfoForm = ({
       return;
     }
 
+    Log.submit('auth_register_info');
     onNext(body);
   });
 

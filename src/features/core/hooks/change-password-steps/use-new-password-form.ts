@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { patchUserPassword } from '@/data/user';
-import { DifferenceNonNullable } from '@/features/core';
+import { DifferenceNonNullable, Log } from '@/features/core';
 
 import { ChangePasswordSteps } from '../../frames/change-password-frame';
 
@@ -73,6 +73,7 @@ export const useNewPasswordForm = ({
       return;
     }
 
+    Log.submit('profile_password_change');
     onNext(formData);
   });
 

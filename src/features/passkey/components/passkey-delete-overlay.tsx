@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog } from '@/features/core';
+import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
 
 import { usePasskeyDeleteForm } from '../hooks/use-passkey-delete-form';
 import { Passkey } from '../hooks/use-passkey-list';
@@ -18,10 +18,17 @@ export function PasskeyDeleteOverlay({
   const { onSubmit } = usePasskeyDeleteForm(passkey);
 
   return (
-    <Dialog
+    <LogDialog
       isOpen={isOpen}
-      close={() => close(false)}
+      close={close}
+      defaultCloseValue={false}
       className="mx-10 min-w-75"
+      event="delete_confirmation"
+      openProperties={{ resource: 'passkey' }}
+      closeProperties={(value) => ({
+        resource: 'passkey',
+        result: value ? 'confirm' : 'cancel',
+      })}
     >
       <Dialog.Header>
         {t('passkey.steps.list.remove_overlay.title')}
@@ -30,21 +37,22 @@ export function PasskeyDeleteOverlay({
         {t('passkey.steps.list.remove_overlay.description')}
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="w-full">
+        <Dialog.Close className="grow" closeValue={false}>
           <Button variant="secondary" className="w-full">
             {t('passkey.steps.list.remove_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          className="w-full"
-          onClick={async () => {
-            if (await onSubmit()) close(true);
-          }}
-        >
-          {t('passkey.steps.list.remove_overlay.confirm')}
-        </Button>
+        <Dialog.Close className="grow" closeValue={true}>
+          <LogClick
+            event="passkey_delete_button"
+            properties={{ passkeyId: passkey.id }}
+          >
+            <Button variant="primary" className="w-full" onClick={onSubmit}>
+              {t('passkey.steps.list.remove_overlay.confirm')}
+            </Button>
+          </LogClick>
+        </Dialog.Close>
       </Dialog.Footer>
-    </Dialog>
+    </LogDialog>
   );
 }

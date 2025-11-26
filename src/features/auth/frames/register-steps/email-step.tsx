@@ -2,7 +2,15 @@ import { overlay } from 'overlay-kit';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, Input, Label, Modal } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Input,
+  Label,
+  LogClick,
+  LogModal,
+  Modal,
+} from '@/features/core';
 
 import { useEmailForm } from '../../hooks/register-steps/use-email-form';
 
@@ -12,16 +20,19 @@ function EmailOverlay({
   onSubmit,
 }: {
   isOpen: boolean;
-  close: (agree: boolean) => void;
+  close: () => void;
   onSubmit: () => Promise<void>;
 }) {
   const { t } = useTranslation();
 
   return (
-    <Modal
+    <LogModal
       isOpen={isOpen}
-      close={() => close(false)}
+      close={(_: boolean) => close()}
+      defaultCloseValue={false}
       dialogClassName="min-w-100"
+      event="email_verification_overlay"
+      closeProperties={(value) => ({ result: value ? 'accept' : 'cancel' })}
     >
       <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
       <Modal.Body>
@@ -47,23 +58,22 @@ function EmailOverlay({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Modal.Close className="grow">
-          <Button variant="secondary" className="w-full">
-            {t('register.steps.email_overlay.sub_button')}
-          </Button>
+        <Modal.Close className="grow" closeValue={false}>
+          <LogClick event="register_email_overlay_cancel">
+            <Button variant="secondary" className="w-full">
+              {t('register.steps.email_overlay.sub_button')}
+            </Button>
+          </LogClick>
         </Modal.Close>
-        <Button
-          variant="primary"
-          onClick={async () => {
-            close(true);
-            await onSubmit();
-          }}
-          className="grow"
-        >
-          {t('register.steps.email_overlay.button')}
-        </Button>
+        <Modal.Close className="grow" closeValue={true}>
+          <LogClick event="register_email_overlay_accept">
+            <Button variant="primary" className="w-full" onClick={onSubmit}>
+              {t('register.steps.email_overlay.button')}
+            </Button>
+          </LogClick>
+        </Modal.Close>
       </Modal.Footer>
-    </Modal>
+    </LogModal>
   );
 }
 
@@ -89,25 +99,27 @@ export function EmailStep({
       title={t('register.title')}
       stepTitle={t('register.steps.email.title')}
       button={
-        <Button
-          variant="primary"
-          className="w-full"
-          loading={isSubmitting}
-          disabled={!(isValid && isDirty)}
-          onClick={async () => {
-            if (await onCheckEmail()) {
-              overlay.open(({ isOpen, close }) => (
-                <EmailOverlay
-                  isOpen={isOpen}
-                  close={close}
-                  onSubmit={onSubmit}
-                />
-              ));
-            }
-          }}
-        >
-          {t('register.steps.email.button')}
-        </Button>
+        <LogClick event="register_email_check">
+          <Button
+            variant="primary"
+            className="w-full"
+            loading={isSubmitting}
+            disabled={!(isValid && isDirty)}
+            onClick={async () => {
+              if (await onCheckEmail()) {
+                overlay.open(({ isOpen, close }) => (
+                  <EmailOverlay
+                    isOpen={isOpen}
+                    close={close}
+                    onSubmit={onSubmit}
+                  />
+                ));
+              }
+            }}
+          >
+            {t('register.steps.email.button')}
+          </Button>
+        </LogClick>
       }
     >
       <Label text={t('register.steps.email.inputs.email.label')}>

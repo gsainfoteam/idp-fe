@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { postVerify } from '@/data/verify';
-import { DifferenceNonNullable } from '@/features/core';
+import { DifferenceNonNullable, Log } from '@/features/core';
 
 import { RegisterSteps } from '../../frames/register-frame';
 import { CODE_MAX_COUNT } from '../../frames/register-steps/code-step';
@@ -65,6 +65,7 @@ export const useCodeForm = ({
       return;
     }
 
+    Log.submit('auth_register_code');
     onNext({ emailVerificationJwtToken: res.data.verificationJwtToken });
   });
 

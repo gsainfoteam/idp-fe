@@ -16,6 +16,7 @@ import {
   Avatar,
   Button,
   FunnelLayout,
+  LogClick,
   ThemeSwitcher,
   cn,
   uniqueKey,
@@ -85,18 +86,20 @@ export function HomeFrame() {
       <div className="flex flex-col gap-6">
         <div className="flex w-full flex-1 items-center px-3">
           <div className="flex w-full items-center gap-3">
-            <Avatar
-              img={user.picture ?? undefined}
-              seed={uniqueKey(user.studentId)}
-              className="cursor-pointer"
-              onClick={() => {
-                overlay.open(({ isOpen, close }) => (
-                  <ProfileEditOverlay isOpen={isOpen} close={close} />
-                ));
-              }}
-            >
-              {user.name.charAt(0)}
-            </Avatar>
+            <LogClick event="home_profile_edit_button">
+              <Avatar
+                img={user.picture ?? undefined}
+                seed={uniqueKey(user.studentId)}
+                className="cursor-pointer"
+                onClick={() => {
+                  overlay.open(({ isOpen, close }) => (
+                    <ProfileEditOverlay isOpen={isOpen} close={close} />
+                  ));
+                }}
+              >
+                {user.name.charAt(0)}
+              </Avatar>
+            </LogClick>
             <div className="flex flex-col">
               <div className="text-title-3 text-label">{user.name}</div>
               <div className="text-body-2 text-basics-secondary-label">
@@ -104,43 +107,61 @@ export function HomeFrame() {
               </div>
             </div>
           </div>
-          <Link
-            to="/profile"
-            className="flex cursor-pointer items-center self-stretch px-2"
-          >
-            <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
-          </Link>
+          <LogClick event="home_profile_link">
+            <Link
+              to="/profile"
+              className="flex cursor-pointer items-center self-stretch px-2"
+            >
+              <ChevronRightIcon className="text-basics-secondary-label shrink-0" />
+            </Link>
+          </LogClick>
         </div>
         <div className="flex flex-col gap-3">
-          <MenuButton
-            icon={UserIcon}
-            onClick={() => {
-              overlay.open(({ isOpen, close }) => (
-                <ProfileEditOverlay isOpen={isOpen} close={close} />
-              ));
-            }}
-          >
-            {t('home.menu.edit')}
-          </MenuButton>
+          <LogClick event="home_profile_edit_button">
+            <MenuButton
+              icon={UserIcon}
+              onClick={() => {
+                overlay.open(({ isOpen, close }) => (
+                  <ProfileEditOverlay isOpen={isOpen} close={close} />
+                ));
+              }}
+            >
+              {t('home.menu.edit')}
+            </MenuButton>
+          </LogClick>
           <Link to="/change-password" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={LockIcon}>{t('home.menu.password')}</MenuButton>
+            <LogClick event="home_profile_password_change_button">
+              <MenuButton icon={LockIcon}>{t('home.menu.password')}</MenuButton>
+            </LogClick>
           </Link>
           <Link to="/passkeys" search={(prev) => ({ ...prev })}>
-            <MenuButton icon={PasskeyIcon}>{t('home.menu.passkey')}</MenuButton>
+            <LogClick event="home_passkeys_link">
+              <MenuButton icon={PasskeyIcon}>
+                {t('home.menu.passkey')}
+              </MenuButton>
+            </LogClick>
           </Link>
           <Link to="/clients">
-            <MenuButton icon={CodeIcon}>{t('home.menu.developer')}</MenuButton>
+            <LogClick event="home_clients_link">
+              <MenuButton icon={CodeIcon}>
+                {t('home.menu.developer')}
+              </MenuButton>
+            </LogClick>
           </Link>
-          <MenuButton
-            icon={LogoutIcon}
-            onClick={async () => await signOut(false)}
-          >
-            {t('home.menu.logout')}
-          </MenuButton>
-          <Link to="/withdraw">
-            <MenuButton variant="danger" icon={WithdrawalIcon}>
-              {t('home.menu.withdrawal')}
+          <LogClick event="auth_logout_button">
+            <MenuButton
+              icon={LogoutIcon}
+              onClick={async () => await signOut(false)}
+            >
+              {t('home.menu.logout')}
             </MenuButton>
+          </LogClick>
+          <Link to="/withdraw">
+            <LogClick event="home_withdraw_link">
+              <MenuButton variant="danger" icon={WithdrawalIcon}>
+                {t('home.menu.withdrawal')}
+              </MenuButton>
+            </LogClick>
           </Link>
         </div>
       </div>

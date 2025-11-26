@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import { useClientInfoForm } from '../hooks/use-client-info-form';
+import { Button, Label, LogClick } from '@/features/core';
+import { CopyInput } from '@/features/core';
 
-import { Button, Label } from '@/features/core';
-import { CopyInput } from '@/features/core/components/copy-input';
 import { Client } from '../hooks/use-client';
+import { useClientInfoForm } from '../hooks/use-client-info-form';
 
 export function ClientInfoForm({ client }: { client: Client }) {
   const { t } = useTranslation();
@@ -42,14 +42,19 @@ export function ClientInfoForm({ client }: { client: Client }) {
                 showIcon={!!secret}
                 disabled={client.deleteRequestedAt != null}
               />
-              <Button
-                variant="default"
-                disabled={
-                  formState.isSubmitting || client.deleteRequestedAt != null
-                }
+              <LogClick
+                event="client_secret_rotate_button"
+                properties={{ clientId: client.clientId }}
               >
-                {t('services.detail.info.regenerate_secret.action')}
-              </Button>
+                <Button
+                  variant="default"
+                  disabled={
+                    formState.isSubmitting || client.deleteRequestedAt != null
+                  }
+                >
+                  {t('services.detail.info.regenerate_secret.action')}
+                </Button>
+              </LogClick>
             </div>
           </Label>
         </div>

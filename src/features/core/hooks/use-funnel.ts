@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import {
   useLocation,
@@ -7,6 +7,8 @@ import {
   useSearch,
 } from '@tanstack/react-router';
 import { AnyFunnelState, createUseFunnel } from '@use-funnel/core';
+
+import { Log } from '../utils/log';
 
 type AnyContext = Record<string, any>;
 type AnyStepContextMap = Record<string, AnyContext>;
@@ -54,6 +56,7 @@ const useFunnelRouter = ({
     () => ({
       history,
       currentIndex,
+      currentState,
       push(
         state: AnyFunnelState,
         { resetScroll, viewTransition }: TanstackRouterRouteOption = {},
@@ -151,6 +154,7 @@ const useFunnelRouter = ({
     }),
     [
       currentIndex,
+      currentState,
       history,
       id,
       location.pathname,
@@ -177,6 +181,13 @@ export const useFunnel = <TStepContextMap extends AnyStepContextMap>(
     ...funnel
   } = useFunnelInternal<TStepContextMap>(...props);
   const router = useFunnelRouter({ id, initialState });
+
+  useEffect(() => {
+    const step = router.currentState.step;
+    if (!step) return;
+
+    Log.funnel(id, step);
+  }, [id, router.currentState.step]);
 
   return {
     ...funnel,

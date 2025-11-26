@@ -10,6 +10,8 @@ import {
   Button,
   FileUpload,
   IconButton,
+  LogClick,
+  LogModal,
   Modal,
   uniqueKey,
 } from '@/features/core';
@@ -38,7 +40,7 @@ export function ProfileEditOverlay({
     } else setPreviewImage(user.picture ?? null);
   }, [user]);
 
-  const handleClose = () => {
+  const handleClose = (_: boolean) => {
     setPreviewImage(user?.picture ?? null);
     close();
   };
@@ -46,7 +48,15 @@ export function ProfileEditOverlay({
   if (!user) return null;
 
   return (
-    <Modal isOpen={isOpen} close={handleClose} dialogClassName="min-w-100">
+    <LogModal
+      isOpen={isOpen}
+      close={handleClose}
+      defaultCloseValue={false}
+      dialogClassName="min-w-100"
+      event="profile_edit_modal"
+      openProperties={{}}
+      closeProperties={() => ({})}
+    >
       <Modal.Header>{t('profile_change.title')}</Modal.Header>
       <Modal.Body className="flex justify-center">
         <div className="relative w-fit cursor-pointer">
@@ -65,34 +75,42 @@ export function ProfileEditOverlay({
             onSave={onSave}
           >
             <div className="absolute right-0 bottom-0">
-              <IconButton
-                variant="primary"
-                icon={<EditIcon width={20} height={20} />}
-                className="border-funnel-background rounded-full border-4 p-2"
-              />
+              <LogClick event="home_profile_picture_upload">
+                <IconButton
+                  variant="primary"
+                  icon={<EditIcon width={20} height={20} />}
+                  className="border-funnel-background rounded-full border-4 p-2"
+                />
+              </LogClick>
             </div>
           </FileUpload>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => setPreviewImage(null)}
-          disabled={previewFile == null}
-          className="grow"
-        >
-          {t('profile_change.sub_button')}
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => startLoading(onSubmit().then(handleClose))}
-          disabled={previewFile === user.picture}
-          loading={loading}
-          className="grow"
-        >
-          {t('profile_change.button')}
-        </Button>
+        <LogClick event="home_profile_picture_delete">
+          <Button
+            variant="secondary"
+            onClick={() => setPreviewImage(null)}
+            disabled={previewFile == null}
+            className="grow"
+          >
+            {t('profile_change.sub_button')}
+          </Button>
+        </LogClick>
+        <Modal.Close className="grow" closeValue={true}>
+          <LogClick event="home_profile_save_button">
+            <Button
+              variant="primary"
+              onClick={async () => await startLoading(onSubmit)}
+              disabled={previewFile === user.picture}
+              loading={loading}
+              className="w-full"
+            >
+              {t('profile_change.button')}
+            </Button>
+          </LogClick>
+        </Modal.Close>
       </Modal.Footer>
-    </Modal>
+    </LogModal>
   );
 }

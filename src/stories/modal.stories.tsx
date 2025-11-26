@@ -1,125 +1,259 @@
-import { useEffect, useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { OverlayProvider, overlay } from 'overlay-kit';
 
 import { Button, Modal } from '@/features/core';
-import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  component: Modal,
-  argTypes: {
-    isOpen: {
-      options: [true, false],
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof Modal>;
+  component: Button,
+  argTypes: {},
+  decorators: [
+    (Story) => (
+      <OverlayProvider>
+        <Story />
+      </OverlayProvider>
+    ),
+  ],
+} satisfies Meta<typeof Button>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ExampleModal = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
-  const [isOpen, setOpen] = useState(initialOpen);
-
-  useEffect(() => {
-    setOpen(initialOpen);
-  }, [initialOpen]);
-
+function StoryContainer({ children }: { children: React.ReactNode }) {
   return (
-    <Modal isOpen={isOpen} close={() => setOpen(false)}>
-      <Modal.Header>Title must be so long</Modal.Header>
-      <Modal.Body>
-        Lorem ipsum dolor sit amet, consectetur
-        <br />
-        adipiscing elit. Mauris non nulla vitae
-        <br />
-        augue pellentesque mollis.
-      </Modal.Body>
-      <Modal.Footer>
-        <Modal.Close>
-          <Button variant="secondary" className="w-full">
-            Close
-          </Button>
-        </Modal.Close>
-        <Modal.Close>
-          <Button
-            variant="primary"
-            onClick={() => {
-              alert('Success!!');
-            }}
-            className="w-full"
-          >
-            Success
-          </Button>
-        </Modal.Close>
-      </Modal.Footer>
-    </Modal>
+    <div className="bg-funnel-background flex min-h-64 items-center justify-center p-10">
+      {children}
+    </div>
   );
+}
+
+const storyArgs = {
+  variant: 'primary' as const,
 };
 
-const UndoWarningModal = () => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <Modal isOpen={open} close={() => setOpen(false)}>
-      <Modal.Header>계속 진행하면 데이터가 소실됩니다.</Modal.Header>
-      <Modal.Body>계속 진행하시겠습니까?</Modal.Body>
-      <Modal.Footer>
-        <Modal.Close>
-          <Button variant="secondary" className="w-full">
-            그만두기
-          </Button>
-        </Modal.Close>
-        <Modal.Close>
-          <Button variant="primary" className="w-full">
-            계속하기
-          </Button>
-        </Modal.Close>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
-const NoBodyModal = () => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <Modal isOpen={open} close={() => setOpen(false)}>
-      <Modal.Header>알림을 받기 위해 앱 알림을 켤게요</Modal.Header>
-      <Modal.Footer>
-        <Modal.Close className="flex justify-end">
-          <Button variant="text">알림 켜기</Button>
-        </Modal.Close>
-      </Modal.Footer>
-    </Modal>
-  );
-};
-
-export const Default: Story = {
+export const ZeroCTA: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Modal (0 CTA)',
   },
-  render: ({ isOpen }) => {
-    return <ExampleModal isOpen={isOpen} />;
-  },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Modal
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Modal.Header>Body Only Modal</Modal.Header>
+              <Modal.Body>
+                This modal has no CTA buttons. Close via backdrop or ESC.
+              </Modal.Body>
+            </Modal>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
 };
 
-export const UndoWarning: Story = {
+export const OneCTA: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Modal (1 CTA)',
   },
-  render: () => {
-    return <UndoWarningModal />;
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Modal
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Modal.Header>Single CTA Modal</Modal.Header>
+              <Modal.Body>This modal has a single confirm button.</Modal.Body>
+              <Modal.Footer>
+                <Modal.Close className="w-full" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Close>
+              </Modal.Footer>
+            </Modal>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const TwoCTA: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Modal (2 CTA)',
   },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Modal
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Modal.Header>Two CTA Modal</Modal.Header>
+              <Modal.Body>
+                This modal has cancel and confirm buttons.
+              </Modal.Body>
+              <Modal.Footer>
+                <Modal.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Cancel
+                  </Button>
+                </Modal.Close>
+                <Modal.Close className="grow" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Close>
+              </Modal.Footer>
+            </Modal>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const ThreeCTA: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Modal (3 CTA)',
+  },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Modal
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Modal.Header>Three CTA Modal</Modal.Header>
+              <Modal.Body>
+                This modal has cancel, maybe, and confirm buttons.
+              </Modal.Body>
+              <Modal.Footer>
+                <Modal.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Cancel
+                  </Button>
+                </Modal.Close>
+                <Modal.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Maybe
+                  </Button>
+                </Modal.Close>
+                <Modal.Close className="grow" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Close>
+              </Modal.Footer>
+            </Modal>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
 };
 
 export const NoBody: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Modal (No Body)',
   },
-  render: () => {
-    return <NoBodyModal />;
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Modal
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Modal.Header>No Body Modal</Modal.Header>
+              <Modal.Footer>
+                <Modal.Close className="flex justify-end" closeValue={false}>
+                  <Button variant="text">Close</Button>
+                </Modal.Close>
+              </Modal.Footer>
+            </Modal>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const AsyncModal: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Modal (Async)',
   },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={async () => {
+          const result = await overlay.openAsync<boolean>(
+            ({ isOpen, close }) => (
+              <Modal isOpen={isOpen} close={close} defaultCloseValue={false}>
+                <Modal.Header>Async Modal</Modal.Header>
+                <Modal.Body>
+                  Clicking confirm returns true, cancel returns false.
+                </Modal.Body>
+                <Modal.Footer>
+                  <Modal.Close closeValue={false} className="grow">
+                    <Button variant="secondary" className="w-full">
+                      Cancel
+                    </Button>
+                  </Modal.Close>
+                  <Modal.Close closeValue={true} className="grow">
+                    <Button variant="primary" className="w-full">
+                      Confirm
+                    </Button>
+                  </Modal.Close>
+                </Modal.Footer>
+              </Modal>
+            ),
+          );
+          alert(`Result: ${result}`);
+        }}
+      />
+    </StoryContainer>
+  ),
 };

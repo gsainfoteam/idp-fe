@@ -5,6 +5,7 @@ import type { ErrorStatus, HttpMethod } from 'openapi-typescript-helpers';
 import type { paths } from '@/@types/api-schema';
 import { postAuthRefresh } from '@/data/auth';
 import { useToken } from '@/features/auth';
+import { Log } from '@/features/core';
 
 interface AuxiliaryRequestInit extends Request {
   retry?: boolean;
@@ -44,6 +45,11 @@ const middleware: Middleware = {
     }
 
     if (response.status >= 400) {
+      Log.error('api', {
+        endpoint: new URL(request.url).pathname,
+        status: response.status,
+        method: request.method as HttpMethod,
+      });
       return Promise.reject(response);
     }
 
@@ -52,11 +58,12 @@ const middleware: Middleware = {
   async onError({ error, request }) {
     if (request.url.includes('/auth/refresh')) {
       return Promise.reject(`Error refreshing token: ${error}`);
-    } else if (request.url.includes('/auth/login')) {
-      return Promise.reject(`Error in login: ${error}`);
-    } else {
-      return Promise.reject(`Error in request: ${error}`);
     }
+    if (request.url.includes('/auth/login')) {
+      return Promise.reject(`Error in login: ${error}`);
+    }
+
+    return Promise.reject(`Error in request: ${error}`);
   },
 };
 

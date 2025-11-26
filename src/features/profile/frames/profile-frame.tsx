@@ -11,6 +11,7 @@ import {
   Avatar,
   FunnelLayout,
   IconButton,
+  LogClick,
   cn,
   uniqueKey,
 } from '@/features/core';
@@ -85,26 +86,30 @@ export function ProfileFrame() {
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
-            <Avatar
-              img={user.picture ?? undefined}
-              seed={uniqueKey(user.studentId)}
-              size={24}
-              className="cursor-pointer"
-              onClick={() => {
-                overlay.open(({ isOpen, close }) => (
-                  <ProfileEditOverlay isOpen={isOpen} close={close} />
-                ));
-              }}
-            >
-              {user.name.charAt(0)}
-            </Avatar>
+            <LogClick event="home_profile_edit_button">
+              <Avatar
+                img={user.picture ?? undefined}
+                seed={uniqueKey(user.studentId)}
+                size={24}
+                className="cursor-pointer"
+                onClick={() => {
+                  overlay.open(({ isOpen, close }) => (
+                    <ProfileEditOverlay isOpen={isOpen} close={close} />
+                  ));
+                }}
+              >
+                {user.name.charAt(0)}
+              </Avatar>
+            </LogClick>
             <div className="absolute right-0 bottom-0">
-              <IconButton
-                variant="primary"
-                size="none"
-                icon={<EditIcon className="size-4" />}
-                className="border-funnel-background size-8 rounded-full border-3"
-              />
+              <LogClick event="home_profile_edit_button">
+                <IconButton
+                  variant="primary"
+                  size="none"
+                  icon={<EditIcon className="size-4" />}
+                  className="border-funnel-background size-8 rounded-full border-3"
+                />
+              </LogClick>
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -123,12 +128,14 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.name_and_id')}
               {isStudent && (
-                <VerifiedBadge
-                  verified={user.isIdVerified}
-                  onClick={async () =>
-                    await navigate({ to: '/profile/verify-student-id' })
-                  }
-                />
+                <LogClick event="home_profile_student_id_verify_button">
+                  <VerifiedBadge
+                    verified={user.isIdVerified}
+                    onClick={async () =>
+                      await navigate({ to: '/profile/verify-student-id' })
+                    }
+                  />
+                </LogClick>
               )}
             </div>
             <div className="text-basics-secondary-label">{`${user.studentId} ${user.name}`}</div>

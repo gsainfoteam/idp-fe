@@ -3,7 +3,7 @@ import { ChangeEvent, PropsWithChildren, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 export type FileUploadProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,

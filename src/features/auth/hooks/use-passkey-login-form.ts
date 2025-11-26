@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { postAuthPasskey, postAuthPasskeyVerify } from '@/data/auth';
+import { Log } from '@/features/core';
 import { useRecentLogin } from '@/features/oauth';
 import {
   arrayBufferToBase64Url,
@@ -101,6 +102,7 @@ export const usePasskeyLoginForm = () => {
     }
 
     saveToken(verifyRes.data.accessToken);
+    Log.submit('auth_login', { method: 'passkey' });
     await refetch();
     setRecentLogin(new Date());
   };

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
@@ -8,12 +10,13 @@ import {
   Button,
   Dialog,
   FileUpload,
+  LogClick,
+  LogDialog,
   cn,
   uniqueKey,
 } from '@/features/core';
 import { useLoading } from '@/features/core';
-import { IconButton } from '@/features/core/components/icon-button';
-import { overlay } from 'overlay-kit';
+import { IconButton } from '@/features/core';
 
 import { Client } from '../hooks/use-client';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
@@ -30,7 +33,14 @@ function ClientPictureOverlay({
   const { t } = useTranslation();
 
   return (
-    <Dialog isOpen={isOpen} close={close} className="mx-10 w-auto">
+    <LogDialog
+      isOpen={isOpen}
+      close={(_: boolean) => close()}
+      defaultCloseValue={false}
+      className="mx-10 w-auto"
+      event="client_picture_delete_dialog"
+      closeProperties={(v) => ({ result: v ? 'confirm' : 'cancel' })}
+    >
       <Dialog.Header>
         {t('services.detail.picture.delete_overlay.title')}
       </Dialog.Header>
@@ -38,20 +48,18 @@ function ClientPictureOverlay({
         {t('services.detail.picture.delete_overlay.description')}
       </Dialog.Body>
       <Dialog.Footer>
-        <Dialog.Close className="grow">
+        <Dialog.Close className="grow" closeValue={false}>
           <Button variant="secondary" className="w-full">
             {t('services.detail.picture.delete_overlay.cancel')}
           </Button>
         </Dialog.Close>
-        <Button
-          variant="primary"
-          onClick={() => onContinue().then(close)}
-          className="grow"
-        >
-          {t('services.detail.picture.delete_overlay.confirm')}
-        </Button>
+        <Dialog.Close className="grow" closeValue={true}>
+          <Button variant="primary" onClick={onContinue}>
+            {t('services.detail.picture.delete_overlay.confirm')}
+          </Button>
+        </Dialog.Close>
       </Dialog.Footer>
-    </Dialog>
+    </LogDialog>
   );
 }
 
@@ -113,32 +121,42 @@ export function ClientPictureForm({
               startUploadLoading(onSave(files, previewUrls).then(uploadImage))
             }
           >
-            <IconButton
-              variant="primary"
-              loading={uploadLoading}
-              disabled={deleteLoading || client.deleteRequestedAt != null}
-              className="p-2.5"
-              icon={<EditIcon />}
-            />
+            <LogClick
+              event="client_edit_button"
+              properties={{ clientId: client.clientId }}
+            >
+              <IconButton
+                variant="primary"
+                loading={uploadLoading}
+                disabled={deleteLoading || client.deleteRequestedAt != null}
+                className="p-2.5"
+                icon={<EditIcon />}
+              />
+            </LogClick>
           </FileUpload>
-          <IconButton
-            variant="secondary"
-            loading={deleteLoading}
-            disabled={!previewImage || client.deleteRequestedAt != null}
-            className="p-2.5"
-            icon={<TrashBinIcon />}
-            onClick={async () => {
-              overlay.open(({ isOpen, close }) => (
-                <ClientPictureOverlay
-                  isOpen={isOpen}
-                  close={close}
-                  onContinue={async () => {
-                    await startDeleteLoading(deleteImage());
-                  }}
-                />
-              ));
-            }}
-          />
+          <LogClick
+            event="client_picture_delete"
+            properties={{ clientId: client.clientId }}
+          >
+            <IconButton
+              variant="secondary"
+              loading={deleteLoading}
+              disabled={!previewImage || client.deleteRequestedAt != null}
+              className="p-2.5"
+              icon={<TrashBinIcon />}
+              onClick={async () => {
+                overlay.open(({ isOpen, close }) => (
+                  <ClientPictureOverlay
+                    isOpen={isOpen}
+                    close={close}
+                    onContinue={async () => {
+                      await startDeleteLoading(deleteImage());
+                    }}
+                  />
+                ));
+              }}
+            />
+          </LogClick>
         </div>
       </div>
     </div>

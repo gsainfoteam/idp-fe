@@ -1,5 +1,8 @@
+import { Link } from '@tanstack/react-router';
+import { TFunction } from 'i18next';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { UAParser } from 'ua-parser-js';
 
 import FaceIDIcon from '@/assets/icons/line/face-id.svg?react';
 import FingerprintIcon from '@/assets/icons/line/fingerprint.svg?react';
@@ -11,11 +14,9 @@ import {
   Button,
   FunnelLayout,
   LoadingOverlay,
+  LogClick,
   ThemeSwitcher,
 } from '@/features/core';
-import { Link } from '@tanstack/react-router';
-import { TFunction } from 'i18next';
-import { UAParser } from 'ua-parser-js';
 
 function getPasskeyButtonInfo(t: TFunction) {
   const { os, device } = UAParser(navigator.userAgent);
@@ -75,39 +76,47 @@ export function LoginFrame() {
             </div>
             <div className="h-8" />
             <div className="flex w-full flex-col items-center justify-center gap-3">
-              <Button
-                variant="primary"
-                className="w-full"
-                disabled={!form.formState.isValid}
-                loading={form.formState.isSubmitting}
-              >
-                {t(`login.buttons.login`)}
-              </Button>
+              <LogClick event="auth_login_email_button">
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  disabled={!form.formState.isValid}
+                  loading={form.formState.isSubmitting}
+                >
+                  {t(`login.buttons.login`)}
+                </Button>
+              </LogClick>
               <div className="flex w-full items-center justify-center gap-3">
                 <div className="bg-basics-tertiary-label h-0.25 w-full" />
                 <span className="text-funnel-description">or</span>
                 <div className="bg-basics-tertiary-label h-0.25 w-full" />
               </div>
-              <Button
-                variant="default"
-                className="w-full"
-                disabled={form.formState.isSubmitting || !navigator.credentials}
-                prefixIcon={prefixIcon}
-                type="button"
-                onClick={onPasskeyLogin}
-              >
-                {buttonText}
-              </Button>
+              <LogClick event="auth_login_passkey_button">
+                <Button
+                  variant="default"
+                  className="w-full"
+                  disabled={
+                    form.formState.isSubmitting || !navigator.credentials
+                  }
+                  prefixIcon={prefixIcon}
+                  type="button"
+                  onClick={onPasskeyLogin}
+                >
+                  {buttonText}
+                </Button>
+              </LogClick>
               <div className="flex w-full items-center justify-center gap-1">
                 <Link to="/auth/register" search={(prev) => ({ ...prev })}>
-                  <Button
-                    variant="link"
-                    size="none"
-                    type="button"
-                    className="text-body-2 no-underline"
-                  >
-                    {t('login.buttons.register')}
-                  </Button>
+                  <LogClick event="auth_register_button">
+                    <Button
+                      variant="link"
+                      size="none"
+                      type="button"
+                      className="text-body-2 no-underline"
+                    >
+                      {t('login.buttons.register')}
+                    </Button>
+                  </LogClick>
                 </Link>
                 <Button
                   variant="grayText"

@@ -1,145 +1,261 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useEffect, useState } from 'react';
+import { OverlayProvider, overlay } from 'overlay-kit';
 
 import { Button, Dialog } from '@/features/core';
 
 const meta = {
-  component: Dialog,
-  argTypes: {
-    isOpen: {
-      options: [true, false],
-      control: { type: 'boolean' },
-    },
-  },
-} satisfies Meta<typeof Dialog>;
+  component: Button,
+  argTypes: {},
+  decorators: [
+    (Story) => (
+      <OverlayProvider>
+        <Story />
+      </OverlayProvider>
+    ),
+  ],
+} satisfies Meta<typeof Button>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ExampleDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
-  const [isOpen, setOpen] = useState(initialOpen);
-
-  useEffect(() => {
-    setOpen(initialOpen);
-  }, [initialOpen]);
-
+function StoryContainer({ children }: { children: React.ReactNode }) {
   return (
-    <Dialog isOpen={isOpen} close={() => setOpen(false)}>
-      <Dialog.Header>Title must be so long</Dialog.Header>
-      <Dialog.Body>
-        Lorem ipsum dolor sit amet, consectetur
-        <br />
-        adipiscing elit. Mauris non nulla vitae
-        <br />
-        augue pellentesque mollis.
-      </Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>
-          <Button variant="secondary" className="w-full">
-            Close
-          </Button>
-        </Dialog.Close>
-        <Dialog.Close>
-          <Button
-            variant="primary"
-            onClick={() => {
-              alert('Success!!');
-            }}
-            className="w-full"
-          >
-            Success
-          </Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
+    <div className="bg-funnel-background flex min-h-64 items-center justify-center p-10">
+      {children}
+    </div>
   );
+}
+
+const storyArgs = {
+  variant: 'primary' as const,
 };
 
-const UndoWarningDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
-  const [open, setOpen] = useState(initialOpen);
-
-  useEffect(() => {
-    setOpen(initialOpen);
-  }, [initialOpen]);
-
-  return (
-    <Dialog isOpen={open} close={() => setOpen(false)}>
-      <Dialog.Header>계속 진행하면 데이터가 소실됩니다.</Dialog.Header>
-      <Dialog.Body>계속 진행하시겠습니까?</Dialog.Body>
-      <Dialog.Footer>
-        <Dialog.Close>
-          <Button variant="secondary" className="w-full">
-            그만두기
-          </Button>
-        </Dialog.Close>
-        <Dialog.Close>
-          <Button variant="primary" className="w-full">
-            계속하기
-          </Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
-  );
-};
-
-const NoBodyDialog = ({ isOpen: initialOpen }: { isOpen: boolean }) => {
-  const [open, setOpen] = useState(initialOpen);
-
-  useEffect(() => {
-    setOpen(initialOpen);
-  }, [initialOpen]);
-
-  return (
-    <Dialog isOpen={open} close={() => setOpen(false)}>
-      <Dialog.Header>알림을 받기 위해 앱 알림을 켤게요</Dialog.Header>
-      <Dialog.Footer>
-        <Dialog.Close className="flex justify-end">
-          <Button variant="text">알림 켜기</Button>
-        </Dialog.Close>
-      </Dialog.Footer>
-    </Dialog>
-  );
-};
-
-export const Default: Story = {
+export const ZeroCTA: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Dialog (0 CTA)',
   },
-  render: ({ isOpen }) => {
-    return (
-      <div className="bg-funnel-background absolute inset-0">
-        <ExampleDialog isOpen={isOpen} />
-      </div>
-    );
-  },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Dialog
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Dialog.Header>Body Only Dialog</Dialog.Header>
+              <Dialog.Body>
+                This dialog has no CTA buttons. Close via backdrop or ESC.
+              </Dialog.Body>
+            </Dialog>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
 };
 
-export const UndoWarning: Story = {
+export const OneCTA: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Dialog (1 CTA)',
   },
-  render: ({ isOpen }) => {
-    return (
-      <div className="bg-funnel-background absolute inset-0">
-        <UndoWarningDialog isOpen={isOpen} />
-      </div>
-    );
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Dialog
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Dialog.Header>Single CTA Dialog</Dialog.Header>
+              <Dialog.Body>
+                This dialog has a single confirm button.
+              </Dialog.Body>
+              <Dialog.Footer>
+                <Dialog.Close className="w-full" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Dialog.Close>
+              </Dialog.Footer>
+            </Dialog>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const TwoCTA: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Dialog (2 CTA)',
   },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Dialog
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Dialog.Header>Two CTA Dialog</Dialog.Header>
+              <Dialog.Body>
+                This dialog has cancel and confirm buttons.
+              </Dialog.Body>
+              <Dialog.Footer>
+                <Dialog.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close className="grow" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Dialog.Close>
+              </Dialog.Footer>
+            </Dialog>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const ThreeCTA: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Dialog (3 CTA)',
+  },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Dialog
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Dialog.Header>Three CTA Dialog</Dialog.Header>
+              <Dialog.Body>
+                This dialog has cancel, maybe, and confirm buttons.
+              </Dialog.Body>
+              <Dialog.Footer>
+                <Dialog.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close className="grow" closeValue={false}>
+                  <Button variant="secondary" className="w-full">
+                    Maybe
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close className="grow" closeValue={true}>
+                  <Button
+                    variant="primary"
+                    onClick={() => alert('Confirmed!')}
+                    className="w-full"
+                  >
+                    Confirm
+                  </Button>
+                </Dialog.Close>
+              </Dialog.Footer>
+            </Dialog>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
 };
 
 export const NoBody: Story = {
   args: {
-    isOpen: true,
-    close: () => {},
+    ...storyArgs,
+    children: 'Open Dialog (No Body)',
   },
-  render: ({ isOpen }) => {
-    return (
-      <div className="bg-funnel-background absolute inset-0">
-        <NoBodyDialog isOpen={isOpen} />
-      </div>
-    );
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={() => {
+          overlay.open(({ isOpen, close }) => (
+            <Dialog
+              isOpen={isOpen}
+              close={(_: boolean) => close()}
+              defaultCloseValue={false}
+            >
+              <Dialog.Header>No Body Dialog</Dialog.Header>
+              <Dialog.Footer>
+                <Dialog.Close className="flex justify-end" closeValue={false}>
+                  <Button variant="text">Close</Button>
+                </Dialog.Close>
+              </Dialog.Footer>
+            </Dialog>
+          ));
+        }}
+      />
+    </StoryContainer>
+  ),
+};
+
+export const AsyncDialog: Story = {
+  args: {
+    ...storyArgs,
+    children: 'Open Dialog (Async)',
   },
+  render: (args) => (
+    <StoryContainer>
+      <Button
+        {...args}
+        onClick={async () => {
+          const result = await overlay.openAsync<boolean>(
+            ({ isOpen, close }) => (
+              <Dialog isOpen={isOpen} close={close} defaultCloseValue={false}>
+                <Dialog.Header>Async Dialog</Dialog.Header>
+                <Dialog.Body>
+                  Clicking confirm returns true, cancel returns false.
+                </Dialog.Body>
+                <Dialog.Footer>
+                  <Dialog.Close closeValue={false} className="grow">
+                    <Button variant="secondary" className="w-full">
+                      Cancel
+                    </Button>
+                  </Dialog.Close>
+                  <Dialog.Close closeValue={true} className="grow">
+                    <Button variant="primary" className="w-full">
+                      Confirm
+                    </Button>
+                  </Dialog.Close>
+                </Dialog.Footer>
+              </Dialog>
+            ),
+          );
+          alert(`Result: ${result}`);
+        }}
+      />
+    </StoryContainer>
+  ),
 };

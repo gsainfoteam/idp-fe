@@ -4,7 +4,13 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import { components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  Button,
+  FunnelLayout,
+  LogClick,
+  uniqueKey,
+} from '@/features/core';
 
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
@@ -74,21 +80,31 @@ function Inner({
           description={t('authorize.description', { client: client.name })}
           button={
             <div className="flex gap-2.5">
-              <Button
-                variant="secondary"
-                className="w-full"
-                type="button"
-                onClick={onCancel}
+              <LogClick
+                event="oauth_authorize_deny"
+                properties={{ clientId: client.clientId }}
               >
-                {t('authorize.buttons.cancel')}
-              </Button>
-              <Button
-                variant="primary"
-                className="w-full"
-                disabled={!!form.formState.errors.root}
+                <Button
+                  variant="secondary"
+                  className="w-full"
+                  type="button"
+                  onClick={onCancel}
+                >
+                  {t('authorize.buttons.cancel')}
+                </Button>
+              </LogClick>
+              <LogClick
+                event="oauth_authorize_allow"
+                properties={{ clientId: client.clientId }}
               >
-                {t('authorize.buttons.continue')}
-              </Button>
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  disabled={!!form.formState.errors.root}
+                >
+                  {t('authorize.buttons.continue')}
+                </Button>
+              </LogClick>
             </div>
           }
         >
