@@ -33,10 +33,8 @@ function EmailOverlay({
       event="email_verification_overlay"
       closeProperties={(value) => ({ result: value ? 'accept' : 'cancel' })}
     >
-      <LogModal.Header>
-        {t('register.steps.email_overlay.title')}
-      </LogModal.Header>
-      <LogModal.Body>
+      <Modal.Header>{t('register.steps.email_overlay.title')}</Modal.Header>
+      <Modal.Body>
         <div className="mt-2 flex w-full flex-col justify-center gap-1.5">
           <a
             target="_blank"
@@ -57,23 +55,23 @@ function EmailOverlay({
             </Button>
           </a>
         </div>
-      </LogModal.Body>
-      <LogModal.Footer>
-        <LogModal.Close className="grow" closeValue={false}>
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close className="grow" closeValue={false}>
           <LogClick event="register_email_overlay_cancel">
             <Button variant="secondary" className="w-full">
               {t('register.steps.email_overlay.sub_button')}
             </Button>
           </LogClick>
-        </LogModal.Close>
-        <LogModal.Close className="grow" closeValue={true}>
+        </Modal.Close>
+        <Modal.Close className="grow" closeValue={true}>
           <LogClick event="register_email_overlay_accept">
             <Button variant="primary" className="w-full" onClick={onSubmit}>
               {t('register.steps.email_overlay.button')}
             </Button>
           </LogClick>
-        </LogModal.Close>
-      </LogModal.Footer>
+        </Modal.Close>
+      </Modal.Footer>
     </LogModal>
   );
 }

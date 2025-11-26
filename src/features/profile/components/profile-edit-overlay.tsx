@@ -56,8 +56,8 @@ export function ProfileEditOverlay({
       openProperties={{}}
       closeProperties={() => ({})}
     >
-      <LogModal.Header>{t('profile_change.title')}</LogModal.Header>
-      <LogModal.Body className="flex justify-center">
+      <Modal.Header>{t('profile_change.title')}</Modal.Header>
+      <Modal.Body className="flex justify-center">
         <div className="relative w-fit cursor-pointer">
           <Avatar
             img={previewFile ?? undefined}
@@ -84,8 +84,8 @@ export function ProfileEditOverlay({
             </div>
           </FileUpload>
         </div>
-      </LogModal.Body>
-      <LogModal.Footer>
+      </Modal.Body>
+      <Modal.Footer>
         <LogClick event="home_profile_picture_delete">
           <Button
             variant="secondary"
@@ -96,7 +96,7 @@ export function ProfileEditOverlay({
             {t('profile_change.sub_button')}
           </Button>
         </LogClick>
-        <LogModal.Close className="grow" closeValue={true}>
+        <Modal.Close className="grow" closeValue={true}>
           <LogClick event="home_profile_save_button">
             <Button
               variant="primary"
@@ -108,8 +108,8 @@ export function ProfileEditOverlay({
               {t('profile_change.button')}
             </Button>
           </LogClick>
-        </LogModal.Close>
-      </LogModal.Footer>
+        </Modal.Close>
+      </Modal.Footer>
     </LogModal>
   );
 }

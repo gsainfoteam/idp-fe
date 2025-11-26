@@ -28,28 +28,28 @@ export function StudentIdVerificationDialog({
       event="student_id_dialog"
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
     >
-      <LogDialog.Header className="flex flex-col gap-1">
+      <Dialog.Header className="flex flex-col gap-1">
         <div className="text-title-1">
           {t('student_id_verification_dialog.title')}
         </div>
         <div className="text-body-1">
           {t('student_id_verification_dialog.description')}
         </div>
-      </LogDialog.Header>
-      <LogDialog.Body>
+      </Dialog.Header>
+      <Dialog.Body>
         <div className="text-title-1 text-label w-full text-center">
           {studentId}
         </div>
-      </LogDialog.Body>
-      <LogDialog.Footer>
-        <LogDialog.Close className="grow" closeValue={false}>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close className="grow" closeValue={false}>
           <LogClick event="student_id_verification_dialog_cancel">
             <Button variant="secondary" className="w-full">
               {t('student_id_verification_dialog.buttons.cancel')}
             </Button>
           </LogClick>
-        </LogDialog.Close>
-        <LogDialog.Close className="grow" closeValue={true}>
+        </Dialog.Close>
+        <Dialog.Close className="grow" closeValue={true}>
           <LogClick
             event="student_id_verification_dialog_confirm"
             properties={{ studentId }}
@@ -58,8 +58,8 @@ export function StudentIdVerificationDialog({
               {t('student_id_verification_dialog.buttons.continue')}
             </Button>
           </LogClick>
-        </LogDialog.Close>
-      </LogDialog.Footer>
+        </Dialog.Close>
+      </Dialog.Footer>
     </LogDialog>
   );
 }

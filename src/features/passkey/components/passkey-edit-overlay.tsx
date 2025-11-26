@@ -29,10 +29,8 @@ export function PasskeyEditOverlay({
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
       className="min-w-100"
     >
-      <LogModal.Header>
-        {t('passkey.steps.list.edit_overlay.title')}
-      </LogModal.Header>
-      <LogModal.Body>
+      <Modal.Header>{t('passkey.steps.list.edit_overlay.title')}</Modal.Header>
+      <Modal.Body>
         <Input
           error={formState.errors.name?.message}
           disabled={formState.isSubmitting}
@@ -40,9 +38,9 @@ export function PasskeyEditOverlay({
           placeholder={t('passkey.steps.list.edit_overlay.placeholder')}
           {...register('name')}
         />
-      </LogModal.Body>
-      <LogModal.Footer>
-        <LogModal.Close closeValue={false} className="grow">
+      </Modal.Body>
+      <Modal.Footer>
+        <Modal.Close closeValue={false} className="grow">
           <Button
             variant="secondary"
             className="w-full"
@@ -50,8 +48,8 @@ export function PasskeyEditOverlay({
           >
             {t('passkey.steps.list.edit_overlay.cancel')}
           </Button>
-        </LogModal.Close>
-        <LogModal.Close closeValue={true} className="grow">
+        </Modal.Close>
+        <Modal.Close closeValue={true} className="grow">
           <Button
             variant="primary"
             className="w-full"
@@ -60,8 +58,8 @@ export function PasskeyEditOverlay({
           >
             {t('passkey.steps.list.edit_overlay.apply')}
           </Button>
-        </LogModal.Close>
-      </LogModal.Footer>
+        </Modal.Close>
+      </Modal.Footer>
     </LogModal>
   );
 }

@@ -49,8 +49,3 @@ export function LogDialog<TCloseValue, TEvent extends keyof ModalEventMap>({
     </Dialog>
   );
 }
-
-LogDialog.Header = Dialog.Header;
-LogDialog.Body = Dialog.Body;
-LogDialog.Footer = Dialog.Footer;
-LogDialog.Close = Dialog.Close;

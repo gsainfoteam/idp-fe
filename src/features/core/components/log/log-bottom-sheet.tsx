@@ -52,8 +52,3 @@ export function LogBottomSheet<
     </BottomSheet>
   );
 }
-
-LogBottomSheet.Header = BottomSheet.Header;
-LogBottomSheet.Body = BottomSheet.Body;
-LogBottomSheet.Footer = BottomSheet.Footer;
-LogBottomSheet.Close = BottomSheet.Close;

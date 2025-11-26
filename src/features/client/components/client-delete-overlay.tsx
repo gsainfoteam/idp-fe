@@ -30,17 +30,15 @@ export function ClientDeleteOverlay({
         result: value ? 'confirm' : 'cancel',
       })}
     >
-      <LogDialog.Header>
-        {t('services.detail.delete.dialog.header')}
-      </LogDialog.Header>
-      <LogDialog.Body>{t('services.detail.delete.dialog.body')}</LogDialog.Body>
-      <LogDialog.Footer>
-        <LogDialog.Close closeValue={false} className="grow">
+      <Dialog.Header>{t('services.detail.delete.dialog.header')}</Dialog.Header>
+      <Dialog.Body>{t('services.detail.delete.dialog.body')}</Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close closeValue={false} className="grow">
           <Button variant="secondary" className="w-full">
             {t('services.detail.delete.dialog.cancel')}
           </Button>
-        </LogDialog.Close>
-        <LogDialog.Close closeValue={true} className="grow">
+        </Dialog.Close>
+        <Dialog.Close closeValue={true} className="grow">
           <LogClick
             event="client_delete_button"
             properties={{ clientId: client.clientId }}
@@ -49,8 +47,8 @@ export function ClientDeleteOverlay({
               {t('services.detail.delete.dialog.confirm')}
             </Button>
           </LogClick>
-        </LogDialog.Close>
-      </LogDialog.Footer>
+        </Dialog.Close>
+      </Dialog.Footer>
     </LogDialog>
   );
 }

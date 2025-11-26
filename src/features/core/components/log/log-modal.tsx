@@ -13,7 +13,7 @@ type LogModalProps<
   closeProperties: (closeValue: TCloseValue) => ModalEventMap[TEvent]['close'];
 };
 
-function LogModalComponent<TCloseValue, TEvent extends keyof ModalEventMap>({
+export function LogModal<TCloseValue, TEvent extends keyof ModalEventMap>({
   event,
   openProperties = {} as ModalEventMap[TEvent]['open'],
   closeProperties,
@@ -51,10 +51,3 @@ function LogModalComponent<TCloseValue, TEvent extends keyof ModalEventMap>({
     </Modal>
   );
 }
-
-export const LogModal = Object.assign(LogModalComponent, {
-  Header: Modal.Header,
-  Body: Modal.Body,
-  Footer: Modal.Footer,
-  Close: Modal.Close,
-});
