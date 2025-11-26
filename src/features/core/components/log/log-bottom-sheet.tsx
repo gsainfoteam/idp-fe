@@ -28,10 +28,9 @@ export function LogBottomSheet<
   ...props
 }: LogBottomSheetProps<TCloseValue, TEvent>) {
   useEffect(() => {
-    if (isOpen) {
-      Log.modal(`${event}_open`, openProperties);
-    }
-  }, [isOpen, event, openProperties]);
+    if (!isOpen) return;
+    Log.modal(`${event}_open`, openProperties);
+  }, [isOpen]);
 
   const wrappedClose: ModalProps<TCloseValue>['close'] = ((
     value: TCloseValue,
