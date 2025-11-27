@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { BottomSheet } from '../compound/bottom-sheet';
 import { type ModalProps } from '../compound/modal';
@@ -27,9 +27,17 @@ export function LogBottomSheet<
   children,
   ...props
 }: LogBottomSheetProps<TCloseValue, TEvent>) {
+  const eventRef = useRef(event);
+  const openPropertiesRef = useRef(openProperties);
+
+  useEffect(() => {
+    eventRef.current = event;
+    openPropertiesRef.current = openProperties;
+  }, [event, openProperties]);
+
   useEffect(() => {
     if (!isOpen) return;
-    Log.modal(`${event}_open`, openProperties);
+    Log.modal(`${eventRef.current}_open`, openPropertiesRef.current);
   }, [isOpen]);
 
   const wrappedClose: ModalProps<TCloseValue>['close'] = ((
