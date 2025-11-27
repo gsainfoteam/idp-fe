@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
-
 import {
   Navigate,
   Outlet,
   createFileRoute,
   useRouter,
 } from '@tanstack/react-router';
+import { useMemo } from 'react';
 
 import { useAuth, useToken } from '@/features/auth';
 

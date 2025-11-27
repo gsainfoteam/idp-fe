@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import imageCompression from 'browser-image-compression';
+import { type Dispatch, type SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +61,7 @@ export const useProfileEditForm = (
         useWebWorker: true,
         fileType: 'image/webp',
       });
-    } catch (error) {
+    } catch {
       toast.error(t('profile_change.errors.failed_to_compress'));
       return null;
     }
@@ -105,7 +104,7 @@ export const useProfileEditForm = (
       if (!uploadResponse.ok) throw uploadResponse;
       Log.submit('profile_edit');
       await refetch();
-    } catch (error) {
+    } catch {
       toast.error(t('profile_change.errors.failed_to_upload'));
       return false;
     }

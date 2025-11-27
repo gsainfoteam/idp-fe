@@ -1,17 +1,27 @@
-import { PropsWithChildren, createContext, useContext, useEffect } from 'react';
+import { type PanInfo, motion, useAnimationControls } from 'framer-motion';
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+} from 'react';
 
-import { PanInfo, motion, useAnimationControls } from 'framer-motion';
-
+import {
+  ModalContext,
+  type ModalContextValue,
+} from '../../context/modal-context';
 import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
-import { ModalContext, ModalContextValue, ModalProps } from './modal';
+
+import { type ModalProps } from './modal';
 
 export type BottomSheetContextValue<TCloseValue> = Pick<
   ModalProps<TCloseValue>,
   'close'
 > | null;
 
-const BottomSheetContext = createContext<BottomSheetContextValue<any>>(null);
+const BottomSheetContext =
+  createContext<BottomSheetContextValue<unknown>>(null);
 
 function BottomSheetComponent<TCloseValue>(
   props: PropsWithChildren<ModalProps<TCloseValue>>,
@@ -55,7 +65,7 @@ function BottomSheetComponent<TCloseValue>(
 
   return (
     <BottomSheetContext.Provider
-      value={{ close } as BottomSheetContextValue<any>}
+      value={{ close } as BottomSheetContextValue<unknown>}
     >
       <Backdrop isOpen={isOpen} close={handleDefaultClose}>
         <motion.div

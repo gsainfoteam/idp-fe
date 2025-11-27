@@ -1,9 +1,9 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, Input, Label } from '@/features/core';
-
 import { useEmailForm } from '../../hooks/issue-password-steps/use-email-form';
+
+import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
 export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const {

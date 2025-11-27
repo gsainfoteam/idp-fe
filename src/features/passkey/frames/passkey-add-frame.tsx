@@ -1,8 +1,9 @@
-import { useFunnel } from '@/features/core';
 import { useRouter } from '@tanstack/react-router';
 
 import { CompleteStep } from './passkey-add-steps/complete-step';
 import { RegisterStep } from './passkey-add-steps/register-step';
+
+import { useFunnel } from '@/features/core';
 
 export type PasskeySteps = {
   register: {};

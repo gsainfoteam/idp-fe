@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import { type RegisterSteps } from '../register-frame';
 
-import { RegisterSteps } from '../register-frame';
+import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
 
 export function CompleteStep({
   context,

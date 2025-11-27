@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import { Log, type ModalEventMap } from '@/features/core';
-
 import { BottomSheet } from '../compound/bottom-sheet';
-import { ModalProps } from '../compound/modal';
+import { type ModalProps } from '../compound/modal';
+
+import { Log, type ModalEventMap } from '@/features/core';
 
 type LogBottomSheetProps<
   TCloseValue,

@@ -1,9 +1,9 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
-
 import { usePasswordForm } from '../../hooks/register-steps/use-password-form';
+
+import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
 
 export function PasswordStep({
   context,

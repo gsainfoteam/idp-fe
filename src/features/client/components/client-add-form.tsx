@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { CreateFormSchema } from '../hooks/use-add-client-form';
+import { type CreateFormSchema } from '../hooks/use-add-client-form';
 
 import { Input, Label } from '@/features/core';
 

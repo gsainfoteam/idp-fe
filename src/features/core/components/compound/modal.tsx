@@ -1,11 +1,16 @@
-import { PropsWithChildren, createContext } from 'react';
+import { type HTMLAttributes, type PropsWithChildren } from 'react';
 
+import {
+  ModalContext,
+  type ModalContextValue,
+} from '../../context/modal-context';
 import { useIsDesktop } from '../../hooks/use-is-desktop';
 import { cn } from '../../utils/cn';
+
 import { BottomSheet } from './bottom-sheet';
 import { Dialog } from './dialog';
 
-export type ModalProps<TCloseValue> = React.HTMLAttributes<HTMLDivElement> & {
+export type ModalProps<TCloseValue> = HTMLAttributes<HTMLDivElement> & {
   isOpen: boolean;
   close: (value: TCloseValue) => void;
   defaultCloseValue: TCloseValue;
@@ -13,13 +18,6 @@ export type ModalProps<TCloseValue> = React.HTMLAttributes<HTMLDivElement> & {
   dialogClassName?: string;
   bottomSheetClassName?: string;
 };
-
-export type ModalContextValue<TCloseValue> = Pick<
-  ModalProps<TCloseValue>,
-  'close'
-> | null;
-
-export const ModalContext = createContext<ModalContextValue<any>>(null);
 
 function ModalComponent<TCloseValue>({
   close,
@@ -34,7 +32,7 @@ function ModalComponent<TCloseValue>({
   const { isDesktop } = useIsDesktop();
 
   return (
-    <ModalContext.Provider value={{ close } as ModalContextValue<any>}>
+    <ModalContext.Provider value={{ close } as ModalContextValue<unknown>}>
       {isDesktop ? (
         <Dialog<TCloseValue>
           key={key}

@@ -1,4 +1,4 @@
-import translation from '../locales/ko/translation.json';
+import type translation from '../locales/ko/translation.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {

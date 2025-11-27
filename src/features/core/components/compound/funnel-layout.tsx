@@ -1,6 +1,5 @@
-import { PropsWithChildren, useCallback, useState } from 'react';
-
-import { RouterHistory } from '@tanstack/react-router';
+import { type RouterHistory } from '@tanstack/react-router';
+import { type PropsWithChildren, useCallback, useState } from 'react';
 
 import { cn } from '../../utils/cn';
 import { BackButton } from '../atomic/back-button';

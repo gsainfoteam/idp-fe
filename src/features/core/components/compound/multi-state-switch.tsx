@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 
 import { cn, palette } from '@/features/core';
 

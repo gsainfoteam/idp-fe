@@ -1,10 +1,11 @@
+import { useCallback, useState } from 'react';
+
 import { useCopy } from '../../hooks/use-copy';
-import { Input, InputProps } from '../atomic/input';
+import { Input, type InputProps } from '../atomic/input';
 
 import ClipboardAddIcon from '@/assets/icons/line/clipboard-add.svg?react';
 import ClipboardCheckIcon from '@/assets/icons/line/clipboard-check.svg?react';
 import ClipboardXIcon from '@/assets/icons/line/clipboard-x.svg?react';
-import { useCallback, useState } from 'react';
 
 type CopyInputProps = Omit<InputProps, 'suffixAdornment'> & {
   value: string;
@@ -12,7 +13,12 @@ type CopyInputProps = Omit<InputProps, 'suffixAdornment'> & {
   showIcon?: boolean;
 };
 
-export function CopyInput({ value, success, showIcon = true, ...props }: CopyInputProps) {
+export function CopyInput({
+  value,
+  success,
+  showIcon = true,
+  ...props
+}: CopyInputProps) {
   const [copied, setCopied] = useState<true | false | null>(null);
   const copy = useCopy();
 
@@ -28,7 +34,7 @@ export function CopyInput({ value, success, showIcon = true, ...props }: CopyInp
       value={value}
       {...props}
       suffixAdornment={
-        showIcon ?
+        showIcon ? (
           copied === null ? (
             <ClipboardAddIcon
               onClick={handleCopy}
@@ -38,8 +44,8 @@ export function CopyInput({ value, success, showIcon = true, ...props }: CopyInp
             <ClipboardCheckIcon onMouseLeave={() => setCopied(null)} />
           ) : (
             <ClipboardXIcon onMouseLeave={() => setCopied(null)} />
-          ) 
-        : null
+          )
+        ) : null
       }
     />
   );

@@ -31,9 +31,16 @@ export * from './components/log/log-modal';
 export * from './components/log/log-dialog';
 export * from './components/log/log-bottom-sheet';
 
+// Contexts
+export * from './context/theme-provider';
+export * from './context/theme-context';
+export * from './context/modal-context';
+
+// Services
 export * from './services/api';
 export * from './services/amplitude';
 
+// Utils
 export * from './utils/cn';
 export * from './utils/palette';
 export * from './utils/time-format';
@@ -43,6 +50,7 @@ export * from './utils/unique-key';
 export * from './utils/sort-by';
 export * from './utils/log';
 
+// Hooks
 export * from './hooks/use-funnel';
 export * from './hooks/use-theme';
 export * from './hooks/use-is-mounted';
@@ -50,6 +58,7 @@ export * from './hooks/use-loading';
 export * from './hooks/use-copy';
 export * from './hooks/use-is-desktop';
 
+// Frames
 export * from './frames/not-found-frame';
 export * from './frames/error-fallback-frame';
 export * from './frames/change-password-frame';

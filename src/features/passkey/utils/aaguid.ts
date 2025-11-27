@@ -1,5 +1,6 @@
-import aaguids from '@/assets/aaguid.json';
 import * as CBOR from 'cbor-js';
+
+import aaguids from '@/assets/aaguid.json';
 
 /**
  * AAGUID는 인증자의 모델을 식별하는 고유한 번호

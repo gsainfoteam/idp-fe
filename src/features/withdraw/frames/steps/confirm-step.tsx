@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
+import { useConfirmWithdrawalForm } from '../../hooks/steps/use-confirm-withdrawal-form';
+
 import { useAuth } from '@/features/auth';
 import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
-
-import { useConfirmWithdrawalForm } from '../../hooks/steps/use-confirm-withdrawal-form';
 
 export function ConfirmStep({
   onNext,

@@ -1,11 +1,10 @@
-import { PropsWithChildren, useState } from 'react';
-
 import {
-  MotionProps,
+  type MotionProps,
   motion,
   useAnimationControls,
   useMotionValue,
 } from 'framer-motion';
+import { type PropsWithChildren, useState } from 'react';
 
 import { cn } from '../../utils/cn';
 
@@ -92,7 +91,7 @@ export function SwipeCard({
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-lg touch-pan-y">
+    <div className="relative w-full touch-pan-y overflow-hidden rounded-lg">
       {leftActions.length > 0 && (
         <div
           className="absolute top-0 bottom-0 left-0 flex"
@@ -102,7 +101,7 @@ export function SwipeCard({
             <button
               key={`left-${i}`}
               type="button"
-              className="flex justify-center items-center cursor-pointer"
+              className="flex cursor-pointer items-center justify-center"
               onClick={async () => {
                 await action.onClick();
                 await close();
@@ -121,14 +120,14 @@ export function SwipeCard({
 
       {rightActions.length > 0 && (
         <div
-          className="absolute top-0 bottom-0 right-0 flex justify-end"
+          className="absolute top-0 right-0 bottom-0 flex justify-end"
           style={{ width: rightWidth + bonusWidth }}
         >
           {rightActions.map((action, i) => (
             <button
               key={`right-${i}`}
               type="button"
-              className="flex justify-center items-center cursor-pointer"
+              className="flex cursor-pointer items-center justify-center"
               onClick={async () => {
                 await action.onClick();
                 await close();
@@ -170,7 +169,7 @@ export function SwipeCard({
         animate={controls}
         style={{ x }}
         className={cn(
-          'relative bg-funnel-background border-basics-tertiary-label flex items-center gap-3 rounded-lg border p-3 w-full',
+          'bg-funnel-background border-basics-tertiary-label relative flex w-full items-center gap-3 rounded-lg border p-3',
           leftActions.length + rightActions.length > 0 &&
             'cursor-grab active:cursor-grabbing',
           className,

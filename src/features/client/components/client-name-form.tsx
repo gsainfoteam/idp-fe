@@ -1,11 +1,13 @@
-import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
-import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import { useEffect, useRef, useState } from 'react';
-import { cn } from '@/features/core';
-import { Client } from '../hooks/use-client';
-import { useClientNameForm } from '../hooks/use-client-name-form';
 import { useFormContext } from 'react-hook-form';
-import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+
+import { type Client } from '../hooks/use-client';
+import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { useClientNameForm } from '../hooks/use-client-name-form';
+
+import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
+import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
+import { cn } from '@/features/core';
 
 export function ClientNameForm({ client }: { client: Client }) {
   const {

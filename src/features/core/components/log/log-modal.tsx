@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { Log, type ModalEventMap } from '@/features/core';
+import { Modal, type ModalProps } from '../compound/modal';
 
-import { Modal, ModalProps } from '../compound/modal';
+import { Log, type ModalEventMap } from '@/features/core';
 
 type LogModalProps<
   TCloseValue,
@@ -28,7 +28,7 @@ export function LogModal<TCloseValue, TEvent extends keyof ModalEventMap>({
   useEffect(() => {
     if (!isOpen) return;
     Log.modal(`${event}_open`, openProperties);
-  }, [isOpen]);
+  }, [event, isOpen, openProperties]);
 
   const wrappedClose: ModalProps<TCloseValue>['close'] = ((
     value: TCloseValue,

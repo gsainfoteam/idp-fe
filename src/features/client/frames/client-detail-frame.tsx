@@ -2,8 +2,6 @@ import { useParams } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FunnelLayout } from '@/features/core';
-
 import { ClientDeleteForm } from '../components/client-delete-form';
 import { ClientIdTokenForm } from '../components/client-id-token-form';
 import { ClientInfoForm } from '../components/client-info-form';
@@ -11,8 +9,10 @@ import { ClientNameForm } from '../components/client-name-form';
 import { ClientPictureForm } from '../components/client-picture-form';
 import { ClientScopesForm } from '../components/client-scopes-form';
 import { ClientUrlsForm } from '../components/client-urls-form';
-import { Client, useClient } from '../hooks/use-client';
+import { type Client, useClient } from '../hooks/use-client';
 import { useClientDetailsForm } from '../hooks/use-client-details-form';
+
+import { FunnelLayout } from '@/features/core';
 
 const Inner = ({
   client,

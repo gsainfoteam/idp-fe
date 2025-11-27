@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input, LogModal, Modal } from '@/features/core';
-
 import { usePasskeyEditForm } from '../hooks/use-passkey-edit-form';
-import { Passkey } from '../hooks/use-passkey-list';
+import { type Passkey } from '../hooks/use-passkey-list';
+
+import { Button, Input, LogModal, Modal } from '@/features/core';
 
 export function PasskeyEditOverlay({
   passkey,

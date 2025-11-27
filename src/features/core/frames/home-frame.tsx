@@ -1,8 +1,9 @@
-import { ReactNode } from 'react';
-
 import { Link } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { ProfileEditOverlay } from '../../profile/components/profile-edit-overlay';
 
 import CodeIcon from '@/assets/icons/duo/code.svg?react';
 import LockIcon from '@/assets/icons/duo/lock.svg?react';
@@ -21,8 +22,6 @@ import {
   cn,
   uniqueKey,
 } from '@/features/core';
-
-import { ProfileEditOverlay } from '../../profile/components/profile-edit-overlay';
 
 interface MenuButtonProps {
   icon: React.ComponentType<{ className?: string }>;

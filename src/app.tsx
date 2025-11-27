@@ -3,6 +3,8 @@ import { RouterProvider } from '@tanstack/react-router';
 import { OverlayProvider } from 'overlay-kit';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import { router } from './router';
+
 import {
   AmplitudeProvider,
   ErrorFallbackFrame,
@@ -10,8 +12,6 @@ import {
   ThemeProvider,
   ToastProvider,
 } from '@/features/core';
-
-import { router } from './router';
 
 const queryClient = new QueryClient();
 

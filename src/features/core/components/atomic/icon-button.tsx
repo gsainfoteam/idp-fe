@@ -1,5 +1,6 @@
 import { cn } from '../../utils/cn';
-import { Button, ButtonProps } from './button';
+
+import { Button, type ButtonProps } from './button';
 
 export type IconButtonProps = Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'> & {
   icon: React.ReactNode;

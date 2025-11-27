@@ -1,5 +1,6 @@
-import { PasskeyAddFrame } from '@/features/passkey';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { PasskeyAddFrame } from '@/features/passkey';
 
 const PasskeyAddPage = () => {
   return <PasskeyAddFrame />;

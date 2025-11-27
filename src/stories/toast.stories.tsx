@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import toast from 'react-hot-toast';
+
 import { Button, ToastProvider } from '@/features/core';
 
 function ToastTestFrame({ label }: { label: string }) {

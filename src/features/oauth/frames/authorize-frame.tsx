@@ -2,7 +2,12 @@ import { useLoaderData } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { components } from '@/@types/api-schema';
+import { AuthorizeForm } from '../components/authorize-form';
+import { useAuthorize } from '../hooks/use-authorize';
+import { useClient } from '../hooks/use-client';
+import { useRecentLogin } from '../hooks/use-recent-login';
+
+import { type components } from '@/@types/api-schema';
 import { useAuth } from '@/features/auth';
 import {
   Avatar,
@@ -11,11 +16,6 @@ import {
   LogClick,
   uniqueKey,
 } from '@/features/core';
-
-import { AuthorizeForm } from '../components/authorize-form';
-import { useAuthorize } from '../hooks/use-authorize';
-import { useClient } from '../hooks/use-client';
-import { useRecentLogin } from '../hooks/use-recent-login';
 
 export function AuthorizeFrame() {
   const { clientId, prompt } = useLoaderData({
