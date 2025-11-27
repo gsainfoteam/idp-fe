@@ -1,10 +1,10 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { type Client } from '../hooks/use-client';
+import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 
 import { Switch } from '@/features/core';
-import { Client } from '../hooks/use-client';
 
 export function ClientIdTokenForm({ client }: { client: Client }) {
   const { t } = useTranslation();

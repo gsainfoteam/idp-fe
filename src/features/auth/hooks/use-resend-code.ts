@@ -1,11 +1,10 @@
 import { useState } from 'react';
-
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { postVerifyEmail } from '@/data/verify';
+import { type RegisterSteps } from '../frames/register-frame';
 
-import { RegisterSteps } from '../frames/register-frame';
+import { postVerifyEmail } from '@/data/verify';
 
 export const useResendCode = ({
   context,

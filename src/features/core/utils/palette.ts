@@ -1,5 +1,5 @@
 import { cn } from './cn';
-import { Falsy } from './type-functions';
+import { type Falsy } from './type-functions';
 
 /**
  * Type Parameters:

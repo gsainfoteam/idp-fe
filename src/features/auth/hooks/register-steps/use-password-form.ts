@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { DifferenceNonNullable } from '@/features/core';
+import { type RegisterSteps } from '../../frames/register-frame';
 
-import { RegisterSteps } from '../../frames/register-frame';
+import { type DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z

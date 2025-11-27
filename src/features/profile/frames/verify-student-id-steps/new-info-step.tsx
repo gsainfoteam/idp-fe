@@ -2,6 +2,9 @@ import { overlay } from 'overlay-kit';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
+import { type VerifyStudentIdSteps } from '../verify-student-id-frame';
+
 import {
   Button,
   FunnelLayout,
@@ -9,9 +12,6 @@ import {
   Label,
   StudentIdVerificationDialog,
 } from '@/features/core';
-
-import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
-import { VerifyStudentIdSteps } from '../verify-student-id-frame';
 
 export function NewInfoStep({
   context,

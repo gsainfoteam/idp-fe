@@ -1,9 +1,9 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, Input, Label } from '@/features/core';
-
 import { useInfoStaffForm } from '../../hooks/register-steps/use-info-staff-form';
+
+import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
 export function InfoStaffStep({
   context,

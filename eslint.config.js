@@ -3,14 +3,20 @@ import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   { ignores: ['dist'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      prettierPlugin,
+    ],
     files: ['**/*.{ts,tsx}'],
+    ignores: ['src/gql/*.ts'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -49,11 +55,17 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'inline-type-imports',
+        },
+      ],
     },
   },
   {
-    extends: [prettierPlugin, 'plugin:storybook/recommended'],
-    files: ['src/**/*.{ts,tsx}'],
-    ignores: ['src/gql/*.ts'],
+    extends: [...storybook.configs['flat/recommended']],
   },
 );

@@ -1,16 +1,15 @@
-import { useEffect, useMemo } from 'react';
-
 import {
   useLocation,
   useNavigate,
   useRouter,
   useSearch,
 } from '@tanstack/react-router';
-import { AnyFunnelState, createUseFunnel } from '@use-funnel/core';
+import { type AnyFunnelState, createUseFunnel } from '@use-funnel/core';
+import { useEffect, useMemo } from 'react';
 
 import { Log } from '../utils/log';
 
-type AnyContext = Record<string, any>;
+type AnyContext = Record<string, unknown>;
 type AnyStepContextMap = Record<string, AnyContext>;
 
 interface TanstackRouterRouteOption {

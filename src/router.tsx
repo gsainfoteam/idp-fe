@@ -1,8 +1,8 @@
 import { createRouter } from '@tanstack/react-router';
 
-import { ErrorFallbackFrame, NotFoundFrame } from '@/features/core';
-
 import { routeTree } from './routeTree.gen';
+
+import { ErrorFallbackFrame, NotFoundFrame } from '@/features/core';
 
 export const router = createRouter({
   routeTree,

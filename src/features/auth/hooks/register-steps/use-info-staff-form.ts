@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { postUser } from '@/data/user';
-import { DifferenceNonNullable, Log } from '@/features/core';
+import { type RegisterSteps } from '../../frames/register-frame';
 
-import { RegisterSteps } from '../../frames/register-frame';
+import { postUser } from '@/data/user';
+import { type DifferenceNonNullable, Log } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({

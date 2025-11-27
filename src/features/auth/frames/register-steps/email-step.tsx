@@ -2,6 +2,8 @@ import { overlay } from 'overlay-kit';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useEmailForm } from '../../hooks/register-steps/use-email-form';
+
 import {
   Button,
   FunnelLayout,
@@ -11,8 +13,6 @@ import {
   LogModal,
   Modal,
 } from '@/features/core';
-
-import { useEmailForm } from '../../hooks/register-steps/use-email-form';
 
 function EmailOverlay({
   isOpen,

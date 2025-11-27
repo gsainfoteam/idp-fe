@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
-
 import { usePasskeyDeleteForm } from '../hooks/use-passkey-delete-form';
-import { Passkey } from '../hooks/use-passkey-list';
+import { type Passkey } from '../hooks/use-passkey-list';
+
+import { Button, Dialog, LogClick, LogDialog } from '@/features/core';
 
 export function PasskeyDeleteOverlay({
   passkey,

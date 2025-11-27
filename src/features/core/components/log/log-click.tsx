@@ -1,7 +1,7 @@
 import {
   Children,
-  ReactElement,
-  ReactNode,
+  type ReactElement,
+  type ReactNode,
   cloneElement,
   isValidElement,
 } from 'react';

@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useAuth } from './use-auth';
+import { useToken } from './use-token';
+
 import { postAuthLogin } from '@/data/auth';
 import { Log } from '@/features/core';
 import { useRecentLogin } from '@/features/oauth';
-
-import { useAuth } from './use-auth';
-import { useToken } from './use-token';
 
 const createSchema = (t: TFunction) =>
   z.object({

@@ -1,6 +1,9 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
+import { useAuth } from './use-auth';
+import { useToken } from './use-token';
+
 import { postAuthPasskey, postAuthPasskeyVerify } from '@/data/auth';
 import { Log } from '@/features/core';
 import { useRecentLogin } from '@/features/oauth';
@@ -9,9 +12,6 @@ import {
   base64UrlToArrayBuffer,
   credentialTypeGuard,
 } from '@/features/passkey';
-
-import { useAuth } from './use-auth';
-import { useToken } from './use-token';
 
 export const usePasskeyLoginForm = () => {
   const { t } = useTranslation();

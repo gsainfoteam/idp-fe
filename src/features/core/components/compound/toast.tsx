@@ -1,8 +1,8 @@
 import {
-  Toast as ToastType,
+  type Toast as ToastType,
   ToastBar,
   Toaster,
-  DefaultToastOptions,
+  type DefaultToastOptions,
 } from 'react-hot-toast';
 
 export function Toast({ t }: { t: ToastType }) {

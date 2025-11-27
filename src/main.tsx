@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
-
 import { createRoot } from 'react-dom/client';
+
+import App from './app.tsx';
 
 import { Log } from '@/features/core';
 
-import App from './app.tsx';
 import './index.css';
 import './locales/i18n';
 

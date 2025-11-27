@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-
-import { patchUserPassword } from '@/data/user';
-import { useAuth, useToken } from '@/features/auth';
-import { Pretty, RequireKeys, useFunnel } from '@/features/core';
 
 import { CompleteStep } from './change-password-steps/complete-step';
 import { CurrentPasswordStep } from './change-password-steps/current-password-step';
 import { NewPasswordStep } from './change-password-steps/new-password-step';
+
+import { type patchUserPassword } from '@/data/user';
+import { useAuth, useToken } from '@/features/auth';
+import { type Pretty, type RequireKeys, useFunnel } from '@/features/core';
 
 type StepContext = Pretty<Partial<Parameters<typeof patchUserPassword>[0]>>;
 

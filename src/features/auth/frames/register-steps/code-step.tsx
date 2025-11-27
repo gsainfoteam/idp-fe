@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { useCodeForm } from '../../hooks/register-steps/use-code-form';
+import { useResendCode } from '../../hooks/use-resend-code';
 
 import {
   Button,
@@ -11,9 +13,6 @@ import {
   LogClick,
   timeString,
 } from '@/features/core';
-
-import { useCodeForm } from '../../hooks/register-steps/use-code-form';
-import { useResendCode } from '../../hooks/use-resend-code';
 
 const CODE_EXPIRED_TIME = 300;
 export const CODE_MAX_COUNT = 5;

@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { UAParser } from 'ua-parser-js';

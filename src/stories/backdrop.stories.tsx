@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 
-import { Backdrop } from '@/features/core';
 import Favicon from '@/assets/logos/favicon.svg?react';
+import { Backdrop } from '@/features/core';
 
 const meta = {
   component: Backdrop,

@@ -1,5 +1,5 @@
 import {
-  ApiResult,
+  type ApiResult,
   api,
   handleApiError,
   handleApiResult,

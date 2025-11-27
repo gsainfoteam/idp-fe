@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
-
 import { useRouter } from '@tanstack/react-router';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, FunnelLayout } from '@/features/core';

@@ -1,4 +1,4 @@
-import createFetchClient, { Middleware } from 'openapi-fetch';
+import createFetchClient, { type Middleware } from 'openapi-fetch';
 import createClient from 'openapi-react-query';
 import type { ErrorStatus, HttpMethod } from 'openapi-typescript-helpers';
 

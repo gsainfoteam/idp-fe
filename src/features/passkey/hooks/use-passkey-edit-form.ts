@@ -1,13 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
 
-import { patchUserPasskey } from '@/data/user';
+import { type Passkey } from './use-passkey-list';
 
-import { Passkey } from './use-passkey-list';
+import { patchUserPasskey } from '@/data/user';
 
 const createSchema = (t: TFunction) =>
   z.object({

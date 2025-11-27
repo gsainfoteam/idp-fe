@@ -2,10 +2,10 @@ import { useRouter } from '@tanstack/react-router';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, FunnelLayout, LogClick } from '@/features/core';
-
 import { ClientAddForm } from '../components/client-add-form';
 import { useAddClientForm } from '../hooks/use-add-client-form';
+
+import { Button, FunnelLayout, LogClick } from '@/features/core';
 
 export function ClientAddFrame() {
   const router = useRouter();

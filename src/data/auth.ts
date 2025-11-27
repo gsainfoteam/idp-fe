@@ -1,6 +1,6 @@
 import {
-  ApiRequestBody,
-  ApiResult,
+  type ApiRequestBody,
+  type ApiResult,
   api,
   handleApiError,
   handleApiResult,

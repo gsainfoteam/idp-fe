@@ -1,9 +1,9 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { deleteUserPasskey } from '@/data/user';
+import { type Passkey } from './use-passkey-list';
 
-import { Passkey } from './use-passkey-list';
+import { deleteUserPasskey } from '@/data/user';
 
 export function usePasskeyDeleteForm(passkey: Passkey) {
   const { t } = useTranslation();

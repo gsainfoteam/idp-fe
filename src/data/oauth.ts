@@ -1,8 +1,8 @@
 import {
-  ApiHeaderParams,
-  ApiQueryParams,
-  ApiRequestBody,
-  ApiResult,
+  type ApiHeaderParams,
+  type ApiQueryParams,
+  type ApiRequestBody,
+  type ApiResult,
   api,
   handleApiError,
   handleApiResult,

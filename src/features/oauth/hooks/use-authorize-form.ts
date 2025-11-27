@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { postOauthConsent } from '@/data/oauth';
 import {
   ClientScopeEnum,
-  ClientScopeType,
+  type ClientScopeType,
 } from '@/routes/_auth-required/authorize';
 
 export const createSchema = () =>

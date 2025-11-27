@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { deleteUser } from '@/data/user';
-
 import { useClientList } from '../use-client-list';
+
+import { deleteUser } from '@/data/user';
 
 const schema = z.object({
   password: z.string().min(1),

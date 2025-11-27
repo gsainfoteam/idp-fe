@@ -1,14 +1,13 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { type Client } from '../hooks/use-client';
+import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { useClientUrlForm } from '../hooks/use-client-url-form';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
-
 import { cn, IconButton, Input } from '@/features/core';
-import { useClientUrlForm } from '../hooks/use-client-url-form';
-import { Client } from '../hooks/use-client';
 
 export function ClientUrlsForm({ client }: { client: Client }) {
   const { t } = useTranslation();

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button, IconButton } from '@/features/core';
-
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
+import { Button, IconButton } from '@/features/core';
 
 const meta = {
   component: Button,

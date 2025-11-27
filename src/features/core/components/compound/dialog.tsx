@@ -1,17 +1,21 @@
-import { PropsWithChildren, createContext, useContext } from 'react';
-
 import { motion } from 'framer-motion';
+import { type PropsWithChildren, createContext, useContext } from 'react';
 
+import {
+  ModalContext,
+  type ModalContextValue,
+} from '../../context/modal-context';
 import { cn } from '../../utils/cn';
 import { Backdrop } from '../atomic/backdrop';
-import { ModalContext, ModalContextValue, ModalProps } from './modal';
+
+import { type ModalProps } from './modal';
 
 export type DialogContextValue<TCloseValue> = Pick<
   ModalProps<TCloseValue>,
   'close'
 > | null;
 
-const DialogContext = createContext<DialogContextValue<any>>(null);
+const DialogContext = createContext<DialogContextValue<unknown>>(null);
 
 function DialogComponent<TCloseValue>(
   props: PropsWithChildren<ModalProps<TCloseValue>>,
@@ -19,7 +23,7 @@ function DialogComponent<TCloseValue>(
   const { isOpen, close, defaultCloseValue, children, className, key } = props;
 
   return (
-    <DialogContext.Provider value={{ close } as DialogContextValue<any>}>
+    <DialogContext.Provider value={{ close } as DialogContextValue<unknown>}>
       <Backdrop isOpen={isOpen} close={() => close(defaultCloseValue)}>
         <motion.div
           key={key}

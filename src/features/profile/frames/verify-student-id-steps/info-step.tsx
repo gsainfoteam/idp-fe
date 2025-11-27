@@ -1,10 +1,10 @@
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useVerifyStudentInfoForm } from '../../hooks/use-verify-student-info-form';
+
 import { useAuth } from '@/features/auth';
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
-
-import { useVerifyStudentInfoForm } from '../../hooks/use-verify-student-info-form';
 
 export function InfoStep({
   onSuccess,
