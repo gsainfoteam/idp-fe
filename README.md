@@ -1,6 +1,6 @@
-# IdP Frontend
+# Account Frontend
 
-GIST 메일로 로그인 서비스의 프론트엔드 애플리케이션입니다. OAuth 2.1, OIDC 기반의 인증 시스템과 패스키(Passkey) 인증을 지원하는 현대적인 웹 애플리케이션입니다.
+인포팀 계정 서비스의 프론트엔드 애플리케이션입니다. OAuth 2.1, OIDC 기반의 인증 시스템과 패스키(Passkey) 인증을 지원하는 현대적인 웹 애플리케이션입니다.
 
 ## 🚀 기술 스택
 
@@ -111,10 +111,10 @@ bun run lint
 cp .env.example .env.{mode}
 ```
 
-| 변수                     | 설명                    | 예시                                                                                              |
-| ------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------- |
-| `VITE_API_URL`           | 백엔드 API의 베이스 URL | `https://api.stg.idp.gistory.me` (development/staging), `https://api.idp.gistory.me` (production) |
-| `VITE_AMPLITUDE_API_KEY` | Amplitude 웹 SDK API 키 | `xxxxxxxxxxxxxxxx`                                                                                |
+| 변수                     | 설명                    | 예시                                                                                                      |
+| ------------------------ | ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| `VITE_API_URL`           | 백엔드 API의 베이스 URL | `https://api.stg.account.gistory.me` (development/staging), `https://api.account.gistory.me` (production) |
+| `VITE_AMPLITUDE_API_KEY` | Amplitude 웹 SDK API 키 | `xxxxxxxxxxxxxxxx`                                                                                        |
 
 > **참고:** `VITE_AMPLITUDE_API_KEY`가 비어 있으면 Amplitude 분석 기능이 비활성화됩니다.
 

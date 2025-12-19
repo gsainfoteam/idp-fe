@@ -1,5 +1,5 @@
 {
-  "name": "idp-fe",
+  "name": "account-fe",
   "private": true,
   "version": "2.3.2",
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "bun run gen-oas && tsr generate && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "gen-oas": "npx openapi-typescript https://api.stg.idp.gistory.me/api-json -o ./src/@types/api-schema.d.ts",
+    "gen-oas": "npx openapi-typescript https://api.stg.account.gistory.me/api-json -o ./src/@types/api-schema.d.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
