@@ -61,6 +61,17 @@ export const getClientPublic = async (
     .catch(handleApiError<'/client/{clientId}/public', 'get'>);
 };
 
+export const getClientMembers = async (
+  pathParams: ApiPathParams<'/client/{clientId}/members', 'get'>,
+): Promise<ApiResult<'/client/{clientId}/members', 'get'>> => {
+  return api
+    .GET('/client/{clientId}/members', {
+      params: { path: pathParams },
+    })
+    .then(handleApiResult<'/client/{clientId}/members', 'get'>)
+    .catch(handleApiError<'/client/{clientId}/members', 'get'>);
+};
+
 export const patchClient = async (
   pathParams: ApiPathParams<'/client/{clientId}', 'patch'>,
   requestBody: ApiRequestBody<'/client/{clientId}', 'patch'>,
