@@ -37,7 +37,7 @@
         "button": "Quit",
         "sub_button": "Cancel"
       },
-      "code": {
+      "email_code": {
         "title": "Enter the 6-digit code\nsent to your email",
         "button": "Verify",
         "resend": "Resend Code",
@@ -53,6 +53,40 @@
             }
           }
         }
+      },
+      "tel": {
+        "title": "Please enter your phone number",
+        "button": "Verify Phone Number",
+        "inputs": {
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          }
+        }
+      },
+      "tel_code": {
+        "title": "Enter the 6-digit code\nsent to your phone number",
+        "button": "Verify",
+        "resend": "Resend Code",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000",
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            }
+          }
+        }
+      },
+      "tel_skip": {
+        "title": "Phone numbers not registered with\ndomestic carriers are difficult to verify",
+        "button": "Skip Phone Number Verification"
       },
       "password": {
         "title": "Please enter your password",
@@ -86,13 +120,6 @@
               "format": "Please enter your name"
             }
           },
-          "phone_number": {
-            "label": "Phone Number",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "Please enter a valid phone number"
-            }
-          },
           "birth_date": {
             "label": "Birth Date",
             "placeholder": "YYYY-MM-DD",
@@ -116,13 +143,6 @@
             "placeholder": "Kim Jin-i",
             "errors": {
               "format": "Please enter your name"
-            }
-          },
-          "phone_number": {
-            "label": "Phone Number",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "Please enter a valid phone number"
             }
           },
           "id": {

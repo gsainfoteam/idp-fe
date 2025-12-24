@@ -10,6 +10,7 @@ export * from './components/atomic/label';
 export * from './components/atomic/loading-ellipse';
 export * from './components/atomic/loading-overlay';
 export * from './components/atomic/password-input';
+export * from './components/atomic/step-progress';
 export * from './components/atomic/switch';
 export * from './components/atomic/theme-switcher';
 

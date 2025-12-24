@@ -11,13 +11,14 @@ import {
   Input,
   Label,
   LogClick,
+  StepProgress,
   timeString,
 } from '@/features/core';
 
 const CODE_EXPIRED_TIME = 300;
 export const CODE_MAX_COUNT = 5;
 
-export function CodeStep({
+export function EmailCodeStep({
   context,
   onNext,
   onUndo,
@@ -43,14 +44,14 @@ export function CodeStep({
   useEffect(() => {
     if (remainTime <= 0) {
       setError('code', {
-        message: t('register.steps.code.inputs.code.errors.expired'),
+        message: t('register.steps.email_code.inputs.code.errors.expired'),
         type: 'value',
       });
     }
 
     if (count >= CODE_MAX_COUNT) {
       setError('code', {
-        message: t('register.steps.code.inputs.code.errors.max_try'),
+        message: t('register.steps.email_code.inputs.code.errors.max_try'),
         type: 'value',
       });
     }
@@ -72,8 +73,13 @@ export function CodeStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={t('register.title')}
-        stepTitle={t('register.steps.code.title')}
+        title={
+          <div className="flex flex-col gap-5">
+            <StepProgress currentStep={3} totalSteps={7} />
+            {t('register.title')}
+          </div>
+        }
+        stepTitle={t('register.steps.email_code.title')}
         button={
           <Button
             variant="primary"
@@ -83,15 +89,17 @@ export function CodeStep({
               !(isValid && isDirty && remainTime > 0 && count < CODE_MAX_COUNT)
             }
           >
-            {t('register.steps.code.button')}
+            {t('register.steps.email_code.button')}
           </Button>
         }
       >
         <div className="w-full">
-          <Label text={t('register.steps.code.inputs.code.label')}>
+          <Label text={t('register.steps.email_code.inputs.code.label')}>
             <Input
               type="text"
-              placeholder={t('register.steps.code.inputs.code.placeholder')}
+              placeholder={t(
+                'register.steps.email_code.inputs.code.placeholder',
+              )}
               error={errors.code?.message}
               disabled={isSubmitting}
               suffixAdornment={
@@ -111,7 +119,7 @@ export function CodeStep({
                 loading={isResending}
                 type="button"
               >
-                {t('register.steps.code.resend')}
+                {t('register.steps.email_code.resend')}
               </Button>
             </LogClick>
           </div>

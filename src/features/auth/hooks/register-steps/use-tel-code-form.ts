@@ -6,31 +6,31 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { type RegisterSteps } from '../../frames/register-frame';
+import { CODE_MAX_COUNT } from '../../frames/register-steps/email-code-step';
 
-import { postUser } from '@/data/user';
+import { postVerify } from '@/data/verify';
 import { type DifferenceNonNullable, Log } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
-    name: z
+    code: z
       .string()
-      .min(1, t('register.steps.info_staff.inputs.name.errors.format')),
-    studentId: z
-      .string()
-      .regex(/^\d{5}$/, t('register.steps.info_staff.inputs.id.errors.format')),
+      .regex(/^\d{6}$/, t('register.steps.tel_code.inputs.code.errors.format')),
   });
 
-export const useInfoStaffForm = ({
+export const useTelCodeForm = ({
   context,
   onNext,
+  count,
 }: {
-  context: RegisterSteps['infoStaff'];
+  context: RegisterSteps['telCode'];
   onNext: (
     data: DifferenceNonNullable<
-      RegisterSteps['complete'],
-      RegisterSteps['infoStaff']
+      RegisterSteps['password'],
+      RegisterSteps['telCode']
     >,
   ) => void;
+  count: number;
 }) => {
   const { t } = useTranslation();
   const form = useForm({
@@ -39,23 +39,23 @@ export const useInfoStaffForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const body = {
-      ...context,
-      ...formData,
-      phoneNumber: context.phoneNumber,
-    };
-
-    const res = await postUser(body);
+    const res = await postVerify({
+      subject: context.phoneNumber,
+      code: formData.code,
+      hint: 'phoneNumber',
+    });
 
     if (!res.ok) {
-      if (res.status === 403) {
-        form.setError('root', {
-          message: t('register.errors.invalid_token'),
-        });
-      } else if (res.status === 409) {
-        form.setError('root', {
-          message: t('register.errors.email_already_exists'),
-        });
+      if (res.status === 400) {
+        if (count < CODE_MAX_COUNT) {
+          form.setError('code', {
+            message: t('register.steps.tel_code.inputs.code.errors.invalid', {
+              count: count + 1,
+              max: CODE_MAX_COUNT,
+            }),
+            type: 'value',
+          });
+        }
       } else if (res.status === 500) {
         toast.error(t('toast.server_error'));
       } else {
@@ -65,8 +65,8 @@ export const useInfoStaffForm = ({
       return;
     }
 
-    Log.submit('auth_register_info');
-    onNext(body);
+    Log.submit('auth_register_tel_code');
+    onNext({ phoneNumberVerificationJwtToken: res.data.verificationJwtToken });
   });
 
   return { form, onSubmit };

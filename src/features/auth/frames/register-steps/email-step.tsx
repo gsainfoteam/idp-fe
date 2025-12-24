@@ -12,6 +12,7 @@ import {
   LogClick,
   LogModal,
   Modal,
+  StepProgress,
 } from '@/features/core';
 
 function EmailOverlay({
@@ -96,7 +97,12 @@ export function EmailStep({
   return (
     <FunnelLayout
       loading={isSubmitting}
-      title={t('register.title')}
+      title={
+        <div className="flex flex-col gap-5">
+          <StepProgress currentStep={2} totalSteps={7} />
+          {t('register.title')}
+        </div>
+      }
       stepTitle={t('register.steps.email.title')}
       button={
         <LogClick event="register_email_check">

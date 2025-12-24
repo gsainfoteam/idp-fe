@@ -3,7 +3,13 @@ import { useTranslation } from 'react-i18next';
 
 import { useInfoStaffForm } from '../../hooks/register-steps/use-info-staff-form';
 
-import { Button, FunnelLayout, Input, Label } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Input,
+  Label,
+  StepProgress,
+} from '@/features/core';
 
 export function InfoStaffStep({
   context,
@@ -22,7 +28,12 @@ export function InfoStaffStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={t('register.title')}
+        title={
+          <div className="flex flex-col gap-5">
+            <StepProgress currentStep={7} totalSteps={7} />
+            {t('register.title')}
+          </div>
+        }
         stepTitle={t('register.steps.info_staff.title')}
         button={
           <Button
@@ -45,19 +56,6 @@ export function InfoStaffStep({
               error={errors.name?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('name')}
-            />
-          </Label>
-          <Label
-            text={t('register.steps.info_staff.inputs.phone_number.label')}
-          >
-            <Input
-              type="tel"
-              placeholder={t(
-                'register.steps.info_staff.inputs.phone_number.placeholder',
-              )}
-              error={errors.phoneNumber?.message || !!errors.root}
-              disabled={isSubmitting}
-              {...register('phoneNumber')}
             />
           </Label>
           <Label text={t('register.steps.info_staff.inputs.id.label')}>

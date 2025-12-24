@@ -3,7 +3,13 @@ import { useTranslation } from 'react-i18next';
 
 import { usePasswordForm } from '../../hooks/register-steps/use-password-form';
 
-import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Label,
+  PasswordInput,
+  StepProgress,
+} from '@/features/core';
 
 export function PasswordStep({
   context,
@@ -22,7 +28,12 @@ export function PasswordStep({
     <form onSubmit={onSubmit}>
       <FunnelLayout
         onUndo={onUndo}
-        title={t('register.title')}
+        title={
+          <div className="flex flex-col gap-5">
+            <StepProgress currentStep={6} totalSteps={7} />
+            {t('register.title')}
+          </div>
+        }
         stepTitle={t('register.steps.password.title')}
         button={
           <Button

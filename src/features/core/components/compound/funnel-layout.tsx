@@ -6,7 +6,7 @@ import { BackButton } from '../atomic/back-button';
 import { LoadingOverlay } from '../atomic/loading-overlay';
 
 export interface FunnelLayoutProps extends React.Attributes {
-  title?: string;
+  title?: React.ReactNode;
   stepTitle?: React.ReactNode;
   description?: string | null;
   button?: React.ReactNode;

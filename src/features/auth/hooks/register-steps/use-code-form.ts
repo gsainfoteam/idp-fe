@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { type RegisterSteps } from '../../frames/register-frame';
-import { CODE_MAX_COUNT } from '../../frames/register-steps/code-step';
+import { CODE_MAX_COUNT } from '../../frames/register-steps/email-code-step';
 
 import { postVerify } from '@/data/verify';
 import { type DifferenceNonNullable, Log } from '@/features/core';
@@ -15,7 +15,10 @@ const createSchema = (t: TFunction) =>
   z.object({
     code: z
       .string()
-      .regex(/^\d{6}$/, t('register.steps.code.inputs.code.errors.format')),
+      .regex(
+        /^\d{6}$/,
+        t('register.steps.email_code.inputs.code.errors.format'),
+      ),
   });
 
 export const useCodeForm = ({
@@ -23,11 +26,11 @@ export const useCodeForm = ({
   onNext,
   count,
 }: {
-  context: RegisterSteps['code'];
+  context: RegisterSteps['emailCode'];
   onNext: (
     data: DifferenceNonNullable<
-      RegisterSteps['password'],
-      RegisterSteps['code']
+      RegisterSteps['tel'],
+      RegisterSteps['emailCode']
     >,
   ) => void;
   count: number;
@@ -49,7 +52,7 @@ export const useCodeForm = ({
       if (res.status === 400) {
         if (count < CODE_MAX_COUNT) {
           form.setError('code', {
-            message: t('register.steps.code.inputs.code.errors.invalid', {
+            message: t('register.steps.email_code.inputs.code.errors.invalid', {
               count: count + 1,
               max: CODE_MAX_COUNT,
             }),
@@ -65,7 +68,7 @@ export const useCodeForm = ({
       return;
     }
 
-    Log.submit('auth_register_code');
+    Log.submit('auth_register_email_code');
     onNext({ emailVerificationJwtToken: res.data.verificationJwtToken });
   });
 

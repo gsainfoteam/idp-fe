@@ -10,6 +10,7 @@ import {
   Input,
   Label,
   LogClick,
+  StepProgress,
   StudentIdVerificationDialog,
 } from '@/features/core';
 
@@ -30,7 +31,12 @@ export function InfoStep({
     <FunnelLayout
       onUndo={onUndo}
       loading={isSubmitting}
-      title={t('register.title')}
+      title={
+        <div className="flex flex-col gap-5">
+          <StepProgress currentStep={7} totalSteps={7} />
+          {t('register.title')}
+        </div>
+      }
       stepTitle={t('register.steps.info.title')}
       button={
         <LogClick event="register_info_verify">
@@ -66,17 +72,6 @@ export function InfoStep({
             error={errors.name?.message || !!errors.root}
             disabled={isSubmitting}
             {...register('name')}
-          />
-        </Label>
-        <Label text={t('register.steps.info.inputs.phone_number.label')}>
-          <Input
-            type="tel"
-            placeholder={t(
-              'register.steps.info.inputs.phone_number.placeholder',
-            )}
-            error={errors.phoneNumber?.message || !!errors.root}
-            disabled={isSubmitting}
-            {...register('phoneNumber')}
           />
         </Label>
         <Label text={t('register.steps.info.inputs.birth_date.label')}>

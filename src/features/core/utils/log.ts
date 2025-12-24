@@ -21,6 +21,8 @@ export type ClickEventMap = {
   register_email_overlay_accept: Record<string, never>;
   register_email_overlay_cancel: Record<string, never>;
   register_code_resend: Record<string, never>;
+  register_tel_verify: Record<string, never>;
+  register_tel_code_resend: Record<string, never>;
   register_info_verify: Record<string, never>;
 
   // Phone Number Verification
@@ -67,7 +69,9 @@ export type ClickEventMap = {
 export type SubmitEventMap = {
   auth_login: { method: 'email' | 'passkey' };
   auth_register_email: Record<string, never>;
-  auth_register_code: Record<string, never>;
+  auth_register_email_code: Record<string, never>;
+  auth_register_tel: Record<string, never>;
+  auth_register_tel_code: Record<string, never>;
   auth_register_info: Record<string, never>;
   profile_edit: Record<string, never>;
   profile_password_change: Record<string, never>;
