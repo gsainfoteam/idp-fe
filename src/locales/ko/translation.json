@@ -299,6 +299,49 @@
       }
     }
   },
+  "verify_phone_number": {
+    "title": "전화번호 인증",
+    "steps": {
+      "tel": {
+        "title": "전화번호를 입력해주세요",
+        "button": "인증번호 보내기",
+        "inputs": {
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        }
+      },
+      "code": {
+        "title": "문자로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
+      },
+      "success": {
+        "title": "인증이 완료되었어요",
+        "button": "돌아가기"
+      },
+      "failure": {
+        "title": "국내 통신사에서 개통되지 않은\n전화번호는 인증이 어려워요",
+        "button": "돌아가기"
+      }
+    }
+  },
   "passkey": {
     "title": "패스키 관리",
     "steps": {

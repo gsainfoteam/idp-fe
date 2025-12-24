@@ -93,7 +93,10 @@ export const useInfoForm = ({
     const body = {
       ...context,
       ...formData,
-      phoneNumber: parsePhoneNumber(formData.phoneNumber, 'KR')!.number,
+      phoneNumber: parsePhoneNumber(
+        formData.phoneNumber,
+        'KR',
+      )!.formatInternational(),
       studentId: formData.studentId,
       studentIdVerificationJwtToken: formData.studentIdVerificationJwtToken,
     };

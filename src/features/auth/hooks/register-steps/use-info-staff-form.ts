@@ -49,7 +49,10 @@ export const useInfoStaffForm = ({
     const body = {
       ...context,
       ...formData,
-      phoneNumber: parsePhoneNumber(formData.phoneNumber, 'KR')!.number,
+      phoneNumber: parsePhoneNumber(
+        formData.phoneNumber,
+        'KR',
+      )!.formatInternational(),
     };
 
     const res = await postUser(body);

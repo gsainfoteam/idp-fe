@@ -299,6 +299,49 @@
       }
     }
   },
+  "verify_phone_number": {
+    "title": "Verify Phone Number",
+    "steps": {
+      "tel": {
+        "title": "Please enter your phone number",
+        "button": "Send Verification Code",
+        "inputs": {
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          }
+        }
+      },
+      "code": {
+        "title": "Enter the 6-digit code\nsent to your phone number",
+        "button": "Verify",
+        "resend": "Resend Code",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000",
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            }
+          }
+        }
+      },
+      "success": {
+        "title": "Verification has been completed",
+        "button": "Go Back"
+      },
+      "failure": {
+        "title": "Verification failed",
+        "button": "Go Back"
+      }
+    }
+  },
   "passkey": {
     "title": "Manage Passkey",
     "steps": {

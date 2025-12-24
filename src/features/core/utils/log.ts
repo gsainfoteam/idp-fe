@@ -23,6 +23,9 @@ export type ClickEventMap = {
   register_code_resend: Record<string, never>;
   register_info_verify: Record<string, never>;
 
+  // Phone Number Verification
+  phone_number_verify_code_resend: Record<string, never>;
+
   // Passkey
   passkey_register_button: Record<string, never>;
   passkey_delete_button: { passkeyId: string };
@@ -54,6 +57,7 @@ export type ClickEventMap = {
   home_profile_picture_delete: Record<string, never>;
   home_profile_password_change_button: Record<string, never>;
   home_profile_student_id_verify_button: Record<string, never>;
+  home_profile_phone_number_verify_button: Record<string, never>;
   home_profile_link: Record<string, never>;
   home_passkeys_link: Record<string, never>;
   home_clients_link: Record<string, never>;
@@ -68,6 +72,8 @@ export type SubmitEventMap = {
   profile_edit: Record<string, never>;
   profile_password_change: Record<string, never>;
   student_id_verify: Record<string, never>;
+  phone_number_verify_code: Record<string, never>;
+  phone_number_verify: Record<string, never>;
   client_create: Record<string, never>;
   client_edit: { clientId: string };
 };
