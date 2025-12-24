@@ -38,3 +38,14 @@ export const postVerifyStudentId = async (
     .then(handleApiResult<'/verify/student-id', 'post'>)
     .catch(handleApiError<'/verify/student-id', 'post'>);
 };
+
+export const postVerifyPhoneNumber = async (
+  requestBody: ApiRequestBody<'/verify/phone-number', 'post'>,
+): Promise<ApiResult<'/verify/phone-number', 'post'>> => {
+  return api
+    .POST('/verify/phone-number', {
+      body: requestBody,
+    })
+    .then(handleApiResult<'/verify/phone-number', 'post'>)
+    .catch(handleApiError<'/verify/phone-number', 'post'>);
+};
