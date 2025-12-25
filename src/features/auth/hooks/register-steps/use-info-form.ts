@@ -84,11 +84,14 @@ export const useInfoForm = ({
     }
 
     const body = {
-      ...context,
-      ...formData,
-      phoneNumber: context.phoneNumber,
+      email: context.email,
+      password: context.password,
+      name: formData.name,
       studentId: formData.studentId,
+      phoneNumber: context.phoneNumber,
+      emailVerificationJwtToken: formData.studentIdVerificationJwtToken,
       studentIdVerificationJwtToken: formData.studentIdVerificationJwtToken,
+      phoneNumberVerificationJwtToken: context.phoneNumberVerificationJwtToken,
     };
 
     const res = await postUser(body);

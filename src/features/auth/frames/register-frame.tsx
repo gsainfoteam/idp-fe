@@ -3,6 +3,7 @@ import { overlay } from 'overlay-kit';
 
 import { RegisterStepUndoWarningOverlay } from '../components/register-step-undo-warning-overlay';
 
+import { AgreeStep } from './register-steps/agree-step';
 import { CompleteStep } from './register-steps/complete-step';
 import { EmailCodeStep } from './register-steps/email-code-step';
 import { EmailStep } from './register-steps/email-step';
@@ -15,10 +16,20 @@ import { TelStep } from './register-steps/tel-step';
 
 import { type postUser } from '@/data/user';
 import { type Pretty, type RequireKeys, useFunnel } from '@/features/core';
-
 type StepContext = Pretty<Partial<Parameters<typeof postUser>[0]>>;
 
+export const RegisterSteps = [
+  'agree',
+  'email',
+  'emailCode',
+  'tel',
+  'telCode',
+  'password',
+  'info',
+] as const;
+
 export type RegisterSteps = {
+  agree: StepContext;
   email: StepContext;
   emailCode: RequireKeys<RegisterSteps['email'], 'email'>;
   tel: RequireKeys<RegisterSteps['emailCode'], 'emailVerificationJwtToken'>;
@@ -39,7 +50,7 @@ export function RegisterFrame() {
     id: 'register',
     initial: {
       context: {},
-      step: 'email',
+      step: 'agree',
     },
   });
 
@@ -53,6 +64,9 @@ export function RegisterFrame() {
 
   return (
     <funnel.Render
+      agree={({ history }) => (
+        <AgreeStep onNext={() => history.replace('email')} />
+      )}
       email={({ history, context }) => (
         <EmailStep
           context={context}

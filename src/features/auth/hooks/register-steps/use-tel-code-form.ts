@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type TFunction } from 'i18next';
+import parsePhoneNumber from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -39,8 +40,11 @@ export const useTelCodeForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    // use-tel-form.ts에서 검증한(파싱 가능하고, KR) 전화번호를 사용
+    const tel = parsePhoneNumber(context.phoneNumber, 'KR')!;
+
     const res = await postVerify({
-      subject: context.phoneNumber,
+      subject: tel.formatNational(),
       code: formData.code,
       hint: 'phoneNumber',
     });

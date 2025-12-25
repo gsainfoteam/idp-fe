@@ -2,6 +2,7 @@ import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useTelForm } from '../../hooks/register-steps/use-tel-form';
+import { RegisterSteps } from '../register-frame';
 
 import {
   Button,
@@ -33,13 +34,16 @@ export function TelStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={
-          <div className="flex flex-col gap-5">
-            <StepProgress currentStep={4} totalSteps={7} />
-            {t('register.title')}
+        title={t('register.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('tel')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.tel.title')}
           </div>
         }
-        stepTitle={t('register.steps.tel.title')}
         button={
           <LogClick event="register_tel_verify">
             <Button

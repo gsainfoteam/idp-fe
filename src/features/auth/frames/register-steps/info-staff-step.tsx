@@ -2,6 +2,7 @@ import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useInfoStaffForm } from '../../hooks/register-steps/use-info-staff-form';
+import { RegisterSteps } from '../register-frame';
 
 import {
   Button,
@@ -28,13 +29,16 @@ export function InfoStaffStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={
-          <div className="flex flex-col gap-5">
-            <StepProgress currentStep={7} totalSteps={7} />
-            {t('register.title')}
+        title={t('register.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('info')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.info_staff.title')}
           </div>
         }
-        stepTitle={t('register.steps.info_staff.title')}
         button={
           <Button
             variant="primary"

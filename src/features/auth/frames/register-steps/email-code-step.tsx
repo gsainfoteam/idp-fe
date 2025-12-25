@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCodeForm } from '../../hooks/register-steps/use-code-form';
 import { useResendCode } from '../../hooks/use-resend-code';
+import { RegisterSteps } from '../register-frame';
 
 import {
   Button,
@@ -73,13 +74,16 @@ export function EmailCodeStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={
-          <div className="flex flex-col gap-5">
-            <StepProgress currentStep={3} totalSteps={7} />
-            {t('register.title')}
+        title={t('register.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('emailCode')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.email_code.title')}
           </div>
         }
-        stepTitle={t('register.steps.email_code.title')}
         button={
           <Button
             variant="primary"

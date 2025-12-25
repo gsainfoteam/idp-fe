@@ -8,6 +8,15 @@
   "register": {
     "title": "회원가입",
     "steps": {
+      "agree": {
+        "title": "인포팀 계정을 사용하려면\n약관에 동의해주세요",
+        "checkboxes": {
+          "terms": "인포팀 계정 <0>이용약관</0>",
+          "privacy": "인포팀 계정 <0>개인정보처리방침</0>"
+        },
+        "button": "진행하기",
+        "undo_button": "취소하기"
+      },
       "email": {
         "title": "이메일을 입력해주세요",
         "button": "인증번호 보내기",

@@ -26,8 +26,8 @@ export function StepProgress({
           className={cn(
             'h-1.5 rounded-full transition-all',
             index === currentStep
-              ? 'bg-primary-600 w-3'
-              : 'w-1.5 bg-neutral-200 dark:bg-neutral-800',
+              ? 'bg-primary-600 w-10'
+              : 'w-5 bg-neutral-200 dark:bg-neutral-800',
           )}
         />
       ))}

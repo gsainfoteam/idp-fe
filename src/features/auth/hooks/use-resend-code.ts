@@ -10,7 +10,7 @@ export const useResendCode = ({
   context,
   resetTimer,
 }: {
-  context: RegisterSteps['code'];
+  context: RegisterSteps['emailCode'];
   resetTimer: () => void;
 }) => {
   const { t } = useTranslation();

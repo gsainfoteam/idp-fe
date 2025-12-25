@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useTelCodeForm } from '../../hooks/register-steps/use-tel-code-form';
 import { useResendTelCode } from '../../hooks/use-resend-tel-code';
+import { RegisterSteps } from '../register-frame';
 
 import {
   Button,
@@ -75,13 +76,16 @@ export function TelCodeStep({
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
-        title={
-          <div className="flex flex-col gap-5">
-            <StepProgress currentStep={5} totalSteps={7} />
-            {t('register.title')}
+        title={t('register.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('telCode')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.tel_code.title')}
           </div>
         }
-        stepTitle={t('register.steps.tel_code.title')}
         button={
           <Button
             variant="primary"

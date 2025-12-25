@@ -67,6 +67,7 @@ export function useVerifyPhoneNumberForm({
       return;
     }
 
+    // country가 KR이면 010-XXXX-XXXX 으로 인증 코드 발송 후 code로
     const res = await postVerifyPhoneNumber({
       phoneNumber: tel.formatNational(),
     });
@@ -83,7 +84,7 @@ export function useVerifyPhoneNumberForm({
 
     Log.submit('phone_number_verify');
     onSuccess({
-      phoneNumber: tel.formatNational(),
+      phoneNumber: tel.formatInternational(),
     });
   });
 

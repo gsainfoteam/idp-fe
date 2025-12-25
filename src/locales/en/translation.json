@@ -8,6 +8,15 @@
   "register": {
     "title": "Register",
     "steps": {
+      "agree": {
+        "title": "To use an Infoteam account,\nplease agree to the terms and conditions",
+        "checkboxes": {
+          "terms": "Infoteam Account <0>Terms of Service</0>",
+          "privacy": "Infoteam Account <0>Privacy Policy</0>"
+        },
+        "button": "Proceed",
+        "undo_button": "Cancel"
+      },
       "email": {
         "title": "Please enter your email",
         "button": "Send Verification Code",

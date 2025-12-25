@@ -14,7 +14,7 @@ export function TelStep({
     form: { register, control },
     onSubmit,
   } = useVerifyPhoneNumberForm({ onSuccess, onFailure });
-  const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
+  const { isSubmitting, isValid, errors } = useFormState({ control });
   const { t } = useTranslation();
   const { user } = useAuth();
 
@@ -30,7 +30,7 @@ export function TelStep({
             variant="primary"
             className="w-full"
             loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
+            disabled={!isValid}
           >
             {t('verify_phone_number.steps.tel.button')}
           </Button>

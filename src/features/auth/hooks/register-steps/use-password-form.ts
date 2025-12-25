@@ -54,11 +54,13 @@ export const usePasswordForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    if (context.email.endsWith('@gm.gist.ac.kr')) {
-      onStudentNext(formData);
-    } else {
-      onStaffNext(formData);
-    }
+    const onNext = context.email.endsWith('@gm.gist.ac.kr')
+      ? onStudentNext
+      : onStaffNext;
+
+    onNext({
+      password: formData.password,
+    });
   });
 
   return { form, onSubmit };
