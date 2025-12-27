@@ -21,10 +21,7 @@ export function TelStep({
   const {
     form: { register, control },
     onSubmit,
-  } = useTelForm({
-    onTelCodeNext,
-    onTelSkipNext,
-  });
+  } = useTelForm({ onTelCodeNext, onTelSkipNext });
 
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();

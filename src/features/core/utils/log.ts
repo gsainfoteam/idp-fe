@@ -25,9 +25,9 @@ export type ClickEventMap = {
   register_agree_undo_button: Record<string, never>;
   register_agree_submit: Record<string, never>;
   register_tel_verify: Record<string, never>;
+  register_tel_skip_button: Record<string, never>;
   register_tel_code_resend: Record<string, never>;
   register_tel_code_submit: Record<string, never>;
-  register_tel_skip_button: Record<string, never>;
   register_password_submit: Record<string, never>;
   register_info_verify: Record<string, never>;
   register_info_staff_submit: Record<string, never>;

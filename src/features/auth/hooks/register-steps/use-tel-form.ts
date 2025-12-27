@@ -39,8 +39,6 @@ export const useTelForm = ({
     mode: 'onChange',
   });
 
-  // TODO: AsYouType 사용
-
   const onSubmit = form.handleSubmit(async (formData) => {
     const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
 
