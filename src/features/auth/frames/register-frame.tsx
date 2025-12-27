@@ -35,11 +35,11 @@ export type RegisterSteps = {
   tel: RequireKeys<RegisterSteps['emailCode'], 'emailVerificationJwtToken'>;
   telCode: RequireKeys<RegisterSteps['tel'], 'phoneNumber'>;
   telSkip: RequireKeys<RegisterSteps['tel'], 'phoneNumber'>;
-  password: RegisterSteps['telCode'] & RegisterSteps['telSkip'];
+  password: RegisterSteps['telCode'] | RegisterSteps['telSkip'];
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   infoStaff: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
-    RegisterSteps['info'] & RegisterSteps['infoStaff'],
+    RegisterSteps['info'] | RegisterSteps['infoStaff'],
     'name' | 'studentId' | 'phoneNumber'
   >;
 };
