@@ -96,7 +96,10 @@ export function RegisterFrame() {
         />
       )}
       telSkip={({ history }) => (
-        <TelSkipStep onNext={() => history.replace('password')} onUndo={undo} />
+        <TelSkipStep
+          onNext={(data) => history.replace('password', data)}
+          onUndo={undo}
+        />
       )}
       password={({ history, context }) => (
         <PasswordStep

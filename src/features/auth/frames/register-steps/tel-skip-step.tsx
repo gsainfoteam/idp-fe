@@ -2,13 +2,24 @@ import { useTranslation } from 'react-i18next';
 
 import { RegisterSteps } from '../register-frame';
 
-import { Button, FunnelLayout, LogClick, StepProgress } from '@/features/core';
+import {
+  Button,
+  type DifferenceNonNullable,
+  FunnelLayout,
+  LogClick,
+  StepProgress,
+} from '@/features/core';
 
 export function TelSkipStep({
   onNext,
   onUndo,
 }: {
-  onNext: () => void;
+  onNext: (
+    data: DifferenceNonNullable<
+      RegisterSteps['password'],
+      RegisterSteps['telSkip']
+    >,
+  ) => void;
   onUndo: () => void;
 }) {
   const { t } = useTranslation();
