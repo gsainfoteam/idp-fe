@@ -56,7 +56,7 @@ export function useVerifyPhoneNumberForm({
     resolver: zodResolver(createSchema(t)),
     mode: 'onChange',
     defaultValues: {
-      phoneNumber: phoneNumber.formatNational(),
+      phoneNumber: phoneNumber.formatInternational(),
     },
   });
 
@@ -67,9 +67,9 @@ export function useVerifyPhoneNumberForm({
       return;
     }
 
-    // country가 KR이면 010-XXXX-XXXX 으로 인증 코드 발송 후 code로
+    // country가 KR이면 인증 코드 발송 후 code로
     const res = await postVerifyPhoneNumber({
-      phoneNumber: tel.formatNational(),
+      phoneNumber: tel.formatInternational(),
     });
 
     if (!res.ok) {

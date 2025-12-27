@@ -44,7 +44,7 @@ export const useTelCodeForm = ({
     const tel = parsePhoneNumber(context.phoneNumber, 'KR')!;
 
     const res = await postVerify({
-      subject: tel.formatNational(),
+      subject: tel.formatInternational(),
       code: formData.code,
       hint: 'phoneNumber',
     });

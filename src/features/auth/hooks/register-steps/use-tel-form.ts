@@ -59,9 +59,9 @@ export const useTelForm = ({
       return;
     }
 
-    // country가 KR이면 010-XXXX-XXXX 으로 인증 코드 발송 후 telCode로
+    // country가 KR이면 인증 코드 발송 후 telCode로
     const res = await postVerifyPhoneNumber({
-      phoneNumber: tel.formatNational(),
+      phoneNumber: tel.formatInternational(),
     });
 
     if (!res.ok) {
