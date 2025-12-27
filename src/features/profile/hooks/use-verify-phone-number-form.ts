@@ -42,27 +42,24 @@ export function useVerifyPhoneNumberForm({
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  // impossible
-  if (!user) throw new Error('User not found');
-
-  const phoneNumber = parsePhoneNumber(user.phoneNumber, 'KR');
-
-  // impossible
-  if (phoneNumber == null) {
-    throw new Error('Invalid phone number');
-  }
+  const phoneNumber = user ? parsePhoneNumber(user.phoneNumber, 'KR') : null;
 
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
     mode: 'onChange',
     defaultValues: {
-      phoneNumber: phoneNumber.formatInternational(),
+      phoneNumber: phoneNumber?.formatInternational() ?? '',
     },
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    // Return early if user is not loaded yet
+    if (!user) {
+      return;
+    }
+
     const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
-    if (tel?.country != 'KR') {
+    if (tel?.country !== 'KR') {
       onFailure({});
       return;
     }
