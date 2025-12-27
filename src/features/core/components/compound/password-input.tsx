@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Input, type InputProps } from './input';
+import { Input, type InputProps } from '../atomic/input';
 
 import EyeCloseIcon from '@/assets/icons/line/eye-close.svg?react';
 import EyeOpenIcon from '@/assets/icons/line/eye-open.svg?react';
