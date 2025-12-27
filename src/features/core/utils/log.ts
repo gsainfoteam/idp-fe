@@ -21,12 +21,22 @@ export type ClickEventMap = {
   register_email_overlay_accept: Record<string, never>;
   register_email_overlay_cancel: Record<string, never>;
   register_code_resend: Record<string, never>;
+  register_email_code_submit: Record<string, never>;
+  register_agree_undo_button: Record<string, never>;
+  register_agree_submit: Record<string, never>;
   register_tel_verify: Record<string, never>;
   register_tel_code_resend: Record<string, never>;
+  register_tel_code_submit: Record<string, never>;
+  register_tel_skip_button: Record<string, never>;
+  register_password_submit: Record<string, never>;
   register_info_verify: Record<string, never>;
+  register_info_staff_submit: Record<string, never>;
+  register_complete_button: Record<string, never>;
 
   // Phone Number Verification
   phone_number_verify_code_resend: Record<string, never>;
+  phone_number_verify_success_button: Record<string, never>;
+  phone_number_verify_failure_button: Record<string, never>;
 
   // Passkey
   passkey_register_button: Record<string, never>;
@@ -70,8 +80,10 @@ export type SubmitEventMap = {
   auth_login: { method: 'email' | 'passkey' };
   auth_register_email: Record<string, never>;
   auth_register_email_code: Record<string, never>;
+  auth_register_agree: Record<string, never>;
   auth_register_tel: Record<string, never>;
   auth_register_tel_code: Record<string, never>;
+  auth_register_password: Record<string, never>;
   auth_register_info: Record<string, never>;
   profile_edit: Record<string, never>;
   profile_password_change: Record<string, never>;

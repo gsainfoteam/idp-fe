@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import flashImg from '@/assets/icons/color/flash.png';
-import { Button, FunnelLayout } from '@/features/core';
+import { Button, FunnelLayout, LogClick } from '@/features/core';
 
 export function FailureStep({ onUndo }: { onUndo: () => void }) {
   const { t } = useTranslation();
@@ -12,9 +12,11 @@ export function FailureStep({ onUndo }: { onUndo: () => void }) {
       stepTitle={t('verify_phone_number.steps.failure.title')}
       hideUndo
       button={
-        <Button variant="primary" className="w-full" onClick={onUndo}>
-          {t('verify_phone_number.steps.failure.button')}
-        </Button>
+        <LogClick event="phone_number_verify_failure_button">
+          <Button variant="primary" className="w-full" onClick={onUndo}>
+            {t('verify_phone_number.steps.failure.button')}
+          </Button>
+        </LogClick>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">

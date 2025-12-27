@@ -8,6 +8,7 @@ import {
   Button,
   FunnelLayout,
   Label,
+  LogClick,
   PasswordInput,
   StepProgress,
 } from '@/features/core';
@@ -40,14 +41,16 @@ export function PasswordStep({
           </div>
         }
         button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
-          >
-            {t('register.steps.password.button')}
-          </Button>
+          <LogClick event="register_password_submit">
+            <Button
+              variant="primary"
+              className="w-full"
+              loading={isSubmitting}
+              disabled={!(isValid && isDirty)}
+            >
+              {t('register.steps.password.button')}
+            </Button>
+          </LogClick>
         }
       >
         <div className="flex flex-col gap-5">

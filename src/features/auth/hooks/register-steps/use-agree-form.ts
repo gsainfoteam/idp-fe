@@ -2,6 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { Log } from '@/features/core';
+
 const createSchema = () =>
   z.object({
     terms: z.boolean().default(false),
@@ -17,6 +19,7 @@ export const useAgreeForm = ({ onNext }: { onNext: () => void }) => {
   });
 
   const onSubmit = form.handleSubmit(async () => {
+    Log.submit('auth_register_agree');
     onNext();
   });
 

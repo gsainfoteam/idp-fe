@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { type RegisterSteps } from '../../frames/register-frame';
 
-import { type DifferenceNonNullable } from '@/features/core';
+import { type DifferenceNonNullable, Log } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z
@@ -54,6 +54,7 @@ export const usePasswordForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    Log.submit('auth_register_password');
     const onNext = context.email.endsWith('@gm.gist.ac.kr')
       ? onStudentNext
       : onStaffNext;

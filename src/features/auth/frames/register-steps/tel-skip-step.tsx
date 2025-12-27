@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RegisterSteps } from '../register-frame';
 
-import { Button, FunnelLayout, StepProgress } from '@/features/core';
+import { Button, FunnelLayout, LogClick, StepProgress } from '@/features/core';
 
 export function TelSkipStep({
   onNext,
@@ -27,9 +27,11 @@ export function TelSkipStep({
         </div>
       }
       button={
-        <Button variant="primary" className="w-full" onClick={onNext}>
-          {t('register.steps.tel_skip.button')}
-        </Button>
+        <LogClick event="register_tel_skip_button">
+          <Button variant="primary" className="w-full" onClick={onNext}>
+            {t('register.steps.tel_skip.button')}
+          </Button>
+        </LogClick>
       }
     />
   );

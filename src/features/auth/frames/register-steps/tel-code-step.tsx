@@ -87,16 +87,23 @@ export function TelCodeStep({
           </div>
         }
         button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={
-              !(isValid && isDirty && remainTime > 0 && count < CODE_MAX_COUNT)
-            }
-          >
-            {t('register.steps.tel_code.button')}
-          </Button>
+          <LogClick event="register_tel_code_submit">
+            <Button
+              variant="primary"
+              className="w-full"
+              loading={isSubmitting}
+              disabled={
+                !(
+                  isValid &&
+                  isDirty &&
+                  remainTime > 0 &&
+                  count < CODE_MAX_COUNT
+                )
+              }
+            >
+              {t('register.steps.tel_code.button')}
+            </Button>
+          </LogClick>
         }
       >
         <div className="w-full">

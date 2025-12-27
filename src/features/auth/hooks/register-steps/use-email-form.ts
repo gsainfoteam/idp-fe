@@ -82,7 +82,5 @@ export const useEmailForm = ({
     onNext(formData);
   });
 
-  // TODO: Logging 새로운 페이지들에
-
   return { form, onCheckEmail, onSubmit };
 };

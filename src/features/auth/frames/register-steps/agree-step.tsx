@@ -14,7 +14,13 @@ import {
 } from '../../hooks/register-steps/use-agree-form';
 import { RegisterSteps } from '../register-frame';
 
-import { Button, Checkbox, FunnelLayout, StepProgress } from '@/features/core';
+import {
+  Button,
+  Checkbox,
+  FunnelLayout,
+  LogClick,
+  StepProgress,
+} from '@/features/core';
 
 function AgreeForm() {
   const { control } = useFormContext<AgreeFormSchema>();
@@ -106,23 +112,27 @@ export function AgreeStep({ onNext }: { onNext: () => void }) {
           }
           button={
             <div className="flex w-full gap-3">
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={() => {
-                  if (router.history.canGoBack()) router.history.back();
-                }}
-              >
-                {t('register.steps.agree.undo_button')}
-              </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full"
-                disabled={!allAgreed}
-              >
-                {t('register.steps.agree.button')}
-              </Button>
+              <LogClick event="register_agree_undo_button">
+                <Button
+                  variant="secondary"
+                  className="w-full"
+                  onClick={() => {
+                    if (router.history.canGoBack()) router.history.back();
+                  }}
+                >
+                  {t('register.steps.agree.undo_button')}
+                </Button>
+              </LogClick>
+              <LogClick event="register_agree_submit">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-full"
+                  disabled={!allAgreed}
+                >
+                  {t('register.steps.agree.button')}
+                </Button>
+              </LogClick>
             </div>
           }
         >

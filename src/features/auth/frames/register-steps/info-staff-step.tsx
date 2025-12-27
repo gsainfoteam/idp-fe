@@ -9,6 +9,7 @@ import {
   FunnelLayout,
   Input,
   Label,
+  LogClick,
   StepProgress,
 } from '@/features/core';
 
@@ -40,14 +41,16 @@ export function InfoStaffStep({
           </div>
         }
         button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
-          >
-            {t('register.steps.info_staff.button')}
-          </Button>
+          <LogClick event="register_info_staff_submit">
+            <Button
+              variant="primary"
+              className="w-full"
+              loading={isSubmitting}
+              disabled={!(isValid && isDirty)}
+            >
+              {t('register.steps.info_staff.button')}
+            </Button>
+          </LogClick>
         }
       >
         <div className="flex flex-col gap-5">
