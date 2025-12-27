@@ -21,7 +21,7 @@ const createSchema = (t: TFunction) =>
       ),
   });
 
-export const useCodeForm = ({
+export const useEmailCodeForm = ({
   context,
   onNext,
   count,

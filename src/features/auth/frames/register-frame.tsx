@@ -71,6 +71,7 @@ export function RegisterFrame() {
         <EmailStep
           context={context}
           onNext={(data) => history.replace('emailCode', data)}
+          onUndo={undo}
         />
       )}
       emailCode={({ history, context }) => (

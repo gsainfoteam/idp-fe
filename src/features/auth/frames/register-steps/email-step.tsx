@@ -16,7 +16,8 @@ import {
 export function EmailStep({
   context,
   onNext,
-}: Parameters<typeof useEmailForm>[0]) {
+  onUndo,
+}: Parameters<typeof useEmailForm>[0] & { onUndo: () => void }) {
   const {
     form: { register, control },
     onCheckEmail,
@@ -31,6 +32,7 @@ export function EmailStep({
 
   return (
     <FunnelLayout
+      onUndo={onUndo}
       loading={isSubmitting}
       title={t('register.title')}
       stepTitle={

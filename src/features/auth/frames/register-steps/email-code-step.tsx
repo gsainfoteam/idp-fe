@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useCodeForm } from '../../hooks/register-steps/use-code-form';
+import { useEmailCodeForm } from '../../hooks/register-steps/use-email-code-form';
 import { useResendCode } from '../../hooks/use-resend-code';
 import { RegisterSteps } from '../register-frame';
 
@@ -23,7 +23,9 @@ export function EmailCodeStep({
   context,
   onNext,
   onUndo,
-}: Omit<Parameters<typeof useCodeForm>[0], 'count'> & { onUndo: () => void }) {
+}: Omit<Parameters<typeof useEmailCodeForm>[0], 'count'> & {
+  onUndo: () => void;
+}) {
   const [remainTime, setRemainTime] = useState(CODE_EXPIRED_TIME);
   const [count, setCount] = useState(0);
 
@@ -31,7 +33,7 @@ export function EmailCodeStep({
   const {
     form: { register, control, setError, clearErrors },
     onSubmit,
-  } = useCodeForm({ context, onNext, count });
+  } = useEmailCodeForm({ context, onNext, count });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { onResetTimer, isLoading: isResending } = useResendCode({
     context,

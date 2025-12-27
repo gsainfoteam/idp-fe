@@ -89,7 +89,7 @@ export const useInfoForm = ({
       name: formData.name,
       studentId: formData.studentId,
       phoneNumber: context.phoneNumber,
-      emailVerificationJwtToken: formData.studentIdVerificationJwtToken,
+      emailVerificationJwtToken: context.emailVerificationJwtToken,
       studentIdVerificationJwtToken: formData.studentIdVerificationJwtToken,
       phoneNumberVerificationJwtToken: context.phoneNumberVerificationJwtToken,
     };
