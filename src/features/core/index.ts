@@ -45,7 +45,6 @@ export * from './services/amplitude';
 export * from './utils/cn';
 export * from './utils/palette';
 export * from './utils/time-format';
-export * from './utils/time-string';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
 export * from './utils/sort-by';

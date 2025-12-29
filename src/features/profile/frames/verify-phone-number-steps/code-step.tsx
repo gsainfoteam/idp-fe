@@ -12,7 +12,7 @@ import {
   Input,
   Label,
   LogClick,
-  timeString,
+  formatTimeToMMSS,
 } from '@/features/core';
 
 const CODE_EXPIRED_TIME = 300;
@@ -99,7 +99,7 @@ export function CodeStep({
               disabled={isSubmitting}
               suffixAdornment={
                 <div className="text-label-1">
-                  {timeString(Math.max(remainTime, 0))}
+                  {formatTimeToMMSS(Math.max(remainTime, 0))}
                 </div>
               }
               {...register('code')}

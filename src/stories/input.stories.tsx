@@ -7,9 +7,9 @@ import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import {
   PasswordInput,
   Label,
-  timeString,
   Input,
   CopyInput,
+  formatTimeToMMSS,
 } from '@/features/core';
 
 const meta = {
@@ -123,7 +123,7 @@ function InputTestFrame() {
           required
           suffixAdornment={
             <div className="text-label-1 text-neutral-600">
-              {timeString(remainTime)}
+              {formatTimeToMMSS(remainTime)}
             </div>
           }
         />
