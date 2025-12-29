@@ -42,7 +42,7 @@ export const useTelCodeForm = ({
   const {
     remainSec,
     tryCount,
-    incrementCount,
+    incrementTryCount,
     handleInvalidCode,
     resetTimer,
     isExpired,
@@ -97,6 +97,8 @@ export const useTelCodeForm = ({
   };
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    incrementTryCount();
+
     // use-tel-form.ts에서 검증한(파싱 가능하고, KR) 전화번호를 사용
     const tel = parsePhoneNumber(context.phoneNumber, 'KR')!;
 
@@ -108,7 +110,7 @@ export const useTelCodeForm = ({
 
     if (!res.ok) {
       if (res.status === 400) {
-        handleInvalidCode();
+        handleInvalidCode(tryCount);
       } else if (res.status === 500) {
         toast.error(t('toast.server_error'));
       } else {
@@ -127,7 +129,6 @@ export const useTelCodeForm = ({
     onSubmit,
     remainSec,
     tryCount,
-    incrementCount,
     resetTimer,
     onResendCode,
     isResending,

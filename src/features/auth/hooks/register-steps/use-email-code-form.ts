@@ -44,7 +44,7 @@ export const useEmailCodeForm = ({
   const {
     remainSec,
     tryCount,
-    incrementCount,
+    incrementTryCount,
     handleInvalidCode,
     resetTimer,
     isExpired,
@@ -97,6 +97,8 @@ export const useEmailCodeForm = ({
   };
 
   const onSubmit = form.handleSubmit(async (formData) => {
+    incrementTryCount();
+
     const res = await postVerify({
       subject: context.email,
       code: formData.code,
@@ -105,7 +107,7 @@ export const useEmailCodeForm = ({
 
     if (!res.ok) {
       if (res.status === 400) {
-        handleInvalidCode();
+        handleInvalidCode(tryCount);
       } else if (res.status === 500) {
         toast.error(t('toast.server_error'));
       } else {
@@ -124,7 +126,6 @@ export const useEmailCodeForm = ({
     onSubmit,
     remainSec,
     tryCount,
-    incrementCount,
     resetTimer,
     onResendCode,
     isResending,

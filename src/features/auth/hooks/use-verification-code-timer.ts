@@ -44,13 +44,13 @@ export function useVerificationCodeTimer({
     }
   }, [tryCount, remainSec, maxTryCount, onExpired, onMaxCountReached]);
 
-  const incrementCount = () => {
+  const incrementTryCount = () => {
     setTryCount((prev) => prev + 1);
   };
 
-  const handleInvalidCode = () => {
-    if (tryCount < maxTryCount && onInvalidCode) {
-      onInvalidCode(tryCount, maxTryCount);
+  const handleInvalidCode = (currentCount: number) => {
+    if (currentCount < maxTryCount && onInvalidCode) {
+      onInvalidCode(currentCount, maxTryCount);
     }
   };
 
@@ -65,7 +65,7 @@ export function useVerificationCodeTimer({
   return {
     remainSec,
     tryCount,
-    incrementCount,
+    incrementTryCount,
     handleInvalidCode,
     resetTimer,
     isExpired: remainSec <= 0,

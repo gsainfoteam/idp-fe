@@ -26,7 +26,6 @@ export function EmailCodeStep({
     form: { register, control },
     onSubmit,
     remainSec,
-    incrementCount,
     onResendCode,
     isResending,
     isExpired,
@@ -35,12 +34,7 @@ export function EmailCodeStep({
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
 
   return (
-    <form
-      onSubmit={(e) => {
-        incrementCount();
-        onSubmit(e);
-      }}
-    >
+    <form onSubmit={onSubmit}>
       <FunnelLayout
         onUndo={onUndo}
         loading={isSubmitting}
