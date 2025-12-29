@@ -4,9 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
-import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
-import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useAuth } from '@/features/auth';
 import {
@@ -14,8 +11,8 @@ import {
   FunnelLayout,
   IconButton,
   LogClick,
-  cn,
   uniqueKey,
+  VerifiedBadge,
 } from '@/features/core';
 
 function formatDateTime(dateString: string, locale: string) {
@@ -28,38 +25,6 @@ function formatDateTime(dateString: string, locale: string) {
       hour: '2-digit',
       minute: '2-digit',
     },
-  );
-}
-
-function VerifiedBadge({
-  verified,
-  onClick,
-}: {
-  verified: boolean;
-  onClick?: () => void;
-}) {
-  const { t } = useTranslation();
-
-  const Badge = verified ? CheckVerifiedIcon : AlertOctagonIcon;
-
-  return (
-    <div
-      className={cn(
-        'flex items-center gap-1',
-        verified ? 'text-[#47B3ED]' : 'text-[#FC9B3A]',
-      )}
-    >
-      <Badge className="size-4" />
-      {!verified && (
-        <button
-          className="text-label-1 text-label ml-1 flex cursor-pointer items-center gap-1 font-bold"
-          onClick={onClick}
-        >
-          {t('profile.verify')}
-          <ChevronRightIcon className="text-basics-secondary-label size-4" />
-        </button>
-      )}
-    </div>
   );
 }
 

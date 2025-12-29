@@ -10,6 +10,7 @@
 @import './styles/avatar.css';
 @import './styles/label.css';
 @import './styles/funnel-layout.css';
+@import './styles/verified-badge.css';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 
