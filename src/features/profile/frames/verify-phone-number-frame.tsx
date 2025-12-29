@@ -1,5 +1,3 @@
-import { useNavigate } from '@tanstack/react-router';
-
 import { CodeStep } from './verify-phone-number-steps/code-step';
 import { FailureStep } from './verify-phone-number-steps/failure-step';
 import { SuccessStep } from './verify-phone-number-steps/success-step';
@@ -21,7 +19,6 @@ export type VerifyPhoneNumberSteps = {
 };
 
 export function VerifyPhoneNumberFrame() {
-  const navigate = useNavigate();
   const { refetch } = useAuth();
   const funnel = useFunnel<VerifyPhoneNumberSteps>({
     id: 'verify-phone-number',
@@ -34,12 +31,7 @@ export function VerifyPhoneNumberFrame() {
   const undo = async () => {
     await refetch();
     await funnel.history.cleanup();
-    await navigate({
-      to: '/profile',
-      replace: true,
-      viewTransition: { types: ['backwards'] },
-      search: (prev) => ({ ...prev }),
-    });
+    window.location.reload();
   };
 
   return (

@@ -1,4 +1,8 @@
-import { useLoaderData } from '@tanstack/react-router';
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { type ConsentFormSchema } from '../hooks/use-authorize-form';
 
 import { type components } from '@/@types/api-schema';
-import { Checkbox } from '@/features/core';
+import { useAuth } from '@/features/auth';
+import { Checkbox, VerifiedBadge } from '@/features/core';
 
 export function AuthorizeForm({
   client,
@@ -19,6 +24,10 @@ export function AuthorizeForm({
   const { clientScopes, consents } = useLoaderData({
     from: '/_auth-required/authorize',
   });
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const consent = consents?.list.find((c) => c.clientUuid === client.clientId);
 
   const requiredScopes = useMemo(
@@ -106,14 +115,42 @@ export function AuthorizeForm({
                   name={`scopes.${scope}`}
                   control={control}
                   render={({ field }) => (
-                    <Checkbox
-                      checked={field.value ?? false}
-                      onChange={field.onChange}
-                    >
-                      <div className="text-label">
-                        {t(`authorize.checkboxes.${scope}`)}
-                      </div>
-                    </Checkbox>
+                    <>
+                      <Checkbox
+                        checked={field.value ?? false}
+                        onChange={field.onChange}
+                      >
+                        <div className="text-label">
+                          {t(`authorize.checkboxes.${scope}`)}
+                        </div>
+                      </Checkbox>
+                      {user && scope === 'student_id' && (
+                        <VerifiedBadge
+                          verified={user.isIdVerified}
+                          onClick={() =>
+                            navigate({
+                              to: '/profile/verify-student-id',
+                              search: {
+                                redirect: location.href,
+                              },
+                            })
+                          }
+                        />
+                      )}
+                      {user && scope === 'phone_number' && (
+                        <VerifiedBadge
+                          verified={user.isPhoneNumberVerified}
+                          onClick={() =>
+                            navigate({
+                              to: '/profile/verify-phone-number',
+                              search: {
+                                redirect: location.href,
+                              },
+                            })
+                          }
+                        />
+                      )}
+                    </>
                   )}
                 />
               ))}
