@@ -124,7 +124,7 @@ export function AuthorizeForm({
                           {t(`authorize.checkboxes.${scope}`)}
                         </div>
                       </Checkbox>
-                      {user && scope === 'student_id' && (
+                      {scope === 'student_id' && user && !user.isIdVerified && (
                         <VerifiedBadge
                           verified={user.isIdVerified}
                           onClick={() =>
@@ -137,19 +137,21 @@ export function AuthorizeForm({
                           }
                         />
                       )}
-                      {user && scope === 'phone_number' && (
-                        <VerifiedBadge
-                          verified={user.isPhoneNumberVerified}
-                          onClick={() =>
-                            navigate({
-                              to: '/profile/verify-phone-number',
-                              search: {
-                                redirect: location.href,
-                              },
-                            })
-                          }
-                        />
-                      )}
+                      {scope === 'phone_number' &&
+                        user &&
+                        !user.isPhoneNumberVerified && (
+                          <VerifiedBadge
+                            verified={user.isPhoneNumberVerified}
+                            onClick={() =>
+                              navigate({
+                                to: '/profile/verify-phone-number',
+                                search: {
+                                  redirect: location.href,
+                                },
+                              })
+                            }
+                          />
+                        )}
                     </>
                   )}
                 />
