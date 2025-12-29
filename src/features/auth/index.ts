@@ -6,4 +6,3 @@ export * from './hooks/use-login-form';
 export * from './hooks/use-passkey-login-form';
 export * from './hooks/use-token';
 export * from './hooks/use-auth';
-export * from './hooks/use-resend-code';

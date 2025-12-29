@@ -2,8 +2,16 @@ import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useInfoStaffForm } from '../../hooks/register-steps/use-info-staff-form';
+import { RegisterSteps } from '../register-frame';
 
-import { Button, FunnelLayout, Input, Label } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Input,
+  Label,
+  LogClick,
+  StepProgress,
+} from '@/features/core';
 
 export function InfoStaffStep({
   context,
@@ -23,16 +31,26 @@ export function InfoStaffStep({
         onUndo={onUndo}
         loading={isSubmitting}
         title={t('register.title')}
-        stepTitle={t('register.steps.info_staff.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('info')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.info_staff.title')}
+          </div>
+        }
         button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
-          >
-            {t('register.steps.info_staff.button')}
-          </Button>
+          <LogClick event="register_info_staff_submit">
+            <Button
+              variant="primary"
+              className="w-full"
+              loading={isSubmitting}
+              disabled={!(isValid && isDirty)}
+            >
+              {t('register.steps.info_staff.button')}
+            </Button>
+          </LogClick>
         }
       >
         <div className="flex flex-col gap-5">
@@ -45,19 +63,6 @@ export function InfoStaffStep({
               error={errors.name?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('name')}
-            />
-          </Label>
-          <Label
-            text={t('register.steps.info_staff.inputs.phone_number.label')}
-          >
-            <Input
-              type="tel"
-              placeholder={t(
-                'register.steps.info_staff.inputs.phone_number.placeholder',
-              )}
-              error={errors.phoneNumber?.message || !!errors.root}
-              disabled={isSubmitting}
-              {...register('phoneNumber')}
             />
           </Label>
           <Label text={t('register.steps.info_staff.inputs.id.label')}>

@@ -29,12 +29,23 @@ export const postVerifyEmail = async (
 };
 
 export const postVerifyStudentId = async (
-  requestBody: ApiRequestBody<'/verify/studentId', 'post'>,
-): Promise<ApiResult<'/verify/studentId', 'post'>> => {
+  requestBody: ApiRequestBody<'/verify/student-id', 'post'>,
+): Promise<ApiResult<'/verify/student-id', 'post'>> => {
   return api
-    .POST('/verify/studentId', {
+    .POST('/verify/student-id', {
       body: requestBody,
     })
-    .then(handleApiResult<'/verify/studentId', 'post'>)
-    .catch(handleApiError<'/verify/studentId', 'post'>);
+    .then(handleApiResult<'/verify/student-id', 'post'>)
+    .catch(handleApiError<'/verify/student-id', 'post'>);
+};
+
+export const postVerifyPhoneNumber = async (
+  requestBody: ApiRequestBody<'/verify/phone-number', 'post'>,
+): Promise<ApiResult<'/verify/phone-number', 'post'>> => {
+  return api
+    .POST('/verify/phone-number', {
+      body: requestBody,
+    })
+    .then(handleApiResult<'/verify/phone-number', 'post'>)
+    .catch(handleApiError<'/verify/phone-number', 'post'>);
 };

@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type TFunction } from 'i18next';
-import parsePhoneNumber, { isValidPhoneNumber } from 'libphonenumber-js';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -16,12 +15,6 @@ const createSchema = (t: TFunction) =>
     name: z
       .string()
       .min(1, t('register.steps.info_staff.inputs.name.errors.format')),
-    phoneNumber: z
-      .string()
-      .refine(
-        (value) => isValidPhoneNumber(value, 'KR'),
-        t('register.steps.info_staff.inputs.phone_number.errors.format'),
-      ),
     studentId: z
       .string()
       .regex(/^\d{5}$/, t('register.steps.info_staff.inputs.id.errors.format')),
@@ -49,7 +42,7 @@ export const useInfoStaffForm = ({
     const body = {
       ...context,
       ...formData,
-      phoneNumber: parsePhoneNumber(formData.phoneNumber, 'KR')!.number,
+      phoneNumber: context.phoneNumber,
     };
 
     const res = await postUser(body);

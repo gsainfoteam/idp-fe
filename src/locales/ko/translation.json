@@ -8,6 +8,15 @@
   "register": {
     "title": "회원가입",
     "steps": {
+      "agree": {
+        "title": "인포팀 계정을 사용하려면\n약관에 동의해주세요",
+        "checkboxes": {
+          "terms": "인포팀 계정 <0>이용약관</0>",
+          "privacy": "인포팀 계정 <0>개인정보처리방침</0>"
+        },
+        "button": "진행하기",
+        "undo_button": "취소하기"
+      },
       "email": {
         "title": "이메일을 입력해주세요",
         "button": "인증번호 보내기",
@@ -37,7 +46,7 @@
         "button": "그만두기",
         "sub_button": "취소"
       },
-      "code": {
+      "email_code": {
         "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
         "button": "인증하기",
         "resend": "인증번호 재요청",
@@ -53,6 +62,40 @@
             }
           }
         }
+      },
+      "tel": {
+        "title": "전화번호를 입력해주세요",
+        "button": "전화번호 인증하기",
+        "inputs": {
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        }
+      },
+      "tel_code": {
+        "title": "문자로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
+      },
+      "tel_skip": {
+        "title": "국내 통신사에서 개통되지 않은\n전화번호는 인증이 어려워요",
+        "button": "전화번호 인증 건너뛰기"
       },
       "password": {
         "title": "비밀번호를 입력해주세요",
@@ -86,13 +129,6 @@
               "format": "이름을 입력해주세요"
             }
           },
-          "phone_number": {
-            "label": "전화번호",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "올바른 전화번호를 입력해주세요"
-            }
-          },
           "birth_date": {
             "label": "생년월일",
             "placeholder": "YYYY-MM-DD",
@@ -116,13 +152,6 @@
             "placeholder": "김지니",
             "errors": {
               "format": "이름을 입력해주세요"
-            }
-          },
-          "phone_number": {
-            "label": "전화번호",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "올바른 전화번호를 입력해주세요"
             }
           },
           "id": {
@@ -295,6 +324,49 @@
       },
       "complete": {
         "title": "인증이 완료되었어요",
+        "button": "돌아가기"
+      }
+    }
+  },
+  "verify_phone_number": {
+    "title": "전화번호 인증",
+    "steps": {
+      "tel": {
+        "title": "전화번호를 입력해주세요",
+        "button": "인증번호 보내기",
+        "inputs": {
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        }
+      },
+      "code": {
+        "title": "문자로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
+      },
+      "success": {
+        "title": "인증이 완료되었어요",
+        "button": "돌아가기"
+      },
+      "failure": {
+        "title": "국내 통신사에서 개통되지 않은\n전화번호는 인증이 어려워요",
         "button": "돌아가기"
       }
     }

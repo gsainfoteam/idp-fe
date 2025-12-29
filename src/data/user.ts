@@ -153,12 +153,23 @@ export const postUserPassword = async (
 };
 
 export const postUserVerifyStudentId = async (
-  requestBody: ApiRequestBody<'/user/verify/studentId', 'post'>,
-): Promise<ApiResult<'/user/verify/studentId', 'post'>> => {
+  requestBody: ApiRequestBody<'/user/verify/student-id', 'post'>,
+): Promise<ApiResult<'/user/verify/student-id', 'post'>> => {
   return api
-    .POST('/user/verify/studentId', {
+    .POST('/user/verify/student-id', {
       body: requestBody,
     })
-    .then(handleApiResult<'/user/verify/studentId', 'post'>)
-    .catch(handleApiError<'/user/verify/studentId', 'post'>);
+    .then(handleApiResult<'/user/verify/student-id', 'post'>)
+    .catch(handleApiError<'/user/verify/student-id', 'post'>);
+};
+
+export const postUserVerifyPhoneNumber = async (
+  requestBody: ApiRequestBody<'/user/verify/phone-number', 'post'>,
+): Promise<ApiResult<'/user/verify/phone-number', 'post'>> => {
+  return api
+    .POST('/user/verify/phone-number', {
+      body: requestBody,
+    })
+    .then(handleApiResult<'/user/verify/phone-number', 'post'>)
+    .catch(handleApiError<'/user/verify/phone-number', 'post'>);
 };

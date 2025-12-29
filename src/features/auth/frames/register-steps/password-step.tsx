@@ -2,8 +2,16 @@ import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { usePasswordForm } from '../../hooks/register-steps/use-password-form';
+import { RegisterSteps } from '../register-frame';
 
-import { Button, FunnelLayout, Label, PasswordInput } from '@/features/core';
+import {
+  Button,
+  FunnelLayout,
+  Label,
+  LogClick,
+  PasswordInput,
+  StepProgress,
+} from '@/features/core';
 
 export function PasswordStep({
   context,
@@ -23,16 +31,26 @@ export function PasswordStep({
       <FunnelLayout
         onUndo={onUndo}
         title={t('register.title')}
-        stepTitle={t('register.steps.password.title')}
+        stepTitle={
+          <div className="flex flex-col items-start gap-5">
+            <StepProgress
+              currentStep={RegisterSteps.indexOf('password')}
+              totalSteps={RegisterSteps.length}
+            />
+            {t('register.steps.password.title')}
+          </div>
+        }
         button={
-          <Button
-            variant="primary"
-            className="w-full"
-            loading={isSubmitting}
-            disabled={!(isValid && isDirty)}
-          >
-            {t('register.steps.password.button')}
-          </Button>
+          <LogClick event="register_password_submit">
+            <Button
+              variant="primary"
+              className="w-full"
+              loading={isSubmitting}
+              disabled={!(isValid && isDirty)}
+            >
+              {t('register.steps.password.button')}
+            </Button>
+          </LogClick>
         }
       >
         <div className="flex flex-col gap-5">

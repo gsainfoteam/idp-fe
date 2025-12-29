@@ -26,7 +26,10 @@ export const useEmailForm = ({
 }: {
   context: RegisterSteps['email'];
   onNext: (
-    data: DifferenceNonNullable<RegisterSteps['code'], RegisterSteps['email']>,
+    data: DifferenceNonNullable<
+      RegisterSteps['emailCode'],
+      RegisterSteps['email']
+    >,
   ) => void;
 }) => {
   const { t } = useTranslation();

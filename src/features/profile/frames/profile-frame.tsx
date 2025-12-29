@@ -115,11 +115,14 @@ export function ProfileFrame() {
           <div className="text-label-1 flex w-full items-center justify-between">
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.phone_number')}
-              {/* TODO: 인증 퍼널 구현 */}
-              <VerifiedBadge
-                verified={user.isPhoneNumberVerified}
-                onClick={() => {}}
-              />
+              <LogClick event="home_profile_phone_number_verify_button">
+                <VerifiedBadge
+                  verified={user.isPhoneNumberVerified}
+                  onClick={async () =>
+                    await navigate({ to: '/profile/verify-phone-number' })
+                  }
+                />
+              </LogClick>
             </div>
             <div className="text-basics-secondary-label">
               {user.phoneNumber}

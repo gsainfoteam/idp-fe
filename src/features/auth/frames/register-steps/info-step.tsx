@@ -3,6 +3,7 @@ import { useFormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useInfoForm } from '../../hooks/register-steps/use-info-form';
+import { RegisterSteps } from '../register-frame';
 
 import {
   Button,
@@ -10,6 +11,7 @@ import {
   Input,
   Label,
   LogClick,
+  StepProgress,
   StudentIdVerificationDialog,
 } from '@/features/core';
 
@@ -31,7 +33,15 @@ export function InfoStep({
       onUndo={onUndo}
       loading={isSubmitting}
       title={t('register.title')}
-      stepTitle={t('register.steps.info.title')}
+      stepTitle={
+        <div className="flex flex-col items-start gap-5">
+          <StepProgress
+            currentStep={RegisterSteps.indexOf('info')}
+            totalSteps={RegisterSteps.length}
+          />
+          {t('register.steps.info.title')}
+        </div>
+      }
       button={
         <LogClick event="register_info_verify">
           <Button
@@ -66,17 +76,6 @@ export function InfoStep({
             error={errors.name?.message || !!errors.root}
             disabled={isSubmitting}
             {...register('name')}
-          />
-        </Label>
-        <Label text={t('register.steps.info.inputs.phone_number.label')}>
-          <Input
-            type="tel"
-            placeholder={t(
-              'register.steps.info.inputs.phone_number.placeholder',
-            )}
-            error={errors.phoneNumber?.message || !!errors.root}
-            disabled={isSubmitting}
-            {...register('phoneNumber')}
           />
         </Label>
         <Label text={t('register.steps.info.inputs.birth_date.label')}>
