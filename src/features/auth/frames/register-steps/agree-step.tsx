@@ -43,7 +43,7 @@ function AgreeForm() {
                     key="terms-link"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://infoteam-rulrudino.notion.site/GIST-1e5365ea27df8051a3e6f6dc2bb11ded"
+                    href="https://terms.gistory.me/account/tos/250520/"
                     className="underline"
                     onClick={(e) => e.stopPropagation()}
                   />,
@@ -69,7 +69,7 @@ function AgreeForm() {
                     key="privacy-link"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href="https://infoteam-rulrudino.notion.site/GSA-90e5824ded1c42479ab61354c8d15db5?pvs=4"
+                    href="https://terms.gistory.me/account/privacy/250520/"
                     className="underline"
                     onClick={(e) => e.stopPropagation()}
                   />,
