@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import CheckIcon from '@/assets/icons/line/checkbox.svg?react';
+import CheckIcon from '@/assets/icons/line/checkmark.svg?react';
 import { cn, palette } from '@/features/core';
 
 const checkboxColors = palette(() => ({

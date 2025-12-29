@@ -8,6 +8,15 @@
   "register": {
     "title": "Register",
     "steps": {
+      "agree": {
+        "title": "To use an Infoteam account,\nplease agree to the terms and conditions",
+        "checkboxes": {
+          "terms": "Infoteam Account <0>Terms of Service</0>",
+          "privacy": "Infoteam Account <0>Privacy Policy</0>"
+        },
+        "button": "Proceed",
+        "undo_button": "Cancel"
+      },
       "email": {
         "title": "Please enter your email",
         "button": "Send Verification Code",
@@ -37,7 +46,7 @@
         "button": "Quit",
         "sub_button": "Cancel"
       },
-      "code": {
+      "email_code": {
         "title": "Enter the 6-digit code\nsent to your email",
         "button": "Verify",
         "resend": "Resend Code",
@@ -53,6 +62,40 @@
             }
           }
         }
+      },
+      "tel": {
+        "title": "Please enter your phone number",
+        "button": "Verify Phone Number",
+        "inputs": {
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          }
+        }
+      },
+      "tel_code": {
+        "title": "Enter the 6-digit code\nsent to your phone number",
+        "button": "Verify",
+        "resend": "Resend Code",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000",
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            }
+          }
+        }
+      },
+      "tel_skip": {
+        "title": "Phone numbers not registered with\ndomestic carriers are difficult to verify",
+        "button": "Skip Phone Number Verification"
       },
       "password": {
         "title": "Please enter your password",
@@ -86,13 +129,6 @@
               "format": "Please enter your name"
             }
           },
-          "phone_number": {
-            "label": "Phone Number",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "Please enter a valid phone number"
-            }
-          },
           "birth_date": {
             "label": "Birth Date",
             "placeholder": "YYYY-MM-DD",
@@ -116,13 +152,6 @@
             "placeholder": "Kim Jin-i",
             "errors": {
               "format": "Please enter your name"
-            }
-          },
-          "phone_number": {
-            "label": "Phone Number",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "Please enter a valid phone number"
             }
           },
           "id": {
@@ -296,6 +325,49 @@
       "complete": {
         "title": "Verification has been completed",
         "button": "Go to Profile"
+      }
+    }
+  },
+  "verify_phone_number": {
+    "title": "Verify Phone Number",
+    "steps": {
+      "tel": {
+        "title": "Please enter your phone number",
+        "button": "Send Verification Code",
+        "inputs": {
+          "phone_number": {
+            "label": "Phone Number",
+            "placeholder": "010-0000-0000",
+            "errors": {
+              "format": "Please enter a valid phone number"
+            }
+          }
+        }
+      },
+      "code": {
+        "title": "Enter the 6-digit code\nsent to your phone number",
+        "button": "Verify",
+        "resend": "Resend Code",
+        "inputs": {
+          "code": {
+            "label": "Verification Code",
+            "placeholder": "000000",
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            }
+          }
+        }
+      },
+      "success": {
+        "title": "Verification has been completed",
+        "button": "Go Back"
+      },
+      "failure": {
+        "title": "Verification failed",
+        "button": "Go Back"
       }
     }
   },

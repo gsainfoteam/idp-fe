@@ -9,13 +9,14 @@ export * from './components/atomic/input';
 export * from './components/atomic/label';
 export * from './components/atomic/loading-ellipse';
 export * from './components/atomic/loading-overlay';
-export * from './components/atomic/password-input';
+export * from './components/atomic/step-progress';
 export * from './components/atomic/switch';
 export * from './components/atomic/theme-switcher';
 
 // Compound components
 export * from './components/compound/bottom-sheet';
 export * from './components/compound/copy-input';
+export * from './components/compound/password-input';
 export * from './components/compound/dialog';
 export * from './components/compound/file-upload';
 export * from './components/compound/funnel-layout';
@@ -44,7 +45,6 @@ export * from './services/amplitude';
 export * from './utils/cn';
 export * from './utils/palette';
 export * from './utils/time-format';
-export * from './utils/time-string';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
 export * from './utils/sort-by';
