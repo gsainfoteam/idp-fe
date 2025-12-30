@@ -1,8 +1,4 @@
-import {
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from '@tanstack/react-router';
+import { Link, useLoaderData, useLocation } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +21,6 @@ export function AuthorizeForm({
     from: '/_auth-required/authorize',
   });
   const { user } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const consent = consents?.list.find((c) => c.clientUuid === client.clientId);
@@ -125,32 +120,28 @@ export function AuthorizeForm({
                         </div>
                       </Checkbox>
                       {scope === 'student_id' && user && !user.isIdVerified && (
-                        <VerifiedBadge
-                          verified={user.isIdVerified}
-                          onClick={() =>
-                            navigate({
-                              to: '/profile/verify-student-id',
-                              search: {
-                                redirect: location.href,
-                              },
-                            })
-                          }
-                        />
+                        <Link
+                          to="/profile/verify-student-id"
+                          search={{
+                            redirect: location.href,
+                          }}
+                        >
+                          <VerifiedBadge verified={user.isIdVerified} />
+                        </Link>
                       )}
                       {scope === 'phone_number' &&
                         user &&
                         !user.isPhoneNumberVerified && (
-                          <VerifiedBadge
-                            verified={user.isPhoneNumberVerified}
-                            onClick={() =>
-                              navigate({
-                                to: '/profile/verify-phone-number',
-                                search: {
-                                  redirect: location.href,
-                                },
-                              })
-                            }
-                          />
+                          <Link
+                            to="/profile/verify-phone-number"
+                            search={{
+                              redirect: location.href,
+                            }}
+                          >
+                            <VerifiedBadge
+                              verified={user.isPhoneNumberVerified}
+                            />
+                          </Link>
                         )}
                     </>
                   )}
