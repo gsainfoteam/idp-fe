@@ -1,5 +1,4 @@
 import { Navigate, createFileRoute } from '@tanstack/react-router';
-import { useEffect } from 'react';
 import { z } from 'zod';
 
 import { useAuth } from '@/features/auth';
@@ -8,12 +7,6 @@ import { VerifyStudentIdFrame } from '@/features/profile';
 function VerifyStudentIdPage() {
   const { user } = useAuth();
   const { redirect } = Route.useSearch();
-
-  useEffect(() => {
-    if (user?.isIdVerified && redirect) {
-      window.location.href = redirect;
-    }
-  }, [user?.isIdVerified, redirect]);
 
   if (!user) {
     return null;
@@ -35,6 +28,12 @@ export const Route = createFileRoute(
 )({
   component: VerifyStudentIdPage,
   validateSearch: z.object({
-    redirect: z.string().url().optional(),
+    redirect: z
+      .string()
+      .refine(
+        (val) => !val || val.startsWith('/'),
+        'Redirect must be a relative path',
+      )
+      .optional(),
   }),
 });
