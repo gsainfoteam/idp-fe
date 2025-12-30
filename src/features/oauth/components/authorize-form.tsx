@@ -122,6 +122,7 @@ export function AuthorizeForm({
                       {scope === 'student_id' && user && !user.isIdVerified && (
                         <Link
                           to="/profile/verify-student-id"
+                          disabled={user.isIdVerified}
                           search={{
                             redirect: location.pathname + location.searchStr,
                           }}
@@ -134,6 +135,7 @@ export function AuthorizeForm({
                         !user.isPhoneNumberVerified && (
                           <Link
                             to="/profile/verify-phone-number"
+                            disabled={user.isPhoneNumberVerified}
                             search={{
                               redirect: location.pathname + location.searchStr,
                             }}

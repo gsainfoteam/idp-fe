@@ -6,13 +6,11 @@ import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
 
-export function VerifiedBadge({
-  verified,
-  onClick,
-}: {
+export interface VerifiedBadgeProps {
   verified: boolean;
-  onClick?: () => void;
-}) {
+}
+
+export function VerifiedBadge({ verified }: VerifiedBadgeProps) {
   const { t } = useTranslation();
 
   const Badge = verified ? CheckVerifiedIcon : AlertOctagonIcon;
@@ -28,14 +26,10 @@ export function VerifiedBadge({
     >
       <Badge className="size-4" />
       {!verified && (
-        <button
-          type="button"
-          className="text-label-1 text-label ml-1 flex cursor-pointer items-center gap-1 font-bold"
-          onClick={onClick}
-        >
+        <div className="text-label-1 text-label ml-1 flex items-center gap-1 font-bold">
           {t('profile.verify')}
           <ChevronRightIcon className="text-basics-secondary-label size-4" />
-        </button>
+        </div>
       )}
     </div>
   );
