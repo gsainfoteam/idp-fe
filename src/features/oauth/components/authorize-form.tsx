@@ -123,7 +123,7 @@ export function AuthorizeForm({
                         <Link
                           to="/profile/verify-student-id"
                           search={{
-                            redirect: location.href,
+                            redirect: location.pathname + location.search,
                           }}
                         >
                           <VerifiedBadge verified={user.isIdVerified} />
@@ -135,7 +135,7 @@ export function AuthorizeForm({
                           <Link
                             to="/profile/verify-phone-number"
                             search={{
-                              redirect: location.href,
+                              redirect: location.pathname + location.search,
                             }}
                           >
                             <VerifiedBadge

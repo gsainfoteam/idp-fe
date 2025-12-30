@@ -15,6 +15,12 @@ const AuthLayout = () => {
 export const Route = createFileRoute('/auth')({
   component: AuthLayout,
   validateSearch: z.object({
-    redirect: z.string().optional(),
+    redirect: z
+      .string()
+      .refine(
+        (val) => !val || val.startsWith('/'),
+        'Redirect must be a relative path',
+      )
+      .optional(),
   }),
 });
