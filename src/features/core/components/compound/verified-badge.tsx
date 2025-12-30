@@ -29,6 +29,7 @@ export function VerifiedBadge({
       <Badge className="size-4" />
       {!verified && (
         <button
+          type="button"
           className="text-label-1 text-label ml-1 flex cursor-pointer items-center gap-1 font-bold"
           onClick={onClick}
         >
