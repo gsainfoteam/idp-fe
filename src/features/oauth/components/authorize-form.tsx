@@ -110,7 +110,7 @@ export function AuthorizeForm({
                   name={`scopes.${scope}`}
                   control={control}
                   render={({ field }) => (
-                    <>
+                    <div className="flex w-full items-center justify-between">
                       <Checkbox
                         checked={field.value ?? false}
                         onChange={field.onChange}
@@ -123,7 +123,7 @@ export function AuthorizeForm({
                         <Link
                           to="/profile/verify-student-id"
                           search={{
-                            redirect: location.pathname + location.search,
+                            redirect: location.pathname + location.searchStr,
                           }}
                         >
                           <VerifiedBadge verified={user.isIdVerified} />
@@ -135,7 +135,7 @@ export function AuthorizeForm({
                           <Link
                             to="/profile/verify-phone-number"
                             search={{
-                              redirect: location.pathname + location.search,
+                              redirect: location.pathname + location.searchStr,
                             }}
                           >
                             <VerifiedBadge
@@ -143,7 +143,7 @@ export function AuthorizeForm({
                             />
                           </Link>
                         )}
-                    </>
+                    </div>
                   )}
                 />
               ))}
