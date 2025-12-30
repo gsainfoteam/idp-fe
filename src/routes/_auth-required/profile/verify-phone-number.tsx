@@ -30,10 +30,8 @@ export const Route = createFileRoute(
   validateSearch: z.object({
     redirect: z
       .string()
-      .refine(
-        (val) => !val || val.startsWith('/'),
-        'Redirect must be a relative path',
-      )
+      .min(1, 'Redirect cannot be empty')
+      .refine((val) => val.startsWith('/'), 'Redirect must be a relative path')
       .optional(),
   }),
 });
