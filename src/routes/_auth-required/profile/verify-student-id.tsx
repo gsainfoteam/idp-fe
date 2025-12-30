@@ -31,7 +31,10 @@ export const Route = createFileRoute(
     redirect: z
       .string()
       .min(1, 'Redirect cannot be empty')
-      .refine((val) => val.startsWith('/'), 'Redirect must be a relative path')
+      .refine(
+        (val) => val.startsWith('/') && !val.startsWith('//'),
+        'Redirect must be a relative path',
+      )
       .optional(),
   }),
 });
