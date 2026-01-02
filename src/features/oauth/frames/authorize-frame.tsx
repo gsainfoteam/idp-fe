@@ -56,7 +56,9 @@ function Inner({
   client: components['schemas']['ClientPublicResDto'];
 }) {
   const { t } = useTranslation();
-  const { form, onSubmit, onCancel } = useAuthorize({ client });
+  const { form, onSubmit, onCancel, isRequiredScopeNotVerified } = useAuthorize(
+    { client },
+  );
 
   return (
     <FormProvider {...form}>
@@ -100,7 +102,9 @@ function Inner({
                 <Button
                   variant="primary"
                   className="w-full"
-                  disabled={!!form.formState.errors.root}
+                  disabled={
+                    !!form.formState.errors.root || isRequiredScopeNotVerified
+                  }
                 >
                   {t('authorize.buttons.continue')}
                 </Button>

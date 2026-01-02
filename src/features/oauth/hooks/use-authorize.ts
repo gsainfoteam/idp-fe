@@ -110,9 +110,12 @@ export const useAuthorize = ({
     user,
   ]);
 
+  const requiredScopes = clientScopes.filter((v) => client.scopes.includes(v));
+
   return {
     ...useAuthorizeForm({
       clientId: client.clientId,
+      requiredScopes,
       onDone: authorize,
     }),
     onCancel,

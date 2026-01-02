@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import './primitive.css';
+
+@theme {
+  --color-verified-badge-background-verified: #47b3ed;
+  --color-verified-badge-background-unverified: #fc9b3a;
+}

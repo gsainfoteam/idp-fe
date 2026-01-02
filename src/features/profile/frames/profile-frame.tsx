@@ -1,12 +1,9 @@
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import { ProfileEditOverlay } from '../components/profile-edit-overlay';
 
-import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
-import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
-import CheckVerifiedIcon from '@/assets/icons/solid/check-verified.svg?react';
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import { useAuth } from '@/features/auth';
 import {
@@ -14,8 +11,8 @@ import {
   FunnelLayout,
   IconButton,
   LogClick,
-  cn,
   uniqueKey,
+  VerifiedBadge,
 } from '@/features/core';
 
 function formatDateTime(dateString: string, locale: string) {
@@ -28,38 +25,6 @@ function formatDateTime(dateString: string, locale: string) {
       hour: '2-digit',
       minute: '2-digit',
     },
-  );
-}
-
-function VerifiedBadge({
-  verified,
-  onClick,
-}: {
-  verified: boolean;
-  onClick?: () => void;
-}) {
-  const { t } = useTranslation();
-
-  const Badge = verified ? CheckVerifiedIcon : AlertOctagonIcon;
-
-  return (
-    <div
-      className={cn(
-        'flex items-center gap-1',
-        verified ? 'text-[#47B3ED]' : 'text-[#FC9B3A]',
-      )}
-    >
-      <Badge className="size-4" />
-      {!verified && (
-        <button
-          className="text-label-1 text-label ml-1 flex cursor-pointer items-center gap-1 font-bold"
-          onClick={onClick}
-        >
-          {t('profile.verify')}
-          <ChevronRightIcon className="text-basics-secondary-label size-4" />
-        </button>
-      )}
-    </div>
   );
 }
 
@@ -129,12 +94,12 @@ export function ProfileFrame() {
               {t('profile.sections.basic_info.fields.name_and_id')}
               {isStudent && (
                 <LogClick event="home_profile_student_id_verify_button">
-                  <VerifiedBadge
-                    verified={user.isIdVerified}
-                    onClick={async () =>
-                      await navigate({ to: '/profile/verify-student-id' })
-                    }
-                  />
+                  <Link
+                    to="/profile/verify-student-id"
+                    disabled={user.isIdVerified}
+                  >
+                    <VerifiedBadge verified={user.isIdVerified} />
+                  </Link>
                 </LogClick>
               )}
             </div>
@@ -151,12 +116,12 @@ export function ProfileFrame() {
             <div className="flex items-center gap-1">
               {t('profile.sections.basic_info.fields.phone_number')}
               <LogClick event="home_profile_phone_number_verify_button">
-                <VerifiedBadge
-                  verified={user.isPhoneNumberVerified}
-                  onClick={async () =>
-                    await navigate({ to: '/profile/verify-phone-number' })
-                  }
-                />
+                <Link
+                  to="/profile/verify-phone-number"
+                  disabled={user.isPhoneNumberVerified}
+                >
+                  <VerifiedBadge verified={user.isPhoneNumberVerified} />
+                </Link>
               </LogClick>
             </div>
             <div className="text-basics-secondary-label">

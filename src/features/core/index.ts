@@ -25,6 +25,7 @@ export * from './components/compound/multi-state-switch';
 export * from './components/compound/student-id-verification-dialog';
 export * from './components/compound/swipe-card';
 export * from './components/compound/toast';
+export * from './components/compound/verified-badge';
 
 // Log components
 export * from './components/log/log-click';
