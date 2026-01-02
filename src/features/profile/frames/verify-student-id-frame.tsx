@@ -35,7 +35,6 @@ export function VerifyStudentIdFrame() {
   const undo = async () => {
     await refetch();
     await funnel.history.cleanup();
-    window.location.reload();
   };
 
   return (
