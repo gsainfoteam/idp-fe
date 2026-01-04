@@ -30,7 +30,7 @@ const buttonStyles = cva(
         false: '',
       },
       disabled: {
-        true: 'cursor-default',
+        true: 'cursor-not-allowed',
         false: '',
       },
     },

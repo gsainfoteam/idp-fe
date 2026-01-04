@@ -7,6 +7,7 @@ import { useClientMemberForm } from '../hooks/use-client-member-form';
 import { type Role, ROLE_NUMBER, ROLE_VALUES } from '../utils/role';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
+import { useAuth } from '@/features/auth';
 import {
   Avatar,
   Button,
@@ -59,6 +60,7 @@ function RoleSelect({
 
 export function ClientMemberForm({ client }: { client: Client }) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const {
     form,
     members,
@@ -137,6 +139,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                             updateMemberRole(member.uuid, newRole)
                           }
                           disabled={
+                            user?.uuid === member.uuid ||
                             !canUpdateRole ||
                             client.deleteRequestedAt != null ||
                             currentUserRoleNumber < ROLE_NUMBER.OWNER
@@ -148,6 +151,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           variant="link"
                           size="none"
                           disabled={
+                            user?.uuid === member.uuid ||
                             !canRemove ||
                             client.deleteRequestedAt != null ||
                             currentUserRoleNumber < ROLE_NUMBER.ADMIN
