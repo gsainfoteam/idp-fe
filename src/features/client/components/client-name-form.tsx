@@ -3,7 +3,9 @@ import { useFormContext } from 'react-hook-form';
 
 import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { useClientMembers } from '../hooks/use-client-members';
 import { useClientNameForm } from '../hooks/use-client-name-form';
+import { ROLE_NUMBER } from '../utils/role';
 
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
@@ -14,6 +16,7 @@ export function ClientNameForm({ client }: { client: Client }) {
     form: { register, watch, formState },
   } = useClientNameForm({ client });
   const { setValue } = useFormContext<ClientDetailsFormSchema>();
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   const [isError, setIsError] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
@@ -46,7 +49,7 @@ export function ClientNameForm({ client }: { client: Client }) {
           <input
             type="text"
             style={{ width: inputWidth }}
-            disabled={disabled}
+            disabled={disabled || currentUserRoleNumber < ROLE_NUMBER.ADMIN}
             className={cn(
               'border-b-2 border-transparent transition-colors focus:border-neutral-400 focus:outline-none',
               isError && 'border-red-400 focus:border-red-400',

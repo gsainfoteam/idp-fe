@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
 import { useClientInfoForm } from '../hooks/use-client-info-form';
+import { useClientMembers } from '../hooks/use-client-members';
+import { ROLE_NUMBER } from '../utils/role';
 
 import { Button, Label, LogClick } from '@/features/core';
 import { CopyInput } from '@/features/core';
@@ -12,6 +14,7 @@ export function ClientInfoForm({ client }: { client: Client }) {
     form: { watch, formState },
     onSubmit,
   } = useClientInfoForm(client);
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   const id = watch('clientId');
   const secret = watch('clientSecret');
@@ -49,7 +52,9 @@ export function ClientInfoForm({ client }: { client: Client }) {
                 <Button
                   variant="default"
                   disabled={
-                    formState.isSubmitting || client.deleteRequestedAt != null
+                    formState.isSubmitting ||
+                    client.deleteRequestedAt != null ||
+                    currentUserRoleNumber < ROLE_NUMBER.ADMIN
                   }
                 >
                   {t('services.detail.info.regenerate_secret.action')}

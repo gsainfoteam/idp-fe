@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
+import { useClientMembers } from '../hooks/use-client-members';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
+import { ROLE_NUMBER } from '../utils/role';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
@@ -17,8 +19,7 @@ import {
   cn,
   uniqueKey,
 } from '@/features/core';
-import { useLoading } from '@/features/core';
-import { IconButton } from '@/features/core';
+import { useLoading, IconButton } from '@/features/core';
 
 function ClientPictureOverlay({
   isOpen,
@@ -79,6 +80,7 @@ export function ClientPictureForm({
     setPreviewImage,
     onUpdated,
   );
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   useEffect(() => {
     setPreviewImage(client.picture ?? null);
@@ -113,7 +115,10 @@ export function ClientPictureForm({
         <div className="flex flex-col gap-3">
           <FileUpload
             ref={fileInputRef}
-            disabled={client.deleteRequestedAt != null}
+            disabled={
+              client.deleteRequestedAt != null ||
+              currentUserRoleNumber < ROLE_NUMBER.ADMIN
+            }
             accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
             maxSizeMb={1}
             onSave={(files, previewUrls) =>
@@ -127,7 +132,11 @@ export function ClientPictureForm({
               <IconButton
                 variant="primary"
                 loading={uploadLoading}
-                disabled={deleteLoading || client.deleteRequestedAt != null}
+                disabled={
+                  deleteLoading ||
+                  client.deleteRequestedAt != null ||
+                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                }
                 className="p-2.5"
                 icon={<EditIcon />}
               />
@@ -140,7 +149,11 @@ export function ClientPictureForm({
             <IconButton
               variant="secondary"
               loading={deleteLoading}
-              disabled={!previewImage || client.deleteRequestedAt != null}
+              disabled={
+                !previewImage ||
+                client.deleteRequestedAt != null ||
+                currentUserRoleNumber < ROLE_NUMBER.ADMIN
+              }
               className="p-2.5"
               icon={<TrashBinIcon />}
               onClick={async () => {

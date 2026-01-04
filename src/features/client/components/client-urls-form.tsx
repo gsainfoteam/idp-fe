@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { useClientMembers } from '../hooks/use-client-members';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
+import { ROLE_NUMBER } from '../utils/role';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
@@ -13,6 +15,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { watch, setValue } = useFormContext<ClientDetailsFormSchema>();
   const { form: urlForm, reset } = useClientUrlForm();
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   const urls = watch('urls');
   const newUrl = urlForm.watch('newUrl');
@@ -23,38 +26,6 @@ export function ClientUrlsForm({ client }: { client: Client }) {
         {t('services.detail.urls.title')}
       </div>
       <div className="flex flex-col gap-5">
-        <div className="flex items-start gap-2">
-          <Input
-            className="flex-1"
-            type="url"
-            placeholder={t('services.detail.urls.placeholder')}
-            error={urlForm.formState.errors.newUrl?.message}
-            disabled={client.deleteRequestedAt != null}
-            {...urlForm.register('newUrl')}
-          />
-          <Controller
-            control={urlForm.control}
-            name="newUrl"
-            render={({ fieldState }) => (
-              <IconButton
-                variant="primary"
-                className="h-fit"
-                disabled={
-                  fieldState.invalid ||
-                  !fieldState.isDirty ||
-                  client.deleteRequestedAt != null
-                }
-                onClick={() => {
-                  setValue('urls', [newUrl, ...(urls ?? [])], {
-                    shouldDirty: true,
-                  });
-                  reset();
-                }}
-                icon={<PlusIcon />}
-              />
-            )}
-          />
-        </div>
         {urls.length > 0 && (
           <div className="border-basics-tertiary-label flex flex-col gap-4 rounded-lg border p-4">
             {urls.map((url, index) => (
@@ -73,7 +44,10 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   <IconButton
                     variant="grayText"
                     size="none"
-                    disabled={client.deleteRequestedAt != null}
+                    disabled={
+                      client.deleteRequestedAt != null ||
+                      currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                    }
                     icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(
@@ -85,12 +59,48 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   />
                 </div>
                 {index !== urls.length - 1 && (
-                  <div className="bg-funnel-separator h-[1px] w-full" />
+                  <div className="bg-funnel-separator h-px w-full" />
                 )}
               </div>
             ))}
           </div>
         )}
+        <div className="flex items-start gap-2">
+          <Input
+            className="flex-1"
+            type="url"
+            placeholder={t('services.detail.urls.placeholder')}
+            error={urlForm.formState.errors.newUrl?.message}
+            disabled={
+              client.deleteRequestedAt != null ||
+              currentUserRoleNumber < ROLE_NUMBER.ADMIN
+            }
+            {...urlForm.register('newUrl')}
+          />
+          <Controller
+            control={urlForm.control}
+            name="newUrl"
+            render={({ fieldState }) => (
+              <IconButton
+                variant="primary"
+                className="h-fit"
+                disabled={
+                  fieldState.invalid ||
+                  !fieldState.isDirty ||
+                  client.deleteRequestedAt != null ||
+                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                }
+                onClick={() => {
+                  setValue('urls', [newUrl, ...(urls ?? [])], {
+                    shouldDirty: true,
+                  });
+                  reset();
+                }}
+                icon={<PlusIcon />}
+              />
+            )}
+          />
+        </div>
       </div>
     </div>
   );
