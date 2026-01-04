@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,9 @@ export type ClientDetailsFormSchema = z.infer<typeof schema>;
 
 export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   const { t } = useTranslation();
+  const clientIdRef = useRef(client.clientId);
+  const isResettingRef = useRef(false);
+
   const form = useForm<ClientDetailsFormSchema>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -40,6 +43,24 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   const hasDirty = Object.keys(form.formState.dirtyFields).length > 0;
   const isInvalid = Object.keys(form.formState.errors).length > 0;
 
+  // client가 변경될 때만 폼을 리셋 (탭 전환 시에는 업데이트 트리거하지 않음)
+  useEffect(() => {
+    if (clientIdRef.current !== client.clientId) {
+      clientIdRef.current = client.clientId;
+      isResettingRef.current = true;
+      form.reset({
+        name: client.name,
+        idTokenAllowed: client.idTokenAllowed,
+        scopes: Object.fromEntries([
+          ...client.scopes.map((v) => [v, 'required']),
+          ...client.optionalScopes.map((v) => [v, 'optional']),
+        ]),
+        urls: client.urls,
+      });
+      setUpdateRequired(false);
+    }
+  }, [client, form]);
+
   useEffect(() => {
     if (!updateRequired) return;
     window.onbeforeunload = () => true;
@@ -50,7 +71,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [updateRequired]);
 
   useEffect(() => {
-    if (!updateRequired || isInvalid) return;
+    if (!updateRequired || isInvalid || isResettingRef.current) return;
 
     const timer = setTimeout(async () => {
       await toast.promise(
@@ -91,6 +112,7 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
           setUpdateRequired(false);
           onUpdated();
 
+          isResettingRef.current = true;
           form.reset({
             name: res.data.name,
             idTokenAllowed: res.data.idTokenAllowed,
@@ -112,8 +134,16 @@ export const useClientDetailsForm = (client: Client, onUpdated: () => void) => {
   }, [client.clientId, form, onUpdated, t, updateRequired, values, isInvalid]);
 
   useEffect(() => {
-    if (hasDirty && !isInvalid) {
+    if (!hasDirty && isResettingRef.current) {
+      isResettingRef.current = false;
+    }
+  }, [hasDirty]);
+
+  useEffect(() => {
+    if (hasDirty && !isInvalid && !isResettingRef.current) {
       setUpdateRequired(true);
+    } else if (!hasDirty) {
+      setUpdateRequired(false);
     }
   }, [hasDirty, isInvalid]);
 
