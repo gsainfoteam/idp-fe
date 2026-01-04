@@ -65,6 +65,8 @@ export const useClientMemberForm = (clientId: string) => {
       } else {
         toast.error(t('toast.unknown_error'));
       }
+
+      return;
     }
 
     await refetch();
@@ -83,6 +85,8 @@ export const useClientMemberForm = (clientId: string) => {
       } else {
         toast.error(t('toast.unknown_error'));
       }
+
+      return;
     }
 
     await refetch();
