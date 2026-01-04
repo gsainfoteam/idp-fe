@@ -45,7 +45,9 @@ export function ClientNameForm({ client }: { client: Client }) {
     <div ref={containerRef} className="flex w-full items-center gap-2">
       <label className="group flex items-center gap-2">
         <div className="flex items-center gap-2">
-          {disabled && <AlertOctagonIcon className="text-red-700" />}
+          {disabled && (
+            <AlertOctagonIcon className="text-red-700 dark:text-red-400" />
+          )}
           <input
             type="text"
             style={{ width: inputWidth }}
@@ -53,7 +55,7 @@ export function ClientNameForm({ client }: { client: Client }) {
             className={cn(
               'border-b-2 border-transparent transition-colors focus:border-neutral-400 focus:outline-none',
               isError && 'border-red-400 focus:border-red-400',
-              disabled && 'border-none text-red-700',
+              disabled && 'border-none text-red-700 dark:text-red-400',
             )}
             {...register('name', {
               onBlur: () => {
