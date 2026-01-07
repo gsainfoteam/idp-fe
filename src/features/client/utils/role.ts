@@ -15,10 +15,6 @@ export const getRoleNumber = (role: Role | null): number => {
   return ROLE_NUMBER[role];
 };
 
-export const requiredRole = (role: Role, requiredRole: Role): boolean => {
-  return getRoleNumber(role) >= getRoleNumber(requiredRole);
-};
-
 export const hasRoleAtLeast = (
   roleNumber: number,
   minimumRole: Role,
