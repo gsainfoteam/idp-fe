@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import { useClientMembers } from '../hooks/use-client-members';
-import { ROLE_NUMBER } from '../utils/role';
+import { hasRoleAtLeast } from '../utils/role';
 
 import { Label, MultiStateSwitch } from '@/features/core';
 
@@ -44,6 +44,8 @@ export function ClientScopesForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { control } = useFormContext<ClientDetailsFormSchema>();
   const { currentUserRoleNumber } = useClientMembers(client.clientId);
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,11 +59,7 @@ export function ClientScopesForm({ client }: { client: Client }) {
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.profile')}
-              disabled={
-                disabled ||
-                client.deleteRequestedAt != null ||
-                currentUserRoleNumber < ROLE_NUMBER.ADMIN
-              }
+              disabled={disabled || isDeleted || !canManage}
               value={value ?? 'no'}
               {...field}
             />
@@ -73,11 +71,7 @@ export function ClientScopesForm({ client }: { client: Client }) {
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.student_id')}
-              disabled={
-                disabled ||
-                client.deleteRequestedAt != null ||
-                currentUserRoleNumber < ROLE_NUMBER.ADMIN
-              }
+              disabled={disabled || isDeleted || !canManage}
               value={value ?? 'no'}
               {...field}
             />
@@ -89,11 +83,7 @@ export function ClientScopesForm({ client }: { client: Client }) {
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.email')}
-              disabled={
-                disabled ||
-                client.deleteRequestedAt != null ||
-                currentUserRoleNumber < ROLE_NUMBER.ADMIN
-              }
+              disabled={disabled || isDeleted || !canManage}
               value={value ?? 'no'}
               {...field}
             />
@@ -105,11 +95,7 @@ export function ClientScopesForm({ client }: { client: Client }) {
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
               label={t('services.detail.scopes.type.phone_number')}
-              disabled={
-                disabled ||
-                client.deleteRequestedAt != null ||
-                currentUserRoleNumber < ROLE_NUMBER.ADMIN
-              }
+              disabled={disabled || isDeleted || !canManage}
               value={value ?? 'no'}
               {...field}
             />

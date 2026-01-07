@@ -14,3 +14,14 @@ export const getRoleNumber = (role: Role | null): number => {
   if (!role) return 0;
   return ROLE_NUMBER[role];
 };
+
+export const requiredRole = (role: Role, requiredRole: Role): boolean => {
+  return getRoleNumber(role) >= getRoleNumber(requiredRole);
+};
+
+export const hasRoleAtLeast = (
+  roleNumber: number,
+  minimumRole: Role,
+): boolean => {
+  return roleNumber >= ROLE_NUMBER[minimumRole];
+};

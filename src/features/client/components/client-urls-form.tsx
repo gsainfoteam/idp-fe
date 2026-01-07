@@ -5,7 +5,7 @@ import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import { useClientMembers } from '../hooks/use-client-members';
 import { useClientUrlForm } from '../hooks/use-client-url-form';
-import { ROLE_NUMBER } from '../utils/role';
+import { hasRoleAtLeast } from '../utils/role';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
@@ -19,6 +19,8 @@ export function ClientUrlsForm({ client }: { client: Client }) {
 
   const urls = watch('urls');
   const newUrl = urlForm.watch('newUrl');
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   return (
     <div className="flex flex-col gap-4">
@@ -34,7 +36,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   <div
                     className={cn(
                       'text-body-1 flex-1',
-                      client.deleteRequestedAt != null
+                      isDeleted
                         ? 'text-basics-secondary-label'
                         : 'text-basics-primary-label',
                     )}
@@ -44,10 +46,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                   <IconButton
                     variant="grayText"
                     size="none"
-                    disabled={
-                      client.deleteRequestedAt != null ||
-                      currentUserRoleNumber < ROLE_NUMBER.ADMIN
-                    }
+                    disabled={isDeleted || !canManage}
                     icon={<TrashBinIcon />}
                     onClick={() =>
                       setValue(
@@ -71,10 +70,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
             type="url"
             placeholder={t('services.detail.urls.placeholder')}
             error={urlForm.formState.errors.newUrl?.message}
-            disabled={
-              client.deleteRequestedAt != null ||
-              currentUserRoleNumber < ROLE_NUMBER.ADMIN
-            }
+            disabled={isDeleted || !canManage}
             {...urlForm.register('newUrl')}
           />
           <Controller
@@ -87,8 +83,8 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                 disabled={
                   fieldState.invalid ||
                   !fieldState.isDirty ||
-                  client.deleteRequestedAt != null ||
-                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                  isDeleted ||
+                  !canManage
                 }
                 onClick={() => {
                   setValue('urls', [newUrl, ...(urls ?? [])], {

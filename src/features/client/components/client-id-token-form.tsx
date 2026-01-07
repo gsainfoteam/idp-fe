@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
 import { useClientMembers } from '../hooks/use-client-members';
-import { ROLE_NUMBER } from '../utils/role';
+import { hasRoleAtLeast } from '../utils/role';
 
 import { Switch } from '@/features/core';
 
@@ -12,6 +12,8 @@ export function ClientIdTokenForm({ client }: { client: Client }) {
   const { t } = useTranslation();
   const { control } = useFormContext<ClientDetailsFormSchema>();
   const { currentUserRoleNumber } = useClientMembers(client.clientId);
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   return (
     <div className="flex flex-col gap-4">
@@ -28,11 +30,7 @@ export function ClientIdTokenForm({ client }: { client: Client }) {
             name="idTokenAllowed"
             render={({ field: { value, disabled, ...field } }) => (
               <Switch
-                disabled={
-                  disabled ||
-                  client.deleteRequestedAt != null ||
-                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
-                }
+                disabled={disabled || isDeleted || !canManage}
                 checked={value}
                 {...field}
               />

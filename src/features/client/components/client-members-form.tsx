@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
 import { useClientMemberForm } from '../hooks/use-client-member-form';
-import { type Role, ROLE_NUMBER, ROLE_VALUES } from '../utils/role';
+import { hasRoleAtLeast, type Role, ROLE_VALUES } from '../utils/role';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import { useAuth } from '@/features/auth';
@@ -69,6 +69,9 @@ export function ClientMemberForm({ client }: { client: Client }) {
     updateMemberRole,
     currentUserRoleNumber,
   } = useClientMemberForm(client.clientId);
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
+  const canUpdateRole = hasRoleAtLeast(currentUserRoleNumber, 'OWNER');
 
   return (
     <div className="flex flex-col gap-4">
@@ -102,9 +105,6 @@ export function ClientMemberForm({ client }: { client: Client }) {
                 {members.map((member) => {
                   const memberRole: Role =
                     member.memberships?.[0]?.role ?? 'MEMBER';
-                  const canUpdateRole =
-                    currentUserRoleNumber >= ROLE_NUMBER.OWNER;
-                  const canRemove = currentUserRoleNumber >= ROLE_NUMBER.ADMIN;
 
                   return (
                     <tr
@@ -123,7 +123,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           <div
                             className={cn(
                               'text-body-1',
-                              client.deleteRequestedAt != null
+                              isDeleted
                                 ? 'text-basics-secondary-label'
                                 : 'text-basics-primary-label',
                             )}
@@ -141,8 +141,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           disabled={
                             user?.uuid === member.uuid ||
                             !canUpdateRole ||
-                            client.deleteRequestedAt != null ||
-                            currentUserRoleNumber < ROLE_NUMBER.OWNER
+                            isDeleted
                           }
                         />
                       </td>
@@ -152,9 +151,8 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           size="none"
                           disabled={
                             user?.uuid === member.uuid ||
-                            !canRemove ||
-                            client.deleteRequestedAt != null ||
-                            currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                            !canManage ||
+                            isDeleted
                           }
                           onClick={() => removeMember(member.uuid)}
                         >
@@ -174,10 +172,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
             type="email"
             placeholder={t('services.detail.members.placeholder')}
             error={form.formState.errors.email?.message}
-            disabled={
-              client.deleteRequestedAt != null ||
-              currentUserRoleNumber < ROLE_NUMBER.ADMIN
-            }
+            disabled={isDeleted || !canManage}
             {...form.register('email')}
           />
           <Controller
@@ -190,8 +185,8 @@ export function ClientMemberForm({ client }: { client: Client }) {
                 disabled={
                   fieldState.invalid ||
                   !fieldState.isDirty ||
-                  client.deleteRequestedAt != null ||
-                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
+                  isDeleted ||
+                  !canManage
                 }
                 onClick={addMember}
                 icon={<PlusIcon />}

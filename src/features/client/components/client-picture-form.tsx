@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { type Client } from '../hooks/use-client';
 import { useClientMembers } from '../hooks/use-client-members';
 import { useClientPictureForm } from '../hooks/use-client-picture-form';
-import { ROLE_NUMBER } from '../utils/role';
+import { hasRoleAtLeast } from '../utils/role';
 
 import EditIcon from '@/assets/icons/solid/edit.svg?react';
 import TrashBinIcon from '@/assets/icons/solid/trash-bin.svg?react';
@@ -81,6 +81,8 @@ export function ClientPictureForm({
     onUpdated,
   );
   const { currentUserRoleNumber } = useClientMembers(client.clientId);
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   useEffect(() => {
     setPreviewImage(client.picture ?? null);
@@ -95,13 +97,11 @@ export function ClientPictureForm({
         <div
           className={cn(
             'h-fit w-fit',
-            client.deleteRequestedAt != null
-              ? 'cursor-default'
-              : 'cursor-pointer',
+            isDeleted ? 'cursor-default' : 'cursor-pointer',
           )}
           onClick={() => fileInputRef.current?.click()}
         >
-          <div className={client.deleteRequestedAt != null ? 'grayscale' : ''}>
+          <div className={isDeleted ? 'grayscale' : ''}>
             <Avatar
               img={previewImage ?? undefined}
               seed={uniqueKey(client.clientId)}
@@ -115,10 +115,7 @@ export function ClientPictureForm({
         <div className="flex flex-col gap-3">
           <FileUpload
             ref={fileInputRef}
-            disabled={
-              client.deleteRequestedAt != null ||
-              currentUserRoleNumber < ROLE_NUMBER.ADMIN
-            }
+            disabled={isDeleted || !canManage}
             accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
             maxSizeMb={1}
             onSave={(files, previewUrls) =>
@@ -132,11 +129,7 @@ export function ClientPictureForm({
               <IconButton
                 variant="primary"
                 loading={uploadLoading}
-                disabled={
-                  deleteLoading ||
-                  client.deleteRequestedAt != null ||
-                  currentUserRoleNumber < ROLE_NUMBER.ADMIN
-                }
+                disabled={deleteLoading || isDeleted || !canManage}
                 className="p-2.5"
                 icon={<EditIcon />}
               />
@@ -149,11 +142,7 @@ export function ClientPictureForm({
             <IconButton
               variant="secondary"
               loading={deleteLoading}
-              disabled={
-                !previewImage ||
-                client.deleteRequestedAt != null ||
-                currentUserRoleNumber < ROLE_NUMBER.ADMIN
-              }
+              disabled={!previewImage || isDeleted || !canManage}
               className="p-2.5"
               icon={<TrashBinIcon />}
               onClick={async () => {
