@@ -8,6 +8,7 @@
   --color-funnel-steptitle: var(--color-black);
   --color-funnel-description: var(--color-neutral-500);
   --color-funnel-separator: var(--color-neutral-50);
+  --color-funnel-separator-active: var(--color-primary-600);
 }
 
 @layer theme {
@@ -18,5 +19,6 @@
     --color-funnel-steptitle: var(--color-white);
     --color-funnel-description: var(--color-neutral-300);
     --color-funnel-separator: var(--color-neutral-940);
+    --color-funnel-separator-active: var(--color-primary-700);
   }
 }

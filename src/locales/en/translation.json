@@ -2,7 +2,8 @@
   "common": {
     "errors": {
       "copy_failed": "Copy failed",
-      "forbidden": "Forbidden"
+      "forbidden": "Forbidden",
+      "unauthorized": "Unauthorized"
     }
   },
   "register": {
@@ -506,7 +507,7 @@
         }
       },
       "urls": {
-        "title": "URLs",
+        "title": "Redirect URIs",
         "placeholder": "Enter Redirect URI",
         "errors": {
           "format": "Please enter the URL"
@@ -520,6 +521,24 @@
           "body": "This action cannot be undone.",
           "confirm": "Continue",
           "cancel": "Cancel"
+        }
+      },
+      "members": {
+        "title": "Members",
+        "placeholder": "Enter email address",
+        "kick_out": "Kick Out",
+        "columns": {
+          "member": "Member",
+          "role": "Role",
+          "kick_out": "Kick Out"
+        },
+        "errors": {
+          "format": "Please enter a valid email address"
+        },
+        "roles": {
+          "owner": "Owner",
+          "admin": "Manager",
+          "member": "Member"
         }
       }
     }

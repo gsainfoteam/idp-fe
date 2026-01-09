@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
 import { useClientInfoForm } from '../hooks/use-client-info-form';
+import { useClientMembers } from '../hooks/use-client-members';
+import { hasRoleAtLeast } from '../utils/role';
 
 import { Button, Label, LogClick } from '@/features/core';
 import { CopyInput } from '@/features/core';
@@ -12,9 +14,12 @@ export function ClientInfoForm({ client }: { client: Client }) {
     form: { watch, formState },
     onSubmit,
   } = useClientInfoForm(client);
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   const id = watch('clientId');
   const secret = watch('clientSecret');
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   return (
     <form onSubmit={onSubmit}>
@@ -26,7 +31,7 @@ export function ClientInfoForm({ client }: { client: Client }) {
           <Label text={t('services.detail.info.id')}>
             <CopyInput
               value={id}
-              disabled={client.deleteRequestedAt != null}
+              disabled={isDeleted}
               success={t('services.detail.info.id_copied')}
               readOnly
             />
@@ -40,7 +45,7 @@ export function ClientInfoForm({ client }: { client: Client }) {
                 success={t('services.detail.info.secret_copied')}
                 readOnly
                 showIcon={!!secret}
-                disabled={client.deleteRequestedAt != null}
+                disabled={isDeleted}
               />
               <LogClick
                 event="client_secret_rotate_button"
@@ -48,9 +53,7 @@ export function ClientInfoForm({ client }: { client: Client }) {
               >
                 <Button
                   variant="default"
-                  disabled={
-                    formState.isSubmitting || client.deleteRequestedAt != null
-                  }
+                  disabled={formState.isSubmitting || isDeleted || !canManage}
                 >
                   {t('services.detail.info.regenerate_secret.action')}
                 </Button>
