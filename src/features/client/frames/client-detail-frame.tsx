@@ -1,5 +1,4 @@
 import { useParams } from '@tanstack/react-router';
-import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -13,73 +12,9 @@ import { ClientScopesForm } from '../components/client-scopes-form';
 import { ClientUrlsForm } from '../components/client-urls-form';
 import { type Client, useClient } from '../hooks/use-client';
 import { useClientDetailsForm } from '../hooks/use-client-details-form';
+import { useSeparatorTab } from '../hooks/use-separator-tab';
 
-import { cn, FunnelLayout } from '@/features/core';
-
-type Tab = 1 | 2 | 3 | 4;
-
-function ClientDetailTab({
-  tab,
-  setTab,
-}: {
-  tab: Tab;
-  setTab: (tab: Tab) => void;
-}) {
-  const { t } = useTranslation();
-
-  return (
-    <div className="text-title-3 text-label -mx-5 flex">
-      <button
-        className="flex w-full flex-col gap-2 text-center"
-        onClick={() => setTab(1)}
-      >
-        {t('services.detail.tabs.default')}
-        <div
-          className={cn(
-            'h-2 w-full',
-            tab === 1 ? 'bg-funnel-separator-active' : 'bg-funnel-separator',
-          )}
-        />
-      </button>
-      <button
-        className="flex w-full flex-col gap-2 text-center"
-        onClick={() => setTab(2)}
-      >
-        {t('services.detail.tabs.connection')}
-        <div
-          className={cn(
-            'h-2 w-full',
-            tab === 2 ? 'bg-funnel-separator-active' : 'bg-funnel-separator',
-          )}
-        />
-      </button>
-      <button
-        className="flex w-full flex-col gap-2 text-center"
-        onClick={() => setTab(3)}
-      >
-        {t('services.detail.tabs.scopes')}
-        <div
-          className={cn(
-            'h-2 w-full',
-            tab === 3 ? 'bg-funnel-separator-active' : 'bg-funnel-separator',
-          )}
-        />
-      </button>
-      <button
-        className="flex w-full flex-col gap-2 text-center"
-        onClick={() => setTab(4)}
-      >
-        {t('services.detail.tabs.members')}
-        <div
-          className={cn(
-            'h-2 w-full',
-            tab === 4 ? 'bg-funnel-separator-active' : 'bg-funnel-separator',
-          )}
-        />
-      </button>
-    </div>
-  );
-}
+import { FunnelLayout } from '@/features/core';
 
 const Inner = ({
   client,
@@ -88,11 +23,14 @@ const Inner = ({
   client: Client;
   refetch: () => void;
 }) => {
-  const [tab, setTab] = useState<Tab>(1);
   const { t } = useTranslation();
   const onUpdated = () => refetch();
 
   const { form } = useClientDetailsForm(client, onUpdated);
+  const tab = useSeparatorTab({
+    items: ['default', 'connection', 'scopes', 'members'],
+    defaultValue: 'default',
+  });
 
   return (
     <FormProvider {...form}>
@@ -107,33 +45,40 @@ const Inner = ({
         }
       >
         <div className="mb-4 flex flex-col gap-5">
-          <ClientDetailTab tab={tab} setTab={setTab} />
-          {tab === 1 && (
-            <>
+          <tab.Provider>
+            <tab.List>
+              <tab.Label value="default">
+                {t('services.detail.tabs.default')}
+              </tab.Label>
+              <tab.Label value="connection">
+                {t('services.detail.tabs.connection')}
+              </tab.Label>
+              <tab.Label value="scopes">
+                {t('services.detail.tabs.scopes')}
+              </tab.Label>
+              <tab.Label value="members">
+                {t('services.detail.tabs.members')}
+              </tab.Label>
+            </tab.List>
+            <tab.Render value="default">
               <ClientPictureForm client={client} onUpdated={onUpdated} />
               <FunnelLayout.Separator />
               <ClientInfoForm client={client} />
               <FunnelLayout.Separator />
               <ClientDeleteForm client={client} />
-            </>
-          )}
-          {tab === 2 && (
-            <>
+            </tab.Render>
+            <tab.Render value="connection">
               <ClientIdTokenForm client={client} />
               <FunnelLayout.Separator />
               <ClientUrlsForm client={client} />
-            </>
-          )}
-          {tab === 3 && (
-            <>
+            </tab.Render>
+            <tab.Render value="scopes">
               <ClientScopesForm client={client} />
-            </>
-          )}
-          {tab === 4 && (
-            <>
+            </tab.Render>
+            <tab.Render value="members">
               <ClientMemberForm client={client} />
-            </>
-          )}
+            </tab.Render>
+          </tab.Provider>
         </div>
       </FunnelLayout>
     </FormProvider>
