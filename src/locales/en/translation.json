@@ -23,10 +23,10 @@
         }
       },
       "email_overlay": {
-        "title": "Please agree to the terms of\nuse to use GIST email login",
+        "title": "Please agree to the terms of\nuse to use Infoteam Account",
         "contents": {
-          "terms": "GIST Email Login Terms of Service",
-          "privacy": "GIST Email Login Privacy Policy"
+          "terms": "Infoteam Account Terms of Service",
+          "privacy": "Infoteam Account Privacy Policy"
         },
         "button": "Agree",
         "sub_button": "Close"
@@ -183,7 +183,7 @@
     }
   },
   "authorize": {
-    "title": "You are trying to log in to\n'{{client}}' service with\nyour GIST email",
+    "title": "You are trying to log in to\n'{{client}}' service with\nInfoteam Account",
     "description": "By continuing, the following information will be shared with '{{client}}'.",
     "labels": {
       "required": "Required",
