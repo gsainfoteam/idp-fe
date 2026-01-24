@@ -366,7 +366,7 @@
     "add": {
       "title": "Add Service",
       "stepTitle": "Add Service",
-      "description": "You can link your GIST email to your\nself-made service.",
+      "description": "You can link Infoteam Account to your\nself-made service.",
       "name": {
         "label": "Service Name (client name)",
         "placeholder": "Enter the name of your app",
