@@ -50,11 +50,7 @@ export function ClientKickOverlay({
             event="member_kick_button"
             properties={{ memberId: member.uuid }}
           >
-            <Button
-              variant="primary"
-              className="w-full"
-              onClick={() => close(true)}
-            >
+            <Button variant="primary" className="w-full">
               {t('services.detail.members.kick_overlay.confirm')}
             </Button>
           </LogClick>
