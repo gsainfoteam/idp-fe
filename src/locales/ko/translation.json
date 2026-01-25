@@ -33,10 +33,10 @@
         }
       },
       "email_overlay": {
-        "title": "GIST 메일로 로그인을 사용하려면\n약관에 동의해주세요",
+        "title": "인포팀 계정을 사용하려면\n약관에 동의해주세요",
         "contents": {
-          "terms": "GIST 메일로 로그인 이용약관",
-          "privacy": "GIST 메일로 로그인 개인정보처리방침"
+          "terms": "인포팀 계정 이용약관",
+          "privacy": "인포팀 계정 개인정보처리방침"
         },
         "button": "동의하기",
         "sub_button": "닫기"
@@ -213,7 +213,7 @@
     }
   },
   "authorize": {
-    "title": "GIST 메일을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
+    "title": "인포팀 계정을 사용하여\n'{{client}}' 서비스에\n로그인하려고 합니다",
     "description": "계속하면 아래 정보가 '{{client}}'에 제공됩니다.",
     "labels": {
       "required": "필수",
@@ -439,7 +439,7 @@
     "add": {
       "title": "서비스 추가",
       "stepTitle": "서비스 추가하기",
-      "description": "직접 만든 서비스에\nGIST 메일로 로그인을 연동할 수 있어요.",
+      "description": "직접 만든 서비스에\n인포팀 계정을 연동할 수 있어요.",
       "name": {
         "label": "서비스 이름 (client name)",
         "placeholder": "앱 이름을 입력해주세요",

@@ -232,7 +232,7 @@ export class Log {
     // Log.track(`error_${type}`, { ...properties, from: Log.currentPath });
     if (import.meta.env.DEV)
       console.error(`[sentry] error_${type}`, properties);
-    // TODO: sentry 연동 in https://github.com/gsainfoteam/idp-fe/issues/235
+    // TODO: sentry 연동 in https://github.com/gsainfoteam/account-fe/issues/235
   };
 
   /**

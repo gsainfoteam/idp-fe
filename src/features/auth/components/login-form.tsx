@@ -1,8 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type LoginFormSchema } from '../hooks/use-login-form';
-
+import { type LoginFormSchema } from '@/features/auth';
 import { Input, PasswordInput } from '@/features/core';
 
 export function LoginForm() {
