@@ -24,7 +24,7 @@ export type ClientMemberFormSchema = z.infer<ReturnType<typeof createSchema>>;
 
 export const useClientMemberForm = (clientId: string) => {
   const { t } = useTranslation();
-  const { members, isLoading, refetch, currentUserRoleNumber } =
+  const { members, isLoading, refetch, getMemberRole, currentUserRoleNumber } =
     useClientMembers(clientId);
   const form = useForm<ClientMemberFormSchema>({
     resolver: zodResolver(createSchema(t)),
@@ -104,6 +104,7 @@ export const useClientMemberForm = (clientId: string) => {
     addMember,
     removeMember,
     updateMemberRole,
+    getMemberRole,
     currentUserRoleNumber,
   };
 };

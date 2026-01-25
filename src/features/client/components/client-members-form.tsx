@@ -1,4 +1,5 @@
 import { type TFunction } from 'i18next';
+import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -46,7 +47,8 @@ function RoleSelect({
         'text-button-default-default-label',
         'border-button-default-default-border border',
         'ring-button-default-focus-border focus:ring-2 focus:outline-none',
-        disabled && 'cursor-not-allowed opacity-50',
+        'cursor-pointer',
+        disabled && 'cursor-not-allowed opacity-30',
       )}
     >
       {ROLE_VALUES.map((roleValue) => (
@@ -67,11 +69,17 @@ export function ClientMemberForm({ client }: { client: Client }) {
     addMember,
     removeMember,
     updateMemberRole,
+    getMemberRole,
     currentUserRoleNumber,
   } = useClientMemberForm(client.clientId);
   const isDeleted = client.deleteRequestedAt != null;
   const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
   const canUpdateRole = hasRoleAtLeast(currentUserRoleNumber, 'OWNER');
+  const canAddMember = canManage;
+  const canKickMember = useCallback(
+    (uuid: string) => canManage && getMemberRole(uuid) < currentUserRoleNumber,
+    [canManage, currentUserRoleNumber, getMemberRole],
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -151,7 +159,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           size="none"
                           disabled={
                             user?.uuid === member.uuid ||
-                            !canManage ||
+                            !canKickMember(member.uuid) ||
                             isDeleted
                           }
                           onClick={() => removeMember(member.uuid)}
@@ -172,7 +180,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
             type="email"
             placeholder={t('services.detail.members.placeholder')}
             error={form.formState.errors.email?.message}
-            disabled={isDeleted || !canManage}
+            disabled={isDeleted || !canAddMember}
             {...form.register('email')}
           />
           <Controller
@@ -186,7 +194,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                   fieldState.invalid ||
                   !fieldState.isDirty ||
                   isDeleted ||
-                  !canManage
+                  !canAddMember
                 }
                 onClick={addMember}
                 icon={<PlusIcon />}
