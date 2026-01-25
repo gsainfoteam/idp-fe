@@ -19,7 +19,8 @@ export default function App() {
   return (
     <ErrorBoundary
       fallbackRender={({ error, resetErrorBoundary }) => {
-        const description = import.meta.env.DEV ? error.stack : undefined;
+        const err = error instanceof Error ? error : new Error(String(error));
+        const description = import.meta.env.DEV ? err.stack : undefined;
         const errorStatus = (error as { status?: unknown }).status;
         const status =
           typeof errorStatus === 'number' ? errorStatus : undefined;
@@ -27,19 +28,20 @@ export default function App() {
         return (
           <ErrorFallbackFrame
             status={status}
-            message={error.message}
+            message={err.message}
             description={description}
             onRetry={resetErrorBoundary}
           />
         );
       }}
-      onError={(error, info) =>
+      onError={(error, info) => {
+        const err = error instanceof Error ? error : new Error(String(error));
         Log.error('runtime', {
-          message: error.message,
+          message: err.message,
           context: info.componentStack,
-          stack: error.stack,
-        })
-      }
+          stack: err.stack,
+        });
+      }}
     >
       <AmplitudeProvider>
         <ThemeProvider>

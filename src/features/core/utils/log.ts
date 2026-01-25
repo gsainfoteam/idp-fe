@@ -21,7 +21,22 @@ export type ClickEventMap = {
   register_email_overlay_accept: Record<string, never>;
   register_email_overlay_cancel: Record<string, never>;
   register_code_resend: Record<string, never>;
+  register_email_code_submit: Record<string, never>;
+  register_agree_undo_button: Record<string, never>;
+  register_agree_submit: Record<string, never>;
+  register_tel_verify: Record<string, never>;
+  register_tel_skip_button: Record<string, never>;
+  register_tel_code_resend: Record<string, never>;
+  register_tel_code_submit: Record<string, never>;
+  register_password_submit: Record<string, never>;
   register_info_verify: Record<string, never>;
+  register_info_staff_submit: Record<string, never>;
+  register_complete_button: Record<string, never>;
+
+  // Phone Number Verification
+  phone_number_verify_code_resend: Record<string, never>;
+  phone_number_verify_success_button: Record<string, never>;
+  phone_number_verify_failure_button: Record<string, never>;
 
   // Passkey
   passkey_register_button: Record<string, never>;
@@ -35,6 +50,7 @@ export type ClickEventMap = {
   client_secret_rotate_button: { clientId: string };
   client_member_add_button: { clientId: string };
   client_member_remove_button: { clientId: string; userId: string };
+  member_kick_button: { memberId: string };
 
   // OAuth
   oauth_authorize_allow: { clientId: string };
@@ -54,6 +70,7 @@ export type ClickEventMap = {
   home_profile_picture_delete: Record<string, never>;
   home_profile_password_change_button: Record<string, never>;
   home_profile_student_id_verify_button: Record<string, never>;
+  home_profile_phone_number_verify_button: Record<string, never>;
   home_profile_link: Record<string, never>;
   home_passkeys_link: Record<string, never>;
   home_clients_link: Record<string, never>;
@@ -63,11 +80,17 @@ export type ClickEventMap = {
 export type SubmitEventMap = {
   auth_login: { method: 'email' | 'passkey' };
   auth_register_email: Record<string, never>;
-  auth_register_code: Record<string, never>;
+  auth_register_email_code: Record<string, never>;
+  auth_register_agree: Record<string, never>;
+  auth_register_tel: Record<string, never>;
+  auth_register_tel_code: Record<string, never>;
+  auth_register_password: Record<string, never>;
   auth_register_info: Record<string, never>;
   profile_edit: Record<string, never>;
   profile_password_change: Record<string, never>;
   student_id_verify: Record<string, never>;
+  phone_number_verify_code: Record<string, never>;
+  phone_number_verify: Record<string, never>;
   client_create: Record<string, never>;
   client_edit: { clientId: string };
 };
@@ -82,6 +105,10 @@ export type ModalEventMap = {
     close: { result: 'confirm' | 'cancel' };
   };
   delete_confirmation: {
+    open: { resource: string };
+    close: { resource: string; result: 'confirm' | 'cancel' };
+  };
+  kick_confirmation: {
     open: { resource: string };
     close: { resource: string; result: 'confirm' | 'cancel' };
   };

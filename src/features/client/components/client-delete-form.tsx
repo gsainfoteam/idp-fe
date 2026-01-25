@@ -3,6 +3,8 @@ import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
+import { useClientMembers } from '../hooks/use-client-members';
+import { hasRoleAtLeast } from '../utils/role';
 
 import { ClientDeleteOverlay } from './client-delete-overlay';
 
@@ -11,7 +13,10 @@ import { Button, LogClick } from '@/features/core';
 
 export function ClientDeleteForm({ client }: { client: Client }) {
   const { t } = useTranslation();
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
   const navigate = useNavigate({ from: '/clients/$id' });
+  const isDeleted = client.deleteRequestedAt != null;
+  const canDelete = hasRoleAtLeast(currentUserRoleNumber, 'OWNER');
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,7 +31,7 @@ export function ClientDeleteForm({ client }: { client: Client }) {
           >
             <Button
               variant="warning"
-              disabled={client.deleteRequestedAt != null}
+              disabled={isDeleted || !canDelete}
               prefixIcon={<TrashBinIcon />}
               onClick={async () => {
                 const result = await overlay.openAsync<boolean>(

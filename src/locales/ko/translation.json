@@ -2,12 +2,22 @@
   "common": {
     "errors": {
       "copy_failed": "복사에 실패했어요",
-      "forbidden": "권한이 없어요"
+      "forbidden": "권한이 없어요",
+      "unauthorized": "로그인이 필요해요"
     }
   },
   "register": {
     "title": "회원가입",
     "steps": {
+      "agree": {
+        "title": "인포팀 계정을 사용하려면\n약관에 동의해주세요",
+        "checkboxes": {
+          "terms": "인포팀 계정 <0>이용약관</0>",
+          "privacy": "인포팀 계정 <0>개인정보처리방침</0>"
+        },
+        "button": "진행하기",
+        "undo_button": "취소하기"
+      },
       "email": {
         "title": "이메일을 입력해주세요",
         "button": "인증번호 보내기",
@@ -37,7 +47,7 @@
         "button": "그만두기",
         "sub_button": "취소"
       },
-      "code": {
+      "email_code": {
         "title": "이메일로 받은\n인증번호 6자리를 입력해주세요",
         "button": "인증하기",
         "resend": "인증번호 재요청",
@@ -53,6 +63,40 @@
             }
           }
         }
+      },
+      "tel": {
+        "title": "전화번호를 입력해주세요",
+        "button": "전화번호 인증하기",
+        "inputs": {
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        }
+      },
+      "tel_code": {
+        "title": "문자로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
+      },
+      "tel_skip": {
+        "title": "국내 통신사에서 개통되지 않은\n전화번호는 인증이 어려워요",
+        "button": "전화번호 인증 건너뛰기"
       },
       "password": {
         "title": "비밀번호를 입력해주세요",
@@ -86,13 +130,6 @@
               "format": "이름을 입력해주세요"
             }
           },
-          "phone_number": {
-            "label": "전화번호",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "올바른 전화번호를 입력해주세요"
-            }
-          },
           "birth_date": {
             "label": "생년월일",
             "placeholder": "YYYY-MM-DD",
@@ -116,13 +153,6 @@
             "placeholder": "김지니",
             "errors": {
               "format": "이름을 입력해주세요"
-            }
-          },
-          "phone_number": {
-            "label": "전화번호",
-            "placeholder": "010-0000-0000",
-            "errors": {
-              "format": "올바른 전화번호를 입력해주세요"
             }
           },
           "id": {
@@ -299,6 +329,49 @@
       }
     }
   },
+  "verify_phone_number": {
+    "title": "전화번호 인증",
+    "steps": {
+      "tel": {
+        "title": "전화번호를 입력해주세요",
+        "button": "인증번호 보내기",
+        "inputs": {
+          "phone_number": {
+            "label": "전화번호",
+            "placeholder": "010-1234-5678",
+            "errors": {
+              "format": "올바른 전화번호를 입력해주세요"
+            }
+          }
+        }
+      },
+      "code": {
+        "title": "문자로 받은\n인증번호 6자리를 입력해주세요",
+        "button": "인증하기",
+        "resend": "인증번호 재요청",
+        "inputs": {
+          "code": {
+            "label": "인증번호",
+            "placeholder": "000000",
+            "errors": {
+              "format": "6자리 숫자를 입력해주세요",
+              "invalid": "인증번호를 잘못 입력했습니다 ({{count}}/{{max}})",
+              "max_try": "인증번호를 다시 요청해주세요",
+              "expired": "인증번호가 만료되었습니다"
+            }
+          }
+        }
+      },
+      "success": {
+        "title": "인증이 완료되었어요",
+        "button": "돌아가기"
+      },
+      "failure": {
+        "title": "국내 통신사에서 개통되지 않은\n전화번호는 인증이 어려워요",
+        "button": "돌아가기"
+      }
+    }
+  },
   "passkey": {
     "title": "패스키 관리",
     "steps": {
@@ -382,6 +455,12 @@
       "updated": "변경사항이 저장되었어요",
       "saving": "변경사항 저장 중...",
       "update_failed": "변경사항을 저장하는데 실패했어요",
+      "tabs": {
+        "default": "일반",
+        "connection": "연결",
+        "scopes": "권한",
+        "members": "멤버"
+      },
       "picture": {
         "title": "서비스 로고",
         "saving": "이미지 업로드 중...",
@@ -434,7 +513,7 @@
         }
       },
       "urls": {
-        "title": "URLs",
+        "title": "Redirect URIs",
         "placeholder": "리다이렉트 URI를 입력하세요",
         "errors": {
           "format": "URL을 입력해주세요"
@@ -448,6 +527,30 @@
           "body": "계속하면 되돌릴 수 없습니다.",
           "confirm": "계속하기",
           "cancel": "그만두기"
+        }
+      },
+      "members": {
+        "title": "멤버 관리",
+        "placeholder": "이메일을 입력해주세요",
+        "kick_out": "추방하기",
+        "columns": {
+          "member": "멤버",
+          "role": "권한",
+          "kick_out": "추방"
+        },
+        "kick_overlay": {
+          "title": "정말로 멤버를 추방하시겠어요?",
+          "description": "{{name}}님을 추방하면 되돌릴 수 없습니다.",
+          "confirm": "추방하기",
+          "cancel": "취소하기"
+        },
+        "errors": {
+          "format": "이메일 형식이 올바르지 않습니다"
+        },
+        "roles": {
+          "owner": "Owner",
+          "admin": "Manager",
+          "member": "Member"
         }
       }
     }

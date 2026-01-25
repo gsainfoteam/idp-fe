@@ -3,7 +3,9 @@ import { useFormContext } from 'react-hook-form';
 
 import { type Client } from '../hooks/use-client';
 import { type ClientDetailsFormSchema } from '../hooks/use-client-details-form';
+import { useClientMembers } from '../hooks/use-client-members';
 import { useClientNameForm } from '../hooks/use-client-name-form';
+import { hasRoleAtLeast } from '../utils/role';
 
 import AlertOctagonIcon from '@/assets/icons/solid/alert-octagon.svg?react';
 import EditLineIcon from '@/assets/icons/solid/edit-line.svg?react';
@@ -14,6 +16,7 @@ export function ClientNameForm({ client }: { client: Client }) {
     form: { register, watch, formState },
   } = useClientNameForm({ client });
   const { setValue } = useFormContext<ClientDetailsFormSchema>();
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
 
   const [isError, setIsError] = useState(false);
   const [inputWidth, setInputWidth] = useState<number>(0);
@@ -23,7 +26,8 @@ export function ClientNameForm({ client }: { client: Client }) {
 
   const name = watch('name');
   const iconSize = 24;
-  const disabled = client.deleteRequestedAt != null;
+  const isDeleted = client.deleteRequestedAt != null;
+  const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
 
   useEffect(() => {
     if (spanRef.current && containerRef.current) {
@@ -42,15 +46,17 @@ export function ClientNameForm({ client }: { client: Client }) {
     <div ref={containerRef} className="flex w-full items-center gap-2">
       <label className="group flex items-center gap-2">
         <div className="flex items-center gap-2">
-          {disabled && <AlertOctagonIcon className="text-red-700" />}
+          {isDeleted && (
+            <AlertOctagonIcon className="text-red-700 dark:text-red-400" />
+          )}
           <input
             type="text"
             style={{ width: inputWidth }}
-            disabled={disabled}
+            disabled={isDeleted || !canManage}
             className={cn(
               'border-b-2 border-transparent transition-colors focus:border-neutral-400 focus:outline-none',
               isError && 'border-red-400 focus:border-red-400',
-              disabled && 'border-none text-red-700',
+              isDeleted && 'border-none text-red-700 dark:text-red-400',
             )}
             {...register('name', {
               onBlur: () => {
@@ -63,7 +69,7 @@ export function ClientNameForm({ client }: { client: Client }) {
         <span ref={spanRef} className="invisible absolute">
           {name || '\t'}
         </span>
-        {!disabled && (
+        {!isDeleted && (
           <EditLineIcon
             className={cn(
               'text-neutral-200 transition-colors group-focus-within:text-neutral-400',

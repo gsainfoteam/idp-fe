@@ -2,7 +2,13 @@ import { useTranslation } from 'react-i18next';
 
 import { type RegisterSteps } from '../register-frame';
 
-import { Avatar, Button, FunnelLayout, uniqueKey } from '@/features/core';
+import {
+  Avatar,
+  Button,
+  FunnelLayout,
+  LogClick,
+  uniqueKey,
+} from '@/features/core';
 
 export function CompleteStep({
   context,
@@ -19,9 +25,11 @@ export function CompleteStep({
       stepTitle={t('register.steps.complete.title')}
       hideUndo
       button={
-        <Button variant="primary" className="w-full" onClick={onNext}>
-          {t('register.steps.complete.button')}
-        </Button>
+        <LogClick event="register_complete_button">
+          <Button variant="primary" className="w-full" onClick={onNext}>
+            {t('register.steps.complete.button')}
+          </Button>
+        </LogClick>
       }
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">
