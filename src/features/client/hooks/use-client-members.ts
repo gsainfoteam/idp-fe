@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { getRoleNumber } from '../utils/role';
 
@@ -16,14 +16,26 @@ export const useClientMembers = (clientId: string) => {
     params: { path: { clientId } },
   });
 
-  const currentUserRoleNumber = useMemo(
-    () =>
+  const getMemberRole = useCallback(
+    (uuid?: string) =>
       getRoleNumber(
-        members?.find((member) => member.email === user?.email)
-          ?.memberships?.[0]?.role ?? null,
+        members?.find((member) => member.uuid === uuid)?.memberships?.[0]
+          ?.role ?? null,
       ),
-    [user, members],
+    [members],
   );
 
-  return { members, currentUserRoleNumber, isLoading, error, refetch };
+  const currentUserRoleNumber = useMemo(
+    () => getMemberRole(user?.uuid),
+    [user?.uuid, getMemberRole],
+  );
+
+  return {
+    members,
+    getMemberRole,
+    currentUserRoleNumber,
+    isLoading,
+    error,
+    refetch,
+  };
 };

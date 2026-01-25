@@ -1,10 +1,14 @@
 import { type TFunction } from 'i18next';
+import { overlay } from 'overlay-kit';
+import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { type Client } from '../hooks/use-client';
 import { useClientMemberForm } from '../hooks/use-client-member-form';
 import { hasRoleAtLeast, type Role, ROLE_VALUES } from '../utils/role';
+
+import { ClientKickOverlay } from './client-kick-overlay';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import { useAuth } from '@/features/auth';
@@ -46,7 +50,8 @@ function RoleSelect({
         'text-button-default-default-label',
         'border-button-default-default-border border',
         'ring-button-default-focus-border focus:ring-2 focus:outline-none',
-        disabled && 'cursor-not-allowed opacity-50',
+        'cursor-pointer',
+        disabled && 'cursor-not-allowed opacity-30',
       )}
     >
       {ROLE_VALUES.map((roleValue) => (
@@ -67,11 +72,17 @@ export function ClientMemberForm({ client }: { client: Client }) {
     addMember,
     removeMember,
     updateMemberRole,
+    getMemberRole,
     currentUserRoleNumber,
   } = useClientMemberForm(client.clientId);
   const isDeleted = client.deleteRequestedAt != null;
   const canManage = hasRoleAtLeast(currentUserRoleNumber, 'ADMIN');
   const canUpdateRole = hasRoleAtLeast(currentUserRoleNumber, 'OWNER');
+  const canAddMember = canManage;
+  const canKickMember = useCallback(
+    (uuid: string) => canManage && getMemberRole(uuid) < currentUserRoleNumber,
+    [canManage, currentUserRoleNumber, getMemberRole],
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -151,10 +162,24 @@ export function ClientMemberForm({ client }: { client: Client }) {
                           size="none"
                           disabled={
                             user?.uuid === member.uuid ||
-                            !canManage ||
+                            !canKickMember(member.uuid) ||
                             isDeleted
                           }
-                          onClick={() => removeMember(member.uuid)}
+                          onClick={async () => {
+                            const result = await overlay.openAsync<boolean>(
+                              ({ isOpen, close }) => (
+                                <ClientKickOverlay
+                                  member={member}
+                                  isOpen={isOpen}
+                                  close={close}
+                                />
+                              ),
+                            );
+
+                            if (result) {
+                              await removeMember(member.uuid);
+                            }
+                          }}
                         >
                           {t('services.detail.members.kick_out')}
                         </Button>
@@ -172,7 +197,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
             type="email"
             placeholder={t('services.detail.members.placeholder')}
             error={form.formState.errors.email?.message}
-            disabled={isDeleted || !canManage}
+            disabled={isDeleted || !canAddMember}
             {...form.register('email')}
           />
           <Controller
@@ -186,7 +211,7 @@ export function ClientMemberForm({ client }: { client: Client }) {
                   fieldState.invalid ||
                   !fieldState.isDirty ||
                   isDeleted ||
-                  !canManage
+                  !canAddMember
                 }
                 onClick={addMember}
                 icon={<PlusIcon />}

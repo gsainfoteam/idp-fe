@@ -3,7 +3,10 @@ import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
 import { ClientDeleteOverlay } from '../components/client-delete-overlay';
+import { type Client } from '../hooks/use-client';
 import { useClientList } from '../hooks/use-client-list';
+import { useClientMembers } from '../hooks/use-client-members';
+import { hasRoleAtLeast } from '../utils/role';
 
 import puzzleImage from '@/assets/icons/color/puzzle.png';
 import ChevronRightIcon from '@/assets/icons/line/chevron-right.svg?react';
@@ -19,10 +22,106 @@ import {
   uniqueKey,
 } from '@/features/core';
 
+function ClientCard({ client }: { client: Client }) {
+  const { currentUserRoleNumber } = useClientMembers(client.clientId);
+  const { refetch } = useClientList();
+  const navigate = useNavigate();
+
+  const isDeleted = client.deleteRequestedAt != null;
+  const canDelete = hasRoleAtLeast(currentUserRoleNumber, 'OWNER');
+
+  return (
+    <SwipeCard
+      key={client.clientId}
+      avatar={
+        <div className={cn(isDeleted && 'opacity-70 grayscale')}>
+          <Avatar
+            size={10}
+            img={client.picture ?? undefined}
+            seed={uniqueKey(client.clientId)}
+            className={cn(
+              'shrink-0 rounded-lg',
+              isDeleted && 'border border-neutral-200',
+            )}
+          >
+            {client.name.charAt(0)}
+          </Avatar>
+        </div>
+      }
+      icon={
+        <ChevronRightIcon
+          className={cn(
+            'text-basics-secondary-label shrink-0',
+            isDeleted && 'text-red-300 dark:text-red-400/80',
+          )}
+        />
+      }
+      className={cn(isDeleted && 'border-red-300 dark:border-red-900')}
+      rightActions={
+        !isDeleted && canDelete
+          ? [
+              {
+                bg: 'var(--color-red-400)',
+                content: (
+                  <LogClick
+                    event="client_delete_button"
+                    properties={{ clientId: client.clientId }}
+                  >
+                    <TrashBinIcon className="text-white" />
+                  </LogClick>
+                ),
+                onClick: async () => {
+                  const result = await overlay.openAsync<boolean>(
+                    ({ isOpen, close }) => (
+                      <ClientDeleteOverlay
+                        client={client}
+                        isOpen={isOpen}
+                        close={close}
+                      />
+                    ),
+                  );
+
+                  if (result) {
+                    await refetch();
+                  }
+                },
+              },
+            ]
+          : undefined
+      }
+      onClick={() => {
+        navigate({
+          to: '/clients/$id',
+          params: { id: client.clientId },
+        });
+      }}
+    >
+      <div
+        className={cn(
+          'text-title-3 text-basics-primary-label truncate',
+          isDeleted && 'text-red-700 dark:text-red-400',
+        )}
+      >
+        <div className="flex items-center gap-1">
+          {isDeleted && <AlertOctagonIcon width={20} height={20} />}
+          {client.name}
+        </div>
+      </div>
+      <div
+        className={cn(
+          'text-label-2 text-basics-secondary-label truncate',
+          isDeleted && 'text-red-300 dark:text-red-400/50',
+        )}
+      >
+        ID: {client.clientId}
+      </div>
+    </SwipeCard>
+  );
+}
+
 export function ClientListFrame() {
   const { t } = useTranslation();
-  const { clients, refetch } = useClientList();
-  const navigate = useNavigate();
+  const { clients } = useClientList();
 
   // TODO: Error Boundary + Suspense
 
@@ -43,99 +142,9 @@ export function ClientListFrame() {
     >
       {clients?.length ? (
         <div className="flex flex-col gap-3">
-          {clients.map((client) => {
-            const isDeleted = client.deleteRequestedAt != null;
-
-            return (
-              <SwipeCard
-                key={client.clientId}
-                avatar={
-                  <div className={cn(isDeleted && 'opacity-70 grayscale')}>
-                    <Avatar
-                      size={10}
-                      img={client.picture ?? undefined}
-                      seed={uniqueKey(client.clientId)}
-                      className={cn(
-                        'shrink-0 rounded-lg',
-                        isDeleted && 'border border-neutral-200',
-                      )}
-                    >
-                      {client.name.charAt(0)}
-                    </Avatar>
-                  </div>
-                }
-                icon={
-                  <ChevronRightIcon
-                    className={cn(
-                      'text-basics-secondary-label shrink-0',
-                      isDeleted && 'text-red-300 dark:text-red-400/80',
-                    )}
-                  />
-                }
-                className={cn(
-                  isDeleted && 'border-red-300 dark:border-red-900',
-                )}
-                rightActions={
-                  !isDeleted
-                    ? [
-                        {
-                          bg: 'var(--color-red-400)',
-                          content: (
-                            <LogClick
-                              event="client_delete_button"
-                              properties={{ clientId: client.clientId }}
-                            >
-                              <TrashBinIcon className="text-white" />
-                            </LogClick>
-                          ),
-                          onClick: async () => {
-                            const result = await overlay.openAsync<boolean>(
-                              ({ isOpen, close }) => (
-                                <ClientDeleteOverlay
-                                  client={client}
-                                  isOpen={isOpen}
-                                  close={close}
-                                />
-                              ),
-                            );
-
-                            if (result) {
-                              await refetch();
-                            }
-                          },
-                        },
-                      ]
-                    : undefined
-                }
-                onClick={() => {
-                  navigate({
-                    to: '/clients/$id',
-                    params: { id: client.clientId },
-                  });
-                }}
-              >
-                <div
-                  className={cn(
-                    'text-title-3 text-basics-primary-label truncate',
-                    isDeleted && 'text-red-700 dark:text-red-400',
-                  )}
-                >
-                  <div className="flex items-center gap-1">
-                    {isDeleted && <AlertOctagonIcon width={20} height={20} />}
-                    {client.name}
-                  </div>
-                </div>
-                <div
-                  className={cn(
-                    'text-label-2 text-basics-secondary-label truncate',
-                    isDeleted && 'text-red-300 dark:text-red-400/50',
-                  )}
-                >
-                  ID: {client.clientId}
-                </div>
-              </SwipeCard>
-            );
-          })}
+          {clients.map((client) => (
+            <ClientCard key={client.clientId} client={client} />
+          ))}
         </div>
       ) : (
         <div className="absolute inset-0 flex flex-col items-center justify-center">

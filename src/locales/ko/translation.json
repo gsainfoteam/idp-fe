@@ -538,6 +538,12 @@
           "role": "권한",
           "kick_out": "추방"
         },
+        "kick_overlay": {
+          "title": "정말로 멤버를 추방하시겠어요?",
+          "description": "{{name}}님을 추방하면 되돌릴 수 없습니다.",
+          "confirm": "추방하기",
+          "cancel": "취소하기"
+        },
         "errors": {
           "format": "이메일 형식이 올바르지 않습니다"
         },
