@@ -1,4 +1,5 @@
 import { type TFunction } from 'i18next';
+import { overlay } from 'overlay-kit';
 import { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { type Client } from '../hooks/use-client';
 import { useClientMemberForm } from '../hooks/use-client-member-form';
 import { hasRoleAtLeast, type Role, ROLE_VALUES } from '../utils/role';
+
+import { ClientKickOverlay } from './client-kick-overlay';
 
 import PlusIcon from '@/assets/icons/line/add.svg?react';
 import { useAuth } from '@/features/auth';
@@ -162,7 +165,21 @@ export function ClientMemberForm({ client }: { client: Client }) {
                             !canKickMember(member.uuid) ||
                             isDeleted
                           }
-                          onClick={() => removeMember(member.uuid)}
+                          onClick={async () => {
+                            const result = await overlay.openAsync<boolean>(
+                              ({ isOpen, close }) => (
+                                <ClientKickOverlay
+                                  member={member}
+                                  isOpen={isOpen}
+                                  close={close}
+                                />
+                              ),
+                            );
+
+                            if (result) {
+                              await removeMember(member.uuid);
+                            }
+                          }}
                         >
                           {t('services.detail.members.kick_out')}
                         </Button>

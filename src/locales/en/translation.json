@@ -532,6 +532,12 @@
           "role": "Role",
           "kick_out": "Kick Out"
         },
+        "kick_overlay": {
+          "title": "Are you sure you want to kick out this member?",
+          "description": "Kicking out {{name}} cannot be undone.",
+          "confirm": "Kick Out",
+          "cancel": "Cancel"
+        },
         "errors": {
           "format": "Please enter a valid email address"
         },

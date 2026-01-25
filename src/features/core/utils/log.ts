@@ -50,6 +50,7 @@ export type ClickEventMap = {
   client_secret_rotate_button: { clientId: string };
   client_member_add_button: { clientId: string };
   client_member_remove_button: { clientId: string; userId: string };
+  member_kick_button: { memberId: string };
 
   // OAuth
   oauth_authorize_allow: { clientId: string };
@@ -104,6 +105,10 @@ export type ModalEventMap = {
     close: { result: 'confirm' | 'cancel' };
   };
   delete_confirmation: {
+    open: { resource: string };
+    close: { resource: string; result: 'confirm' | 'cancel' };
+  };
+  kick_confirmation: {
     open: { resource: string };
     close: { resource: string; result: 'confirm' | 'cancel' };
   };
