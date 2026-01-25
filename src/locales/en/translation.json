@@ -546,6 +546,12 @@
           "admin": "Manager",
           "member": "Member"
         }
+      },
+      "tabs": {
+        "connection": "Connect",
+        "default": "General",
+        "members": "Members",
+        "scopes": "Scopes"
       }
     }
   },
