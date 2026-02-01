@@ -1,5 +1,7 @@
 import { useLoaderData, useSearch } from '@tanstack/react-router';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+
+import { checkRequiredScopeNotVerified } from '../utils';
 
 import { useAuthorizeForm } from './use-authorize-form';
 import { useRecentLogin } from './use-recent-login';
@@ -22,6 +24,16 @@ export const useAuthorize = ({
   const { prompt, ...search } = useSearch({
     from: '/_auth-required/authorize',
   });
+
+  const requiredScopes = useMemo(
+    () => clientScopes.filter((v) => client.scopes.includes(v)),
+    [client.scopes, clientScopes],
+  );
+
+  const isRequiredScopeNotVerified = useMemo(
+    () => checkRequiredScopeNotVerified(user, requiredScopes),
+    [user, requiredScopes],
+  );
 
   const redirect = useCallback(
     (params: { error?: string; error_description?: string }) => {
@@ -47,19 +59,23 @@ export const useAuthorize = ({
 
   const authorize = useCallback(
     (agreed: ClientScopeType[]) => {
+      if (isRequiredScopeNotVerified) {
+        return redirect({
+          error: 'access_denied',
+          error_description: 'verification_required',
+        });
+      }
+
       const query = new URLSearchParams(search);
       query.set('scope', [...tokenScopes, ...agreed].join(' '));
       window.location.href = `${import.meta.env.VITE_API_URL}/oauth/authorize?${query.toString()}`;
     },
-    [search, tokenScopes],
+    [isRequiredScopeNotVerified, redirect, search, tokenScopes],
   );
 
   useEffect(() => {
     const consentedClient = consents?.list.find(
       (c) => c.clientUuid === clientId,
-    );
-    const requiredScopes = clientScopes.filter((v) =>
-      client.scopes.includes(v),
     );
     const consented = consentedClient
       ? requiredScopes.every((s) => consentedClient.scopes.includes(s))
@@ -85,6 +101,11 @@ export const useAuthorize = ({
           error: 'access_denied',
           error_description: 'consent_required',
         });
+      if (isRequiredScopeNotVerified)
+        return redirect({
+          error: 'access_denied',
+          error_description: 'verification_required',
+        });
       return authorize(consentedScopes);
     }
 
@@ -92,17 +113,22 @@ export const useAuthorize = ({
 
     if (consented) {
       if (tokenScopes.includes('offline_access')) return;
+      if (isRequiredScopeNotVerified)
+        return redirect({
+          error: 'access_denied',
+          error_description: 'verification_required',
+        });
       return authorize(consentedScopes);
     }
   }, [
     authorize,
-    client.scopes,
     clientId,
-    clientScopes,
     consents?.list,
+    isRequiredScopeNotVerified,
     prompt,
     recentLogin,
     redirect,
+    requiredScopes,
     signOut,
     state,
     tokenScopes,
@@ -110,14 +136,12 @@ export const useAuthorize = ({
     user,
   ]);
 
-  const requiredScopes = clientScopes.filter((v) => client.scopes.includes(v));
-
   return {
     ...useAuthorizeForm({
       clientId: client.clientId,
-      requiredScopes,
       onDone: authorize,
     }),
+    isRequiredScopeNotVerified,
     onCancel,
   };
 };
