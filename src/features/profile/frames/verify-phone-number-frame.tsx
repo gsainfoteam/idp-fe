@@ -1,5 +1,4 @@
 import { CodeStep } from './verify-phone-number-steps/code-step';
-import { FailureStep } from './verify-phone-number-steps/failure-step';
 import { SuccessStep } from './verify-phone-number-steps/success-step';
 import { TelStep } from './verify-phone-number-steps/tel-step';
 
@@ -13,7 +12,6 @@ type StepContext = Pretty<
 
 export type VerifyPhoneNumberSteps = {
   tel: StepContext;
-  failure: StepContext;
   code: RequireKeys<StepContext, 'phoneNumber'>;
   success: RequireKeys<StepContext, 'phoneNumber' | 'code'>;
 };
@@ -36,12 +34,8 @@ export function VerifyPhoneNumberFrame() {
   return (
     <funnel.Render
       tel={({ history }) => (
-        <TelStep
-          onSuccess={(data) => history.replace('code', data)}
-          onFailure={(data) => history.replace('failure', data)}
-        />
+        <TelStep onNext={(data) => history.replace('code', data)} />
       )}
-      failure={() => <FailureStep onUndo={undo} />}
       code={({ history, context }) => (
         <CodeStep
           context={context}

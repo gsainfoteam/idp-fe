@@ -23,18 +23,11 @@ const createSchema = (t: TFunction) =>
   });
 
 export function useVerifyPhoneNumberForm({
-  onSuccess,
-  onFailure,
+  onNext,
 }: {
-  onSuccess: (
+  onNext: (
     data: DifferenceNonNullable<
       VerifyPhoneNumberSteps['code'],
-      VerifyPhoneNumberSteps['tel']
-    >,
-  ) => void;
-  onFailure: (
-    data: DifferenceNonNullable<
-      VerifyPhoneNumberSteps['failure'],
       VerifyPhoneNumberSteps['tel']
     >,
   ) => void;
@@ -53,18 +46,13 @@ export function useVerifyPhoneNumberForm({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    // Return early if user is not loaded yet
     if (!user) {
       return;
     }
 
-    const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
-    if (tel?.country !== 'KR') {
-      onFailure({});
-      return;
-    }
+    // zod에서 검증됨
+    const tel = parsePhoneNumber(formData.phoneNumber, 'KR')!;
 
-    // country가 KR이면 인증 코드 발송 후 code로
     const res = await postVerifyPhoneNumber({
       phoneNumber: tel.formatInternational(),
     });
@@ -80,7 +68,7 @@ export function useVerifyPhoneNumberForm({
     }
 
     Log.submit('phone_number_verify');
-    onSuccess({
+    onNext({
       phoneNumber: tel.formatInternational(),
     });
   });

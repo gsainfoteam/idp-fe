@@ -11,7 +11,6 @@ import { InfoStaffStep } from './register-steps/info-staff-step';
 import { InfoStep } from './register-steps/info-step';
 import { PasswordStep } from './register-steps/password-step';
 import { TelCodeStep } from './register-steps/tel-code-step';
-import { TelSkipStep } from './register-steps/tel-skip-step';
 import { TelStep } from './register-steps/tel-step';
 
 import { type postUser } from '@/data/user';
@@ -34,8 +33,10 @@ export type RegisterSteps = {
   emailCode: RequireKeys<RegisterSteps['email'], 'email'>;
   tel: RequireKeys<RegisterSteps['emailCode'], 'emailVerificationJwtToken'>;
   telCode: RequireKeys<RegisterSteps['tel'], 'phoneNumber'>;
-  telSkip: RequireKeys<RegisterSteps['tel'], 'phoneNumber'>;
-  password: RegisterSteps['telCode'] | RegisterSteps['telSkip'];
+  password: RequireKeys<
+    RegisterSteps['telCode'],
+    'phoneNumberVerificationJwtToken'
+  >;
   info: RequireKeys<RegisterSteps['password'], 'password'>;
   infoStaff: RequireKeys<RegisterSteps['password'], 'password'>;
   complete: RequireKeys<
@@ -83,20 +84,13 @@ export function RegisterFrame() {
       )}
       tel={({ history }) => (
         <TelStep
-          onTelCodeNext={(data) => history.replace('telCode', data)}
-          onTelSkipNext={(data) => history.replace('telSkip', data)}
+          onNext={(data) => history.replace('telCode', data)}
           onUndo={undo}
         />
       )}
       telCode={({ history, context }) => (
         <TelCodeStep
           context={context}
-          onNext={(data) => history.replace('password', data)}
-          onUndo={undo}
-        />
-      )}
-      telSkip={({ history }) => (
-        <TelSkipStep
           onNext={(data) => history.replace('password', data)}
           onUndo={undo}
         />

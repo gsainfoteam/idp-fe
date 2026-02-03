@@ -7,13 +7,12 @@ import { useAuth } from '@/features/auth';
 import { Button, FunnelLayout, Input, Label } from '@/features/core';
 
 export function TelStep({
-  onSuccess,
-  onFailure,
+  onNext,
 }: Parameters<typeof useVerifyPhoneNumberForm>[0]) {
   const {
     form: { register, control },
     onSubmit,
-  } = useVerifyPhoneNumberForm({ onSuccess, onFailure });
+  } = useVerifyPhoneNumberForm({ onNext });
   const { isSubmitting, isValid, errors } = useFormState({ control });
   const { t } = useTranslation();
   const { user } = useAuth();

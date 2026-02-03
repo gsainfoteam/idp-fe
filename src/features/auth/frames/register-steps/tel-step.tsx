@@ -14,14 +14,13 @@ import {
 } from '@/features/core';
 
 export function TelStep({
-  onTelCodeNext,
-  onTelSkipNext,
+  onNext,
   onUndo,
 }: Parameters<typeof useTelForm>[0] & { onUndo: () => void }) {
   const {
     form: { register, control },
     onSubmit,
-  } = useTelForm({ onTelCodeNext, onTelSkipNext });
+  } = useTelForm({ onNext });
 
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
