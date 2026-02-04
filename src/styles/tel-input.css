@@ -1,0 +1,18 @@
+@import 'react-phone-number-input/style.css';
+
+:root {
+  --PhoneInput-color--focus: var(--color-primary-600);
+  --PhoneInputCountrySelectArrow-color--focus: var(--color-primary-600);
+  --PhoneInputCountryFlag-borderColor--focus: var(--color-primary-600);
+}
+
+.dark {
+  --PhoneInput-color--focus: var(--color-primary-700);
+  --PhoneInputCountrySelectArrow-color: var(--color-neutral-400);
+  --PhoneInputCountrySelectArrow-color--focus: var(--color-primary-700);
+  --PhoneInputCountryFlag-borderColor--focus: var(--color-primary-700);
+}
+
+.PhoneInput--wrapper .PhoneInputCountry {
+  margin-right: 0;
+}

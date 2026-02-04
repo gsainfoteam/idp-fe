@@ -17,20 +17,16 @@ const createSchema = (t: TFunction) =>
       .string()
       .min(1, t('register.steps.tel.inputs.phone_number.errors.format'))
       .refine(
-        (value) => isValidPhoneNumber(value, 'KR'),
+        (value) => isValidPhoneNumber(value),
         t('register.steps.tel.inputs.phone_number.errors.format'),
       ),
   });
 
 export const useTelForm = ({
-  onTelCodeNext,
-  onTelSkipNext,
+  onNext,
 }: {
-  onTelCodeNext: (
+  onNext: (
     data: DifferenceNonNullable<RegisterSteps['telCode'], RegisterSteps['tel']>,
-  ) => void;
-  onTelSkipNext: (
-    data: DifferenceNonNullable<RegisterSteps['telSkip'], RegisterSteps['tel']>,
   ) => void;
 }) => {
   const { t } = useTranslation();
@@ -40,7 +36,7 @@ export const useTelForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
+    const tel = parsePhoneNumber(formData.phoneNumber);
 
     if (!tel) {
       form.setError('phoneNumber', {
@@ -49,15 +45,6 @@ export const useTelForm = ({
       return;
     }
 
-    // country가 KR이 아니면 telSkip으로
-    if (tel.country !== 'KR') {
-      onTelSkipNext({
-        phoneNumber: tel.formatInternational(),
-      });
-      return;
-    }
-
-    // country가 KR이면 인증 코드 발송 후 telCode로
     const res = await postVerifyPhoneNumber({
       phoneNumber: tel.formatInternational(),
     });
@@ -73,7 +60,7 @@ export const useTelForm = ({
     }
 
     Log.submit('auth_register_tel');
-    onTelCodeNext({
+    onNext({
       phoneNumber: tel.formatInternational(),
     });
   });

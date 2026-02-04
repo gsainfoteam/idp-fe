@@ -17,24 +17,17 @@ const createSchema = (t: TFunction) =>
     phoneNumber: z
       .string()
       .refine(
-        (value) => isValidPhoneNumber(value, 'KR'),
+        (value) => isValidPhoneNumber(value),
         t('verify_phone_number.steps.tel.inputs.phone_number.errors.format'),
       ),
   });
 
 export function useVerifyPhoneNumberForm({
-  onSuccess,
-  onFailure,
+  onNext,
 }: {
-  onSuccess: (
+  onNext: (
     data: DifferenceNonNullable<
       VerifyPhoneNumberSteps['code'],
-      VerifyPhoneNumberSteps['tel']
-    >,
-  ) => void;
-  onFailure: (
-    data: DifferenceNonNullable<
-      VerifyPhoneNumberSteps['failure'],
       VerifyPhoneNumberSteps['tel']
     >,
   ) => void;
@@ -42,7 +35,7 @@ export function useVerifyPhoneNumberForm({
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  const phoneNumber = user ? parsePhoneNumber(user.phoneNumber, 'KR') : null;
+  const phoneNumber = user ? parsePhoneNumber(user.phoneNumber) : null;
 
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
@@ -53,18 +46,13 @@ export function useVerifyPhoneNumberForm({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    // Return early if user is not loaded yet
     if (!user) {
       return;
     }
 
-    const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
-    if (tel?.country !== 'KR') {
-      onFailure({});
-      return;
-    }
+    // zod에서 검증되어 단언해도 안전
+    const tel = parsePhoneNumber(formData.phoneNumber)!;
 
-    // country가 KR이면 인증 코드 발송 후 code로
     const res = await postVerifyPhoneNumber({
       phoneNumber: tel.formatInternational(),
     });
@@ -80,7 +68,7 @@ export function useVerifyPhoneNumberForm({
     }
 
     Log.submit('phone_number_verify');
-    onSuccess({
+    onNext({
       phoneNumber: tel.formatInternational(),
     });
   });
