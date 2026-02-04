@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import type {
   Country,
   DefaultInputComponentProps,
@@ -9,7 +10,6 @@ import koLabels from 'react-phone-number-input/locale/ko';
 import PhoneInputWithCountrySelect from 'react-phone-number-input/react-hook-form';
 
 import { cn } from '@/features/core';
-import i18n from '@/locales/i18n';
 
 export interface TelInputProps<T extends FieldValues>
   extends Omit<
@@ -40,12 +40,14 @@ export function TelInput<T extends FieldValues>({
   numberInputProps,
   ...rest
 }: TelInputProps<T>) {
+  const { i18n } = useTranslation();
+  const labels = useMemo(
+    () => (i18n.language === 'ko' ? koLabels : enLabels),
+    [i18n.language],
+  );
+
   const hasError =
     typeof error === 'string' ? error.trim().length > 0 : !!error;
-
-  const labels = useMemo(() => {
-    return i18n.language === 'ko' ? koLabels : enLabels;
-  }, []);
 
   return (
     <div className={className}>
