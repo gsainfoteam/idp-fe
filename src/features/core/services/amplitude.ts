@@ -7,11 +7,11 @@ const amplitudeApiKey = import.meta.env.VITE_AMPLITUDE_API_KEY;
 if (!amplitudeApiKey) {
   Log.error('runtime', {
     message: 'Amplitude API key missing',
-    context: 'AmplitudeProvider',
+    context: 'amplitude-init',
+  });
+} else {
+  amplitude.init(amplitudeApiKey, {
+    autocapture: true,
+    logLevel: amplitude.Types.LogLevel.Warn,
   });
 }
-
-amplitude.init(amplitudeApiKey, {
-  autocapture: true,
-  logLevel: amplitude.Types.LogLevel.Warn,
-});
