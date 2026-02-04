@@ -37,10 +37,12 @@ export const useAgreeForm = ({ onNext }: { onNext: () => void }) => {
   useEffect(() => {
     let cancelled = false;
 
-    startTermsVersionLoading(fetchTermsVersion()).then((version) => {
-      if (cancelled) return;
-      setTermsVersion({ privacy: version.privacy, tos: version.tos });
-    });
+    startTermsVersionLoading(fetchTermsVersion())
+      .then((version) => {
+        if (cancelled) return;
+        setTermsVersion({ privacy: version.privacy, tos: version.tos });
+      })
+      .catch(() => {});
 
     return () => {
       cancelled = true;
