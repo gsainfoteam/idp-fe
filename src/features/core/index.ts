@@ -17,6 +17,7 @@ export * from './components/atomic/theme-switcher';
 export * from './components/compound/bottom-sheet';
 export * from './components/compound/copy-input';
 export * from './components/compound/password-input';
+export * from './components/compound/tel-input';
 export * from './components/compound/dialog';
 export * from './components/compound/file-upload';
 export * from './components/compound/funnel-layout';

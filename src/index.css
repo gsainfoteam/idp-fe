@@ -11,6 +11,7 @@
 @import './styles/label.css';
 @import './styles/funnel-layout.css';
 @import './styles/verified-badge.css';
+@import './styles/tel-input.css';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
 

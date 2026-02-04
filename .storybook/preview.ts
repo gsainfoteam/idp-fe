@@ -2,6 +2,7 @@ import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
 
 import '../src/index.css';
+import '../src/locales/i18n';
 
 const preview: Preview = {
   decorators: [
