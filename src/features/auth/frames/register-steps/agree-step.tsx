@@ -1,4 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { useMemo } from 'react';
 import {
   Controller,
@@ -17,12 +18,63 @@ import { RegisterSteps } from '../register-frame';
 import {
   Button,
   Checkbox,
+  Dialog,
   FunnelLayout,
   LogClick,
   StepProgress,
 } from '@/features/core';
 
-function AgreeForm() {
+const TERMS_EMBED_URL = 'https://terms.gistory.me/embedded/account/tos/260201/';
+const PRIVACY_EMBED_URL =
+  'https://terms.gistory.me/embedded/account/privacy/260201/';
+
+type TermsModalType = 'terms' | 'privacy';
+
+function TermsDialogOverlay({
+  type,
+  isOpen,
+  close,
+}: {
+  type: TermsModalType;
+  isOpen: boolean;
+  close: () => void;
+}) {
+  const { t } = useTranslation();
+  const title =
+    type === 'terms'
+      ? t('register.steps.agree.modal.terms_title')
+      : t('register.steps.agree.modal.privacy_title');
+  const src = type === 'terms' ? TERMS_EMBED_URL : PRIVACY_EMBED_URL;
+
+  return (
+    <Dialog
+      isOpen={isOpen}
+      close={(_: unknown) => close()}
+      defaultCloseValue={null}
+      className="min-h-[60vh] w-full"
+    >
+      <Dialog.Header>{title}</Dialog.Header>
+      <Dialog.Body className="min-h-[60vh]">
+        <iframe src={src} title={title} className="h-[60vh] w-full border-0" />
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close closeValue={null} className="w-full">
+          <Button variant="primary" className="w-full">
+            {t('register.steps.agree.modal.close')}
+          </Button>
+        </Dialog.Close>
+      </Dialog.Footer>
+    </Dialog>
+  );
+}
+
+function AgreeForm({
+  onOpenTerms,
+  onOpenPrivacy,
+}: {
+  onOpenTerms: () => void;
+  onOpenPrivacy: () => void;
+}) {
   const { control } = useFormContext<AgreeFormSchema>();
 
   return (
@@ -39,13 +91,14 @@ function AgreeForm() {
               <Trans
                 i18nKey="register.steps.agree.checkboxes.terms"
                 components={[
-                  <a
+                  <button
                     key="terms-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://terms.gistory.me/account/tos/250520/"
+                    type="button"
                     className="underline"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenTerms();
+                    }}
                   />,
                 ]}
               />
@@ -65,13 +118,14 @@ function AgreeForm() {
               <Trans
                 i18nKey="register.steps.agree.checkboxes.privacy"
                 components={[
-                  <a
+                  <button
                     key="privacy-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://terms.gistory.me/account/privacy/250520/"
+                    type="button"
                     className="underline"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenPrivacy();
+                    }}
                   />,
                 ]}
               />
@@ -136,7 +190,26 @@ export function AgreeStep({ onNext }: { onNext: () => void }) {
             </div>
           }
         >
-          <AgreeForm />
+          <AgreeForm
+            onOpenTerms={() =>
+              overlay.open(({ isOpen, close }) => (
+                <TermsDialogOverlay
+                  type="terms"
+                  isOpen={isOpen}
+                  close={close}
+                />
+              ))
+            }
+            onOpenPrivacy={() =>
+              overlay.open(({ isOpen, close }) => (
+                <TermsDialogOverlay
+                  type="privacy"
+                  isOpen={isOpen}
+                  close={close}
+                />
+              ))
+            }
+          />
         </FunnelLayout>
       </form>
     </FormProvider>

@@ -63,9 +63,12 @@ export function Backdrop({
         >
           <div
             ref={backdropRef}
-            className="relative flex h-full w-full items-center justify-center"
+            className="relative flex h-full w-full items-center justify-center px-5"
           >
-            <div className="h-fit w-fit" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="mx-auto h-fit w-full max-w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
               <AnimatePresence propagate>{children}</AnimatePresence>
             </div>
           </div>
