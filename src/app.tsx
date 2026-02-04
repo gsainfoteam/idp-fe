@@ -6,7 +6,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { router } from './router';
 
 import {
-  AmplitudeProvider,
   ErrorFallbackFrame,
   Log,
   ThemeProvider,
@@ -43,16 +42,14 @@ export default function App() {
         });
       }}
     >
-      <AmplitudeProvider>
-        <ThemeProvider>
-          <QueryClientProvider client={queryClient}>
-            <OverlayProvider>
-              <RouterProvider router={router} />
-              <ToastProvider />
-            </OverlayProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </AmplitudeProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <OverlayProvider>
+            <RouterProvider router={router} />
+            <ToastProvider />
+          </OverlayProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }
