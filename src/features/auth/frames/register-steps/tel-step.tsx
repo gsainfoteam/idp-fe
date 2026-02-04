@@ -7,10 +7,10 @@ import { RegisterSteps } from '../register-frame';
 import {
   Button,
   FunnelLayout,
-  Input,
   Label,
   LogClick,
   StepProgress,
+  TelInput,
 } from '@/features/core';
 
 export function TelStep({
@@ -18,7 +18,7 @@ export function TelStep({
   onUndo,
 }: Parameters<typeof useTelForm>[0] & { onUndo: () => void }) {
   const {
-    form: { register, control },
+    form: { control },
     onSubmit,
   } = useTelForm({ onNext });
 
@@ -54,14 +54,15 @@ export function TelStep({
         }
       >
         <Label text={t('register.steps.tel.inputs.phone_number.label')}>
-          <Input
-            type="tel"
+          <TelInput
+            name="phoneNumber"
+            control={control}
             placeholder={t(
               'register.steps.tel.inputs.phone_number.placeholder',
             )}
             error={errors.phoneNumber?.message}
             disabled={isSubmitting}
-            {...register('phoneNumber')}
+            defaultCountry="KR"
           />
         </Label>
       </FunnelLayout>

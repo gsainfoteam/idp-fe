@@ -17,7 +17,7 @@ const createSchema = (t: TFunction) =>
       .string()
       .min(1, t('register.steps.tel.inputs.phone_number.errors.format'))
       .refine(
-        (value) => isValidPhoneNumber(value, 'KR'),
+        (value) => isValidPhoneNumber(value),
         t('register.steps.tel.inputs.phone_number.errors.format'),
       ),
   });
@@ -36,7 +36,7 @@ export const useTelForm = ({
   });
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const tel = parsePhoneNumber(formData.phoneNumber, 'KR');
+    const tel = parsePhoneNumber(formData.phoneNumber);
 
     if (!tel) {
       form.setError('phoneNumber', {

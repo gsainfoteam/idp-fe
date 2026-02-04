@@ -17,7 +17,7 @@ const createSchema = (t: TFunction) =>
     phoneNumber: z
       .string()
       .refine(
-        (value) => isValidPhoneNumber(value, 'KR'),
+        (value) => isValidPhoneNumber(value),
         t('verify_phone_number.steps.tel.inputs.phone_number.errors.format'),
       ),
   });
@@ -35,7 +35,7 @@ export function useVerifyPhoneNumberForm({
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  const phoneNumber = user ? parsePhoneNumber(user.phoneNumber, 'KR') : null;
+  const phoneNumber = user ? parsePhoneNumber(user.phoneNumber) : null;
 
   const form = useForm({
     resolver: zodResolver(createSchema(t)),
@@ -50,8 +50,8 @@ export function useVerifyPhoneNumberForm({
       return;
     }
 
-    // zod에서 검증됨
-    const tel = parsePhoneNumber(formData.phoneNumber, 'KR')!;
+    // zod에서 검증되어 단언해도 안전
+    const tel = parsePhoneNumber(formData.phoneNumber)!;
 
     const res = await postVerifyPhoneNumber({
       phoneNumber: tel.formatInternational(),
