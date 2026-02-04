@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { overlay } from 'overlay-kit';
 import { useTranslation } from 'react-i18next';
 
@@ -31,23 +31,13 @@ function formatDateTime(dateString: string, locale: string) {
 export function ProfileFrame() {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   if (!user) return null;
 
   const isStudent = user.email.endsWith('@gm.gist.ac.kr');
 
   return (
-    <FunnelLayout
-      title={t('profile.title')}
-      onUndo={async () => {
-        await navigate({
-          to: '/',
-          viewTransition: { types: ['reload'] },
-          search: (prev) => ({ ...prev }),
-        });
-      }}
-    >
+    <FunnelLayout title={t('profile.title')}>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col items-center gap-4">
           <div className="relative">
