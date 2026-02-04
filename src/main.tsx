@@ -7,6 +7,7 @@ import { Log } from '@/features/core';
 
 import './index.css';
 import './locales/i18n';
+import './features/core/services/amplitude';
 
 declare global {
   interface Window {
