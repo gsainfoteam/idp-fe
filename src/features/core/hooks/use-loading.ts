@@ -2,11 +2,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useIsMounted } from './use-is-mounted';
 
-export function useLoading(): [
-  boolean,
-  <T>(promise: Promise<T> | (() => Promise<T>)) => Promise<T>,
-] {
-  const [loading, setLoading] = useState(false);
+export function useLoading(
+  initialLoading = false,
+): [boolean, <T>(promise: Promise<T> | (() => Promise<T>)) => Promise<T>] {
+  const [loading, setLoading] = useState(initialLoading);
   const { getIsMounted } = useIsMounted();
 
   const startLoading = useCallback(

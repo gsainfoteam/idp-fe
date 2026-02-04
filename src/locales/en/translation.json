@@ -15,6 +15,11 @@
           "terms": "Infoteam Account <0>Terms of Service</0>",
           "privacy": "Infoteam Account <0>Privacy Policy</0>"
         },
+        "modal": {
+          "terms_title": "Terms of Service",
+          "privacy_title": "Privacy Policy",
+          "close": "Close"
+        },
         "button": "Proceed",
         "undo_button": "Cancel"
       },

@@ -1,4 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
+import { overlay } from 'overlay-kit';
 import { useMemo } from 'react';
 import {
   Controller,
@@ -17,12 +18,67 @@ import { RegisterSteps } from '../register-frame';
 import {
   Button,
   Checkbox,
+  Dialog,
   FunnelLayout,
+  LoadingEllipse,
   LogClick,
   StepProgress,
 } from '@/features/core';
 
-function AgreeForm() {
+function TermsDialogOverlay({
+  isOpen,
+  close,
+  title,
+  iframeSrc,
+  isTermsVersionLoading,
+}: {
+  isOpen: boolean;
+  close: () => void;
+  title: string;
+  iframeSrc: string;
+  isTermsVersionLoading: boolean;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <Dialog
+      isOpen={isOpen}
+      close={(_: unknown) => close()}
+      defaultCloseValue={null}
+      className="min-h-[60vh] w-full"
+    >
+      <Dialog.Header>{title}</Dialog.Header>
+      <Dialog.Body className="min-h-[60vh]">
+        {isTermsVersionLoading ? (
+          <div className="flex h-[60vh] w-full items-center justify-center">
+            <LoadingEllipse />
+          </div>
+        ) : (
+          <iframe
+            src={iframeSrc}
+            title={title}
+            className="h-[60vh] w-full border-0"
+          />
+        )}
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close closeValue={null} className="w-full">
+          <Button variant="primary" className="w-full">
+            {t('register.steps.agree.modal.close')}
+          </Button>
+        </Dialog.Close>
+      </Dialog.Footer>
+    </Dialog>
+  );
+}
+
+function AgreeForm({
+  onOpenTerms,
+  onOpenPrivacy,
+}: {
+  onOpenTerms: () => void;
+  onOpenPrivacy: () => void;
+}) {
   const { control } = useFormContext<AgreeFormSchema>();
 
   return (
@@ -39,13 +95,14 @@ function AgreeForm() {
               <Trans
                 i18nKey="register.steps.agree.checkboxes.terms"
                 components={[
-                  <a
+                  <button
                     key="terms-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://terms.gistory.me/account/tos/250520/"
+                    type="button"
                     className="underline"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenTerms();
+                    }}
                   />,
                 ]}
               />
@@ -65,13 +122,14 @@ function AgreeForm() {
               <Trans
                 i18nKey="register.steps.agree.checkboxes.privacy"
                 components={[
-                  <a
+                  <button
                     key="privacy-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://terms.gistory.me/account/privacy/250520/"
+                    type="button"
                     className="underline"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenPrivacy();
+                    }}
                   />,
                 ]}
               />
@@ -86,7 +144,9 @@ function AgreeForm() {
 export function AgreeStep({ onNext }: { onNext: () => void }) {
   const router = useRouter();
   const { t } = useTranslation();
-  const { form, onSubmit } = useAgreeForm({ onNext });
+  const { form, onSubmit, embeddedUrls, isTermsVersionLoading } = useAgreeForm({
+    onNext,
+  });
 
   const termsValue = useWatch({ name: 'terms', control: form.control });
   const privacyValue = useWatch({ name: 'privacy', control: form.control });
@@ -136,7 +196,30 @@ export function AgreeStep({ onNext }: { onNext: () => void }) {
             </div>
           }
         >
-          <AgreeForm />
+          <AgreeForm
+            onOpenTerms={() =>
+              overlay.open(({ isOpen, close }) => (
+                <TermsDialogOverlay
+                  isOpen={isOpen}
+                  close={close}
+                  title={t('register.steps.agree.modal.terms_title')}
+                  iframeSrc={embeddedUrls.terms}
+                  isTermsVersionLoading={isTermsVersionLoading}
+                />
+              ))
+            }
+            onOpenPrivacy={() =>
+              overlay.open(({ isOpen, close }) => (
+                <TermsDialogOverlay
+                  isOpen={isOpen}
+                  close={close}
+                  title={t('register.steps.agree.modal.privacy_title')}
+                  iframeSrc={embeddedUrls.privacy}
+                  isTermsVersionLoading={isTermsVersionLoading}
+                />
+              ))
+            }
+          />
         </FunnelLayout>
       </form>
     </FormProvider>

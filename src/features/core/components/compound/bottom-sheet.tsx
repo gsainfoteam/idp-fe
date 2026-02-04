@@ -81,7 +81,7 @@ function BottomSheetComponent<TCloseValue>(
           onDragStart={() => controls.stop()}
           onDragEnd={handleDragEnd}
           className={cn(
-            'bg-modal-background fixed inset-x-0 bottom-0 z-50 mx-3 mb-3 flex flex-col rounded-[20px] pt-9 shadow-xl',
+            'bg-modal-background fixed inset-x-0 bottom-0 z-50 mx-auto mb-3 flex w-[calc(100%-1.5rem)] max-w-full flex-col rounded-[20px] pt-9 shadow-xl',
             className,
           )}
         >

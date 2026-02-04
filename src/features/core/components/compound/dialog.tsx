@@ -37,7 +37,7 @@ function DialogComponent<TCloseValue>(
             stiffness: 250,
           }}
           className={cn(
-            'bg-modal-background relative mx-10 flex w-fit flex-col rounded-[20px]',
+            'bg-modal-background relative mx-auto flex w-fit max-w-full flex-col rounded-[20px]',
             className,
           )}
         >
