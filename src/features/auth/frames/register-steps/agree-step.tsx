@@ -20,31 +20,25 @@ import {
   Checkbox,
   Dialog,
   FunnelLayout,
+  LoadingEllipse,
   LogClick,
   StepProgress,
 } from '@/features/core';
 
-const TERMS_EMBED_URL = 'https://terms.gistory.me/embedded/account/tos/260201/';
-const PRIVACY_EMBED_URL =
-  'https://terms.gistory.me/embedded/account/privacy/260201/';
-
-type TermsModalType = 'terms' | 'privacy';
-
 function TermsDialogOverlay({
-  type,
   isOpen,
   close,
+  title,
+  iframeSrc,
+  isTermsVersionLoading,
 }: {
-  type: TermsModalType;
   isOpen: boolean;
   close: () => void;
+  title: string;
+  iframeSrc: string;
+  isTermsVersionLoading: boolean;
 }) {
   const { t } = useTranslation();
-  const title =
-    type === 'terms'
-      ? t('register.steps.agree.modal.terms_title')
-      : t('register.steps.agree.modal.privacy_title');
-  const src = type === 'terms' ? TERMS_EMBED_URL : PRIVACY_EMBED_URL;
 
   return (
     <Dialog
@@ -55,7 +49,17 @@ function TermsDialogOverlay({
     >
       <Dialog.Header>{title}</Dialog.Header>
       <Dialog.Body className="min-h-[60vh]">
-        <iframe src={src} title={title} className="h-[60vh] w-full border-0" />
+        {isTermsVersionLoading ? (
+          <div className="flex h-[60vh] w-full items-center justify-center">
+            <LoadingEllipse />
+          </div>
+        ) : (
+          <iframe
+            src={iframeSrc}
+            title={title}
+            className="h-[60vh] w-full border-0"
+          />
+        )}
       </Dialog.Body>
       <Dialog.Footer>
         <Dialog.Close closeValue={null} className="w-full">
@@ -140,7 +144,9 @@ function AgreeForm({
 export function AgreeStep({ onNext }: { onNext: () => void }) {
   const router = useRouter();
   const { t } = useTranslation();
-  const { form, onSubmit } = useAgreeForm({ onNext });
+  const { form, onSubmit, embeddedUrls, isTermsVersionLoading } = useAgreeForm({
+    onNext,
+  });
 
   const termsValue = useWatch({ name: 'terms', control: form.control });
   const privacyValue = useWatch({ name: 'privacy', control: form.control });
@@ -194,18 +200,22 @@ export function AgreeStep({ onNext }: { onNext: () => void }) {
             onOpenTerms={() =>
               overlay.open(({ isOpen, close }) => (
                 <TermsDialogOverlay
-                  type="terms"
                   isOpen={isOpen}
                   close={close}
+                  title={t('register.steps.agree.modal.terms_title')}
+                  iframeSrc={embeddedUrls.terms}
+                  isTermsVersionLoading={isTermsVersionLoading}
                 />
               ))
             }
             onOpenPrivacy={() =>
               overlay.open(({ isOpen, close }) => (
                 <TermsDialogOverlay
-                  type="privacy"
                   isOpen={isOpen}
                   close={close}
+                  title={t('register.steps.agree.modal.privacy_title')}
+                  iframeSrc={embeddedUrls.privacy}
+                  isTermsVersionLoading={isTermsVersionLoading}
                 />
               ))
             }
