@@ -61,7 +61,7 @@ export function AuthorizeForm({
   );
 
   useEffect(() => {
-    if (requiredScopeValues.some((v) => !v)) {
+    if (!requiredAllAgree) {
       setError('root', {
         message: t('authorize.errors.required_scopes'),
         type: 'required',
@@ -69,7 +69,7 @@ export function AuthorizeForm({
     } else {
       clearErrors('root');
     }
-  }, [clearErrors, requiredScopeValues, setError, t]);
+  }, [requiredAllAgree, clearErrors, setError, t]);
 
   useEffect(() => {
     requiredScopes.forEach((scope) => {
