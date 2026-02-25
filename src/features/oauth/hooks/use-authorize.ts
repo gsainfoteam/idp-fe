@@ -101,11 +101,7 @@ export const useAuthorize = ({
           error: 'access_denied',
           error_description: 'consent_required',
         });
-      if (isRequiredScopeNotVerified)
-        return redirect({
-          error: 'access_denied',
-          error_description: 'verification_required',
-        });
+      if (isRequiredScopeNotVerified) return;
       return authorize(consentedScopes);
     }
 
@@ -113,11 +109,7 @@ export const useAuthorize = ({
 
     if (consented) {
       if (tokenScopes.includes('offline_access')) return;
-      if (isRequiredScopeNotVerified)
-        return redirect({
-          error: 'access_denied',
-          error_description: 'verification_required',
-        });
+      if (isRequiredScopeNotVerified) return;
       return authorize(consentedScopes);
     }
   }, [
