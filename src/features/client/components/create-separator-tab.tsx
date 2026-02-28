@@ -11,16 +11,17 @@ import {
   type SeparatorTabRenderProps,
 } from '../components/separator-tab';
 
-export function useSeparatorTab<T extends string>({
+export function createSeparatorTab<T extends string>({
   items,
   defaultValue,
-  onChange,
 }: {
   items: readonly T[];
   defaultValue: T;
-  onChange?: (value: T) => void;
 }) {
-  const Provider: FC<SeparatorTabProviderProps> = ({ children }) => (
+  const Provider: FC<SeparatorTabProviderProps<T>> = ({
+    onChange,
+    children,
+  }) => (
     <SeparatorTabProvider<T>
       items={items}
       defaultValue={defaultValue}

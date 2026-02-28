@@ -69,14 +69,17 @@ export function MultiStateSwitch({
       )}
       {...props}
     >
-      <motion.div
-        className={cn(
-          'absolute top-0 bottom-0 rounded-lg',
-          handleColor(disabled),
-        )}
-        animate={indicatorStyle}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      />
+      {indicatorStyle.width > 0 && (
+        <motion.div
+          className={cn(
+            'absolute top-0 bottom-0 rounded-lg',
+            handleColor(disabled),
+          )}
+          animate={indicatorStyle}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          initial={false}
+        />
+      )}
       {labels.map((label, idx) => (
         <button
           key={idx}

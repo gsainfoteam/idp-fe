@@ -10,11 +10,16 @@ import { ClientNameForm } from '../components/client-name-form';
 import { ClientPictureForm } from '../components/client-picture-form';
 import { ClientScopesForm } from '../components/client-scopes-form';
 import { ClientUrlsForm } from '../components/client-urls-form';
+import { createSeparatorTab } from '../components/create-separator-tab';
 import { type Client, useClient } from '../hooks/use-client';
 import { useClientDetailsForm } from '../hooks/use-client-details-form';
-import { useSeparatorTab } from '../hooks/use-separator-tab';
 
 import { FunnelLayout } from '@/features/core';
+
+const tab = createSeparatorTab({
+  items: ['default', 'connection', 'scopes', 'members'],
+  defaultValue: 'default',
+});
 
 const Inner = ({
   client,
@@ -27,10 +32,6 @@ const Inner = ({
   const onUpdated = () => refetch();
 
   const { form } = useClientDetailsForm(client, onUpdated);
-  const tab = useSeparatorTab({
-    items: ['default', 'connection', 'scopes', 'members'],
-    defaultValue: 'default',
-  });
 
   return (
     <FormProvider {...form}>
