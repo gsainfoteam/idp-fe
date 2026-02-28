@@ -55,6 +55,30 @@ export function ClientScopesForm({ client }: { client: Client }) {
       <div className="flex flex-col gap-5">
         <Controller
           control={control}
+          name="scopes.name"
+          render={({ field: { value, disabled, ...field } }) => (
+            <ScopeSwitch
+              label={t('services.detail.scopes.type.name')}
+              disabled={disabled || isDeleted || !canManage}
+              value={value ?? 'no'}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="scopes.picture"
+          render={({ field: { value, disabled, ...field } }) => (
+            <ScopeSwitch
+              label={t('services.detail.scopes.type.picture')}
+              disabled={disabled || isDeleted || !canManage}
+              value={value ?? 'no'}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="scopes.profile"
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch

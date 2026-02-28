@@ -5,7 +5,9 @@ import { getUserConsent } from '@/data/user';
 import { AuthorizeFrame } from '@/features/oauth';
 
 export const ClientScopeEnum = z.enum([
+  'name',
   'profile',
+  'picture',
   'email',
   'phone_number',
   'student_id',
