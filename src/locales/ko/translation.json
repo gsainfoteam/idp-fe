@@ -229,7 +229,9 @@
       "email": "이메일",
       "student_id": "학번",
       "phone_number": "전화번호",
-      "profile": "프로필(이름, 사진)"
+      "name": "이름",
+      "profile": "프로필",
+      "picture": "사진"
     },
     "errors": {
       "client_id": "클라이언트 ID가 필요합니다",
@@ -506,6 +508,8 @@
       "scopes": {
         "title": "스코프 (Scopes)",
         "type": {
+          "name": "이름",
+          "picture": "사진",
           "profile": "프로필",
           "student_id": "학번",
           "phone_number": "전화번호",

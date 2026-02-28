@@ -229,7 +229,9 @@
       "email": "Email",
       "student_id": "Student ID",
       "phone_number": "Phone Number",
-      "profile": "Profile(Name, Image)"
+      "name": "Name",
+      "profile": "Profile",
+      "picture": "Picture"
     },
     "errors": {
       "client_id": "Client ID is required",
@@ -500,6 +502,8 @@
       "scopes": {
         "title": "Scopes (Scopes)",
         "type": {
+          "name": "Name",
+          "picture": "Picture",
           "profile": "Profile",
           "student_id": "Student ID",
           "phone_number": "Phone Number",
