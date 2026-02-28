@@ -67,10 +67,10 @@ export function ClientScopesForm({ client }: { client: Client }) {
         />
         <Controller
           control={control}
-          name="scopes.email"
+          name="scopes.picture"
           render={({ field: { value, disabled, ...field } }) => (
             <ScopeSwitch
-              label={t('services.detail.scopes.type.email')}
+              label={t('services.detail.scopes.type.picture')}
               disabled={disabled || isDeleted || !canManage}
               value={value ?? 'no'}
               {...field}
