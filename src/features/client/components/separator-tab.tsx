@@ -29,7 +29,9 @@ function useSeparatorTabInternal<
   return context as unknown as SeparatorTabContextValue<T>;
 }
 
-export type SeparatorTabProviderProps = PropsWithChildren;
+export type SeparatorTabProviderProps<T> = PropsWithChildren<{
+  onChange?: (value: T) => void;
+}>;
 
 export type SeparatorTabListProps = PropsWithChildren;
 
