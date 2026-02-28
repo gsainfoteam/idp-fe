@@ -72,7 +72,7 @@ export function useVerifyStudentNewInfoForm({
   const onSubmit = form.handleSubmit(async (formData) => {
     const res = await postUserVerifyStudentId({
       birthDate: formatDateToYYYYMMDD(formData.birthDate),
-      name: user.name,
+      name: formData.name,
     });
 
     if (!res.ok) {
