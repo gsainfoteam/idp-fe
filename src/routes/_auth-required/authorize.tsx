@@ -40,7 +40,11 @@ const schema = z.object({
 
 const validateSchema = schema
   .transform(({ scope, client_id, redirect_uri, response_type, ...rest }) => ({
-    scopes: z.array(ScopeEnum).parse(scope.split(' ')),
+    scopes: z
+      .array(ScopeEnum)
+      .parse(scope.split(' '))
+      // TODO: remove this after name migration completed
+      .map((s) => (s === 'profile' ? 'name' : (s as typeof s | 'profile'))),
     clientId: client_id,
     redirectUri: redirect_uri,
     responseTypes: z.array(ResponseEnum).parse(response_type.split(' ')),
