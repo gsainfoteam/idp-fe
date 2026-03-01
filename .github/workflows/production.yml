@@ -1,18 +1,16 @@
-name: Production Deploy
-
 on:
   release:
     types:
       - released
 
 jobs:
-  preview-deploy:
+  production-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: oven-sh/setup-bun@v2
       - name: build
         env:
@@ -21,11 +19,16 @@ jobs:
           bun install
           bun run build -- --mode production
       - name: Deploy to production
-        uses: cloudflare/pages-action@v1.5.0
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: account-fe-prod
-          directory: dist
+          command: pages deploy dist --project-name account-fe-prod --branch main
           gitHubToken: ${{ github.token }}
-          branch: main
+      - name: Deploy to production
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy dist --project-name idp-fe-prod --branch main
+          gitHubToken: ${{ github.token }}
