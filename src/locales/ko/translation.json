@@ -135,6 +135,13 @@
               "format": "이름을 입력해주세요"
             }
           },
+          "first_name": {
+            "label": "이름 (First Name)",
+            "placeholder": "John",
+            "errors": {
+              "required": "이름 (First Name)을 입력해주세요"
+            }
+          },
           "birth_date": {
             "label": "생년월일",
             "placeholder": "YYYY-MM-DD",
@@ -317,6 +324,13 @@
             "placeholder": "김지니",
             "errors": {
               "format": "이름을 입력해주세요"
+            }
+          },
+          "first_name": {
+            "label": "이름 (First Name)",
+            "placeholder": "John",
+            "errors": {
+              "required": "이름 (First Name)을 입력해주세요"
             }
           },
           "birth_date": {

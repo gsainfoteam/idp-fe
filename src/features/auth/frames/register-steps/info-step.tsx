@@ -13,6 +13,7 @@ import {
   LogClick,
   StepProgress,
   StudentIdVerificationDialog,
+  isKoreanName,
 } from '@/features/core';
 
 export function InfoStep({
@@ -21,12 +22,15 @@ export function InfoStep({
   onUndo,
 }: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
   const {
-    form: { register, control, getValues },
+    form: { register, control, getValues, watch },
     onVerify,
     onSubmit,
   } = useInfoForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
+
+  const name = watch('name') ?? '';
+  const showFirstNameField = !!name && !isKoreanName(name);
 
   return (
     <FunnelLayout
@@ -78,6 +82,19 @@ export function InfoStep({
             {...register('name')}
           />
         </Label>
+        {showFirstNameField && (
+          <Label text={t('register.steps.info.inputs.first_name.label')}>
+            <Input
+              type="text"
+              placeholder={t(
+                'register.steps.info.inputs.first_name.placeholder',
+              )}
+              error={errors.firstName?.message || !!errors.root}
+              disabled={isSubmitting}
+              {...register('firstName')}
+            />
+          </Label>
+        )}
         <Label text={t('register.steps.info.inputs.birth_date.label')}>
           <Input
             type="date"

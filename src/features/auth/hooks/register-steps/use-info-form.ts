@@ -13,17 +13,28 @@ import {
   type DifferenceNonNullable,
   Log,
   formatDateToYYYYMMDD,
+  isKoreanName,
 } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
-  z.object({
-    name: z.string().min(1, t('register.steps.info.inputs.name.errors.format')),
-    birthDate: z.date({
-      required_error: t('register.steps.info.inputs.birth_date.errors.format'),
-    }),
-    studentId: z.string().nullable().default(null),
-    studentIdVerificationJwtToken: z.string().nullable().default(null),
-  });
+  z
+    .object({
+      name: z
+        .string()
+        .min(1, t('register.steps.info.inputs.name.errors.format')),
+      firstName: z.string().optional(),
+      birthDate: z.date({
+        required_error: t(
+          'register.steps.info.inputs.birth_date.errors.format',
+        ),
+      }),
+      studentId: z.string().nullable().default(null),
+      studentIdVerificationJwtToken: z.string().nullable().default(null),
+    })
+    .refine((data) => isKoreanName(data.name) || !!data.firstName?.trim(), {
+      message: t('register.steps.info.inputs.first_name.errors.required'),
+      path: ['firstName'],
+    });
 
 export const useInfoForm = ({
   context,
@@ -43,16 +54,26 @@ export const useInfoForm = ({
     mode: 'onChange',
   });
 
+  const buildVerifyPayload = (formData: {
+    name: string;
+    firstName?: string;
+    birthDate: Date;
+  }) => ({
+    birthDate: formatDateToYYYYMMDD(formData.birthDate),
+    name: formData.name,
+    ...(!isKoreanName(formData.name) &&
+      formData.firstName?.trim() && {
+        firstName: formData.firstName.trim(),
+      }),
+  });
+
   const onVerify = async () => {
     const isValid = await form.trigger();
     if (!isValid) return false;
 
     const formData = form.getValues();
 
-    const verifyRes = await postVerifyStudentId({
-      birthDate: formatDateToYYYYMMDD(formData.birthDate),
-      name: formData.name,
-    });
+    const verifyRes = await postVerifyStudentId(buildVerifyPayload(formData));
 
     if (!verifyRes.ok) {
       if (verifyRes.status === 404) {
@@ -87,6 +108,10 @@ export const useInfoForm = ({
       email: context.email,
       password: context.password,
       name: formData.name,
+      ...(!isKoreanName(formData.name) &&
+        formData.firstName?.trim() && {
+          firstName: formData.firstName.trim(),
+        }),
       studentId: formData.studentId,
       phoneNumber: context.phoneNumber,
       emailVerificationJwtToken: context.emailVerificationJwtToken,

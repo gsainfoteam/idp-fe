@@ -11,6 +11,7 @@ import {
   Input,
   Label,
   StudentIdVerificationDialog,
+  isKoreanName,
 } from '@/features/core';
 
 export function NewInfoStep({
@@ -21,12 +22,15 @@ export function NewInfoStep({
   onNext: () => void;
 }) {
   const {
-    form: { register, control, getValues },
+    form: { register, control, getValues, watch },
     onVerify,
     onSubmit,
   } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
+
+  const name = watch('name') ?? '';
+  const showFirstNameField = !!name && !isKoreanName(name);
 
   return (
     <FunnelLayout
@@ -69,6 +73,21 @@ export function NewInfoStep({
             {...register('name')}
           />
         </Label>
+        {showFirstNameField && (
+          <Label
+            text={t('verify_student_id.steps.new_info.inputs.first_name.label')}
+          >
+            <Input
+              type="text"
+              placeholder={t(
+                'verify_student_id.steps.new_info.inputs.first_name.placeholder',
+              )}
+              error={errors.firstName?.message || !!errors.root}
+              disabled={isSubmitting}
+              {...register('firstName')}
+            />
+          </Label>
+        )}
         <Label
           text={t('verify_student_id.steps.new_info.inputs.birth_date.label')}
         >
