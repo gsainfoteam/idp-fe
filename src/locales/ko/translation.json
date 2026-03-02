@@ -136,10 +136,10 @@
             }
           },
           "first_name": {
-            "label": "First Name",
+            "label": "이름 (First Name)",
             "placeholder": "John",
             "errors": {
-              "required": "First Name을 입력해주세요"
+              "required": "이름 (First Name)을 입력해주세요"
             }
           },
           "birth_date": {
@@ -327,10 +327,10 @@
             }
           },
           "first_name": {
-            "label": "First Name",
+            "label": "이름 (First Name)",
             "placeholder": "John",
             "errors": {
-              "required": "First Name을 입력해주세요"
+              "required": "이름 (First Name)을 입력해주세요"
             }
           },
           "birth_date": {
