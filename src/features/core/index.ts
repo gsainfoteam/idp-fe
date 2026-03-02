@@ -46,6 +46,7 @@ export * from './services/amplitude';
 // Utils
 export * from './utils/cn';
 export * from './utils/palette';
+export * from './utils/name-utils';
 export * from './utils/time-format';
 export * from './utils/type-functions';
 export * from './utils/unique-key';
