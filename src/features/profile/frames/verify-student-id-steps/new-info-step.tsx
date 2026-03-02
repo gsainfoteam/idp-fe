@@ -82,7 +82,7 @@ export function NewInfoStep({
               placeholder={t(
                 'verify_student_id.steps.new_info.inputs.first_name.placeholder',
               )}
-              error={!!errors.firstName?.message}
+              error={errors.firstName?.message || !!errors.root}
               disabled={isSubmitting}
               {...register('firstName')}
             />
