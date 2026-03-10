@@ -1,5 +1,5 @@
 import { overlay } from 'overlay-kit';
-import { useFormState } from 'react-hook-form';
+import { useFormState, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useInfoForm } from '../../hooks/register-steps/use-info-form';
@@ -22,14 +22,14 @@ export function InfoStep({
   onUndo,
 }: Parameters<typeof useInfoForm>[0] & { onUndo: () => void }) {
   const {
-    form: { register, control, getValues, watch },
+    form: { register, control, getValues },
     onVerify,
     onSubmit,
   } = useInfoForm({ context, onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
-  const name = watch('name') ?? '';
+  const name = useWatch({ control, name: 'name', defaultValue: '' });
   const showFirstNameField = !!name && !isKoreanName(name);
 
   return (

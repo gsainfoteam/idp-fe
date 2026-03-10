@@ -1,5 +1,5 @@
 import { overlay } from 'overlay-kit';
-import { useFormState } from 'react-hook-form';
+import { useFormState, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
@@ -22,14 +22,14 @@ export function NewInfoStep({
   onNext: () => void;
 }) {
   const {
-    form: { register, control, getValues, watch },
+    form: { register, control, getValues },
     onVerify,
     onSubmit,
   } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
-  const name = watch('name') ?? '';
+  const name = useWatch({ control, name: 'name', defaultValue: '' });
   const showFirstNameField = !!name && !isKoreanName(name);
 
   return (
