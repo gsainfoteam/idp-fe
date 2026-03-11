@@ -629,6 +629,23 @@
       "complete": {
         "title": "Temporary password has been\nsent to your email",
         "button": "Log In"
+      },
+      "code": {
+        "inputs": {
+          "code": {
+            "errors": {
+              "format": "Please enter a 6-digit number",
+              "invalid": "The verification code is incorrect ({{count}}/{{max}})",
+              "max_try": "Please request the verification code again",
+              "expired": "The verification code has expired"
+            },
+            "label": "Verification Code",
+            "placeholder": "000000"
+          }
+        },
+        "title": "Enter the 6-digit code sent to your email",
+        "button": "Verify",
+        "resend": "Resend Code"
       }
     }
   },
