@@ -33,6 +33,10 @@ export type ClickEventMap = {
   register_info_staff_submit: Record<string, never>;
   register_complete_button: Record<string, never>;
 
+  // Issue Password
+  issue_password_code_submit: Record<string, never>;
+  issue_password_code_resend: Record<string, never>;
+
   // Phone Number Verification
   phone_number_verify_code_resend: Record<string, never>;
   phone_number_verify_success_button: Record<string, never>;
@@ -86,6 +90,7 @@ export type SubmitEventMap = {
   auth_register_tel_code: Record<string, never>;
   auth_register_password: Record<string, never>;
   auth_register_info: Record<string, never>;
+  issue_password_code: Record<string, never>;
   profile_edit: Record<string, never>;
   profile_password_change: Record<string, never>;
   student_id_verify: Record<string, never>;

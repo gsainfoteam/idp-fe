@@ -1,5 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 
+import { CodeStep } from './issue-password-steps/code-step';
 import { CompleteStep } from './issue-password-steps/complete-step';
 import { EmailStep } from './issue-password-steps/email-step';
 
@@ -8,9 +9,15 @@ import { type Pretty, type RequireKeys, useFunnel } from '@/features/core';
 
 type StepContext = Pretty<Partial<Parameters<typeof postUserPassword>[0]>>;
 
+export const IssuePasswordSteps = ['email', 'code', 'complete'] as const;
+
 export type IssuePasswordSteps = {
   email: StepContext;
-  complete: RequireKeys<IssuePasswordSteps['email'], 'email'>;
+  code: RequireKeys<IssuePasswordSteps['email'], 'email'>;
+  complete: RequireKeys<
+    IssuePasswordSteps['code'],
+    'emailVerificationJwtToken'
+  >;
 };
 
 export function IssuePasswordFrame() {
@@ -27,6 +34,12 @@ export function IssuePasswordFrame() {
     <funnel.Render
       email={({ history, context }) => (
         <EmailStep
+          context={context}
+          onNext={(data) => history.replace('code', data)}
+        />
+      )}
+      code={({ history, context }) => (
+        <CodeStep
           context={context}
           onNext={(data) => history.replace('complete', data)}
         />
