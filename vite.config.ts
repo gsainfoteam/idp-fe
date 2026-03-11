@@ -28,8 +28,8 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (
-            id.includes('node_modules/react') ||
-            id.includes('node_modules/react-dom')
+            /node_modules[\\/]+react(?!-)/.test(id) ||
+            /node_modules[\\/]+react-dom(?!-)/.test(id)
           ) {
             return 'vendor-react';
           }
