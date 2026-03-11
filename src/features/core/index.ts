@@ -59,6 +59,7 @@ export * from './hooks/use-is-mounted';
 export * from './hooks/use-loading';
 export * from './hooks/use-copy';
 export * from './hooks/use-is-desktop';
+export * from './hooks/use-verification-code-timer';
 
 // Frames
 export * from './frames/not-found-frame';

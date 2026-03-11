@@ -5,15 +5,12 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { type RegisterSteps } from '../../frames/register-frame';
+import { type IssuePasswordSteps } from '../../frames/issue-password-frame';
 
+import { postUserPassword } from '@/data/user';
 import { postVerify, postVerifyEmail } from '@/data/verify';
-import {
-  type DifferenceNonNullable,
-  Log,
-  useLoading,
-  useVerificationCodeTimer,
-} from '@/features/core';
+import { type DifferenceNonNullable, Log, useLoading } from '@/features/core';
+import { useVerificationCodeTimer } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
@@ -21,19 +18,19 @@ const createSchema = (t: TFunction) =>
       .string()
       .regex(
         /^\d{6}$/,
-        t('register.steps.email_code.inputs.code.errors.format'),
+        t('issue_password.steps.code.inputs.code.errors.format'),
       ),
   });
 
-export const useEmailCodeForm = ({
+export const useCodeForm = ({
   context,
   onNext,
 }: {
-  context: RegisterSteps['emailCode'];
+  context: IssuePasswordSteps['code'];
   onNext: (
     data: DifferenceNonNullable<
-      RegisterSteps['tel'],
-      RegisterSteps['emailCode']
+      IssuePasswordSteps['complete'],
+      IssuePasswordSteps['code']
     >,
   ) => void;
 }) => {
@@ -58,19 +55,19 @@ export const useEmailCodeForm = ({
     maxTryCount: 5,
     onExpired: () => {
       form.setError('code', {
-        message: t('register.steps.email_code.inputs.code.errors.expired'),
+        message: t('issue_password.steps.code.inputs.code.errors.expired'),
         type: 'value',
       });
     },
     onMaxCountReached: () => {
       form.setError('code', {
-        message: t('register.steps.email_code.inputs.code.errors.max_try'),
+        message: t('issue_password.steps.code.inputs.code.errors.max_try'),
         type: 'value',
       });
     },
     onInvalidCode: (currentCount, maxCount) => {
       form.setError('code', {
-        message: t('register.steps.email_code.inputs.code.errors.invalid', {
+        message: t('issue_password.steps.code.inputs.code.errors.invalid', {
           count: currentCount + 1,
           max: maxCount,
         }),
@@ -103,16 +100,16 @@ export const useEmailCodeForm = ({
   const onSubmit = form.handleSubmit(async (formData) => {
     incrementTryCount();
 
-    const res = await postVerify({
+    const verifyRes = await postVerify({
       subject: context.email,
       code: formData.code,
       hint: 'email',
     });
 
-    if (!res.ok) {
-      if (res.status === 400) {
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 400) {
         handleInvalidCode(tryCount);
-      } else if (res.status === 500) {
+      } else if (verifyRes.status === 500) {
         toast.error(t('toast.server_error'));
       } else {
         toast.error(t('toast.unknown_error'));
@@ -121,8 +118,29 @@ export const useEmailCodeForm = ({
       return;
     }
 
-    Log.submit('auth_register_email_code');
-    onNext({ emailVerificationJwtToken: res.data.verificationJwtToken });
+    Log.submit('issue_password_code');
+
+    const emailVerificationJwtToken = verifyRes.data.verificationJwtToken;
+    const passwordRes = await postUserPassword({
+      email: context.email,
+      emailVerificationJwtToken,
+    });
+
+    if (!passwordRes.ok) {
+      if (passwordRes.status === 400) {
+        toast.error(t('toast.invalid_body'));
+      } else if (passwordRes.status === 403) {
+        // impossible case
+      } else if (passwordRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
+      }
+
+      return;
+    }
+
+    onNext({ emailVerificationJwtToken });
   });
 
   return {

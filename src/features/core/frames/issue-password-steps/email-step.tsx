@@ -8,13 +8,21 @@ import { Button, FunnelLayout, Input, Label } from '@/features/core';
 export function EmailStep(props: Parameters<typeof useEmailForm>[0]) {
   const {
     form: { register, control },
+    onCheckEmail,
     onSubmit,
   } = useEmailForm(props);
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (await onCheckEmail()) {
+      await onSubmit();
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <FunnelLayout
         loading={isSubmitting}
         title={t('issue_password.title')}

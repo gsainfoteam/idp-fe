@@ -7,7 +7,8 @@ import { z } from 'zod';
 
 import { type IssuePasswordSteps } from '../../frames/issue-password-frame';
 
-import { postUserPassword } from '@/data/user';
+import { getUserEmail } from '@/data/user';
+import { postVerifyEmail } from '@/data/verify';
 import { type DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
@@ -26,7 +27,7 @@ export const useEmailForm = ({
   context: IssuePasswordSteps['email'];
   onNext: (
     data: DifferenceNonNullable<
-      IssuePasswordSteps['complete'],
+      IssuePasswordSteps['code'],
       IssuePasswordSteps['email']
     >,
   ) => void;
@@ -37,18 +38,39 @@ export const useEmailForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
-    const res = await postUserPassword(formData);
+  const onCheckEmail = async () => {
+    const isValid = await form.trigger('email');
+    if (!isValid) return false;
 
-    if (!res.ok) {
-      if (res.status === 400) {
-        toast.error(t('toast.invalid_body'));
-      } else if (res.status === 403) {
-        form.setError('email', {
-          message: t('issue_password.steps.email.inputs.email.errors.invalid'),
-          type: 'value',
-        });
-      } else if (res.status === 500) {
+    const emailRes = await getUserEmail({ email: form.getValues('email') });
+
+    if (!emailRes.ok) {
+      if (emailRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
+      }
+
+      return false;
+    }
+
+    if (emailRes.data === false) {
+      form.setError('email', {
+        message: t('issue_password.steps.email.inputs.email.errors.invalid'),
+        type: 'value',
+      });
+
+      return false;
+    }
+
+    return true;
+  };
+
+  const onSubmit = form.handleSubmit(async (formData) => {
+    const verifyRes = await postVerifyEmail({ email: formData.email });
+
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 500) {
         toast.error(t('toast.server_error'));
       } else {
         toast.error(t('toast.unknown_error'));
@@ -60,5 +82,5 @@ export const useEmailForm = ({
     onNext(formData);
   });
 
-  return { form, onSubmit };
+  return { form, onCheckEmail, onSubmit };
 };
