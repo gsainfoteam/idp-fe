@@ -8,10 +8,8 @@ import {
   formatTimeToMMSS,
   FunnelLayout,
   Input,
-  IssuePasswordSteps,
   Label,
   LogClick,
-  StepProgress,
 } from '@/features/core';
 
 export function CodeStep({
@@ -35,15 +33,7 @@ export function CodeStep({
       <FunnelLayout
         loading={isSubmitting}
         title={t('issue_password.title')}
-        stepTitle={
-          <div className="flex flex-col items-start gap-5">
-            <StepProgress
-              currentStep={IssuePasswordSteps.indexOf('code')}
-              totalSteps={IssuePasswordSteps.length}
-            />
-            {t('issue_password.steps.code.title')}
-          </div>
-        }
+        stepTitle={t('issue_password.steps.code.title')}
         button={
           <LogClick event="issue_password_code_submit">
             <Button
