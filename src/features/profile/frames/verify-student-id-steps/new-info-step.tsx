@@ -1,5 +1,5 @@
 import { overlay } from 'overlay-kit';
-import { useFormState } from 'react-hook-form';
+import { useFormState, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { useVerifyStudentNewInfoForm } from '../../hooks/use-verify-student-new-info-form';
@@ -11,6 +11,7 @@ import {
   Input,
   Label,
   StudentIdVerificationDialog,
+  isKoreanName,
 } from '@/features/core';
 
 export function NewInfoStep({
@@ -27,6 +28,9 @@ export function NewInfoStep({
   } = useVerifyStudentNewInfoForm({ onNext });
   const { isSubmitting, isValid, isDirty, errors } = useFormState({ control });
   const { t } = useTranslation();
+
+  const name = useWatch({ control, name: 'name', defaultValue: '' });
+  const showFirstNameField = !!name && !isKoreanName(name);
 
   return (
     <FunnelLayout
@@ -69,6 +73,21 @@ export function NewInfoStep({
             {...register('name')}
           />
         </Label>
+        {showFirstNameField && (
+          <Label
+            text={t('verify_student_id.steps.new_info.inputs.first_name.label')}
+          >
+            <Input
+              type="text"
+              placeholder={t(
+                'verify_student_id.steps.new_info.inputs.first_name.placeholder',
+              )}
+              error={errors.firstName?.message || !!errors.root}
+              disabled={isSubmitting}
+              {...register('firstName')}
+            />
+          </Label>
+        )}
         <Label
           text={t('verify_student_id.steps.new_info.inputs.birth_date.label')}
         >

@@ -8,20 +8,35 @@ import z from 'zod';
 import { postUserVerifyStudentId } from '@/data/user';
 import { postVerifyStudentId } from '@/data/verify';
 import { useAuth } from '@/features/auth';
-import { formatDateToYYYYMMDD } from '@/features/core';
+import { formatDateToYYYYMMDD, isKoreanName } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
-  z.object({
-    birthDate: z.date({
-      required_error: t(
-        'verify_student_id.steps.new_info.inputs.birth_date.errors.format',
+  z
+    .object({
+      name: z
+        .string()
+        .min(
+          1,
+          t('verify_student_id.steps.new_info.inputs.name.errors.format'),
+        ),
+      firstName: z.string().optional(),
+      birthDate: z.date({
+        required_error: t(
+          'verify_student_id.steps.new_info.inputs.birth_date.errors.format',
+        ),
+      }),
+      studentId: z.string().nullable().default(null),
+    })
+    .refine((data) => isKoreanName(data.name) || !!data.firstName?.trim(), {
+      message: t(
+        'verify_student_id.steps.new_info.inputs.first_name.errors.required',
       ),
-    }),
-    name: z
-      .string()
-      .min(1, t('verify_student_id.steps.new_info.inputs.name.errors.format')),
-    studentId: z.string().nullable().default(null),
-  });
+      path: ['firstName'],
+    });
+
+export type VerifyStudentNewInfoFormValues = z.infer<
+  ReturnType<typeof createSchema>
+>;
 
 export function useVerifyStudentNewInfoForm({
   onNext,
@@ -38,16 +53,26 @@ export function useVerifyStudentNewInfoForm({
   // impossible
   if (!user) throw new Error('User not found');
 
+  const buildVerifyPayload = (formData: {
+    name: string;
+    firstName?: string;
+    birthDate: Date;
+  }) => ({
+    birthDate: formatDateToYYYYMMDD(formData.birthDate),
+    name: formData.name,
+    ...(!isKoreanName(formData.name) &&
+      formData.firstName?.trim() && {
+        firstName: formData.firstName.trim(),
+      }),
+  });
+
   const onVerify = async () => {
     const isValid = await form.trigger();
     if (!isValid) return false;
 
     const formData = form.getValues();
 
-    const res = await postVerifyStudentId({
-      birthDate: formatDateToYYYYMMDD(formData.birthDate),
-      name: formData.name,
-    });
+    const res = await postVerifyStudentId(buildVerifyPayload(formData));
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -70,10 +95,7 @@ export function useVerifyStudentNewInfoForm({
   };
 
   const onSubmit = form.handleSubmit(async (formData) => {
-    const res = await postUserVerifyStudentId({
-      birthDate: formatDateToYYYYMMDD(formData.birthDate),
-      name: formData.name,
-    });
+    const res = await postUserVerifyStudentId(buildVerifyPayload(formData));
 
     if (!res.ok) {
       if (res.status === 404) {

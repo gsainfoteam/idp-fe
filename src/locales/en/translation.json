@@ -135,6 +135,13 @@
               "format": "Please enter your name"
             }
           },
+          "first_name": {
+            "label": "First Name",
+            "placeholder": "John",
+            "errors": {
+              "required": "Please enter your first name"
+            }
+          },
           "birth_date": {
             "label": "Birth Date",
             "placeholder": "YYYY-MM-DD",
@@ -317,6 +324,13 @@
             "placeholder": "Kim Jin-i",
             "errors": {
               "format": "Please enter your name"
+            }
+          },
+          "first_name": {
+            "label": "First Name",
+            "placeholder": "John",
+            "errors": {
+              "required": "Please enter your first name"
             }
           },
           "birth_date": {
