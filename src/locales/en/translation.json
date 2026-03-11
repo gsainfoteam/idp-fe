@@ -643,7 +643,7 @@
             "placeholder": "000000"
           }
         },
-        "title": "Enter the 6-digit code sent to your email",
+        "title": "Enter the 6-digit code\nsent to your email",
         "button": "Verify",
         "resend": "Resend Code"
       }
