@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "bun run gen-oas && tsr generate && tsc -b && vite build",
+    "build:analyze": "ANALYZE=1 bun run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "gen-oas": "npx openapi-typescript https://api.stg.account.gistory.me/api-json -o ./src/@types/api-schema.d.ts",
@@ -83,6 +84,7 @@
     "playwright": "^1.54.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "rollup-plugin-visualizer": "^7.0.1",
     "storybook": "^8.6.14",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.36.0",
