@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { type IssuePasswordSteps } from '../../frames/issue-password-frame';
 
 import { getUserEmail } from '@/data/user';
+import { postVerifyEmail } from '@/data/verify';
 import { type DifferenceNonNullable } from '@/features/core';
 
 const createSchema = (t: TFunction) =>
@@ -37,8 +38,11 @@ export const useEmailForm = ({
     mode: 'onChange',
   });
 
-  const onSubmit = form.handleSubmit(async (formData) => {
-    const emailRes = await getUserEmail(formData);
+  const onCheckEmail = async () => {
+    const isValid = await form.trigger('email');
+    if (!isValid) return false;
+
+    const emailRes = await getUserEmail({ email: form.getValues('email') });
 
     if (!emailRes.ok) {
       if (emailRes.status === 500) {
@@ -47,7 +51,7 @@ export const useEmailForm = ({
         toast.error(t('toast.unknown_error'));
       }
 
-      return;
+      return false;
     }
 
     if (emailRes.data === false) {
@@ -56,11 +60,27 @@ export const useEmailForm = ({
         type: 'value',
       });
 
+      return false;
+    }
+
+    return true;
+  };
+
+  const onSubmit = form.handleSubmit(async (formData) => {
+    const verifyRes = await postVerifyEmail({ email: formData.email });
+
+    if (!verifyRes.ok) {
+      if (verifyRes.status === 500) {
+        toast.error(t('toast.server_error'));
+      } else {
+        toast.error(t('toast.unknown_error'));
+      }
+
       return;
     }
 
     onNext(formData);
   });
 
-  return { form, onSubmit };
+  return { form, onCheckEmail, onSubmit };
 };
