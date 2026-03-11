@@ -6,8 +6,8 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useVerificationCodeTimer } from '../../../core/hooks/use-verification-code-timer';
 import { type RegisterSteps } from '../../frames/register-frame';
-import { useVerificationCodeTimer } from '../use-verification-code-timer';
 
 import { postVerify, postVerifyPhoneNumber } from '@/data/verify';
 import { type DifferenceNonNullable, Log, useLoading } from '@/features/core';

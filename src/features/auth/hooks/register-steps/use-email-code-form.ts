@@ -6,10 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import { type RegisterSteps } from '../../frames/register-frame';
-import { useVerificationCodeTimer } from '../use-verification-code-timer';
 
 import { postVerify, postVerifyEmail } from '@/data/verify';
-import { type DifferenceNonNullable, Log, useLoading } from '@/features/core';
+import {
+  type DifferenceNonNullable,
+  Log,
+  useLoading,
+  useVerificationCodeTimer,
+} from '@/features/core';
 
 const createSchema = (t: TFunction) =>
   z.object({
