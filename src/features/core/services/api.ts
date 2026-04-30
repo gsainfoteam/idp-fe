@@ -33,9 +33,18 @@ const middleware: Middleware = {
         const refreshRes = await postAuthRefresh();
 
         if (refreshRes.ok) {
-          useToken.getState().saveToken(refreshRes.data.accessToken);
-          auxiliaryRequest.retry = true;
-          return options.fetch(auxiliaryRequest);
+          const newToken = refreshRes.data.accessToken;
+          useToken.getState().saveToken(newToken);
+
+          const newHeaders = new Headers(auxiliaryRequest.headers);
+          newHeaders.set('Authorization', `Bearer ${newToken}`);
+
+          const retryRequest = new Request(auxiliaryRequest, {
+            headers: newHeaders,
+          }) as AuxiliaryRequestInit;
+          retryRequest.retry = true;
+
+          return options.fetch(retryRequest);
         } else {
           if (!auxiliaryRequest.keepToken) {
             useToken.getState().saveToken(null);
