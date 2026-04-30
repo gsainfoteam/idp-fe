@@ -43,6 +43,7 @@ const middleware: Middleware = {
             headers: newHeaders,
           }) as AuxiliaryRequestInit;
           retryRequest.retry = true;
+          retryRequest.keepToken = auxiliaryRequest.keepToken;
 
           return options.fetch(retryRequest);
         } else {
