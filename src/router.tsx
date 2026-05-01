@@ -15,6 +15,7 @@ export const router = createRouter({
 
     return (
       <ErrorFallbackFrame
+        error={error}
         message={error.message}
         description={description}
         status={status}

@@ -26,6 +26,7 @@ export default function App() {
 
         return (
           <ErrorFallbackFrame
+            error={error}
             status={status}
             message={err.message}
             description={description}

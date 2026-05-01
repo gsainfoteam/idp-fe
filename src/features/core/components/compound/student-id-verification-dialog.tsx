@@ -24,7 +24,7 @@ export function StudentIdVerificationDialog({
       isOpen={isOpen}
       close={(_: boolean) => close()}
       defaultCloseValue={defaultCloseValue}
-      className="mx-10 min-w-[300px]"
+      className="min-w-[300px] max-w-[calc(100%-5rem)]"
       event="student_id_dialog"
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
     >
