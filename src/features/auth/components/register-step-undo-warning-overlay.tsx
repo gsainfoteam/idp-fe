@@ -16,7 +16,7 @@ export function RegisterStepUndoWarningOverlay({
       isOpen={isOpen}
       close={close}
       defaultCloseValue={false}
-      className="mx-10 w-auto"
+      className="min-w-75 max-w-[calc(100%-5rem)]"
       event="register_undo_warning_dialog"
       closeProperties={(value) => ({ result: value ? 'confirm' : 'cancel' })}
     >

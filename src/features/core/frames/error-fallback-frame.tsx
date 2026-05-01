@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ZodError } from 'zod';
 
 import { Button, FunnelLayout } from '@/features/core';
 
@@ -8,6 +9,7 @@ type ErrorFallbackFrameProps = {
   status?: number;
   message?: string;
   description?: string;
+  error?: unknown;
 };
 
 export function ErrorFallbackFrame({
@@ -15,8 +17,21 @@ export function ErrorFallbackFrame({
   status,
   message,
   description,
+  error,
 }: ErrorFallbackFrameProps) {
   const { t } = useTranslation();
+
+  const resolvedMessage = (() => {
+    if (error instanceof ZodError) {
+      return error.issues
+        .map((issue) => {
+          const path = issue.path.join('.');
+          return path ? `${path}: ${issue.message}` : issue.message;
+        })
+        .join('\n');
+    }
+    return message;
+  })();
 
   const handleRetry = useCallback(() => {
     if (onRetry) {
@@ -37,13 +52,13 @@ export function ErrorFallbackFrame({
         </Button>
       }
     >
-      <div className="flex flex-col items-center gap-3 text-center">
+      <div className="flex flex-col items-center gap-3">
         <div className="text-funnel-steptitle text-6xl font-black">
           {status ?? 'Unknown'}
         </div>
-        {message && (
-          <div className="text-body-2 text-basics-secondary-label whitespace-pre-line">
-            {t('error_fallback.details_label')}: {message}
+        {resolvedMessage && (
+          <div className="text-body-2 text-basics-secondary-label w-full whitespace-pre-line">
+            {t('error_fallback.details_label')}: {resolvedMessage}
           </div>
         )}
       </div>

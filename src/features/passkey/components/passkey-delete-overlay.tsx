@@ -22,7 +22,7 @@ export function PasskeyDeleteOverlay({
       isOpen={isOpen}
       close={close}
       defaultCloseValue={false}
-      className="mx-10 min-w-75"
+      className="min-w-75 max-w-[calc(100%-5rem)]"
       event="delete_confirmation"
       openProperties={{ resource: 'passkey' }}
       closeProperties={(value) => ({

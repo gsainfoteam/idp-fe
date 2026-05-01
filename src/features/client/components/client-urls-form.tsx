@@ -35,7 +35,7 @@ export function ClientUrlsForm({ client }: { client: Client }) {
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      'text-body-1 flex-1',
+                      'text-body-1 min-w-0 flex-1 truncate',
                       isDeleted
                         ? 'text-basics-secondary-label'
                         : 'text-basics-primary-label',

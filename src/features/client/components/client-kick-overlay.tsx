@@ -23,7 +23,7 @@ export function ClientKickOverlay({
       isOpen={isOpen}
       close={close}
       defaultCloseValue={false}
-      className="mx-10 min-w-75"
+      className="min-w-75 max-w-[calc(100%-5rem)]"
       event="kick_confirmation"
       openProperties={{ resource: 'member' }}
       closeProperties={(value) => ({

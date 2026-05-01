@@ -37,7 +37,7 @@ function ClientPictureOverlay({
       isOpen={isOpen}
       close={(_: boolean) => close()}
       defaultCloseValue={false}
-      className="mx-10 w-auto"
+      className="max-w-[calc(100%-5rem)] min-w-75"
       event="client_picture_delete_dialog"
       closeProperties={(v) => ({ result: v ? 'confirm' : 'cancel' })}
     >
