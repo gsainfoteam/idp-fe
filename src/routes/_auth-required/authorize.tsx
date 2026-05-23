@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
-import { getUserConsent } from '@/data/user';
 import { AuthorizeFrame } from '@/features/oauth';
 
 export const ClientScopeEnum = z.enum([
@@ -85,11 +84,5 @@ export const Route = createFileRoute('/_auth-required/authorize')({
   component: AuthorizePage,
   validateSearch: schema,
   loaderDeps: ({ search }) => search,
-  loader: async ({ deps }) => {
-    const res = await getUserConsent();
-    return {
-      ...validateSchema.parse(deps),
-      consents: res.ok ? res.data : undefined,
-    };
-  },
+  loader: ({ deps }) => validateSchema.parse(deps),
 });

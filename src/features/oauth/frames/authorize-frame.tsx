@@ -5,6 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { AuthorizeForm } from '../components/authorize-form';
 import { useAuthorize } from '../hooks/use-authorize';
 import { useClient } from '../hooks/use-client';
+import { useConsentedScopes } from '../hooks/use-consented-scopes';
 import { useRecentLogin } from '../hooks/use-recent-login';
 
 import { type components } from '@/@types/api-schema';
@@ -22,6 +23,7 @@ export function AuthorizeFrame() {
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
+  const { scopes, isLoading } = useConsentedScopes(clientId);
 
   const { recentLogin } = useRecentLogin();
   const { signOut } = useAuth();
@@ -45,19 +47,23 @@ export function AuthorizeFrame() {
         />
       </div>
     );
+  } else if (isLoading) {
+    return null;
   } else {
-    return <Inner client={client} />;
+    return <Inner client={client} scopes={scopes} />;
   }
 }
 
 function Inner({
   client,
+  scopes,
 }: {
   client: components['schemas']['ClientPublicResDto'];
+  scopes: string[];
 }) {
   const { t } = useTranslation();
   const { form, onSubmit, onCancel, isRequiredScopeNotVerified } = useAuthorize(
-    { client },
+    { client, scopes },
   );
 
   return (
@@ -112,7 +118,7 @@ function Inner({
             </div>
           }
         >
-          <AuthorizeForm client={client} />
+          <AuthorizeForm client={client} scopes={scopes} />
         </FunnelLayout>
       </form>
     </FormProvider>

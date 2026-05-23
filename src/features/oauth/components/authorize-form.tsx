@@ -11,19 +11,19 @@ import { Checkbox, VerifiedBadge } from '@/features/core';
 
 export function AuthorizeForm({
   client,
+  scopes,
 }: {
   client: components['schemas']['ClientPublicResDto'];
+  scopes: string[];
 }) {
   const { control, setValue, setError, clearErrors } =
     useFormContext<ConsentFormSchema>();
   const { t } = useTranslation();
-  const { clientScopes, consents } = useLoaderData({
+  const { clientScopes } = useLoaderData({
     from: '/_auth-required/authorize',
   });
   const { user } = useAuth();
   const location = useLocation();
-
-  const consent = consents?.list.find((c) => c.clientUuid === client.clientId);
 
   const requiredScopes = useMemo(
     () => clientScopes.filter((v) => client.scopes.includes(v)),
@@ -73,12 +73,12 @@ export function AuthorizeForm({
 
   useEffect(() => {
     requiredScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, consent?.scopes.includes(scope) ?? false);
+      setValue(`scopes.${scope}`, scopes.includes(scope) ?? false);
     });
     optionalScopes.forEach((scope) => {
-      setValue(`scopes.${scope}`, consent?.scopes.includes(scope) ?? false);
+      setValue(`scopes.${scope}`, scopes.includes(scope) ?? false);
     });
-  }, [requiredScopes, optionalScopes, setValue, consent]);
+  }, [requiredScopes, optionalScopes, setValue, scopes]);
 
   return (
     <div className="flex flex-col">
