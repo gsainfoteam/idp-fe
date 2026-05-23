@@ -23,7 +23,7 @@ export function AuthorizeFrame() {
     from: '/_auth-required/authorize',
   });
   const { client } = useClient(clientId);
-  const { scopes } = useConsentedScopes(clientId);
+  const { scopes, isLoading } = useConsentedScopes(clientId);
 
   const { recentLogin } = useRecentLogin();
   const { signOut } = useAuth();
@@ -47,6 +47,8 @@ export function AuthorizeFrame() {
         />
       </div>
     );
+  } else if (isLoading) {
+    return null;
   } else {
     return <Inner client={client} scopes={scopes} />;
   }
