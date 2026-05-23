@@ -12,15 +12,16 @@ import { type ClientScopeType } from '@/routes/_auth-required/authorize';
 
 export const useAuthorize = ({
   client,
+  scopes,
 }: {
   client: components['schemas']['ClientPublicResDto'];
+  scopes: string[];
 }) => {
   const { recentLogin } = useRecentLogin();
   const { user, signOut } = useAuth();
-  const { clientId, clientScopes, tokenScopes, consents, url, state } =
-    useLoaderData({
-      from: '/_auth-required/authorize',
-    });
+  const { clientId, clientScopes, tokenScopes, url, state } = useLoaderData({
+    from: '/_auth-required/authorize',
+  });
   const { prompt, ...search } = useSearch({
     from: '/_auth-required/authorize',
   });
@@ -74,15 +75,9 @@ export const useAuthorize = ({
   );
 
   useEffect(() => {
-    const consentedClient = consents?.list.find(
-      (c) => c.clientUuid === clientId,
-    );
-    const consented = consentedClient
-      ? requiredScopes.every((s) => consentedClient.scopes.includes(s))
-      : false;
+    const consented = requiredScopes.every((s) => scopes.includes(s));
 
-    const consentedScopes =
-      (consentedClient?.scopes as ClientScopeType[]) ?? [];
+    const consentedScopes = (scopes as ClientScopeType[]) ?? [];
 
     if (prompt === 'none') {
       if (!user)
@@ -115,7 +110,7 @@ export const useAuthorize = ({
   }, [
     authorize,
     clientId,
-    consents?.list,
+    scopes,
     isRequiredScopeNotVerified,
     prompt,
     recentLogin,
