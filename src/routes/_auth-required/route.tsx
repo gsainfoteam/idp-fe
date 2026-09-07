@@ -28,7 +28,7 @@ const AuthRequiredLayout = () => {
   const router = useRouter();
 
   const searchParams = useMemo(() => {
-    const shouldRedirect = token === null;
+    const shouldRedirect = !token;
     return shouldRedirect
       ? { redirect: cleanupAllFunnel(router.history.location.href) }
       : {};
